@@ -1,0 +1,13 @@
+{
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": { "dhis": { "href": "*" } },
+  "appType": "APP",
+  "name": "Facility Checker App",
+  "version": "1.2.26",
+  "description": "Facility Checker App",
+  "developer": { "name": "HISPVN Team" },
+  "key": "fca",
+  "short_name": "fca",
+  "icons": { "16": "icon.png", "48": "icon.png", "128": "icon.png" }
+}
