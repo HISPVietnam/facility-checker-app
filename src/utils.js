@@ -18,6 +18,27 @@ const isValidPoint = (lat, lng) => {
   return typeof lat === "number" && typeof lng === "number" && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
 };
 
+const isInsideParent = (path, lat, long) => {
+  let isInside = true;
+  const { orgUnitGeoJson } = useMetadataStore.getState();
+  const currentOrgUnits = _.compact(path.split("/"));
+  while (true) {
+    const currentParent = currentOrgUnits.pop();
+    const foundParent = orgUnitGeoJson.features.find((f) => f.id === currentParent);
+    if (foundParent && foundParent.geometry && (foundParent.geometry.type === "Polygon" || foundParent.geometry.type === "MultiPolygon")) {
+      const withinPolygon = booleanPointInPolygon(point([long, lat]), foundParent.geometry);
+      if (!withinPolygon) {
+        isInside = false;
+      }
+      break;
+    }
+    if (!currentParent) {
+      break;
+    }
+  }
+  return isInside;
+};
+
 const convertEvent = (event, dataElements) => {
   const convertedEvent = {
     occurredAt: event.occurredAt,
@@ -327,6 +348,7 @@ const isWaitingForApproval = (facility) => {
 export {
   pickTranslation,
   isValidPoint,
+  isInsideParent,
   convertTeis,
   findAttributeValue,
   findDataValue,

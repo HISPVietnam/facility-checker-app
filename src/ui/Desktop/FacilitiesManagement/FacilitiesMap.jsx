@@ -12,7 +12,7 @@ import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import { useTranslation } from "react-i18next";
 import CustomizedButton from "@/ui/common/Button";
 import useLayoutStore from "@/states/layout";
-import { isValidPoint, convertToDhis2Event, generateUid } from "@/utils";
+import { isValidPoint, isInsideParent, convertToDhis2Event, generateUid } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, BASE_LAYER_TYPES } from "@/const";
 import DataValueLabel from "@/ui/common/DataValueLabel";
@@ -20,12 +20,18 @@ import FacilityProfileDialog from "./FacilityProfileDialog";
 import { postEvent } from "@/api/data";
 import { format } from "date-fns";
 import DataValueText from "@/ui/common/DataValueText";
+import { booleanPointInPolygon, point } from "@turf/turf";
 import _ from "lodash";
 const { UID, NAME, PATH } = DATA_ELEMENTS;
 
 const TooltipContent = (props) => {
   const [loading, setLoading] = useState(false);
-  const program = useMetadataStore((state) => state.program);
+  const { program, orgUnitGeoJson } = useMetadataStore(
+    useShallow((state) => ({
+      program: state.program,
+      orgUnitGeoJson: state.orgUnitGeoJson
+    }))
+  );
   const { selectedFacility, editing, actions, draggingMode } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
@@ -47,6 +53,7 @@ const TooltipContent = (props) => {
   const [lat, setLat] = useState(facility.latitude);
   const [long, setLong] = useState(facility.longitude);
   const [valid, setValid] = useState(false);
+  const [isWithinParent, setIsWithinParent] = useState(false);
   const isPending = facility.isPending;
   useEffect(() => {
     setLat(facility.latitude);
@@ -54,8 +61,18 @@ const TooltipContent = (props) => {
   }, [facility.latitude, facility.longitude]);
 
   useEffect(() => {
-    const valid = isValidPoint(parseFloat(lat), parseFloat(long));
+    let valid = true;
+    let isWithinParent = true;
+    if (!isValidPoint(parseFloat(lat), parseFloat(long))) {
+      valid = false;
+    }
+    if (!valid) {
+      setValid(valid);
+      return;
+    }
+    isWithinParent = isInsideParent(facility[PATH], lat, long);
     setValid(valid);
+    setIsWithinParent(isWithinParent);
   }, [lat, long]);
 
   const saveChanges = async () => {
@@ -122,7 +139,7 @@ const TooltipContent = (props) => {
             dense={true}
             valueType="number"
             onChange={(value) => {
-              setLat(value.value);
+              setLat(value);
             }}
           />
         ) : (
@@ -138,7 +155,7 @@ const TooltipContent = (props) => {
             dense={true}
             valueType="number"
             onChange={(value) => {
-              setLong(value.value);
+              setLong(value);
             }}
           />
         ) : (
@@ -159,7 +176,7 @@ const TooltipContent = (props) => {
         <CustomizedButton small={true} disabled={isPending} onClick={toggleEditing} hidden={editing}>
           {t("editLocation")}
         </CustomizedButton>
-        <CustomizedButton loading={loading} small={true} hidden={!editing} disabled={!valid} primary onClick={saveChanges}>
+        <CustomizedButton loading={loading} small={true} hidden={!editing} disabled={!valid || !isWithinParent} primary onClick={saveChanges}>
           {t("save")}
         </CustomizedButton>
         &nbsp;
@@ -190,6 +207,13 @@ const TooltipContent = (props) => {
           {t("moving")}
         </CustomizedButton>
       </div>
+      {!isWithinParent && (
+        <div>
+          <NoticeBox className="!p-[5.5px] mt-1" error>
+            {t("mustBeInsideParentBoundaries")}
+          </NoticeBox>
+        </div>
+      )}
       {isPending && (
         <div>
           <NoticeBox className="!p-[5.5px] mt-1" warning>

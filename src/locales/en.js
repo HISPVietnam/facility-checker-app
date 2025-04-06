@@ -74,7 +74,7 @@ export default {
   waitingForApproval: "Waiting for approval",
   set: "Set",
   startChoosingPoint: "Click on the map to start choosing the location",
-  dragTheMarker: "Click on the map or drag the marker to change the location",
+  dragTheMarker: "Click on the map or drag the marker to change the location, the location must be inside facility parent",
   apply: "Apply",
   outsideBoundaryHelper: "Warning: you are moving the facility to be outside the boundary",
   newFacility: "New facility",
@@ -89,5 +89,6 @@ export default {
   facilityCannotHaveTheSameShortNameAsItsParent: "Facility cannot have the same short name as it's parent",
   facilityShortNameInSameParentHasBeenTaken: "This facility short name has been taken in the same parent",
   thisCodeHasBeenTaken: "This facility code has been taken, code must be unique",
-  facilityHaveBeenSaved: "Facility data bave been saved"
+  facilityHaveBeenSaved: "Facility data bave been saved",
+  mustBeInsideParentBoundaries: "Facility location must be inside it's parent"
 };

@@ -11,7 +11,7 @@ import DataValueText from "./DataValueText";
 
 const CustomizedInputField = (props) => {
   const { t } = useTranslation();
-  const { value, displayValue, valueType, options, multiSelection, onChange, disabled, filter } = props;
+  const { value, displayValue, valueType, options, multiSelection, onChange, disabled, filter, error, validationText } = props;
   if (options && multiSelection) {
     return (
       <MultiSelect
@@ -175,7 +175,7 @@ const CustomizedInputField = (props) => {
           }
           onChange(newValue);
         };
-        return (
+        return [
           <div className="w-full flex">
             <div className="w-[50%]">
               <InputField
@@ -186,11 +186,13 @@ const CustomizedInputField = (props) => {
                   changeCoordinates("latitude", value.value);
                 }}
                 className="font-normal"
+                error={error}
               />
             </div>
             &nbsp;
             <div className="w-[50%]">
               <InputField
+                error={error}
                 type="number"
                 {...props}
                 value={value[0]}
@@ -201,7 +203,7 @@ const CustomizedInputField = (props) => {
               />
             </div>
           </div>
-        );
+        ];
       })();
     case "TEXT":
     case "NUMBER":

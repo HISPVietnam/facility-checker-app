@@ -6,6 +6,7 @@ const Helper = ({ type, value }) => {
       break;
     case "WARNING":
       className = "text-[14px] font-bold text-orange-600";
+      break;
     case "ERROR":
       className = "text-[14px] font-bold text-red-600";
       break;

@@ -13,7 +13,7 @@ import FacilityCoordinatesPickerMap from "./FacilityCoordinatesPickerMap";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
-import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath } from "@/utils";
+import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, isInsideParent } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, TRACKED_ENTITY_ATTRIBUTES } from "@/const";
 import { postEvent, postTei, findFacilityByCode } from "@/api/data";
@@ -25,10 +25,10 @@ const { UID, APPROVAL_STATUS, PATH, IS_NEW_FACILITY, CODE } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 const Row = ({ children, className }) => {
   return (
-    <div className={`flex items-center py-1 border-b border-b-slate-200 ${className ? className : ""}`}>
-      <div className="w-[250px] text-[15px]">{children[0]}</div>
-      <div className="w-[450px]">{children[1]}</div>
-      <div className="w-[450px] h-full ml-2 mr-2 p-2 rounded-md bg-slate-100 text-[14px]">{children[2]}</div>
+    <div className={`flex  py-1 border-b border-b-slate-200 ${className ? className : ""}`}>
+      <div className="self-center w-[250px] text-[15px]">{children[0]}</div>
+      <div className="self-start w-[450px]">{children[1]}</div>
+      <div className="self-start w-[450px] h-[40px] ml-2 mr-2 p-2 rounded-md bg-slate-100 text-[14px]">{children[2]}</div>
     </div>
   );
 };
@@ -200,6 +200,27 @@ const FacilityProfileDialog = () => {
     }
   };
 
+  const [helpers, setHelpers] = useState([]);
+
+  useEffect(() => {
+    const path = currentFacility[PATH] ? currentFacility[PATH] : selectedFacility.previousValues[PATH];
+    const currentHelpers = [];
+    console.log(path);
+    if (currentFacility.latitude && currentFacility.longitude && path) {
+      const isInside = isInsideParent(path, currentFacility.latitude, currentFacility.longitude);
+      if (!isInside) {
+        currentHelpers.push({
+          target: "coordinates",
+          type: "error",
+          value: t("mustBeInsideParentBoundaries")
+        });
+      }
+    }
+    setHelpers(currentHelpers);
+  }, [JSON.stringify(currentFacility)]);
+
+  const foundCoordinatesError = helpers.find((h) => h.type === "error" && h.target === "coordinates");
+
   return (
     <Modal fluid>
       <ModalTitle>{t("facilityProfile")}</ModalTitle>
@@ -247,26 +268,30 @@ const FacilityProfileDialog = () => {
           <div className="h-[calc(100%-115px)] overflow-auto">
             <Row className="mt-auto">
               <span>{t("coordinates")}</span>
-              <div className="flex w-full">
-                <CustomizedInputField
-                  valueType="COORDINATES"
-                  disabled={isPending || loading}
-                  value={[currentFacility.longitude, currentFacility.latitude]}
-                  onChange={(value) => {
-                    changeCoordinates(value);
-                  }}
-                />
-                <div className="h-full mt-auto ml-1">
-                  <CustomizedButton
-                    icon={<FontAwesomeIcon icon={faMap} />}
-                    className="!h-[40px]"
-                    onClick={() => {
-                      setFacilityCoordinatesPicker(true);
+              <div className="w-full">
+                <div className="flex w-full">
+                  <CustomizedInputField
+                    error={foundCoordinatesError ? true : false}
+                    valueType="COORDINATES"
+                    disabled={isPending || loading}
+                    value={[currentFacility.longitude, currentFacility.latitude]}
+                    onChange={(value) => {
+                      changeCoordinates(value);
                     }}
-                  >
-                    {t("map")}
-                  </CustomizedButton>
+                  />
+                  <div className="h-full mt-auto ml-1">
+                    <CustomizedButton
+                      icon={<FontAwesomeIcon icon={faMap} />}
+                      className="!h-[40px]"
+                      onClick={() => {
+                        setFacilityCoordinatesPicker(true);
+                      }}
+                    >
+                      {t("map")}
+                    </CustomizedButton>
+                  </div>
                 </div>
+                {foundCoordinatesError && <Helper type="ERROR" value={foundCoordinatesError.value} />}
               </div>
               <span>
                 {selectedFacility.previousValues.longitude && selectedFacility.previousValues.latitude ? (
@@ -349,11 +374,16 @@ const FacilityProfileDialog = () => {
             </NoticeBox>
           )}
           &nbsp;
-          <CustomizedButton loading={loading} disabled={loading || isPending} primary={true} onClick={saveChanges}>
+          <CustomizedButton
+            loading={loading}
+            disabled={loading || isPending || helpers.find((h) => h.type === "error")}
+            primary={true}
+            onClick={saveChanges}
+          >
             {t("save")}
           </CustomizedButton>
           &nbsp;
-          <CustomizedButton loading={loading} disabled={loading || isPending} onClick={complete}>
+          <CustomizedButton loading={loading} disabled={loading || isPending || helpers.find((h) => h.type === "error")} onClick={complete}>
             {t("applyForApproval")}
           </CustomizedButton>
           &nbsp;
