@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.2...v1.3.3) (2025-04-07)
+
+### Bug Fixes
+
+* switch semantic release preset to conventionalcommits [#9317](https://projects.hispvietnam.org/work_packages/9317) ([097507d](https://github.com/HISPVietnam/facility-checker-app/commit/097507dc04346ac2d1d9a92f9236d1c7b4cb9074))
+
 ## [1.3.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.1...v1.3.2) (2025-04-07)
 
 
