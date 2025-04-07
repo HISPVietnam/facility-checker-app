@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.1...v1.3.2) (2025-04-07)
+
+
+### Bug Fixes
+
+* issue hyperlink not linked to hispvn openproject, continue [#9317](https://github.com/HISPVietnam/facility-checker-app/issues/9317) ([25144fb](https://github.com/HISPVietnam/facility-checker-app/commit/25144fb8777d678a94aecabb952eae2a2f9c7f37))
+
 ## [1.3.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.0...v1.3.1) (2025-04-07)
 
 
