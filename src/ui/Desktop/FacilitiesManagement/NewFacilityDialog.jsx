@@ -322,7 +322,6 @@ const NewFacilityDialog = () => {
                     }
                   })
                   .map((orgUnit) => orgUnit.path);
-
                 return (
                   <Row>
                     <DataValueLabel dataElement={PATH} mandatory={true} />

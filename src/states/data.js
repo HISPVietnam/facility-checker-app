@@ -80,18 +80,34 @@ const useDataStore = create((set) => ({
           // state.facilities[foundFacilityIndex] = { ...currentFacility, ...event };
           if (foundFacilityIndex !== -1) {
             const foundActiveEventIndex = state.facilities[foundFacilityIndex].events.findIndex((event) => event.status === "ACTIVE");
+            program.dataElements.forEach((de) => {
+              if (event[de.id]) {
+                state.facilities[foundFacilityIndex][de.id] = event[de.id];
+              }
+            });
+            if (event.latitude) {
+              state.facilities[foundFacilityIndex].latitude = event.latitude;
+              state.facilities[foundFacilityIndex].longitude = event.longitude;
+            }
+            if (event.status && event.status === "COMPLETED") {
+              state.facilities[foundFacilityIndex][APPROVAL_STATUS] = event[APPROVAL_STATUS];
+              state.facilities[foundFacilityIndex].status = "COMPLETED";
+              state.facilities[foundFacilityIndex].isPending = true;
+              state.facilities[foundFacilityIndex].completedAt = event.completedAt;
+              state.facilities[foundFacilityIndex].updatedBy = {
+                firstName: me.firstName,
+                surname: me.surname
+              };
+            }
             if (foundActiveEventIndex !== -1) {
               program.dataElements.forEach((de) => {
                 if (event[de.id]) {
                   state.facilities[foundFacilityIndex].events[foundActiveEventIndex][de.id] = event[de.id];
-                  state.facilities[foundFacilityIndex][de.id] = event[de.id];
                 }
               });
               if (event.latitude) {
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].latitude = event.latitude;
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].longitude = event.longitude;
-                state.facilities[foundFacilityIndex].latitude = event.latitude;
-                state.facilities[foundFacilityIndex].longitude = event.longitude;
               }
               if (event.status && event.status === "COMPLETED") {
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex][APPROVAL_STATUS] = event[APPROVAL_STATUS];
@@ -99,14 +115,6 @@ const useDataStore = create((set) => ({
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].isPending = true;
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].completedAt = event.completedAt;
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].updatedBy = {
-                  firstName: me.firstName,
-                  surname: me.surname
-                };
-                state.facilities[foundFacilityIndex][APPROVAL_STATUS] = event[APPROVAL_STATUS];
-                state.facilities[foundFacilityIndex].status = "COMPLETED";
-                state.facilities[foundFacilityIndex].isPending = true;
-                state.facilities[foundFacilityIndex].completedAt = event.completedAt;
-                state.facilities[foundFacilityIndex].updatedBy = {
                   firstName: me.firstName,
                   surname: me.surname
                 };

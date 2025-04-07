@@ -413,7 +413,6 @@ const FacilitiesLayer = () => {
         const id = currentFacility[UID];
         const name = currentFacility[NAME];
         const isSelectedFacility = selectedFacility && selectedFacility[UID] === id;
-
         if (isSelectedFacility) {
           currentFacility = selectedFacility;
         }

@@ -118,10 +118,10 @@ const FacilitiesLayer = ({ position, setPosition }) => {
     }
   }, [selectedFacility[UID]]);
 
-  const { editSelectedFacility } = actions;
   return (
     position && (
       <Marker
+        ref={markerRef}
         eventHandlers={{
           dragend() {
             const marker = markerRef.current;

@@ -205,7 +205,6 @@ const FacilityProfileDialog = () => {
   useEffect(() => {
     const path = currentFacility[PATH] ? currentFacility[PATH] : selectedFacility.previousValues[PATH];
     const currentHelpers = [];
-    console.log(path);
     if (currentFacility.latitude && currentFacility.longitude && path) {
       const isInside = isInsideParent(path, currentFacility.latitude, currentFacility.longitude);
       if (!isInside) {
