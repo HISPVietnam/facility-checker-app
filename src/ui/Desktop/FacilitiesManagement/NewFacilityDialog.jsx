@@ -13,7 +13,7 @@ import FacilityCoordinatesPickerMap from "./FacilityCoordinatesPickerMap";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
-import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, convertTeis, pickTranslation } from "@/utils";
+import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, convertTeis, pickTranslation, isInsideParent } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, MANDATORY_FIELDS, TRACKED_ENTITY_TYPE, PROGRAM_ID, TRACKED_ENTITY_ATTRIBUTES } from "@/const";
 import { postEvent, postTei, getTeiById, findFacilityByCode } from "@/api/data";
@@ -256,12 +256,28 @@ const NewFacilityDialog = () => {
         });
         valid = false;
       }
+
+      const path = selectedFacility[PATH];
+      if (selectedFacility.latitude && selectedFacility.longitude && path) {
+        const isInside = isInsideParent(path, selectedFacility.latitude, selectedFacility.longitude);
+        if (!isInside) {
+          currentHelpers.push({
+            target: "coordinates",
+            type: "ERROR",
+            value: t("mustBeInsideParentBoundaries")
+          });
+          valid = false;
+        }
+      }
     }
 
     setValid(valid);
     setOrgUnit(orgUnit);
     setHelpers([...currentHelpers]);
   }, [selectedFacility ? Object.values(selectedFacility).join(";") : ""]);
+
+  const foundCoordinatesError = helpers.find((h) => h.target === "coordinates" && h.type === "ERROR");
+
   return (
     selectedFacility && (
       <Modal fluid>
@@ -351,26 +367,31 @@ const NewFacilityDialog = () => {
               })()}
               <Row className="mt-auto">
                 <span>{t("coordinates")}</span>
-                <div className="flex w-full">
-                  <CustomizedInputField
-                    valueType="COORDINATES"
-                    disabled={loading}
-                    value={[selectedFacility.longitude, selectedFacility.latitude]}
-                    onChange={(value) => {
-                      changeCoordinates(value);
-                    }}
-                  />
-                  <div className="h-full mt-auto ml-1">
-                    <CustomizedButton
-                      icon={<FontAwesomeIcon icon={faMap} />}
-                      className="!h-[40px]"
-                      onClick={() => {
-                        setFacilityCoordinatesPicker(true);
+                <div className="w-full">
+                  <div className="flex w-full">
+                    <CustomizedInputField
+                      valueType="COORDINATES"
+                      disabled={loading}
+                      value={[selectedFacility.longitude, selectedFacility.latitude]}
+                      onChange={(value) => {
+                        changeCoordinates(value);
                       }}
-                    >
-                      {t("map")}
-                    </CustomizedButton>
+                      error={foundCoordinatesError ? true : false}
+                      helpers={[foundCoordinatesError]}
+                    />
+                    <div className="h-full mt-auto ml-1">
+                      <CustomizedButton
+                        icon={<FontAwesomeIcon icon={faMap} />}
+                        className="!h-[40px]"
+                        onClick={() => {
+                          setFacilityCoordinatesPicker(true);
+                        }}
+                      >
+                        {t("map")}
+                      </CustomizedButton>
+                    </div>
                   </div>
+                  {foundCoordinatesError && <Helper type="ERROR" value={foundCoordinatesError.value} />}
                 </div>
               </Row>
               {program.programStages[0].programStageDataElements
