@@ -77,7 +77,7 @@ export default {
   dragTheMarker: "Click on the map or drag the marker to change the location, the location must be inside facility parent",
   apply: "Apply",
   outsideBoundaryHelper: "Warning: you are moving the facility to be outside the boundary",
-  newFacility: "New facility",
+  newFacility: "Tạo mới",
   value: "Value",
   selectPathFirst: "Please select facility parent before choosing the location",
   newFacilityName: "<New facility name>",

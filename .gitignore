@@ -25,4 +25,6 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
-``
+
+# Production
+version.json
