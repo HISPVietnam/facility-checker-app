@@ -11,7 +11,7 @@ import DataValueText from "./DataValueText";
 
 const CustomizedInputField = (props) => {
   const { t } = useTranslation();
-  const { value, displayValue, valueType, options, multiSelection, onChange, disabled, filter, error, validationText } = props;
+  const { value, displayValue, valueType, options, multiSelection, onChange, disabled, filter, error, validationText, roots } = props;
   if (options && multiSelection) {
     return (
       <MultiSelect
@@ -122,6 +122,8 @@ const CustomizedInputField = (props) => {
         );
         const [open, setOpen] = useState(false);
         const foundOu = orgUnits.find((ou) => ou.path === value);
+        const roots = orgUnits.filter((orgUnit) => orgUnit.level === 1).map((orgUnit) => orgUnit.id);
+
         return (
           <div>
             <div ref={divRef}>
@@ -154,7 +156,7 @@ const CustomizedInputField = (props) => {
                       }
                     }}
                     selected={value ? [value] : []}
-                    roots={me.organisationUnits.map((ou) => ou.id)}
+                    roots={roots ? roots : me.organisationUnits.map((orgUnit) => orgUnit.id)}
                   />
                 </div>
               </Popover>

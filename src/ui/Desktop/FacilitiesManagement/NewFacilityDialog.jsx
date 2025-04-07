@@ -55,16 +55,13 @@ const NewFacilityDialog = () => {
     }))
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] = useState(false);
-  const { program, me } = useMetadataStore(
+
+  const { program, orgUnits, locale, me } = useMetadataStore(
     useShallow((state) => ({
-      me: state.me,
-      program: state.program
-    }))
-  );
-  const { orgUnits, locale } = useMetadataStore(
-    useShallow((state) => ({
+      program: state.program,
       orgUnits: state.orgUnits,
-      locale: state.locale
+      locale: state.locale,
+      me: state.me
     }))
   );
   const { selectedFacility, facilityCheckModuleActions } = useFacilityCheckModuleStore(
@@ -305,15 +302,33 @@ const NewFacilityDialog = () => {
                 const tempValue = selectedFacility[NAME] ? selectedFacility[NAME] : t("newFacilityName");
                 const filter = orgUnits
                   .filter((orgUnit) => {
+                    let valid = false;
+                    me.organisationUnits.forEach((meOrgUnit) => {
+                      if (orgUnit.path.includes(meOrgUnit.id)) {
+                        valid = true;
+                      }
+                    });
+                    if (orgUnit.level === 1) {
+                      valid = true;
+                    }
+                    return valid;
+                  })
+                  .filter((orgUnit) => {
                     const foundInFacilities = facilities.find((f) => f[PATH] === orgUnit.path);
-                    return !foundInFacilities;
+                    if (!foundInFacilities) {
+                      return true;
+                    } else {
+                      return false;
+                    }
                   })
                   .map((orgUnit) => orgUnit.path);
+
                 return (
                   <Row>
                     <DataValueLabel dataElement={PATH} mandatory={true} />
                     <div>
                       <InputField
+                        roots={orgUnits.filter((orgUnit) => orgUnit.level === 1).map((orgUnit) => orgUnit.id)}
                         filter={filter}
                         displayValue={convertDisplayValueForPath(value, tempValue)}
                         valueType="ORGANISATION_UNIT"

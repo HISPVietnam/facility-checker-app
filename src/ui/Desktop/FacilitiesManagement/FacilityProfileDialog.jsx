@@ -58,13 +58,13 @@ const FacilityProfileDialog = () => {
     }))
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] = useState(false);
-  const { program, me } = useMetadataStore(
+  const { program, me, orgUnits } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
-      program: state.program
+      program: state.program,
+      orgUnits: state.orgUnits
     }))
   );
-  const orgUnits = useMetadataStore((state) => state.orgUnits);
   const [currentFacility, setCurrentFacility] = useState({});
   const { selectedFacility, facilityCheckModuleActions } = useFacilityCheckModuleStore(
     useShallow((state) => ({
@@ -311,6 +311,18 @@ const FacilityProfileDialog = () => {
                 const value = currentValue ? selectedFacility.previousValues[de.id] : selectedFacility[de.id];
                 if (de.id === PATH) {
                   const filter = orgUnits
+                    .filter((orgUnit) => {
+                      let valid = false;
+                      me.organisationUnits.forEach((meOrgUnit) => {
+                        if (orgUnit.path.includes(meOrgUnit.id)) {
+                          valid = true;
+                        }
+                      });
+                      if (orgUnit.level === 1) {
+                        valid = true;
+                      }
+                      return valid;
+                    })
                     .filter((orgUnit) => {
                       const foundInFacilities = facilities.find((f) => f[PATH] === orgUnit.path);
                       return !foundInFacilities;
