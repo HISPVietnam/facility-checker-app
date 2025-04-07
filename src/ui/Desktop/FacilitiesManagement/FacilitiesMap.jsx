@@ -578,13 +578,13 @@ const FacilityMap = () => {
           className="rounded-lg"
           // zoomSnap={0.25}
           // zoomDelta={1}
-          // key={[
-          //   // boundaryLayer,
-          //   // facilityLayer,
-          //   // baseLayer,
-          //   baseLayerType
-          //   //  selectedFacility ? selectedFacility.id : ""
-          // ].join(";")}
+          key={[
+            // boundaryLayer,
+            // facilityLayer,
+            // baseLayer,
+            baseLayerType
+            //  selectedFacility ? selectedFacility.id : ""
+          ].join(";")}
         >
           <MapControl />
           <TileLayer {...BASE_LAYER_TYPES[baseLayerType]} />
