@@ -11,7 +11,11 @@ const config = {
     [
       "@semantic-release/release-notes-generator",
       {
-        issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}"
+        preset: "angular",
+        presetConfig: {
+          issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}",
+          issuePrefixes: ["OP-"]
+        }
       }
     ],
     "@semantic-release/changelog",
