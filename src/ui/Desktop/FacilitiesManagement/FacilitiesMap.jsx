@@ -345,7 +345,7 @@ const BoundaryLayer = () => {
           layer.setStyle({
             weight: 1,
             opacity: mapControl.boundaryLayer ? 1 : 0,
-            fillOpacity: mapControl.boundaryLayer ? 0.1 : 0,
+            fillOpacity: mapControl.boundaryLayer ? 0.01 : 0,
             color: mapControl.baseLayerType === "satellite" ? "#ffffff" : "#000000"
           });
         }

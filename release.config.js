@@ -8,7 +8,12 @@ const config = {
         releaseRules: [{ subject: "/skip-release/", release: false }]
       }
     ],
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}"
+      }
+    ],
     "@semantic-release/changelog",
     [
       "@semantic-release/exec",
