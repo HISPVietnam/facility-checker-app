@@ -1,3 +1,18 @@
+# [1.2.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.1.0...v1.2.0) (2025-04-07)
+
+
+### Bug Fixes
+
+* boundaries are not highlighted in normal map mode [#9242](https://github.com/HISPVietnam/facility-checker-app/issues/9242) ([e7c103f](https://github.com/HISPVietnam/facility-checker-app/commit/e7c103fce7fde25aa4bb7c8f0e65dc06f13fc5cd))
+* dHIS2 path is not shown when the user is province user [#9238](https://github.com/HISPVietnam/facility-checker-app/issues/9238) ([13ef60e](https://github.com/HISPVietnam/facility-checker-app/commit/13ef60ee58387c35d099fa2e184706776b3643b0))
+* updated data are not saved to TEI in state in edit mode [#9235](https://github.com/HISPVietnam/facility-checker-app/issues/9235) ([e4a97d1](https://github.com/HISPVietnam/facility-checker-app/commit/e4a97d172a3bcf60809346d033150d0c09c08e47))
+
+
+### Features
+
+* add validations for coordinates, only allow the location inside facility parent [#9250](https://github.com/HISPVietnam/facility-checker-app/issues/9250) ([d975451](https://github.com/HISPVietnam/facility-checker-app/commit/d9754519c44b1517a43069ed475b02c6332544c7))
+* add version info to app front page ([e13c7b4](https://github.com/HISPVietnam/facility-checker-app/commit/e13c7b4f8dec197033559c9dc00a09609e5763cd))
+
 # [1.1.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.0.0...v1.1.0) (2025-03-31)
 
 
