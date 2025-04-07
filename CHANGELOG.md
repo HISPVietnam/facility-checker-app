@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.2.0...v1.3.0) (2025-04-07)
+
+
+### Features
+
+* change semantic release changelog issue url to be linked to hispvn openproject [#9317](https://github.com/HISPVietnam/facility-checker-app/issues/9317) ([63c1143](https://github.com/HISPVietnam/facility-checker-app/commit/63c1143f7369353df895fb4bccbf3a725c97984a))
+
 # [1.2.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.1.0...v1.2.0) (2025-04-07)
 
 
