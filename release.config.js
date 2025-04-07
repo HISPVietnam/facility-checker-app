@@ -4,17 +4,17 @@ const config = {
     [
       "@semantic-release/commit-analyzer",
       {
-        preset: "angular",
+        preset: "conventionalcommits",
         releaseRules: [{ subject: "/skip-release/", release: false }]
       }
     ],
     [
       "@semantic-release/release-notes-generator",
       {
-        preset: "angular",
+        preset: "conventionalcommits",
         presetConfig: {
-          issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}",
-          issuePrefixes: ["#"]
+          issuePrefixes: ["#"],
+          issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}"
         }
       }
     ],
