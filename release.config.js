@@ -14,7 +14,7 @@ const config = {
         preset: "angular",
         presetConfig: {
           issueUrlFormat: "https://projects.hispvietnam.org/work_packages/{{id}}",
-          issuePrefixes: ["OP-"]
+          issuePrefixes: ["#"]
         }
       }
     ],
