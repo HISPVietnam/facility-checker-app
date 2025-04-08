@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const Home = () => {
   const { t } = useTranslation();
   return (
-    <div className="p-20 w-full h-full">
+    <div className="p-5 w-full h-full">
       <Card className="p-10 w-full h-full !flex !items-center flex-col">
         <div>
           <img className="w-[80px]" src={appIcon}></img>
@@ -25,7 +25,7 @@ const Home = () => {
         <div className="w-full mt-auto flex items-center">
           Developed by <img className="h-[60px]" src={hispvnLogo} />
         </div>
-        <div className="w-full text-sm flex flex-col items-start">
+        <div className="w-full text-[12px] flex flex-col items-start text-slate-400">
           <div>
             {t("version")}: {version.version}
           </div>

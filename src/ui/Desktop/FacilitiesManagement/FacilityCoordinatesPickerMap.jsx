@@ -160,9 +160,9 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates }) => {
     <Modal fluid hide={!open}>
       <ModalTitle>{t("chooseLocation")}</ModalTitle>
       <ModalContent>
-        <div className="h-[1000px] w-[1000px]">
-          <div className="w-full h-[80px]">
-            {["z6u0MJRMxOw", "jDSCfb245G5", "WvwRmFG7udm"].map((de) => {
+        <div className="h-[500px] w-[1000px]">
+          <div className="w-full h-[30px] flex">
+            {["z6u0MJRMxOw", "jDSCfb245G5", "WvwRmFG7udm"].map((de, index) => {
               const value = selectedFacility[de];
               return (
                 <div>
@@ -181,16 +181,17 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates }) => {
                   ) : (
                     <DataValueText dataElement={de} value={value} />
                   )}
+                  {index !== 2 && <span className="mx-2">|</span>}
                 </div>
               );
             })}
           </div>
           {!isPending && (
-            <div className="w-full h-[60px]">
+            <div className="w-full h-[50px]">
               <NoticeBox warning title={t("dragTheMarker")} />
             </div>
           )}
-          <div className="w-full h-[calc(100%-140px)]">
+          <div className="pt-1 w-full h-[calc(100%-80px)]">
             <MapContainer
               key={selectedFacility ? selectedFacility[UID] : ""}
               minZoom={6}
