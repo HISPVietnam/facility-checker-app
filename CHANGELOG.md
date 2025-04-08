@@ -1,3 +1,13 @@
+## [1.4.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.3...v1.4.0) (2025-04-08)
+
+### Features
+
+* apply coordinates validation for new facility dialog [#9250](https://projects.hispvietnam.org/work_packages/9250) ([4a1eae0](https://github.com/HISPVietnam/facility-checker-app/commit/4a1eae09c52b77278f80bb6d12790a12106c96c7))
+
+### Bug Fixes
+
+* the height of coordinates picker map is too big, it does not fit the small screens ([ed0344f](https://github.com/HISPVietnam/facility-checker-app/commit/ed0344f229f2cfc872032c77809e8b4fd4b37674))
+
 ## [1.3.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.2...v1.3.3) (2025-04-07)
 
 ### Bug Fixes
