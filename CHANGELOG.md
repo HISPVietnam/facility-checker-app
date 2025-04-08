@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.0...v1.4.1) (2025-04-08)
+
+### Bug Fixes
+
+* move DHIS2 path to be above coordinates in facility profile dialog ([9812f9f](https://github.com/HISPVietnam/facility-checker-app/commit/9812f9fcb4bdad163d5090dc0fc5aacfca8b930a))
+* parent boundary  is not updated when facility path is changed in facility profile dialog ([2c34ff6](https://github.com/HISPVietnam/facility-checker-app/commit/2c34ff6a324de26f171bef2614c7e1c8676912ea))
+
 ## [1.4.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.3.3...v1.4.0) (2025-04-08)
 
 ### Features
