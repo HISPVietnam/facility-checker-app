@@ -12,7 +12,7 @@ import { BASE_LAYER_TYPES, DATA_ELEMENTS } from "@/const";
 import _ from "lodash";
 const { PATH, UID } = DATA_ELEMENTS;
 
-const BoundaryLayer = ({ mapOpen }) => {
+const BoundaryLayer = ({ mapOpen, path }) => {
   const ref = useRef();
   const map = useMap();
   const { selectedFacility } = useFacilityCheckModuleStore(useShallow((state) => ({ selectedFacility: state.selectedFacility })));
@@ -23,7 +23,7 @@ const BoundaryLayer = ({ mapOpen }) => {
     }))
   );
   useEffect(() => {
-    const path = selectedFacility[PATH];
+    // const path = selectedFacility[PATH];
     if (!path) return;
     const currentOrgUnits = _.compact(path.split("/"));
     const self = currentOrgUnits.pop();
@@ -48,7 +48,7 @@ const BoundaryLayer = ({ mapOpen }) => {
       lastUpdated: new Date().toISOString(),
       features: finalFeatures
     });
-  }, [selectedFacility[UID], selectedFacility[PATH]]);
+  }, [selectedFacility[UID], path]);
 
   useEffect(() => {
     if (mapOpen) {
@@ -138,7 +138,7 @@ const FacilitiesLayer = ({ position, setPosition }) => {
   );
 };
 
-const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates }) => {
+const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates, path }) => {
   const { t } = useTranslation();
   const [position, setPosition] = useState(null);
 
@@ -206,7 +206,7 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates }) => {
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png"
               />
               <FacilitiesLayer position={position} setPosition={setPosition} changeCoordinates={changeCoordinates} />
-              <BoundaryLayer mapOpen={open} />
+              <BoundaryLayer mapOpen={open} path={path} />
             </MapContainer>
           </div>
         </div>

@@ -431,6 +431,7 @@ const NewFacilityDialog = () => {
             open={facilityCoordinatesPicker}
             setOpen={setFacilityCoordinatesPicker}
             changeCoordinates={changeCoordinates}
+            path={selectedFacility[PATH]}
           />
         </ModalContent>
         <ModalActions>

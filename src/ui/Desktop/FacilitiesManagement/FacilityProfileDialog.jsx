@@ -367,7 +367,12 @@ const FacilityProfileDialog = () => {
               })}
           </div>
         </div>
-        <FacilityCoordinatesPickerMap open={facilityCoordinatesPicker} setOpen={setFacilityCoordinatesPicker} changeCoordinates={changeCoordinates} />
+        <FacilityCoordinatesPickerMap
+          open={facilityCoordinatesPicker}
+          setOpen={setFacilityCoordinatesPicker}
+          changeCoordinates={changeCoordinates}
+          path={currentFacility[PATH] ? currentFacility[PATH] : selectedFacility.previousValues[PATH]}
+        />
       </ModalContent>
       <ModalActions>
         <div className="flex items-center">
