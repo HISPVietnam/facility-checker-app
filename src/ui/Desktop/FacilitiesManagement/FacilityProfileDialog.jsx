@@ -38,7 +38,7 @@ const Closed = ({ children }) => {
 };
 
 const Open = ({ children }) => {
-  return <span className="text-[14px] p-1 rounded-md bg-blue-200 ">{children}</span>;
+  return <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">{children}</span>;
 };
 
 const New = ({ children }) => {
@@ -265,6 +265,48 @@ const FacilityProfileDialog = () => {
             <div className="w-[450px] ml-2">{isPending ? t("previousValue") : t("currentValue")}</div>
           </div>
           <div className="h-[calc(100%-115px)] overflow-auto">
+            {(() => {
+              const de = PATH;
+              const currentValue = currentFacility[de];
+              const value = currentValue ? selectedFacility.previousValues[de] : selectedFacility[de];
+              const filter = orgUnits
+                .filter((orgUnit) => {
+                  let valid = false;
+                  me.organisationUnits.forEach((meOrgUnit) => {
+                    if (orgUnit.path.includes(meOrgUnit.id)) {
+                      valid = true;
+                    }
+                  });
+                  if (orgUnit.level === 1) {
+                    valid = true;
+                  }
+                  return valid;
+                })
+                .filter((orgUnit) => {
+                  const foundInFacilities = facilities.find((f) => f[PATH] === orgUnit.path);
+                  return !foundInFacilities;
+                })
+                .map((orgUnit) => orgUnit.path);
+              return (
+                <Row>
+                  <DataValueLabel dataElement={de} />
+                  <div>
+                    <InputField
+                      disabled={isPending || loading}
+                      filter={filter}
+                      displayValue={convertDisplayValueForPath(currentValue)}
+                      valueType="ORGANISATION_UNIT"
+                      value={currentValue}
+                      onChange={(orgUnit) => {
+                        changeValue(de, orgUnit.path + "/" + selectedFacility[UID]);
+                      }}
+                    />
+                    {currentValue && currentValue !== value && value !== "" && <Helper type="WARNING" value={t("outsideBoundaryHelper")} />}
+                  </div>
+                  {value ? <DataValueText dataElement={de} value={value} /> : <span>&nbsp;</span>}
+                </Row>
+              );
+            })()}
             <Row className="mt-auto">
               <span>{t("coordinates")}</span>
               <div className="w-full">
@@ -302,66 +344,26 @@ const FacilityProfileDialog = () => {
             </Row>
             {program.programStages[0].programStageDataElements
               .filter((psde) => {
-                return !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id);
+                return !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) && psde.dataElement.id !== PATH;
               })
               .map((psde) => {
                 const de = psde.dataElement;
                 const currentValue = currentFacility[de.id];
                 const value = currentValue ? selectedFacility.previousValues[de.id] : selectedFacility[de.id];
-                if (de.id === PATH) {
-                  const filter = orgUnits
-                    .filter((orgUnit) => {
-                      let valid = false;
-                      me.organisationUnits.forEach((meOrgUnit) => {
-                        if (orgUnit.path.includes(meOrgUnit.id)) {
-                          valid = true;
-                        }
-                      });
-                      if (orgUnit.level === 1) {
-                        valid = true;
-                      }
-                      return valid;
-                    })
-                    .filter((orgUnit) => {
-                      const foundInFacilities = facilities.find((f) => f[PATH] === orgUnit.path);
-                      return !foundInFacilities;
-                    })
-                    .map((orgUnit) => orgUnit.path);
-                  return (
-                    <Row>
-                      <DataValueLabel dataElement={de.id} />
-                      <div>
-                        <InputField
-                          disabled={isPending || loading}
-                          filter={filter}
-                          displayValue={convertDisplayValueForPath(currentValue)}
-                          valueType="ORGANISATION_UNIT"
-                          value={currentValue}
-                          onChange={(orgUnit) => {
-                            changeValue(de.id, orgUnit.path + "/" + selectedFacility[UID]);
-                          }}
-                        />
-                        {currentValue && currentValue !== value && value !== "" && <Helper type="WARNING" value={t("outsideBoundaryHelper")} />}
-                      </div>
-                      {value ? <DataValueText dataElement={de.id} value={value} /> : <span>&nbsp;</span>}
-                    </Row>
-                  );
-                } else {
-                  return (
-                    <Row>
-                      <DataValueLabel dataElement={de.id} />
-                      <DataValueField
-                        dataElement={de.id}
-                        disabled={isPending || loading}
-                        value={currentFacility[de.id]}
-                        onChange={(value) => {
-                          changeValue(de.id, value);
-                        }}
-                      />
-                      {value ? <DataValueText dataElement={de.id} value={value} /> : <span>&nbsp;</span>}
-                    </Row>
-                  );
-                }
+                return (
+                  <Row>
+                    <DataValueLabel dataElement={de.id} />
+                    <DataValueField
+                      dataElement={de.id}
+                      disabled={isPending || loading}
+                      value={currentFacility[de.id]}
+                      onChange={(value) => {
+                        changeValue(de.id, value);
+                      }}
+                    />
+                    {value ? <DataValueText dataElement={de.id} value={value} /> : <span>&nbsp;</span>}
+                  </Row>
+                );
               })}
           </div>
         </div>
