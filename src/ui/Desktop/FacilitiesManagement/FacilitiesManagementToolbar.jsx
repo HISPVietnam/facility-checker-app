@@ -140,9 +140,9 @@ const FacilitiesManagementToolbar = () => {
                 return (
                   <FilterSubSection title={t(type)}>
                     {filters.map((f) => {
-                      const { id, label } = f;
+                      const { id, label, tooltip } = f;
                       return (
-                        <Tooltip content={t(id + "Tooltip")} placement="left">
+                        <Tooltip content={tooltip ? tooltip : t(id + "Tooltip")} placement="left">
                           <div>
                             <Checkbox
                               checked={currentFilters.includes(id)}

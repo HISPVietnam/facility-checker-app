@@ -140,6 +140,7 @@ const FacilitiesManagement = () => {
               return {
                 id: de.id,
                 label: t("notInGroup", { group: de.formName }),
+                tooltip: t("notInGroupTooltip", { group: de.formName }),
                 function: (facility) => {
                   return isNotInGroup(facility, de);
                 }
