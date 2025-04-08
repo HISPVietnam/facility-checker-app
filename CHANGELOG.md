@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.1...v1.4.2) (2025-04-08)
+
+### Bug Fixes
+
+* wrong tooltip in facility filter ([af22763](https://github.com/HISPVietnam/facility-checker-app/commit/af2276363e0a1fb9227bce921d8c3ab552f0458f))
+
 ## [1.4.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.0...v1.4.1) (2025-04-08)
 
 ### Bug Fixes
