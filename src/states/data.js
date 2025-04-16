@@ -6,7 +6,7 @@ import useFacilityCheckModuleStore from "./facilityCheckModule";
 import _ from "lodash";
 import { format } from "date-fns";
 import { generateUid } from "@/utils";
-const { UID, APPROVAL_STATUS, PATH, ACTIVE_STATUS, IS_NEW_FACILITY } = DATA_ELEMENTS;
+const { UID, APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, PATH, ACTIVE_STATUS, IS_NEW_FACILITY } = DATA_ELEMENTS;
 
 const useDataStore = create((set) => ({
   teis: [],
@@ -125,6 +125,24 @@ const useDataStore = create((set) => ({
             const newSelectedFacility = _.cloneDeep(state.facilities[foundFacilityIndex]);
             newSelectedFacility.lastUpdated = new Date().toISOString();
             selectFacility(newSelectedFacility);
+          }
+        })
+      ),
+    approve: (facility) =>
+      set(
+        produce((state) => {
+          const me = useMetadataStore.getState().me;
+          const { username } = me;
+          const now = format(new Date(), "yyyy-MM-dd");
+          const foundFacilityIndex = state.facilities.findIndex((f) => f[UID] === facility[UID]);
+          if (foundFacilityIndex !== -1) {
+            const foundPendingEventIndex = state.facilities[foundFacilityIndex].events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][APPROVAL_STATUS] = "approved";
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][APPROVED_BY] = username;
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][APPROVED_AT] = now;
+            state.facilities[foundFacilityIndex][APPROVAL_STATUS] = "approved";
+            state.facilities[foundFacilityIndex][APPROVED_BY] = username;
+            state.facilities[foundFacilityIndex][APPROVED_AT] = now;
           }
         })
       )

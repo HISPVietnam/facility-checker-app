@@ -9,6 +9,7 @@ import {
   DataTableColumnHeader,
   Pagination
 } from "@dhis2/ui";
+import { Pending, Edited, New } from "@/ui/common/Labels";
 import DataValueText from "@/ui/common/DataValueText";
 import useMetadataStore from "@/states/metadata";
 import { useShallow } from "zustand/react/shallow";
@@ -116,18 +117,6 @@ const FacilitiesList = () => {
       }
     }
     setSorting({ name: columnId, direction });
-  };
-
-  const Pending = ({ children }) => {
-    return <span className="text-[14px] text-white p-1 rounded-md bg-orange-500">{children}</span>;
-  };
-
-  const Edited = ({ children }) => {
-    return <span className="text-[14px] text-white p-1 rounded-md bg-blue-500 ">{children}</span>;
-  };
-
-  const New = ({ children }) => {
-    return <span className="text-[14px] text-white p-1 rounded-md bg-green-700 ">{children}</span>;
   };
 
   const generateFacilityList = () => {

@@ -53,7 +53,7 @@ const App = () => {
                     <Route path="/home" element={<div />} />
                     <Route path="/" element={<div />} />
                     <Route path="/facility-check" element={<FacilitiesManagementToolbar />} />
-                    <Route path="/approval" element={<ApprovalToolbar />} />
+                    <Route path="/approval-and-sync" element={<ApprovalToolbar />} />
                   </Routes>
                 </div>
               </div>
@@ -62,7 +62,7 @@ const App = () => {
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Home />} />
                   <Route path="/facility-check" element={<FacilitiesManagement />} />
-                  <Route path="/approval" element={<Approval />} />
+                  <Route path="/approval-and-sync" element={<Approval />} />
                 </Routes>
               </div>
             </div>

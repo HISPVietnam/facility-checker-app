@@ -1,7 +1,7 @@
 export default {
   home: "Home",
   "facility-check": "Facility check",
-  approval: "Approval",
+  "approval-and-sync": "Approval & Sync",
   configuration: "Configuration",
   searchFacility: "Search facility",
   id: "ID",
@@ -95,5 +95,7 @@ export default {
   mustBeInsideParentBoundaries: "Facility location must be inside it's parent",
   version: "Version",
   buildDate: "Build date",
-  buildRevision: "Build revision"
+  buildRevision: "Build revision",
+  notYetSynced: "Not yet synced",
+  approved: "Approved"
 };
