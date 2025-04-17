@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
 import { useShallow } from "zustand/react/shallow";
-import FacilityHierarchy from "./FacilitiesHierarchy";
+import FacilityHierarchy from "@/ui/common/FacilitiesHierarchy";
 import NewFacilityDialog from "./NewFacilityDialog";
 import useDataStore from "@/states/data";
 
@@ -33,9 +33,10 @@ const FacilitiesManagementToolbar = () => {
   const { t } = useTranslation();
   const dataActions = useDataStore((state) => state.actions);
   const { initNewFacility } = dataActions;
-  const { selectedFacility, view, allFilters, currentFilters, editing, actions } = useFacilityCheckModuleStore(
+  const { selectedFacility, selectedOrgUnit, view, allFilters, currentFilters, editing, actions } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
+      selectedOrgUnit: state.selectedOrgUnit,
       allFilters: state.allFilters,
       currentFilters: state.filters,
       actions: state.actions,
@@ -132,7 +133,7 @@ const FacilitiesManagementToolbar = () => {
         >
           <div className="flex p-2">
             <FilterSection title={t("hierarchy")}>
-              <FacilityHierarchy />
+              <FacilityHierarchy selectedOrgUnit={selectedOrgUnit} selectOrgUnit={selectOrgUnit} />
             </FilterSection>
             <FilterSection title={t("filterForFacility")}>
               {allFilters.map((filter) => {

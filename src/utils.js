@@ -5,6 +5,7 @@ import { point, polygon, multiPolygon, booleanPointInPolygon, featureCollection,
 import _ from "lodash";
 const { APPROVAL_STATUS, PATH, UID, NAME } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
+
 const pickTranslation = (object, language, field) => {
   const fieldMapping = {
     formName: "FORM_NAME",
