@@ -67,7 +67,9 @@ const getLatestValues = (events, program, includeActiveEvents = true) => {
   const latestValues = {};
   let tempEvents = events;
   if (!includeActiveEvents) {
-    tempEvents = events.filter((event) => event.status !== "ACTIVE").filter((event) => event[APPROVAL_STATUS] !== "pending");
+    tempEvents = events
+      .filter((event) => event.status !== "ACTIVE")
+      .filter((event) => event[APPROVAL_STATUS] !== "pending" && event[APPROVAL_STATUS] !== "approved");
   }
   program.dataElements.forEach((de) => {
     const foundEvent = tempEvents.find((event) => {

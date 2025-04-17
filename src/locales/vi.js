@@ -30,7 +30,6 @@ export default {
   viewProfile: "View profile",
   editLocation: "Edit location",
   facilityProfile: "Facility profile",
-  noValue: "No value",
   field: "Field",
   newValue: "New value",
   currentValue: "Current value",

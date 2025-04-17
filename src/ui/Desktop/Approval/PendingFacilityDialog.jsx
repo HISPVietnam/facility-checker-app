@@ -75,7 +75,6 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     const result = await postEvent(convertedEvent);
     setLoading(false);
   };
-
   return (
     selectedFacility && (
       <Modal fluid hide={!open}>
