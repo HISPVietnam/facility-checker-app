@@ -6,7 +6,7 @@ const useMetadataStore = create((set) => ({
   orgUnitGroups: null,
   orgUnitGroupSets: null,
   orgUnitGeoJson: null,
-  facilities: [],
+  customAttributes: null,
   locale: "en",
   actions: {
     setMetadata: (type, values) =>

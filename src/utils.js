@@ -163,6 +163,18 @@ const findDataValue = (event, dataElement) => {
   return foundDataValue ? foundDataValue.value : "";
 };
 
+const findCustomAttributeValue = (attributeValues, attribute) => {
+  if (!attributeValues) {
+    return "";
+  }
+  const array = JSON.parse(attributeValues);
+  if (array.length === 0) {
+    return "";
+  }
+  const found = array.find((attr) => attr.attribute.id === attribute);
+  return found ? found.value : "";
+};
+
 const convertDisplayValue = (program, field, value) => {
   let foundField = null;
   let optionSet = null;
@@ -339,6 +351,7 @@ const isNotSentForApproval = (facility) => {
   }
   return passed;
 };
+
 const isWaitingForApproval = (facility) => {
   let passed = false;
   const foundPendingEvent = facility.events.find((event) => event.status === "COMPLETED" && event[APPROVAL_STATUS] === "pending");
@@ -355,6 +368,7 @@ export {
   convertTeis,
   findAttributeValue,
   findDataValue,
+  findCustomAttributeValue,
   convertDisplayValue,
   getLatestValues,
   generateUid,

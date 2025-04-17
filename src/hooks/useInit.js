@@ -1,4 +1,13 @@
-import { getOrgUnits, getOrgUnitGroupSets, getOrgUnitGeoJson, getOrgUnitLevels, getMe, getProgram, getOrgUnitGroups } from "@/api/metadata";
+import {
+  getOrgUnits,
+  getOrgUnitGroupSets,
+  getOrgUnitGeoJson,
+  getOrgUnitLevels,
+  getMe,
+  getProgram,
+  getOrgUnitGroups,
+  getCustomAttributes
+} from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
 import useMetadataStore from "@/states/metadata";
@@ -21,6 +30,7 @@ const useInit = () => {
       const orgUnitGeoJson = await getOrgUnitGeoJson();
       const orgUnitLevels = await getOrgUnitLevels();
       const program = await getProgram();
+      const customAttributes = await getCustomAttributes();
       const me = await getMe();
       const teis = await getFacilityTeis(me.organisationUnits[0].id);
       teis.forEach((tei) => {
@@ -38,6 +48,7 @@ const useInit = () => {
       const locale = me.settings.keyUiLocale;
       setMetadata("locale", locale);
       setMetadata("program", program);
+      setMetadata("customAttributes", customAttributes);
       i18n.changeLanguage(locale);
       const foundOugs = orgUnitGroupSets.find((ougs) => ougs.id === "J5jldMd8OHv");
       const foundOrgUnits = orgUnits

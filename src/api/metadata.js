@@ -43,4 +43,9 @@ const getProgram = async () => {
   return program;
 };
 
-export { getOrgUnits, getOrgUnitGeoJson, getOrgUnitGroupSets, getOrgUnitLevels, getMe, getProgram, getOrgUnitGroups };
+const getCustomAttributes = async () => {
+  const result = await pull("/api/attributes?paging=false&fields=organisationUnitAttribute,id,name,translations,valueType");
+  return result.attributes.filter((attr) => attr.organisationUnitAttribute === true);
+};
+
+export { getOrgUnits, getOrgUnitGeoJson, getOrgUnitGroupSets, getOrgUnitLevels, getMe, getProgram, getOrgUnitGroups, getCustomAttributes };

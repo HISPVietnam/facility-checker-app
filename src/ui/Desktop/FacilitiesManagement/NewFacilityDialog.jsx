@@ -8,12 +8,23 @@ import InputField from "@/ui/common/InputField";
 import { Tooltip } from "@mui/material";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
+import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
+import CustomAttributeField from "@/ui/common/CustomAttributeField";
 import DataValueText from "@/ui/common/DataValueText";
 import FacilityCoordinatesPickerMap from "./FacilityCoordinatesPickerMap";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
-import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, convertTeis, pickTranslation, isInsideParent } from "@/utils";
+import {
+  getLatestValues,
+  generateUid,
+  convertToDhis2Event,
+  convertDisplayValueForPath,
+  convertTeis,
+  pickTranslation,
+  isInsideParent,
+  findCustomAttributeValue
+} from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, MANDATORY_FIELDS, TRACKED_ENTITY_TYPE, PROGRAM_ID, TRACKED_ENTITY_ATTRIBUTES } from "@/const";
 import { postEvent, postTei, getTeiById, findFacilityByCode } from "@/api/data";
@@ -21,7 +32,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faMap } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import _ from "lodash";
-const { UID, APPROVAL_STATUS, PATH, NAME, ACTIVE_STATUS, SHORT_NAME, CODE } = DATA_ELEMENTS;
+const { UID, APPROVAL_STATUS, PATH, NAME, ACTIVE_STATUS, SHORT_NAME, CODE, ATTRIBUTE_VALUES } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 const Row = ({ children, className }) => {
   return (
@@ -56,12 +67,13 @@ const NewFacilityDialog = () => {
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] = useState(false);
 
-  const { program, orgUnits, locale, me } = useMetadataStore(
+  const { program, orgUnits, locale, me, customAttributes } = useMetadataStore(
     useShallow((state) => ({
       program: state.program,
       orgUnits: state.orgUnits,
       locale: state.locale,
-      me: state.me
+      me: state.me,
+      customAttributes: state.customAttributes
     }))
   );
   const { selectedFacility, facilityCheckModuleActions } = useFacilityCheckModuleStore(
@@ -76,6 +88,34 @@ const NewFacilityDialog = () => {
 
   const changeValue = (field, value) => {
     editSelectedFacility(field, value);
+  };
+
+  const changeAttributeValue = (attribute, value) => {
+    const currentAttributeValues = selectedFacility[ATTRIBUTE_VALUES];
+    let finalValue = [];
+
+    if (!currentAttributeValues && value) {
+      finalValue.push({
+        attribute: {
+          id: attribute
+        },
+        value: value
+      });
+    } else {
+      finalValue = JSON.parse(currentAttributeValues);
+      const foundIndex = finalValue.findIndex((v) => v.attribute.id === attribute);
+      if (foundIndex === -1) {
+        finalValue.push({
+          attribute: {
+            id: attribute
+          },
+          value: value
+        });
+      } else {
+        finalValue[foundIndex].value = value;
+      }
+    }
+    editSelectedFacility(ATTRIBUTE_VALUES, JSON.stringify(finalValue));
   };
 
   const changeCoordinates = (value) => {
@@ -142,6 +182,7 @@ const NewFacilityDialog = () => {
     toggleDialog("newFacilityDialog");
     toggleDialog("facilityProfileDialog");
   };
+
   const complete = async () => {
     await saveChanges();
     let newFacility = { ...selectedFacility };
@@ -277,7 +318,6 @@ const NewFacilityDialog = () => {
   }, [selectedFacility ? Object.values(selectedFacility).join(";") : ""]);
 
   const foundCoordinatesError = helpers.find((h) => h.target === "coordinates" && h.type === "ERROR");
-
   return (
     selectedFacility && (
       <Modal fluid>
@@ -425,6 +465,23 @@ const NewFacilityDialog = () => {
                     </Row>
                   );
                 })}
+              {customAttributes.map((customAttribute) => {
+                const { id } = customAttribute;
+                return (
+                  <Row>
+                    <CustomAttributeLabel attribute={id} />
+                    <div>
+                      <CustomAttributeField
+                        attribute={id}
+                        value={findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id)}
+                        onChange={(value) => {
+                          changeAttributeValue(id, value);
+                        }}
+                      />
+                    </div>
+                  </Row>
+                );
+              })}
             </div>
           </div>
           <FacilityCoordinatesPickerMap
