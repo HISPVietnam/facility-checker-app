@@ -1,10 +1,27 @@
 import { useEffect } from "react";
-import { ButtonStrip, CheckboxField, SingleSelectField, SingleSelectOption, TabBar, Tab, Chip, Checkbox, elevations, Tooltip } from "@dhis2/ui";
+import {
+  ButtonStrip,
+  CheckboxField,
+  SingleSelectField,
+  SingleSelectOption,
+  TabBar,
+  Tab,
+  Chip,
+  Checkbox,
+  elevations,
+  Tooltip,
+} from "@dhis2/ui";
 import { Popover } from "@mui/material";
 import CustomizedButton from "@/ui/common/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSitemap, faFilter, faList, faMap, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSitemap,
+  faFilter,
+  faList,
+  faMap,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
@@ -12,28 +29,22 @@ import { useShallow } from "zustand/react/shallow";
 import FacilityHierarchy from "@/ui/common/FacilitiesHierarchy";
 import NewFacilityDialog from "./NewFacilityDialog";
 import useDataStore from "@/states/data";
-
-const FilterSection = ({ children }) => {
-  return (
-    <div className={`ml-1 mr-1 p-1 rounded-md border border-slate-300 w-[300px] h-[450px]`}>
-      <div className="h-[calc(100%-30px)] overflow-auto">{children}</div>
-    </div>
-  );
-};
-const FilterSubSection = ({ title, children }) => {
-  return (
-    <div className="mb-1">
-      <div className="h-[30px] font-bold">{title}</div>
-      <div className="h-[calc(100%-30px)] overflow-auto">{children}</div>
-    </div>
-  );
-};
+import FilterSection from "@/ui/common/FilterSection";
+import FilterSubSection from "@/ui/common/FilterSubSection";
 
 const FacilitiesManagementToolbar = () => {
   const { t } = useTranslation();
   const dataActions = useDataStore((state) => state.actions);
   const { initNewFacility } = dataActions;
-  const { selectedFacility, selectedOrgUnit, view, allFilters, currentFilters, editing, actions } = useFacilityCheckModuleStore(
+  const {
+    selectedFacility,
+    selectedOrgUnit,
+    view,
+    allFilters,
+    currentFilters,
+    editing,
+    actions,
+  } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
       selectedOrgUnit: state.selectedOrgUnit,
@@ -41,7 +52,7 @@ const FacilitiesManagementToolbar = () => {
       currentFilters: state.filters,
       actions: state.actions,
       view: state.view,
-      editing: state.editing
+      editing: state.editing,
     }))
   );
   const { selectOrgUnit, setView, toggleFilter, toggleDialog } = actions;
@@ -50,7 +61,7 @@ const FacilitiesManagementToolbar = () => {
     useShallow((state) => ({
       me: state.me,
       orgUnits: state.orgUnits,
-      program: state.program
+      program: state.program,
     }))
   );
   const [filtersPopover, setFiltersPopover] = useState(false);
@@ -128,12 +139,15 @@ const FacilitiesManagementToolbar = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left"
+            horizontal: "left",
           }}
         >
           <div className="flex p-2">
             <FilterSection title={t("hierarchy")}>
-              <FacilityHierarchy selectedOrgUnit={selectedOrgUnit} selectOrgUnit={selectOrgUnit} />
+              <FacilityHierarchy
+                selectedOrgUnit={selectedOrgUnit}
+                selectOrgUnit={selectOrgUnit}
+              />
             </FilterSection>
             <FilterSection title={t("filterForFacility")}>
               {allFilters.map((filter) => {
@@ -143,7 +157,10 @@ const FacilitiesManagementToolbar = () => {
                     {filters.map((f) => {
                       const { id, label, tooltip } = f;
                       return (
-                        <Tooltip content={tooltip ? tooltip : t(id + "Tooltip")} placement="left">
+                        <Tooltip
+                          content={tooltip ? tooltip : t(id + "Tooltip")}
+                          placement="left"
+                        >
                           <div>
                             <Checkbox
                               checked={currentFilters.includes(id)}
