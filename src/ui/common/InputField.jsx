@@ -207,6 +207,8 @@ const CustomizedInputField = (props) => {
           </div>
         ];
       })();
+    case "GEOJSON":
+      return <div>asdasd</div>;
     case "TEXT":
     case "NUMBER":
     default:

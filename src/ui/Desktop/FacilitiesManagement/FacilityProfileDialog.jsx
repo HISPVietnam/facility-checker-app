@@ -9,11 +9,13 @@ import { Tooltip } from "@mui/material";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
+import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
+import CustomAttributeField from "@/ui/common/CustomAttributeField";
 import FacilityCoordinatesPickerMap from "./FacilityCoordinatesPickerMap";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
-import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, isInsideParent } from "@/utils";
+import { getLatestValues, generateUid, convertToDhis2Event, convertDisplayValueForPath, isInsideParent, findCustomAttributeValue } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, TRACKED_ENTITY_ATTRIBUTES } from "@/const";
 import { postEvent, postTei, findFacilityByCode } from "@/api/data";
@@ -21,14 +23,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose, faMap } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import _ from "lodash";
-const { UID, APPROVAL_STATUS, PATH, IS_NEW_FACILITY, CODE } = DATA_ELEMENTS;
+const { UID, APPROVAL_STATUS, PATH, IS_NEW_FACILITY, CODE, ATTRIBUTE_VALUES } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 const Row = ({ children, className }) => {
   return (
     <div className={`flex  py-1 border-b border-b-slate-200 ${className ? className : ""}`}>
       <div className="self-center w-[250px] text-[15px]">{children[0]}</div>
       <div className="self-start w-[450px]">{children[1]}</div>
-      <div className="self-start w-[450px] h-[40px] ml-2 mr-2 p-2 rounded-md bg-slate-100 text-[14px]">{children[2]}</div>
+      <div className="self-start flex items-center w-[450px] h-[40px] ml-2 mr-2 p-2 rounded-md bg-slate-100 text-[14px]">{children[2]}</div>
     </div>
   );
 };
@@ -58,11 +60,12 @@ const FacilityProfileDialog = () => {
     }))
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] = useState(false);
-  const { program, me, orgUnits } = useMetadataStore(
+  const { program, me, orgUnits, customAttributes } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       program: state.program,
-      orgUnits: state.orgUnits
+      orgUnits: state.orgUnits,
+      customAttributes: state.customAttributes
     }))
   );
   const [currentFacility, setCurrentFacility] = useState({});
@@ -81,6 +84,34 @@ const FacilityProfileDialog = () => {
     const cloned = _.cloneDeep(currentFacility);
     cloned[field] = value;
     setCurrentFacility({ ...cloned });
+  };
+
+  const changeAttributeValue = (attribute, value) => {
+    const currentAttributeValues = selectedFacility[ATTRIBUTE_VALUES];
+    let finalValue = [];
+
+    if (!currentAttributeValues && value) {
+      finalValue.push({
+        attribute: {
+          id: attribute
+        },
+        value: value
+      });
+    } else {
+      finalValue = JSON.parse(currentAttributeValues);
+      const foundIndex = finalValue.findIndex((v) => v.attribute.id === attribute);
+      if (foundIndex === -1) {
+        finalValue.push({
+          attribute: {
+            id: attribute
+          },
+          value: value
+        });
+      } else {
+        finalValue[foundIndex].value = value;
+      }
+    }
+    changeValue(ATTRIBUTE_VALUES, JSON.stringify(finalValue));
   };
 
   const changeCoordinates = (value) => {
@@ -365,6 +396,30 @@ const FacilityProfileDialog = () => {
                   </Row>
                 );
               })}
+            {customAttributes.map((customAttribute) => {
+              const { id, valueType } = customAttribute;
+              const currentValue = findCustomAttributeValue(currentFacility[ATTRIBUTE_VALUES], id);
+              const value = currentValue
+                ? findCustomAttributeValue(selectedFacility.previousValues[ATTRIBUTE_VALUES], id)
+                : findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id);
+              if (valueType !== "GEOJSON") {
+                return (
+                  <Row>
+                    <CustomAttributeLabel attribute={id} />
+                    <div>
+                      <CustomAttributeField
+                        attribute={id}
+                        value={value}
+                        onChange={(value) => {
+                          changeAttributeValue(id, value);
+                        }}
+                      />
+                    </div>
+                    {value ? value : <span>&nbsp;</span>}
+                  </Row>
+                );
+              }
+            })}
           </div>
         </div>
         <FacilityCoordinatesPickerMap

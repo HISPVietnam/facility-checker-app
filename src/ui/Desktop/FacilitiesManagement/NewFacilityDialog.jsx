@@ -466,21 +466,23 @@ const NewFacilityDialog = () => {
                   );
                 })}
               {customAttributes.map((customAttribute) => {
-                const { id } = customAttribute;
-                return (
-                  <Row>
-                    <CustomAttributeLabel attribute={id} />
-                    <div>
-                      <CustomAttributeField
-                        attribute={id}
-                        value={findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id)}
-                        onChange={(value) => {
-                          changeAttributeValue(id, value);
-                        }}
-                      />
-                    </div>
-                  </Row>
-                );
+                const { id, valueType } = customAttribute;
+                if (valueType !== "GEOJSON") {
+                  return (
+                    <Row>
+                      <CustomAttributeLabel attribute={id} />
+                      <div>
+                        <CustomAttributeField
+                          attribute={id}
+                          value={findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id)}
+                          onChange={(value) => {
+                            changeAttributeValue(id, value);
+                          }}
+                        />
+                      </div>
+                    </Row>
+                  );
+                }
               })}
             </div>
           </div>
