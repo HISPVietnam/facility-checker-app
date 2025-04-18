@@ -77,6 +77,27 @@ const Synchronization = () => {
       });
   };
 
+  const handleCheckFacility = (facility) => {
+    const isSelected = selectedFacilities.includes(facility.tei);
+    const isSelectAll =
+      !isSelected &&
+      [...selectedFacilities, facility.tei].length ===
+        filterApprovalFacilities(facilities).length;
+    if (isSelected) {
+      selectFacilities(
+        selectedFacilities.filter(
+          (item) => item !== facility.tei && item !== "all"
+        )
+      );
+      return;
+    }
+    if (isSelectAll) {
+      selectFacilities([...selectedFacilities, facility.tei, "all"]);
+      return;
+    }
+    selectFacilities([...selectedFacilities, facility.tei]);
+  };
+
   useEffect(() => {
     resetFilters();
     toggleFilter("notYetSynced");
@@ -125,37 +146,15 @@ const Synchronization = () => {
               ? foundPendingEvent
               : foundApprovedEvent;
             return (
-              <DataTableRow>
+              <DataTableRow
+                className="cursor-pointer"
+                onClick={() => handleCheckFacility(facility)}
+              >
                 <DataTableCell>
                   <Checkbox
                     checked={selectedFacilities.includes(facility.tei)}
                     value={facility.tei}
-                    onChange={() => {
-                      const isSelected = selectedFacilities.includes(
-                        facility.tei
-                      );
-                      const isSelectAll =
-                        !isSelected &&
-                        [...selectedFacilities, facility.tei].length ===
-                          filterApprovalFacilities(facilities).length;
-                      if (isSelected) {
-                        selectFacilities(
-                          selectedFacilities.filter(
-                            (item) => item !== facility.tei && item !== "all"
-                          )
-                        );
-                        return;
-                      }
-                      if (isSelectAll) {
-                        selectFacilities([
-                          ...selectedFacilities,
-                          facility.tei,
-                          "all",
-                        ]);
-                        return;
-                      }
-                      selectFacilities([...selectedFacilities, facility.tei]);
-                    }}
+                    onChange={() => handleCheckFacility(facility)}
                   />
                 </DataTableCell>
                 {columns.map((column) => {
