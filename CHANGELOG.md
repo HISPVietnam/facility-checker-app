@@ -1,3 +1,22 @@
+## [1.5.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.2...v1.5.0) (2025-04-18)
+
+### Features
+
+* add approval functions [#9335](https://projects.hispvietnam.org/work_packages/9335) ([1ad42c5](https://github.com/HISPVietnam/facility-checker-app/commit/1ad42c5f0bae39d3e9f5fa0ca525daf82b430421))
+* add filter to approval module [#9339](https://projects.hispvietnam.org/work_packages/9339) ([46bef33](https://github.com/HISPVietnam/facility-checker-app/commit/46bef3316829a109c6fec03ce7f9e20ed6c54ac1))
+* add Synchronization module and functions [#9337](https://projects.hispvietnam.org/work_packages/9337) ([57c8824](https://github.com/HISPVietnam/facility-checker-app/commit/57c882413b3cf24262e9aaf916ad3cad90b4bd91))
+* continue [#9336](https://projects.hispvietnam.org/work_packages/9336) [skip-release] ([4dc9219](https://github.com/HISPVietnam/facility-checker-app/commit/4dc921919ed413a7699a310606d2a83f5eb9642d))
+* continue [#9336](https://projects.hispvietnam.org/work_packages/9336) [skip-release] ([3a37b05](https://github.com/HISPVietnam/facility-checker-app/commit/3a37b05520c5c97d0632a64aac09f152df1e5fd2))
+* show human-readable attribute values [#9336](https://projects.hispvietnam.org/work_packages/9336) ([1a77c1b](https://github.com/HISPVietnam/facility-checker-app/commit/1a77c1b7a630855ccad05546028c04ef6c2ca216))
+
+### Bug Fixes
+
+* checkbox is not ticked when the row is clicked in synchronization list ([ccfd640](https://github.com/HISPVietnam/facility-checker-app/commit/ccfd6400839fdeda717b233cf10541eab95bee74))
+* merge conflicts of the locales en and vi [skip-release] ([15bd81f](https://github.com/HISPVietnam/facility-checker-app/commit/15bd81fbcc4ac42815c933f4fbb3d916fe73de2c))
+* move Facility Hierarchy to common ([d3f1c32](https://github.com/HISPVietnam/facility-checker-app/commit/d3f1c32cdb0fbab7299758bd93bcc9867c450032))
+* old and new values are not shown correctly in approval dialog ([19d3eac](https://github.com/HISPVietnam/facility-checker-app/commit/19d3eac4dfc8ec06ddfb350878678f94b70749ac))
+* wrong imports for synchronization module ([42e324a](https://github.com/HISPVietnam/facility-checker-app/commit/42e324afb7fe3392fd2bb0d1ffeb4375b3436af8))
+
 ## [1.4.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.1...v1.4.2) (2025-04-08)
 
 ### Bug Fixes
