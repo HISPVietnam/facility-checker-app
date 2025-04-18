@@ -164,7 +164,6 @@ const findDataValue = (event, dataElement) => {
 };
 
 const findCustomAttributeValue = (attributeValues, attribute) => {
-  console.log(attributeValues);
   if (!attributeValues || attributeValues === "{}") {
     return "";
   }
