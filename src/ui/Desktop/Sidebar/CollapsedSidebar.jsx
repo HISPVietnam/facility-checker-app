@@ -1,7 +1,14 @@
 import { Button, Tooltip } from "@dhis2/ui";
 import MenuItem from "./MenuItem";
 import { useTranslation } from "react-i18next";
-import { faHome, faLocationDot, faWrench, faCheck, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faLocationDot,
+  faWrench,
+  faCheck,
+  faBars,
+  faRotate,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -54,6 +61,7 @@ const CollapsedSidebar = () => {
       <SideBarItem label="home" icon={faHome} />
       <SideBarItem label="facility-check" icon={faLocationDot} />
       <SideBarItem label="approval" icon={faCheck} />
+      <SideBarItem label="synchronization" icon={faRotate} />
       <SideBarItem label="configuration" icon={faWrench} />
     </div>
   );
