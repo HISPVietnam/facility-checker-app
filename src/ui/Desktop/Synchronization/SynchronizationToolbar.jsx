@@ -35,7 +35,7 @@ const SynchronizationToolbar = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <div ref={filterButtonRef}>
+      {/* <div ref={filterButtonRef}>
         <CustomizedButton
           icon={<FontAwesomeIcon icon={faFilter} />}
           onClick={() => {
@@ -44,7 +44,7 @@ const SynchronizationToolbar = () => {
         >
           {t("filters")}
         </CustomizedButton>
-      </div>
+      </div> */}
       <CustomizedButton
         primary
         icon={<FontAwesomeIcon icon={faRotate} />}

@@ -67,14 +67,15 @@ const Synchronization = () => {
       const facilityPath = facility[PATH];
       return facilityPath.includes(selectedOrgUnit.id);
     };
-    return facilities
-      .filter((facility) => facility[APPROVAL_STATUS] === "approved")
-      .filter((facility) => {
-        return (
-          (filterBySyncStatus(facility) || filterByIsNewFacility(facility)) &&
-          filterByOrgUnit(facility)
-        );
-      });
+    return facilities.filter(
+      (facility) => facility[APPROVAL_STATUS] === "approved"
+    );
+    //   .filter((facility) => {
+    //     return (
+    //       (filterBySyncStatus(facility) || filterByIsNewFacility(facility)) &&
+    //       filterByOrgUnit(facility)
+    //     );
+    //   });
   };
 
   const handleCheckFacility = (facility) => {
@@ -100,7 +101,6 @@ const Synchronization = () => {
 
   useEffect(() => {
     resetFilters();
-    toggleFilter("notYetSynced");
   }, []);
   return (
     <div className="w-full h-full p-1">
