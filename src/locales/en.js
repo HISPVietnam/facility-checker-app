@@ -1,7 +1,8 @@
 export default {
   home: "Home",
   "facility-check": "Facility check",
-  "approval-and-sync": "Approval & Sync",
+  approval: "Approval",
+  synchronization: "Synchronization",
   configuration: "Configuration",
   searchFacility: "Search facility",
   id: "ID",
@@ -109,4 +110,6 @@ export default {
   notYetSynced: "Not yet synced",
   approved: "Approved",
   isNewFacility: "Is new facility",
+  synced: "Synced",
+  notYetSynced: "Not yet synced",
 };
