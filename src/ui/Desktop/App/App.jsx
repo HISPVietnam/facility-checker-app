@@ -6,6 +6,8 @@ import CollapsedSidebar from "@/ui/Desktop/Sidebar/CollapsedSidebar";
 import Home from "@/ui/Desktop/Home/Home";
 import FacilitiesManagement from "@/ui/Desktop/FacilitiesManagement/FacilitiesManagement";
 import FacilitiesManagementToolbar from "@/ui/Desktop/FacilitiesManagement/FacilitiesManagementToolbar";
+import Synchronization from "@/ui/Desktop/Synchronization/Synchronization";
+import SynchronizationToolbar from "@/ui/Desktop/Synchronization/SynchronizationToolbar";
 import Approval from "@/ui/Desktop/Approval/Approval";
 import ApprovalToolbar from "@/ui/Desktop/Approval/ApprovalToolbar";
 import useLayoutStore from "@/states/layout";
@@ -15,8 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import useInit from "@/hooks/useInit";
 import { useEffect } from "react";
-import SynchronizationToolbar from "../Synchronization/SynchronizationToolbar";
-import Synchronization from "../Synchronization/Synchronization";
 
 const App = () => {
   const ready = useInit();
@@ -24,7 +24,7 @@ const App = () => {
   const { layout, actions } = useLayoutStore(
     useShallow((state) => ({
       layout: state.layout,
-      actions: state.actions,
+      actions: state.actions
     }))
   );
   const { sidebar } = layout;
@@ -42,11 +42,7 @@ const App = () => {
         {ready ? (
           <>
             {sidebar ? <Sidebar /> : <CollapsedSidebar />}
-            <div
-              className={`h-full ${
-                sidebar ? "w-[calc(100%-250px)]" : "w-[calc(100%-60px)]"
-              } bg-slate-100`}
-            >
+            <div className={`h-full ${sidebar ? "w-[calc(100%-250px)]" : "w-[calc(100%-60px)]"} bg-slate-100`}>
               <div className="h-[60px] w-full bg-white border-b-slate-300 border-b flex items-center p-2">
                 {/* <div>
                   <Button icon={<FontAwesomeIcon icon={sidebar ? faCaretLeft : faCaretRight} />} onClick={toggleSidebar}>
@@ -58,15 +54,9 @@ const App = () => {
                   <Routes>
                     <Route path="/home" element={<div />} />
                     <Route path="/" element={<div />} />
-                    <Route
-                      path="/facility-check"
-                      element={<FacilitiesManagementToolbar />}
-                    />
+                    <Route path="/facility-check" element={<FacilitiesManagementToolbar />} />
                     <Route path="/approval" element={<ApprovalToolbar />} />
-                    <Route
-                      path="/synchronization"
-                      element={<SynchronizationToolbar />}
-                    />
+                    <Route path="/synchronization" element={<SynchronizationToolbar />} />
                   </Routes>
                 </div>
               </div>
@@ -74,15 +64,9 @@ const App = () => {
                 <Routes>
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Home />} />
-                  <Route
-                    path="/facility-check"
-                    element={<FacilitiesManagement />}
-                  />
+                  <Route path="/facility-check" element={<FacilitiesManagement />} />
                   <Route path="/approval" element={<Approval />} />
-                  <Route
-                    path="/synchronization"
-                    element={<Synchronization />}
-                  />
+                  <Route path="/synchronization" element={<Synchronization />} />
                 </Routes>
               </div>
             </div>
