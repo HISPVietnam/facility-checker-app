@@ -5,7 +5,7 @@ import DataValueLabel from "@/ui/common/DataValueLabel";
 import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox } from "@dhis2/ui";
 import Helper from "@/ui/common/Helper";
 import InputField from "@/ui/common/InputField";
-import { Tooltip } from "@mui/material";
+import { Tooltip, Popover } from "@mui/material";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose, faMap } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import _ from "lodash";
+import GeoJsonViewer from "@/ui/common/GeoJsonViewer";
 const { UID, APPROVAL_STATUS, PATH, IS_NEW_FACILITY, CODE, ATTRIBUTE_VALUES } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 const Row = ({ children, className }) => {
@@ -48,6 +49,7 @@ const New = ({ children }) => {
 };
 
 const FacilityProfileDialog = () => {
+  const [geoJsonViewer, setGeoJsonViewer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [isDuplicated, setIsDuplicated] = useState(false);
@@ -85,11 +87,9 @@ const FacilityProfileDialog = () => {
     cloned[field] = value;
     setCurrentFacility({ ...cloned });
   };
-
   const changeAttributeValue = (attribute, value) => {
-    const currentAttributeValues = selectedFacility[ATTRIBUTE_VALUES];
+    const currentAttributeValues = currentFacility[ATTRIBUTE_VALUES];
     let finalValue = [];
-
     if (!currentAttributeValues && value) {
       finalValue.push({
         attribute: {
@@ -248,9 +248,7 @@ const FacilityProfileDialog = () => {
     }
     setHelpers(currentHelpers);
   }, [JSON.stringify(currentFacility)]);
-
   const foundCoordinatesError = helpers.find((h) => h.type === "error" && h.target === "coordinates");
-
   return (
     <Modal fluid>
       <ModalTitle>{t("facilityProfile")}</ModalTitle>
@@ -402,23 +400,65 @@ const FacilityProfileDialog = () => {
               const value = currentValue
                 ? findCustomAttributeValue(selectedFacility.previousValues[ATTRIBUTE_VALUES], id)
                 : findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id);
-              if (valueType !== "GEOJSON") {
-                return (
-                  <Row>
-                    <CustomAttributeLabel attribute={id} />
-                    <div>
-                      <CustomAttributeField
-                        attribute={id}
-                        value={value}
-                        onChange={(value) => {
-                          changeAttributeValue(id, value);
-                        }}
-                      />
-                    </div>
-                    {value ? value : <span>&nbsp;</span>}
-                  </Row>
-                );
-              }
+              return (
+                <Row>
+                  <CustomAttributeLabel attribute={id} />
+                  <div>
+                    <CustomAttributeField
+                      attribute={id}
+                      value={currentValue}
+                      onChange={(value) => {
+                        changeAttributeValue(id, value);
+                      }}
+                    />
+                  </div>
+                  {value ? (
+                    valueType === "GEOJSON" ? (
+                      <div>
+                        <span
+                          className="underline cursor-pointer"
+                          onClick={() => {
+                            setGeoJsonViewer(true);
+                          }}
+                        >
+                          {t("clickToView")}
+                        </span>
+                        {geoJsonViewer && (
+                          <Modal fluid>
+                            <ModalTitle>
+                              <CustomAttributeLabel attribute={id} />
+                            </ModalTitle>
+                            <ModalContent>
+                              <div className="w-[1000px] h-[600px]">
+                                <GeoJsonViewer
+                                  data={JSON.parse(value)}
+                                  point={[
+                                    currentFacility.latitude ? currentFacility.latitude : selectedFacility.previousValues.latitude,
+                                    currentFacility.longitude ? currentFacility.longitude : selectedFacility.previousValues.longitude
+                                  ]}
+                                />
+                              </div>
+                            </ModalContent>
+                            <ModalActions>
+                              <CustomizedButton
+                                onClick={() => {
+                                  setGeoJsonViewer(false);
+                                }}
+                              >
+                                {t("close")}
+                              </CustomizedButton>
+                            </ModalActions>
+                          </Modal>
+                        )}
+                      </div>
+                    ) : (
+                      <span>{value}</span>
+                    )
+                  ) : (
+                    <span>&nbsp;</span>
+                  )}
+                </Row>
+              );
             })}
           </div>
         </div>

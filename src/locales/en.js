@@ -36,26 +36,22 @@ export default {
   currentValue: "Current value",
   previousValue: "Previous value",
   applyForApproval: "Apply for approval",
-  isPendingWarning:
-    "This facility is waiting for approval, all values cannot be modified",
+  isPendingWarning: "This facility is waiting for approval, all values cannot be modified",
   awaitingApprovalValue: "New value (awaiting approval)",
   noMatchFound: "No match found!",
   ok: "OK",
   filters: "Filters",
   filterForFacility: "Filter for facility",
   noCoordinates: "No coordinates",
-  noCoordinatesTooltip:
-    "Facilities with no Coordinates - viewed in list view only",
+  noCoordinatesTooltip: "Facilities with no Coordinates - viewed in list view only",
   wrongLocation: "Outside boundary",
   wrongLocationTooltip: "Facilities outside their assigned district/province",
   tooCloseToEachOther: "Close proximity <2 km",
   tooCloseToEachOtherTooltip: "Facilities close to each other (<2 km)",
   multipleGroups: "Multiple orgunit group",
-  multipleGroupsTooltip:
-    "Facilities belong to multiple Orgunit groups in a orgunit group set",
+  multipleGroupsTooltip: "Facilities belong to multiple Orgunit groups in a orgunit group set",
   notInGroup: "Not in any {{group}}",
-  notInGroupTooltip:
-    "Facilities not in any group belong to group set {{group}}",
+  notInGroupTooltip: "Facilities not in any group belong to group set {{group}}",
   approve: "Approve",
   reject: "Reject",
   pendingApprovalValues: "Pending approval values",
@@ -80,11 +76,9 @@ export default {
   waitingForApprovalTooltip: "Facilities which are waiting for approval",
   set: "Set",
   startChoosingPoint: "Click on the map to start choosing the location",
-  dragTheMarker:
-    "Click on the map or drag the marker to change the location, the location must be inside facility parent",
+  dragTheMarker: "Click on the map or drag the marker to change the location, the location must be inside facility parent",
   apply: "Apply",
-  outsideBoundaryHelper:
-    "Warning: you are moving the facility to be outside the boundary",
+  outsideBoundaryHelper: "Warning: you are moving the facility to be outside the boundary",
   newFacility: "New facility",
   value: "Value",
   selectPathFirst: "Please select facility parent before choosing the location",
@@ -92,16 +86,11 @@ export default {
   close: "Close",
   parentNotAssignedToFcaProgram: "Parent is not assigned to FCA program",
   pleaseSelectFacilityParent: "Please select the parent of the facility",
-  facilityCannotHaveTheSameNameAsItsParent:
-    "Facility cannot have the same name as it's parent",
-  facilityNameInSameParentHasBeenTaken:
-    "This facility name has been taken in the same parent",
-  facilityCannotHaveTheSameShortNameAsItsParent:
-    "Facility cannot have the same short name as it's parent",
-  facilityShortNameInSameParentHasBeenTaken:
-    "This facility short name has been taken in the same parent",
-  thisCodeHasBeenTaken:
-    "This facility code has been taken, code must be unique",
+  facilityCannotHaveTheSameNameAsItsParent: "Facility cannot have the same name as it's parent",
+  facilityNameInSameParentHasBeenTaken: "This facility name has been taken in the same parent",
+  facilityCannotHaveTheSameShortNameAsItsParent: "Facility cannot have the same short name as it's parent",
+  facilityShortNameInSameParentHasBeenTaken: "This facility short name has been taken in the same parent",
+  thisCodeHasBeenTaken: "This facility code has been taken, code must be unique",
   facilityHaveBeenSaved: "Facility data bave been saved",
   mustBeInsideParentBoundaries: "Facility location must be inside it's parent",
   version: "Version",
@@ -110,6 +99,6 @@ export default {
   notYetSynced: "Not yet synced",
   approved: "Approved",
   isNewFacility: "Is new facility",
-  synced: "Synced",
-  notYetSynced: "Not yet synced",
+  clickToView: "Click to view",
+  synced: "Synced"
 };
