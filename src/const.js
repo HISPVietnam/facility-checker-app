@@ -1,3 +1,5 @@
+import { faCheck, faPenToSquare, faRotate } from "@fortawesome/free-solid-svg-icons";
+
 const DATA_ELEMENTS = {
   PATH: "eqSFoW6vuam",
   UID: "jDSCfb245G5",
@@ -13,12 +15,12 @@ const DATA_ELEMENTS = {
   IS_NEW_FACILITY: "guutPq3seaj",
   SHORT_NAME: "eb7SYR3EHEZ",
   OPENING_DATE: "PCoXOnxAzwr",
-  CODE: "nEAFd0oKJzb",
+  CODE: "nEAFd0oKJzb"
 };
 const TRACKED_ENTITY_ATTRIBUTES = {
   UID: "prbjtVvKNet",
   ACTIVE_STATUS: "PUYl7QIbEov",
-  ATTRIBUTE_CODE: "d9FXpa9ndGO",
+  ATTRIBUTE_CODE: "d9FXpa9ndGO"
 };
 const TRACKED_ENTITY_TYPE = "ER5qgJDCfUh";
 const PROFILE_LOGS_PROGRAM_STAGE_ID = "VdBma23iRTw";
@@ -32,58 +34,77 @@ const HIDDEN_DATA_ELEMENTS = [
   DATA_ELEMENTS.APPROVED_BY,
   DATA_ELEMENTS.APPROVED_AT,
   DATA_ELEMENTS.REASON_FOR_REJECT,
-  DATA_ELEMENTS.IS_NEW_FACILITY,
+  DATA_ELEMENTS.IS_NEW_FACILITY
 ];
 
-const MANDATORY_FIELDS = [
-  DATA_ELEMENTS.NAME,
-  DATA_ELEMENTS.PATH,
-  DATA_ELEMENTS.SHORT_NAME,
-  DATA_ELEMENTS.OPENING_DATE,
-];
+const MANDATORY_FIELDS = [DATA_ELEMENTS.NAME, DATA_ELEMENTS.PATH, DATA_ELEMENTS.SHORT_NAME, DATA_ELEMENTS.OPENING_DATE];
 
 const CUSTOM_COLUMNS_LIST_VIEW = [
   {
     id: "status",
     name: "status",
     optionSet: null,
-    position: 0,
+    position: 0
   },
   {
     id: "coordinates",
     name: "coordinates",
     optionSet: null,
-    position: 2,
-  },
+    position: 2
+  }
 ];
 
 const BASE_LAYER_TYPES = {
   satellite: {
     attribution: `&copy; <a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community`,
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
   },
   normal: {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`,
-    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
-  },
+    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"
+  }
 };
 
 const APPROVAL_FILTERS = [
   { id: "approved" },
   { id: "pending" },
   {
-    id: "isNewFacility",
-  },
+    id: "isNewFacility"
+  }
 ];
 
 const SYNCHRONIZATION_FILTERS = [
   { id: "synced" },
   { id: "notYetSynced" },
   {
-    id: "isNewFacility",
-  },
+    id: "isNewFacility"
+  }
 ];
 
+const STEPS = ["welcome", "selectGroupSets", "setupAuthorities", "summary"];
+const APP_ROLES = [
+  {
+    name: "captureRole",
+    description: "captureRoleDescription",
+    borderColor: "border-cyan-700",
+    color: "text-cyan-700",
+    icon: faPenToSquare
+  },
+  {
+    name: "approvalRole",
+    description: "approvalRoleDescription",
+    borderColor: "border-green-700",
+    color: "text-green-700",
+    icon: faCheck
+  },
+  {
+    name: "synchronizationRole",
+    description: "synchronizationRoleDescription",
+    borderColor: "border-red-700",
+    color: "text-red-700",
+    icon: faRotate
+  }
+];
 export {
   DATA_ELEMENTS,
   PROFILE_LOGS_PROGRAM_STAGE_ID,
@@ -96,4 +117,6 @@ export {
   TRACKED_ENTITY_ATTRIBUTES,
   APPROVAL_FILTERS,
   SYNCHRONIZATION_FILTERS,
+  STEPS,
+  APP_ROLES
 };

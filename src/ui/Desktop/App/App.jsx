@@ -1,6 +1,5 @@
 import { HeaderBar, Button, CircularLoader } from "@dhis2/ui";
 import { Routes, Route, useNavigate } from "react-router";
-import VerticalDivider from "@/ui/common/VerticalDivider";
 import Sidebar from "@/ui/Desktop/Sidebar/Sidebar";
 import CollapsedSidebar from "@/ui/Desktop/Sidebar/CollapsedSidebar";
 import Home from "@/ui/Desktop/Home/Home";
@@ -10,6 +9,7 @@ import Synchronization from "@/ui/Desktop/Synchronization/Synchronization";
 import SynchronizationToolbar from "@/ui/Desktop/Synchronization/SynchronizationToolbar";
 import Approval from "@/ui/Desktop/Approval/Approval";
 import ApprovalToolbar from "@/ui/Desktop/Approval/ApprovalToolbar";
+import Installation from "@/ui/Desktop/Installation/Installation";
 import useLayoutStore from "@/states/layout";
 import { useShallow } from "zustand/react/shallow";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ import useInit from "@/hooks/useInit";
 import { useEffect } from "react";
 
 const App = () => {
-  const ready = useInit();
+  const { ready, firstRun } = useInit();
   const { t } = useTranslation();
   const { layout, actions } = useLayoutStore(
     useShallow((state) => ({
@@ -39,7 +39,8 @@ const App = () => {
     <div className="w-full h-full text-slate-700">
       <HeaderBar />
       <div className="w-full h-[calc(100%-48px)] flex items-center justify-center">
-        {ready ? (
+        {!ready && <CircularLoader />}
+        {ready && !firstRun && (
           <>
             {sidebar ? <Sidebar /> : <CollapsedSidebar />}
             <div className={`h-full ${sidebar ? "w-[calc(100%-250px)]" : "w-[calc(100%-60px)]"} bg-slate-100`}>
@@ -71,9 +72,8 @@ const App = () => {
               </div>
             </div>
           </>
-        ) : (
-          <CircularLoader />
         )}
+        {ready && firstRun && <Installation />}
       </div>
     </div>
   );

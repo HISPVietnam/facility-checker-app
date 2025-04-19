@@ -29,12 +29,12 @@ const getOrgUnitGroups = async () => {
   return result.organisationUnitGroups;
 };
 const getOrgUnitGroupSets = async () => {
-  const result = await pull("/api/organisationUnitGroupSets?fields=id,name,items&paging=false");
+  const result = await pull("/api/organisationUnitGroupSets?fields=id,name,items,translations&paging=false");
   return result.organisationUnitGroupSets;
 };
 
 const getMe = async () => {
-  const result = await pull("/api/me?fields=*");
+  const result = await pull("/api/me?fields=*,organisationUnits[id,name,level],userRoles[id,name,authorities]");
   return result;
 };
 
@@ -43,9 +43,14 @@ const getProgram = async () => {
   return program;
 };
 
+const getUsers = async () => {
+  const result = await pull("/api/users?fields=id,username,firstName,surname&paging=false");
+  return result.users;
+};
+
 const getCustomAttributes = async () => {
   const result = await pull("/api/attributes?paging=false&fields=organisationUnitAttribute,id,name,translations,valueType");
   return result.attributes.filter((attr) => attr.organisationUnitAttribute === true);
 };
 
-export { getOrgUnits, getOrgUnitGeoJson, getOrgUnitGroupSets, getOrgUnitLevels, getMe, getProgram, getOrgUnitGroups, getCustomAttributes };
+export { getOrgUnits, getOrgUnitGeoJson, getOrgUnitGroupSets, getOrgUnitLevels, getMe, getProgram, getUsers, getOrgUnitGroups, getCustomAttributes };

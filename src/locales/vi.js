@@ -100,5 +100,30 @@ export default {
   approved: "Approved",
   isNewFacility: "Is new facility",
   clickToView: "Click to view",
-  synced: "Synced"
+  synced: "Synced",
+  back: "Back",
+  next: "Next",
+  welcome: "Welcome",
+  selectGroupSets: "Select group sets",
+  welcomeToFacilityChecker: "Welcome to Facility Checker App",
+  welcomeParagraph1:
+    "Hi {{fullName}} 👋, it looks like this is your first time running the application — welcome aboard! Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
+  welcomeParagraph2:
+    "This installation wizard will guide you through each step of the installation process. It won't take long, and we'll be with you the whole way.",
+  welcomeParagraph3: "Before we start, your user will need certain privileges as follow:",
+  superuserRole: "Superuser role",
+  accessToRootOrgUnit: "Access to root organisation unit (level 1)",
+  validWelcome: "Your user has all the needed privileges 👏, click Next to proceed.",
+  invalidWelcome: "Unfortunately, your user does not have all the needed privileges 😞, please contact your administrator.",
+  selectGroupSets: "Select facility org unit group sets",
+  selectGroupSetsParagraph1:
+    "In this step, you need to select the orgunit groupset(s) which contain all the facilities in your instance. You must select at least one groupset to proceed.",
+  potentialErrors: "Potential errors",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "Found an orgunit which geometry type is not a Point and will be ignored: ",
+  summary: "Summary",
+  totalFacilities: "Total facilities",
+  toBeImported: "To be imported",
+  toBeIgnored: "To be ignored",
+  validSelectGroupSets: "You have selected the groupset(s) 👏, click Next to proceed.",
+  setupAuthorities: "Setup authorities"
 };

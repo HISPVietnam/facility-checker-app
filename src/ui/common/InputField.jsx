@@ -11,7 +11,20 @@ import DataValueText from "./DataValueText";
 
 const CustomizedInputField = (props) => {
   const { t } = useTranslation();
-  const { value, displayValue, valueType, options, multiSelection, onChange, disabled, filter, error, validationText, roots } = props;
+  const {
+    value,
+    displayValue,
+    valueType,
+    options,
+    multiSelection,
+    multiSelectionRestriction,
+    onChange,
+    disabled,
+    filter,
+    error,
+    validationText,
+    roots
+  } = props;
   if (options && multiSelection) {
     return (
       <MultiSelect
@@ -21,8 +34,12 @@ const CustomizedInputField = (props) => {
         filterable
         noMatchText={t("noMatchFound")}
         onChange={(value) => {
-          if (value.selected.length > 1) {
-            onChange(JSON.stringify([value.selected.pop()]));
+          if (multiSelectionRestriction) {
+            if (value.selected.length > 1) {
+              onChange(JSON.stringify([value.selected.pop()]));
+            } else {
+              onChange(JSON.stringify(value.selected));
+            }
           } else {
             onChange(JSON.stringify(value.selected));
           }

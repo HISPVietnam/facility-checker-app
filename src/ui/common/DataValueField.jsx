@@ -31,7 +31,15 @@ const DataValueField = (props) => {
       };
     });
     return (
-      <CustomizedInputField valueType={valueType} onChange={onChange} disabled={disabled} value={value} options={options} multiSelection={true} />
+      <CustomizedInputField
+        valueType={valueType}
+        onChange={onChange}
+        disabled={disabled}
+        value={value}
+        options={options}
+        multiSelection={true}
+        multiSelectionRestriction={true}
+      />
     );
   } else if (optionSet && optionSet.id) {
     const foundOptionSet = program.optionSets.find((os) => os.id === optionSet.id);
