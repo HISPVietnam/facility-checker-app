@@ -22,7 +22,7 @@ const Installation = () => {
   );
   const { setStep } = actions;
   return (
-    <div className="w-[calc(100%-100px)] h-[calc(100%-100px)] shadow-xl border-slate-200 border rounded-md p-2 flex items-center flex-col">
+    <div className="w-[calc(100%-100px)] h-[calc(100%-100px)] shadow-xl border-slate-300 border rounded-md p-2 flex items-center flex-col">
       <div className="mb-8 mt-8 w-[1000px]">
         <Stepper activeStep={step}>
           {STEPS.map((step) => {
