@@ -10,7 +10,7 @@ const AppRole = ({ role }) => {
         <FontAwesomeIcon icon={icon} />
         &nbsp;{t(name)}
       </div>
-      <div className="text-[14px]">{t(description)}</div>
+      <div className="text-[15px]">{t(description)}</div>
     </div>
   );
 };

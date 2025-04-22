@@ -3,6 +3,7 @@ import Welcome from "./Welcome";
 import SelectGroupSets from "./SelectGroupSets";
 import SetupAuthorities from "./SetupAuthorities";
 import Summary from "./Summary";
+import Install from "./Install";
 import CustomizedButton from "@/ui/common/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,8 +23,8 @@ const Installation = () => {
   );
   const { setStep } = actions;
   return (
-    <div className="w-[calc(100%-100px)] h-[calc(100%-100px)] shadow-xl border-slate-300 border rounded-md p-2 flex items-center flex-col">
-      <div className="mb-8 mt-8 w-[1000px]">
+    <div className="w-[calc(100%-50px)] h-[calc(100%-50px)] shadow-xl border-slate-300 border rounded-md p-1 flex items-center flex-col">
+      <div className="mb-5 mt-5 w-[1200px]">
         <Stepper activeStep={step}>
           {STEPS.map((step) => {
             return (
@@ -34,7 +35,7 @@ const Installation = () => {
           })}
         </Stepper>
       </div>
-      <div className="flex mt-2 mb-2 w-[1000px] justify-between">
+      <div className="flex mt-2 mb-2 w-[1200px] justify-between">
         <CustomizedButton
           disabled={step === 0}
           className="w-[60px]"
@@ -57,11 +58,12 @@ const Installation = () => {
           <FontAwesomeIcon icon={faCaretRight} />
         </CustomizedButton>
       </div>
-      <div>
+      <div className="w-[1200px]">
         {step === 0 && <Welcome />}
         {step === 1 && <SelectGroupSets />}
         {step === 2 && <SetupAuthorities />}
         {step === 3 && <Summary />}
+        {step === 4 && <Install />}
       </div>
     </div>
   );

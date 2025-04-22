@@ -1,4 +1,4 @@
-import { faCheck, faPenToSquare, faRotate } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPenToSquare, faRotate, faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 
 const DATA_ELEMENTS = {
   PATH: "eqSFoW6vuam",
@@ -81,7 +81,7 @@ const SYNCHRONIZATION_FILTERS = [
   }
 ];
 
-const STEPS = ["welcome", "selectGroupSets", "setupAuthorities", "summary"];
+const STEPS = ["welcome", "selectGroupSets", "setupAuthorities", "summary", "install"];
 const APP_ROLES = [
   {
     name: "captureRole",
@@ -103,6 +103,13 @@ const APP_ROLES = [
     borderColor: "border-red-700",
     color: "text-red-700",
     icon: faRotate
+  },
+  {
+    name: "adminRole",
+    description: "adminRoleDescription",
+    borderColor: "border-amber-600",
+    color: "text-amber-600",
+    icon: faScrewdriverWrench
   }
 ];
 export {

@@ -7,7 +7,8 @@ import {
   getProgram,
   getOrgUnitGroups,
   getCustomAttributes,
-  getUsers
+  getUsers,
+  getSchemas
 } from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
@@ -33,6 +34,7 @@ const useInit = () => {
       const orgUnitGroupSets = await getOrgUnitGroupSets();
       const orgUnitGeoJson = await getOrgUnitGeoJson();
       const users = await getUsers();
+      const schemas = await getSchemas();
       if (program.httpStatusCode === 404) {
         setMetadata("me", me);
         const locale = me.settings.keyUiLocale;
@@ -42,6 +44,7 @@ const useInit = () => {
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
         setMetadata("users", users);
+        setMetadata("schemas", schemas);
         setReady(true);
         setFirstRun(true);
       } else {

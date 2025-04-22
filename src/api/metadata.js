@@ -53,4 +53,20 @@ const getCustomAttributes = async () => {
   return result.attributes.filter((attr) => attr.organisationUnitAttribute === true);
 };
 
-export { getOrgUnits, getOrgUnitGeoJson, getOrgUnitGroupSets, getOrgUnitLevels, getMe, getProgram, getUsers, getOrgUnitGroups, getCustomAttributes };
+const getSchemas = async () => {
+  const result = await pull("/api/schemas?fields=klass,plural,displayName");
+  return result.schemas;
+};
+
+export {
+  getOrgUnits,
+  getOrgUnitGeoJson,
+  getOrgUnitGroupSets,
+  getOrgUnitLevels,
+  getMe,
+  getProgram,
+  getUsers,
+  getOrgUnitGroups,
+  getCustomAttributes,
+  getSchemas
+};

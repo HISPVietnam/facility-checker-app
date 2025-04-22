@@ -5,13 +5,14 @@ const useInstallationModuleStore = create((set) => ({
   welcome: {},
   selectGroupSets: {
     selectedGroupSets: "[]",
-    potentialErrors: [],
+    skippedOrgUnits: [],
     members: []
   },
   setupAuthorities: {
     captureRoleUsers: "[]",
     approvalRoleUsers: "[]",
-    synchronizationRoleUsers: "[]"
+    synchronizationRoleUsers: "[]",
+    adminRoleUsers: "[]"
   },
   step: 0,
   valid: false,

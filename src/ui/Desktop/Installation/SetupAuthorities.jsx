@@ -24,7 +24,7 @@ const SetupAuthorities = () => {
       setupAuthorities: state.setupAuthorities
     }))
   );
-  const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers } = setupAuthorities;
+  const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers } = setupAuthorities;
   const { setValid, setStepData } = actions;
   useEffect(() => {
     if (
@@ -33,13 +33,15 @@ const SetupAuthorities = () => {
       approvalRoleUsers &&
       JSON.parse(approvalRoleUsers).length > 0 &&
       synchronizationRoleUsers &&
-      JSON.parse(synchronizationRoleUsers).length > 0
+      JSON.parse(synchronizationRoleUsers).length > 0 &&
+      adminRoleUsers &&
+      JSON.parse(adminRoleUsers).length > 0
     ) {
       setValid(true);
     } else {
       setValid(false);
     }
-  }, [captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers]);
+  }, [captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers]);
 
   const userOptions = users.map((user) => {
     return {
@@ -48,8 +50,15 @@ const SetupAuthorities = () => {
     };
   });
 
+  const mapping = {
+    captureRole: captureRoleUsers,
+    approvalRole: approvalRoleUsers,
+    synchronizationRole: synchronizationRoleUsers,
+    adminRole: adminRoleUsers
+  };
+
   return (
-    <div className="w-[1000px] flex flex-col">
+    <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("setupAuthorities")}</div>
       <div className="mb-2">{t("setupAuthoritiesParagraph1")}</div>
       <div className="flex gap-2 mb-4">
@@ -57,55 +66,28 @@ const SetupAuthorities = () => {
           return <AppRole role={role} />;
         })}
       </div>
-      <div>{t("setupAuthoritiesParagraph2")}</div>
-      <div>
-        <div>
-          {t("selectUsersFor")}&nbsp;<span className="font-bold text-cyan-700">{t("captureRole")}</span>
-        </div>
-        <div>
-          <CustomizedInputField
-            value={captureRoleUsers}
-            onChange={(value) => {
-              setStepData("setupAuthorities", "captureRoleUsers", value);
-            }}
-            multiSelection={true}
-            valueType="TEXT"
-            options={userOptions}
-          />
-        </div>
-      </div>
-      <div className="mt-3">
-        <div>
-          {t("selectUsersFor")}&nbsp;<span className="font-bold text-green-700">{t("approvalRole")}</span>
-        </div>
-        <div>
-          <CustomizedInputField
-            value={approvalRoleUsers}
-            onChange={(value) => {
-              setStepData("setupAuthorities", "approvalRoleUsers", value);
-            }}
-            multiSelection={true}
-            valueType="TEXT"
-            options={userOptions}
-          />
-        </div>
-      </div>
-      <div className="mt-3">
-        <div>
-          {t("selectUsersFor")}&nbsp;<span className="font-bold text-red-700">{t("synchronizationRole")}</span>
-        </div>
-        <div>
-          <CustomizedInputField
-            value={synchronizationRoleUsers}
-            onChange={(value) => {
-              setStepData("setupAuthorities", "synchronizationRoleUsers", value);
-            }}
-            multiSelection={true}
-            valueType="TEXT"
-            options={userOptions}
-          />
-        </div>
-      </div>
+      {/* <div>{t("setupAuthoritiesParagraph2")}</div> */}
+      {APP_ROLES.map((role) => {
+        const { color, name } = role;
+        return (
+          <div className="mt-2">
+            <div>
+              {t("selectUsersFor")}&nbsp;<span className={`font-bold ${color}`}>{t(name)}</span>
+            </div>
+            <div>
+              <CustomizedInputField
+                value={mapping[name]}
+                onChange={(value) => {
+                  setStepData("setupAuthorities", name + "Users", value);
+                }}
+                multiSelection={true}
+                valueType="TEXT"
+                options={userOptions}
+              />
+            </div>
+          </div>
+        );
+      })}
       {valid && <div className="mt-3">{t("validSetupAuthorities")}</div>}
     </div>
   );

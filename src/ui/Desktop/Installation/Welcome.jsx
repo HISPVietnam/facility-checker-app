@@ -51,19 +51,25 @@ const Welcome = () => {
   };
 
   return (
-    <div className="w-[1000px] flex flex-col">
+    <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("welcomeToFacilityChecker")}</div>
       <div>{t("welcomeParagraph1", { fullName: me.firstName + " " + me.surname })}</div>
+      <br />
       <div>{t("welcomeParagraph2")}</div>
+      <br />
       <div>{t("welcomeParagraph3")}</div>
       <div>
         <div className="flex">
           <div className="w-[25px] flex items-center">{validUserRole ? <Valid /> : <Invalid />}</div>
-          <div>{t("superuserRole")}</div>
+          <div>
+            <strong>{t("superuserRole")}</strong>
+          </div>
         </div>
         <div className="flex">
           <div className="w-[25px] flex items-center">{validOrgUnitAccess ? <Valid /> : <Invalid />}</div>
-          <div>{t("accessToRootOrgUnit")}</div>
+          <div>
+            <strong>{t("accessToRootOrgUnit")}</strong>
+          </div>
         </div>
       </div>
       <br />
