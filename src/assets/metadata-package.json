@@ -1,27 +1,61 @@
 {
+  "system": {
+    "id": "eed3d451-4ff5-4193-b951-ffcc68954299",
+    "rev": "c9e1af5",
+    "version": "2.40.7.1",
+    "date": "2025-04-23T22:26:24.703+0700"
+  },
   "programs": [
     {
       "code": "FCA",
       "name": "FC:Facility checker",
-      "created": "2025-01-07T13:34:39.273",
-      "lastUpdated": "2025-03-26T03:59:36.864",
+      "created": "2025-04-23T21:54:17.375",
+      "lastUpdated": "2025-04-23T22:25:11.847",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rwr-----",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-rw----",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-rw----",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-rw----",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
       },
       "shortName": "FC:Facility checker",
-      "version": 1,
+      "version": 14,
       "enrollmentDateLabel": "Facility register date",
       "programType": "WITH_REGISTRATION",
       "displayIncidentDate": true,
@@ -32,6 +66,9 @@
       "selectIncidentDatesInFuture": false,
       "trackedEntityType": {
         "id": "ER5qgJDCfUh"
+      },
+      "dataEntryForm": {
+        "id": "luXQOrb9npU"
       },
       "categoryCombo": {
         "id": "bjDvmb4bfuf"
@@ -48,7 +85,11 @@
       "accessLevel": "OPEN",
       "id": "dJELklAE1ZZ",
       "attributeValues": [],
-      "organisationUnits": [],
+      "organisationUnits": [
+        {
+          "id": "DiszpKrYNg8"
+        }
+      ],
       "programStages": [
         {
           "id": "VdBma23iRTw"
@@ -58,12 +99,20 @@
       "programTrackedEntityAttributes": [
         {
           "name": "FC:Facility checker FC:DHIS2 UID",
-          "created": "2025-01-07T13:34:39.089",
-          "lastUpdated": "2025-03-26T03:59:36.866",
+          "created": "2025-04-23T21:54:17.004",
+          "lastUpdated": "2025-04-23T22:25:11.847",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -90,12 +139,20 @@
         },
         {
           "name": "FC:Facility checker FC:Active status",
-          "created": "2025-01-07T13:34:39.089",
-          "lastUpdated": "2025-03-26T03:59:36.866",
+          "created": "2025-04-23T21:54:17.005",
+          "lastUpdated": "2025-04-23T22:25:11.847",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -122,12 +179,20 @@
         },
         {
           "name": "FC:Facility checker FC:Code",
-          "created": "2025-03-18T08:59:16.568",
-          "lastUpdated": "2025-03-26T03:59:36.866",
+          "created": "2025-04-23T21:54:17.005",
+          "lastUpdated": "2025-04-23T22:25:11.848",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -155,93 +220,87 @@
       ]
     }
   ],
-  "categoryCombos": [
+  "optionSets": [
     {
-      "code": "default",
-      "name": "default",
-      "created": "2011-12-24T12:24:25.203",
-      "lastUpdated": "2016-04-12T20:37:49.126",
+      "name": "FC: Approval status",
+      "created": "2025-04-23T21:54:17.255",
+      "lastUpdated": "2025-04-23T21:54:17.255",
       "translations": [],
-      "categories": [
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
+      },
+      "options": [
         {
-          "id": "GLevLNI9wkl"
+          "id": "VdllG4CKoD4"
+        },
+        {
+          "id": "kDzsaqyIaPo"
+        },
+        {
+          "id": "N7MSTvv0PbV"
         }
       ],
-      "dataDimensionType": "DISAGGREGATION",
-      "skipTotal": false,
-      "id": "bjDvmb4bfuf"
-    }
-  ],
-  "options": [
+      "valueType": "TEXT",
+      "version": 3,
+      "id": "GvCWttSR2pv",
+      "attributeValues": []
+    },
     {
-      "code": "open",
-      "name": "Open",
-      "created": "2025-01-07T14:43:50.801",
-      "lastUpdated": "2025-04-07T04:09:37.076",
-      "translations": [
+      "code": "FCA001",
+      "name": "FC:Active status",
+      "created": "2025-04-23T21:54:17.255",
+      "lastUpdated": "2025-04-23T21:54:17.255",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
+      },
+      "options": [
         {
-          "locale": "vi",
-          "property": "NAME",
-          "value": "Đang hoạt động"
+          "id": "epSrOaPxNrL"
+        },
+        {
+          "id": "qpcng3oFHS9"
         }
       ],
-      "optionSet": {
-        "id": "It38VvS3E2c"
-      },
-      "sortOrder": 1,
-      "id": "epSrOaPxNrL",
-      "attributeValues": []
-    },
-    {
-      "code": "rejected",
-      "name": "Rejected",
-      "created": "2025-02-15T08:53:12.040",
-      "lastUpdated": "2025-02-15T08:53:12.084",
-      "translations": [],
-      "optionSet": {
-        "id": "GvCWttSR2pv"
-      },
-      "sortOrder": 2,
-      "id": "kDzsaqyIaPo",
-      "attributeValues": []
-    },
-    {
-      "code": "approved",
-      "name": "Approved",
-      "created": "2025-02-15T08:53:02.501",
-      "lastUpdated": "2025-02-15T08:53:02.607",
-      "translations": [],
-      "optionSet": {
-        "id": "GvCWttSR2pv"
-      },
-      "sortOrder": 1,
-      "id": "VdllG4CKoD4",
-      "attributeValues": []
-    },
-    {
-      "code": "closed",
-      "name": "Closed",
-      "created": "2025-01-07T14:44:31.302",
-      "lastUpdated": "2025-01-07T14:44:31.368",
-      "translations": [],
-      "optionSet": {
-        "id": "It38VvS3E2c"
-      },
-      "sortOrder": 2,
-      "id": "qpcng3oFHS9",
-      "attributeValues": []
-    },
-    {
-      "code": "pending",
-      "name": "Pending",
-      "created": "2025-02-15T08:53:22.449",
-      "lastUpdated": "2025-02-15T08:53:22.495",
-      "translations": [],
-      "optionSet": {
-        "id": "GvCWttSR2pv"
-      },
-      "sortOrder": 3,
-      "id": "N7MSTvv0PbV",
+      "valueType": "TEXT",
+      "version": 6,
+      "id": "It38VvS3E2c",
       "attributeValues": []
     }
   ],
@@ -265,538 +324,23 @@
         "displayName": "Tom Wakiki",
         "username": "system"
       },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rwrw----"
+      },
       "shortName": "default",
       "organisationUnits": [],
       "id": "xYerKDKCefk",
       "attributeValues": []
     }
   ],
-  "categories": [
-    {
-      "code": "default",
-      "name": "default",
-      "created": "2012-11-21T12:15:18.537",
-      "lastUpdated": "2025-04-18T10:57:51.153",
-      "translations": [],
-      "createdBy": {
-        "id": "GOLswS44mh8",
-        "code": null,
-        "name": "Tom Wakiki",
-        "displayName": "Tom Wakiki",
-        "username": "system"
-      },
-      "shortName": "default",
-      "dataDimensionType": "DISAGGREGATION",
-      "dataDimension": false,
-      "categoryOptions": [
-        {
-          "id": "xYerKDKCefk"
-        }
-      ],
-      "id": "GLevLNI9wkl",
-      "attributeValues": []
-    }
-  ],
-  "programStageDataElements": [
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "L5YKpJEzCR1"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 5,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "ZcCT84SEBHc"
-    },
-    {
-      "created": "2025-02-25T12:55:39.350",
-      "lastUpdated": "2025-04-16T21:07:26.614",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "WvwRmFG7udm"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 4,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "MmxLKlR30wU"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "Wno4M1rmwHr"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 15,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "NGoAiQDWWBt"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.615",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "rMnWeGTBnKo"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 18,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "vf37pLk4aA3"
-    },
-    {
-      "created": "2025-03-12T14:58:44.329",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "guutPq3seaj"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 25,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "ZXZicUY3mO8"
-    },
-    {
-      "created": "2025-03-06T07:00:01.734",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "jmUQ1B95ZP9"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 23,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "xH7ytgsoJ3d"
-    },
-    {
-      "created": "2025-01-07T13:34:39.251",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "YLxv92NmyFD"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 12,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "AdjTd5AchEe"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "pf27agpzDak"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 19,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "ggYZJPPMGFt"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "z6u0MJRMxOw"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 1,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Az9Eb04yuGu"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "XioJoxZsHVn"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 13,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "gJs0ysiQ9hP"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.615",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "eqSFoW6vuam"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 0,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "CYXTkeKZyZD"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.616",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "HAOSMsp1TXB"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 14,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "pHOCD0bg5S3"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "kDreDTHEauZ"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 16,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "CHpQumdteEx"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "jR58BZSMB6B"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 11,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Nc3jmWKtgII"
-    },
-    {
-      "created": "2025-03-06T07:00:01.734",
-      "lastUpdated": "2025-04-16T21:07:26.615",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "wetRbzCTyYO"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 24,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "gD0qWQeTjxH"
-    },
-    {
-      "created": "2025-01-07T13:34:39.251",
-      "lastUpdated": "2025-04-16T21:07:26.614",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "zqiHZrr50rJ"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 7,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "MDxo6eAYWED"
-    },
-    {
-      "created": "2025-02-21T08:43:16.285",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "m75JpouZBy8"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 20,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "hA6Y8zzDMsk"
-    },
-    {
-      "created": "2025-01-07T13:34:39.251",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "eb7SYR3EHEZ"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 2,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "SzSrqCNGDBT"
-    },
-    {
-      "created": "2025-04-16T21:07:26.618",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "z3Qe8czE7LE"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 26,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "hyslcRQpYwU"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.616",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "jGlGi4ABpTL"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 8,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "pKyUggTuXSW"
-    },
-    {
-      "created": "2025-02-15T09:45:08.316",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "p4m3y1jLgpv"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 21,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "jQ0k1ub3cfr"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.617",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "PCoXOnxAzwr"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 10,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Wytm3NQKX6d"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.616",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "QRaMM9LMM3y"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 17,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "eWFajkJvoU9"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.618",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "nEAFd0oKJzb"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 3,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "mjOhfZnAnqF"
-    },
-    {
-      "created": "2025-01-07T13:34:39.251",
-      "lastUpdated": "2025-04-16T21:07:26.614",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "jDSCfb245G5"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 6,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "q0jUzjJPXEZ"
-    },
-    {
-      "created": "2025-01-07T13:34:39.252",
-      "lastUpdated": "2025-04-16T21:07:26.615",
-      "programStage": {
-        "id": "VdBma23iRTw"
-      },
-      "dataElement": {
-        "id": "KctgA83s81V"
-      },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 9,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "qULzeSX0Idy"
-    }
-  ],
   "programTrackedEntityAttributes": [
     {
-      "created": "2025-01-07T13:34:39.089",
-      "lastUpdated": "2025-03-26T03:59:36.866",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T22:25:11.847",
       "program": {
         "id": "dJELklAE1ZZ"
       },
@@ -811,8 +355,8 @@
       }
     },
     {
-      "created": "2025-01-07T13:34:39.089",
-      "lastUpdated": "2025-03-26T03:59:36.866",
+      "created": "2025-04-23T21:54:17.004",
+      "lastUpdated": "2025-04-23T22:25:11.847",
       "program": {
         "id": "dJELklAE1ZZ"
       },
@@ -827,8 +371,8 @@
       }
     },
     {
-      "created": "2025-03-18T08:59:16.568",
-      "lastUpdated": "2025-03-26T03:59:36.866",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T22:25:11.848",
       "program": {
         "id": "dJELklAE1ZZ"
       },
@@ -843,979 +387,175 @@
       }
     }
   ],
-  "optionSets": [
-    {
-      "name": "FC: Approval status",
-      "created": "2025-02-15T08:52:56.523",
-      "lastUpdated": "2025-02-15T08:53:22.658",
-      "translations": [],
-      "createdBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "options": [
-        {
-          "id": "VdllG4CKoD4"
-        },
-        {
-          "id": "kDzsaqyIaPo"
-        },
-        {
-          "id": "N7MSTvv0PbV"
-        }
-      ],
-      "valueType": "TEXT",
-      "version": 3,
-      "id": "GvCWttSR2pv",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA001",
-      "name": "FC:Active status",
-      "created": "2025-01-07T14:40:46.819",
-      "lastUpdated": "2025-01-07T14:44:31.422",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "options": [
-        {
-          "id": "epSrOaPxNrL"
-        },
-        {
-          "id": "qpcng3oFHS9"
-        }
-      ],
-      "valueType": "TEXT",
-      "version": 6,
-      "id": "It38VvS3E2c",
-      "attributeValues": []
-    }
-  ],
-  "categoryOptionCombos": [
+  "categoryCombos": [
     {
       "code": "default",
       "name": "default",
-      "created": "2011-12-24T12:24:25.319",
-      "lastUpdated": "2011-12-24T12:24:25.319",
+      "created": "2011-12-24T12:24:25.203",
+      "lastUpdated": "2016-04-12T20:37:49.126",
       "translations": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
-      "categoryOptions": [
+      "categories": [
         {
-          "id": "xYerKDKCefk"
+          "id": "GLevLNI9wkl"
         }
       ],
-      "ignoreApproval": false,
-      "id": "HllvX50cXC0",
+      "dataDimensionType": "DISAGGREGATION",
+      "skipTotal": false,
+      "id": "bjDvmb4bfuf"
+    }
+  ],
+  "options": [
+    {
+      "code": "open",
+      "name": "Open",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T21:54:17.246",
+      "translations": [],
+      "optionSet": {
+        "id": "It38VvS3E2c"
+      },
+      "sortOrder": 1,
+      "id": "epSrOaPxNrL",
+      "attributeValues": []
+    },
+    {
+      "code": "rejected",
+      "name": "Rejected",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T21:54:17.246",
+      "translations": [],
+      "optionSet": {
+        "id": "GvCWttSR2pv"
+      },
+      "sortOrder": 2,
+      "id": "kDzsaqyIaPo",
+      "attributeValues": []
+    },
+    {
+      "code": "approved",
+      "name": "Approved",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T21:54:17.246",
+      "translations": [],
+      "optionSet": {
+        "id": "GvCWttSR2pv"
+      },
+      "sortOrder": 1,
+      "id": "VdllG4CKoD4",
+      "attributeValues": []
+    },
+    {
+      "code": "closed",
+      "name": "Closed",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T21:54:17.246",
+      "translations": [],
+      "optionSet": {
+        "id": "It38VvS3E2c"
+      },
+      "sortOrder": 2,
+      "id": "qpcng3oFHS9",
+      "attributeValues": []
+    },
+    {
+      "code": "pending",
+      "name": "Pending",
+      "created": "2025-04-23T21:54:17.005",
+      "lastUpdated": "2025-04-23T21:54:17.246",
+      "translations": [],
+      "optionSet": {
+        "id": "GvCWttSR2pv"
+      },
+      "sortOrder": 3,
+      "id": "N7MSTvv0PbV",
       "attributeValues": []
     }
   ],
-  "programStages": [
+  "dataEntryForms": [
+    {
+      "name": "FC:Facility checker",
+      "created": "2025-04-23T22:15:25.157",
+      "lastUpdated": "2025-04-23T22:24:58.648",
+      "translations": [],
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
+      "format": 0,
+      "id": "luXQOrb9npU"
+    },
     {
       "name": "Profile logs",
-      "created": "2025-01-07T13:34:39.251",
-      "lastUpdated": "2025-04-16T21:07:26.610",
+      "created": "2025-04-23T22:15:40.475",
+      "lastUpdated": "2025-04-23T22:25:07.865",
       "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
       "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
-      "minDaysFromStart": 0,
-      "program": {
-        "id": "dJELklAE1ZZ"
-      },
-      "programStageDataElements": [
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.615",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "eqSFoW6vuam"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 0,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "CYXTkeKZyZD",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "z6u0MJRMxOw"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 1,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "Az9Eb04yuGu",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.251",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "eb7SYR3EHEZ"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 2,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "SzSrqCNGDBT",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "nEAFd0oKJzb"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 3,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "mjOhfZnAnqF",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-02-25T12:55:39.350",
-          "lastUpdated": "2025-04-16T21:07:26.614",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "WvwRmFG7udm"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 4,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "MmxLKlR30wU",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "L5YKpJEzCR1"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 5,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "ZcCT84SEBHc",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.251",
-          "lastUpdated": "2025-04-16T21:07:26.614",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "jDSCfb245G5"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 6,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "q0jUzjJPXEZ",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.251",
-          "lastUpdated": "2025-04-16T21:07:26.614",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "zqiHZrr50rJ"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 7,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "MDxo6eAYWED",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.616",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "jGlGi4ABpTL"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 8,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "pKyUggTuXSW",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.615",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "KctgA83s81V"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 9,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "qULzeSX0Idy",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "PCoXOnxAzwr"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 10,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "Wytm3NQKX6d",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "jR58BZSMB6B"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 11,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "Nc3jmWKtgII",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.251",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "YLxv92NmyFD"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 12,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "AdjTd5AchEe",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "XioJoxZsHVn"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 13,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "gJs0ysiQ9hP",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.616",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "HAOSMsp1TXB"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 14,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "pHOCD0bg5S3",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "Wno4M1rmwHr"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 15,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "NGoAiQDWWBt",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "kDreDTHEauZ"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 16,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "CHpQumdteEx",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.616",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "QRaMM9LMM3y"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 17,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "eWFajkJvoU9",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.615",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "rMnWeGTBnKo"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 18,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "vf37pLk4aA3",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-01-07T13:34:39.252",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "pf27agpzDak"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 19,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "ggYZJPPMGFt",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-02-21T08:43:16.285",
-          "lastUpdated": "2025-04-16T21:07:26.617",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "m75JpouZBy8"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 20,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "hA6Y8zzDMsk",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-02-15T09:45:08.316",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "p4m3y1jLgpv"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 21,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "jQ0k1ub3cfr",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-03-06T07:00:01.734",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "jmUQ1B95ZP9"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 23,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "xH7ytgsoJ3d",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-03-06T07:00:01.734",
-          "lastUpdated": "2025-04-16T21:07:26.615",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "wetRbzCTyYO"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 24,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "gD0qWQeTjxH",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-03-12T14:58:44.329",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "guutPq3seaj"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 25,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "ZXZicUY3mO8",
-          "attributeValues": []
-        },
-        {
-          "created": "2025-04-16T21:07:26.618",
-          "lastUpdated": "2025-04-16T21:07:26.618",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "favorites": [],
-          "sharing": {
-            "external": false,
-            "users": {},
-            "userGroups": {}
-          },
-          "programStage": {
-            "id": "VdBma23iRTw"
-          },
-          "dataElement": {
-            "id": "z3Qe8czE7LE"
-          },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 26,
-          "displayInReports": false,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "hyslcRQpYwU",
-          "attributeValues": []
-        }
-      ],
-      "autoGenerateEvent": true,
-      "validationStrategy": "ON_COMPLETE",
-      "displayGenerateEventBox": true,
-      "featureType": "POINT",
-      "blockEntryForm": false,
-      "preGenerateUID": false,
-      "remindCompleted": false,
-      "generatedByEnrollmentDate": false,
-      "allowGenerateNextVisit": false,
-      "openAfterEnrollment": false,
-      "sortOrder": 1,
-      "hideDueDate": false,
-      "enableUserAssignment": false,
-      "referral": false,
-      "id": "VdBma23iRTw",
-      "attributeValues": [],
-      "repeatable": true,
-      "programStageSections": [],
-      "notificationTemplates": []
+      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
+      "format": 0,
+      "id": "jtRQ5PD72D8"
     }
   ],
   "trackedEntityTypes": [
     {
       "name": "FCA:Facility",
-      "created": "2025-01-07T13:26:21.827",
-      "lastUpdated": "2025-03-26T03:58:36.542",
+      "created": "2025-04-23T21:54:17.329",
+      "lastUpdated": "2025-04-23T21:54:17.329",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
       "description": "Facility checker: Facility",
       "trackedEntityTypeAttributes": [
         {
           "name": "FCA:Facility FC:DHIS2 UID",
-          "created": "2025-01-07T13:26:21.565",
-          "lastUpdated": "2025-03-26T03:58:36.543",
+          "created": "2025-04-23T21:54:17.007",
+          "lastUpdated": "2025-04-23T21:54:17.329",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -1839,12 +579,20 @@
         },
         {
           "name": "FCA:Facility FC:Active status",
-          "created": "2025-01-07T13:26:21.566",
-          "lastUpdated": "2025-03-26T03:58:36.543",
+          "created": "2025-04-23T21:54:17.007",
+          "lastUpdated": "2025-04-23T21:54:17.330",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -1868,12 +616,20 @@
         },
         {
           "name": "FCA:Facility FC:Code",
-          "created": "2025-03-18T09:01:42.932",
-          "lastUpdated": "2025-03-26T03:58:36.543",
+          "created": "2025-04-23T21:54:17.007",
+          "lastUpdated": "2025-04-23T21:54:17.330",
           "translations": [],
           "externalAccess": false,
           "userGroupAccesses": [],
           "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
           "favorites": [],
           "sharing": {
             "external": false,
@@ -1904,935 +660,1178 @@
       "attributeValues": []
     }
   ],
-  "dataElements": [
+  "categories": [
     {
-      "code": "FCA_005",
-      "name": "FC:DHIS2 path",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.918",
+      "code": "default",
+      "name": "default",
+      "created": "2012-11-21T12:15:18.537",
+      "lastUpdated": "2025-04-23T21:53:37.915",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
-      "shortName": "DHIS2 path",
-      "formName": "DHIS2 path",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "eqSFoW6vuam",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "name": "FC:Approval status",
-      "created": "2025-02-15T08:52:33.777",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Approval status",
-      "formName": "Approval status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "optionSet": {
-        "id": "GvCWttSR2pv"
-      },
-      "id": "p4m3y1jLgpv",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_001",
-      "name": "FC:Name",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility name",
-      "formName": "Facility name",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "z6u0MJRMxOw",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "name": "FC:Synced",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-04-16T21:16:21.854",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Synced",
-      "formName": "Sync status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TRUE_ONLY",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "m75JpouZBy8",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_007",
-      "name": "FC:Translations",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Translations",
-      "formName": "Translations",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "pf27agpzDak",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_011",
-      "name": "FC:Opening date",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Opening date",
-      "formName": "Facility opening date",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "PCoXOnxAzwr",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_009",
-      "name": "FC:Image",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility Image",
-      "formName": "Facility Image",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "IMAGE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "QRaMM9LMM3y",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_003",
-      "name": "FC:Code",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility code",
-      "formName": "Facility code",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "nEAFd0oKJzb",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_019",
-      "name": "FC:Type",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility type",
-      "description": "FCGS:J5jldMd8OHv",
-      "formName": "Facility type",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "zqiHZrr50rJ",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_010",
-      "name": "FC:Description",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility Description",
-      "formName": "Facility Description",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "L5YKpJEzCR1",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_012",
-      "name": "FC:Closing date",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Closing date",
-      "formName": "Facility closing date",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jR58BZSMB6B",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_020",
-      "name": "FC:Location",
-      "created": "2025-01-07T13:08:49.196",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility location",
-      "description": "FCGS:Cbuj0VCyDjL",
-      "formName": "Facility location",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "KctgA83s81V",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_021",
-      "name": "FC:Owner",
-      "created": "2025-01-07T13:08:49.196",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility owner",
-      "description": "FCGS:Bpx0589u8y0",
-      "formName": "Facility owner",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jGlGi4ABpTL",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_018",
-      "name": "FC:Url",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Url",
-      "formName": "Facility Url",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "kDreDTHEauZ",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_Aprby",
-      "name": "FC:Approved by",
-      "created": "2025-03-06T06:57:55.297",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Approved by",
-      "formName": "Approved by",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jmUQ1B95ZP9",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_016",
-      "name": "FC:Contact person",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Contact person",
-      "formName": "Facility Contact person",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "XioJoxZsHVn",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_017",
-      "name": "FC:Attributevalues",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Attributevalues",
-      "formName": "Attributevalues",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "rMnWeGTBnKo",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_004",
-      "name": "FC:DHIS2 UID",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "DHIS2 UID",
-      "formName": "DHIS2 UID",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jDSCfb245G5",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FC:INF",
-      "name": "FC:Is new facility",
-      "created": "2025-03-12T14:58:27.929",
-      "lastUpdated": "2025-03-26T03:46:13.923",
-      "translations": [],
-      "createdBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Is new facility",
-      "formName": "Is new facility",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TRUE_ONLY",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "guutPq3seaj",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_015",
-      "name": "FC:Email",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Email",
-      "formName": "Facility contact email",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "Wno4M1rmwHr",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_Aprat",
-      "name": "FC:Approved at",
-      "created": "2025-04-16T21:07:04.097",
-      "lastUpdated": "2025-04-16T21:07:04.097",
-      "translations": [],
-      "createdBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Approved at",
-      "formName": "Approved at",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "z3Qe8czE7LE",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_002",
-      "name": "FC:Short name",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Facility short name",
-      "formName": "Facility short name",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "eb7SYR3EHEZ",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "name": "FC:Active status",
-      "created": "2025-02-25T12:55:05.238",
-      "lastUpdated": "2025-03-26T03:46:13.920",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "FC:Active status",
-      "formName": "Active status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "optionSet": {
-        "id": "It38VvS3E2c"
-      },
-      "id": "WvwRmFG7udm",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_014",
-      "name": "FC:Address",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-04-07T04:03:15.214",
-      "translations": [
+      "shortName": "default",
+      "dataDimensionType": "DISAGGREGATION",
+      "dataDimension": false,
+      "categoryOptions": [
         {
-          "locale": "vi",
-          "property": "FORM_NAME",
-          "value": "Địa chỉ"
+          "id": "xYerKDKCefk"
         }
       ],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Address",
-      "formName": "Facility Address",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "YLxv92NmyFD",
-      "attributeValues": [],
+      "id": "GLevLNI9wkl",
+      "attributeValues": []
+    }
+  ],
+  "categoryOptionCombos": [
+    {
+      "code": "default",
+      "name": "default",
+      "created": "2011-12-24T12:24:25.319",
+      "lastUpdated": "2011-12-24T12:24:25.319",
+      "translations": [],
       "categoryCombo": {
         "id": "bjDvmb4bfuf"
-      }
-    },
+      },
+      "categoryOptions": [
+        {
+          "id": "xYerKDKCefk"
+        }
+      ],
+      "ignoreApproval": false,
+      "id": "HllvX50cXC0",
+      "attributeValues": []
+    }
+  ],
+  "programStages": [
     {
-      "code": "FCA_RR",
-      "name": "FC:Reason for Reject",
-      "created": "2025-03-06T06:58:53.767",
-      "lastUpdated": "2025-03-26T03:46:13.923",
+      "name": "Profile logs",
+      "created": "2025-04-23T21:54:17.342",
+      "lastUpdated": "2025-04-23T22:15:40.489",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
-      "shortName": "Reason for Reject",
-      "formName": "Reason for Reject",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "wetRbzCTyYO",
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rwr-----",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-rw----",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-rw----",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-rw----",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "minDaysFromStart": 0,
+      "program": {
+        "id": "dJELklAE1ZZ"
+      },
+      "programStageDataElements": [
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "eqSFoW6vuam"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 0,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "CYXTkeKZyZD",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "z6u0MJRMxOw"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 1,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "Az9Eb04yuGu",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "eb7SYR3EHEZ"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 2,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "SzSrqCNGDBT",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.492",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "nEAFd0oKJzb"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 3,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "mjOhfZnAnqF",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.342",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "WvwRmFG7udm"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 4,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "MmxLKlR30wU",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "L5YKpJEzCR1"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 5,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "ZcCT84SEBHc",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "jDSCfb245G5"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 6,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "q0jUzjJPXEZ",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.342",
+          "lastUpdated": "2025-04-23T22:15:40.490",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "zqiHZrr50rJ"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 7,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "MDxo6eAYWED",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "jGlGi4ABpTL"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 8,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "pKyUggTuXSW",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "KctgA83s81V"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 9,
+          "displayInReports": true,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "qULzeSX0Idy",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "PCoXOnxAzwr"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 10,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "Wytm3NQKX6d",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "jR58BZSMB6B"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 11,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "Nc3jmWKtgII",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "YLxv92NmyFD"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 12,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "AdjTd5AchEe",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "XioJoxZsHVn"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 13,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "gJs0ysiQ9hP",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "HAOSMsp1TXB"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 14,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "pHOCD0bg5S3",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.492",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "Wno4M1rmwHr"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 15,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "NGoAiQDWWBt",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.492",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "kDreDTHEauZ"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 16,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "CHpQumdteEx",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "QRaMM9LMM3y"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 17,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "eWFajkJvoU9",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "rMnWeGTBnKo"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 18,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "vf37pLk4aA3",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "pf27agpzDak"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 19,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "ggYZJPPMGFt",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "m75JpouZBy8"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 20,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "hA6Y8zzDMsk",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "p4m3y1jLgpv"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 21,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "jQ0k1ub3cfr",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "jmUQ1B95ZP9"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 23,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "xH7ytgsoJ3d",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "wetRbzCTyYO"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 24,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "gD0qWQeTjxH",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.492",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "guutPq3seaj"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 25,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "ZXZicUY3mO8",
+          "attributeValues": []
+        },
+        {
+          "created": "2025-04-23T21:54:17.343",
+          "lastUpdated": "2025-04-23T22:15:40.491",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": {
+            "manage": true,
+            "externalize": true,
+            "write": true,
+            "read": true,
+            "update": true,
+            "delete": true
+          },
+          "favorites": [],
+          "sharing": {
+            "external": false,
+            "users": {},
+            "userGroups": {}
+          },
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "z3Qe8czE7LE"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 26,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "hyslcRQpYwU",
+          "attributeValues": []
+        }
+      ],
+      "dataEntryForm": {
+        "id": "jtRQ5PD72D8"
+      },
+      "autoGenerateEvent": true,
+      "validationStrategy": "ON_COMPLETE",
+      "displayGenerateEventBox": true,
+      "featureType": "POINT",
+      "blockEntryForm": false,
+      "preGenerateUID": false,
+      "remindCompleted": false,
+      "generatedByEnrollmentDate": false,
+      "allowGenerateNextVisit": false,
+      "openAfterEnrollment": false,
+      "sortOrder": 1,
+      "hideDueDate": false,
+      "enableUserAssignment": false,
+      "referral": false,
+      "id": "VdBma23iRTw",
       "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
-    },
-    {
-      "code": "FCA_013",
-      "name": "FC:Phone",
-      "created": "2025-01-07T13:08:49.195",
-      "lastUpdated": "2025-03-26T03:46:13.921",
-      "translations": [],
-      "createdBy": {
-        "id": "e7xhw2zLJbK",
-        "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
-      },
-      "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
-        "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
-      },
-      "shortName": "Phone",
-      "formName": "Facility contact number",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "HAOSMsp1TXB",
-      "attributeValues": [],
-      "categoryCombo": {
-        "id": "bjDvmb4bfuf"
-      }
+      "repeatable": true,
+      "programStageSections": [],
+      "notificationTemplates": []
     }
   ],
   "trackedEntityAttributes": [
     {
       "code": "FCA:005",
       "name": "FC:Active status",
-      "created": "2025-01-07T13:12:53.580",
-      "lastUpdated": "2025-03-28T04:14:40.386",
-      "translations": [
-        {
-          "locale": "vi",
-          "property": "NAME",
-          "value": "Trạng thái hoạt động"
-        },
-        {
-          "locale": "vi",
-          "property": "FORM_NAME",
-          "value": "Trạng thái hoạt động"
-        }
-      ],
+      "created": "2025-04-23T21:54:17.320",
+      "lastUpdated": "2025-04-23T21:54:17.320",
+      "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "Ze9f8VN6ZhW",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "Dung Ng",
-        "displayName": "Dung Ng",
-        "username": "dung"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
       "shortName": "Active status",
       "formName": "Facility operational status",
@@ -2857,22 +1856,29 @@
     {
       "code": "FCA:003",
       "name": "FC:Code",
-      "created": "2025-01-07T13:11:45.110",
-      "lastUpdated": "2025-01-07T13:11:45.110",
+      "created": "2025-04-23T21:54:17.320",
+      "lastUpdated": "2025-04-23T21:54:17.320",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
       "shortName": "Facility code",
       "formName": "Facility code",
@@ -2894,22 +1900,29 @@
     {
       "code": "FCA:004",
       "name": "FC:DHIS2 UID",
-      "created": "2025-01-07T13:12:12.287",
-      "lastUpdated": "2025-01-07T13:12:12.287",
+      "created": "2025-04-23T21:54:17.320",
+      "lastUpdated": "2025-04-23T21:54:17.320",
       "translations": [],
       "createdBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
       },
       "lastUpdatedBy": {
-        "id": "e7xhw2zLJbK",
+        "id": "GOLswS44mh8",
         "code": null,
-        "name": "John Lewis",
-        "displayName": "John Lewis",
-        "username": "john"
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {},
+        "public": "rw------"
       },
       "shortName": "DHIS2 UID",
       "formName": "Facility DHIS2 UID",
@@ -2927,6 +1940,2128 @@
       "skipSynchronization": false,
       "id": "prbjtVvKNet",
       "attributeValues": []
+    }
+  ],
+  "programStageDataElements": [
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "L5YKpJEzCR1"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 5,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "ZcCT84SEBHc"
+    },
+    {
+      "created": "2025-04-23T21:54:17.342",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "WvwRmFG7udm"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 4,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "MmxLKlR30wU"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.492",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "Wno4M1rmwHr"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 15,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "NGoAiQDWWBt"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "rMnWeGTBnKo"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 18,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "vf37pLk4aA3"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.492",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "guutPq3seaj"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 25,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "ZXZicUY3mO8"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "jmUQ1B95ZP9"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 23,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "xH7ytgsoJ3d"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "YLxv92NmyFD"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 12,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "AdjTd5AchEe"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "pf27agpzDak"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 19,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "ggYZJPPMGFt"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "z6u0MJRMxOw"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 1,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "Az9Eb04yuGu"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "XioJoxZsHVn"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 13,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "gJs0ysiQ9hP"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "eqSFoW6vuam"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 0,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "CYXTkeKZyZD"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "HAOSMsp1TXB"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 14,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "pHOCD0bg5S3"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.492",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "kDreDTHEauZ"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 16,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "CHpQumdteEx"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "jR58BZSMB6B"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 11,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "Nc3jmWKtgII"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "wetRbzCTyYO"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 24,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "gD0qWQeTjxH"
+    },
+    {
+      "created": "2025-04-23T21:54:17.342",
+      "lastUpdated": "2025-04-23T22:15:40.490",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "zqiHZrr50rJ"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 7,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "MDxo6eAYWED"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "m75JpouZBy8"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 20,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "hA6Y8zzDMsk"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "eb7SYR3EHEZ"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 2,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "SzSrqCNGDBT"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "z3Qe8czE7LE"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 26,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "hyslcRQpYwU"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "jGlGi4ABpTL"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 8,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "pKyUggTuXSW"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "p4m3y1jLgpv"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 21,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "jQ0k1ub3cfr"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "PCoXOnxAzwr"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 10,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "Wytm3NQKX6d"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "QRaMM9LMM3y"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 17,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "eWFajkJvoU9"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.492",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "nEAFd0oKJzb"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 3,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "mjOhfZnAnqF"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "jDSCfb245G5"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 6,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "q0jUzjJPXEZ"
+    },
+    {
+      "created": "2025-04-23T21:54:17.343",
+      "lastUpdated": "2025-04-23T22:15:40.491",
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "KctgA83s81V"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 9,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "qULzeSX0Idy"
+    }
+  ],
+  "dataElements": [
+    {
+      "code": "FCA_005",
+      "name": "FC:DHIS2 path",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.243",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "DHIS2 path",
+      "formName": "DHIS2 path",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "eqSFoW6vuam",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "name": "FC:Approval status",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Approval status",
+      "formName": "Approval status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "optionSet": {
+        "id": "GvCWttSR2pv"
+      },
+      "id": "p4m3y1jLgpv",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_001",
+      "name": "FC:Name",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.250",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility name",
+      "formName": "Facility name",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "z6u0MJRMxOw",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "name": "FC:Synced",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Synced",
+      "formName": "Sync status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TRUE_ONLY",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "m75JpouZBy8",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_007",
+      "name": "FC:Translations",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Translations",
+      "formName": "Translations",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "pf27agpzDak",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_011",
+      "name": "FC:Opening date",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Opening date",
+      "formName": "Facility opening date",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "PCoXOnxAzwr",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_009",
+      "name": "FC:Image",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility Image",
+      "formName": "Facility Image",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "IMAGE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "QRaMM9LMM3y",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_003",
+      "name": "FC:Code",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.250",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility code",
+      "formName": "Facility code",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "nEAFd0oKJzb",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_019",
+      "name": "FC:Type",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility type",
+      "description": "FCGS:J5jldMd8OHv",
+      "formName": "Facility type",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "zqiHZrr50rJ",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_010",
+      "name": "FC:Description",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility Description",
+      "formName": "Facility Description",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "L5YKpJEzCR1",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_012",
+      "name": "FC:Closing date",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Closing date",
+      "formName": "Facility closing date",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jR58BZSMB6B",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_020",
+      "name": "FC:Location",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility location",
+      "description": "FCGS:Cbuj0VCyDjL",
+      "formName": "Facility location",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "KctgA83s81V",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_021",
+      "name": "FC:Owner",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility owner",
+      "description": "FCGS:Bpx0589u8y0",
+      "formName": "Facility owner",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jGlGi4ABpTL",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_018",
+      "name": "FC:Url",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Url",
+      "formName": "Facility Url",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "kDreDTHEauZ",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_Aprby",
+      "name": "FC:Approved by",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Approved by",
+      "formName": "Approved by",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jmUQ1B95ZP9",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_016",
+      "name": "FC:Contact person",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Contact person",
+      "formName": "Facility Contact person",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "XioJoxZsHVn",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_017",
+      "name": "FC:Attributevalues",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Attributevalues",
+      "formName": "Attributevalues",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "rMnWeGTBnKo",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_004",
+      "name": "FC:DHIS2 UID",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "DHIS2 UID",
+      "formName": "DHIS2 UID",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jDSCfb245G5",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FC:INF",
+      "name": "FC:Is new facility",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Is new facility",
+      "formName": "Is new facility",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TRUE_ONLY",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "guutPq3seaj",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_015",
+      "name": "FC:Email",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Email",
+      "formName": "Facility contact email",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "Wno4M1rmwHr",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_Aprat",
+      "name": "FC:Approved at",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Approved at",
+      "formName": "Approved at",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "z3Qe8czE7LE",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_002",
+      "name": "FC:Short name",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.250",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Facility short name",
+      "formName": "Facility short name",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "eb7SYR3EHEZ",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "name": "FC:Active status",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.250",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "FC:Active status",
+      "formName": "Active status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "optionSet": {
+        "id": "It38VvS3E2c"
+      },
+      "id": "WvwRmFG7udm",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_014",
+      "name": "FC:Address",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [
+        {
+          "locale": "vi",
+          "property": "FORM_NAME",
+          "value": "Địa chỉ"
+        }
+      ],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Address",
+      "formName": "Facility Address",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "YLxv92NmyFD",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_RR",
+      "name": "FC:Reason for Reject",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.252",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Reason for Reject",
+      "formName": "Reason for Reject",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "wetRbzCTyYO",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
+    },
+    {
+      "code": "FCA_013",
+      "name": "FC:Phone",
+      "created": "2025-04-23T21:54:17.288",
+      "lastUpdated": "2025-04-23T22:00:42.251",
+      "translations": [],
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "owner": "GOLswS44mh8",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "Phone",
+      "formName": "Facility contact number",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "HAOSMsp1TXB",
+      "attributeValues": [],
+      "categoryCombo": {
+        "id": "bjDvmb4bfuf"
+      }
     }
   ]
 }

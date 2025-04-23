@@ -43,13 +43,24 @@ const Summary = () => {
       const newOptionSetId = generateUid();
       newDataElements.push({
         id: newDataElementId,
-        name: foundGs.name,
+        name: "FC:" + foundGs.name,
         shortName: foundGs.name,
         valueType: "TEXT",
         domainType: "TRACKER",
         aggregationType: "COUNT",
         optionSet: {
           id: newOptionSetId
+        },
+        sharing: {
+          external: false,
+          users: {},
+          userGroups: {
+            MJK6n5PLXM6: { access: "rw------", id: "MJK6n5PLXM6" },
+            m6GidmfEK48: { access: "r-------", id: "m6GidmfEK48" },
+            shYXBFb3lpw: { access: "r-------", id: "shYXBFb3lpw" },
+            xd865kZFSRw: { access: "r-------", id: "xd865kZFSRw" }
+          },
+          public: "--------"
         }
       });
       newProgramStageDataElements.push({
@@ -65,7 +76,7 @@ const Summary = () => {
       });
       const newOptionSet = {
         id: newOptionSetId,
-        name: foundGs.name,
+        name: "FC:" + foundGs.name,
         shortName: foundGs.name,
         valueType: "TEXT",
         options: []
@@ -92,6 +103,14 @@ const Summary = () => {
     clonedMetadata.dataElements.push(...newDataElements);
     clonedMetadata.optionSets.push(...newOptionSets);
     clonedMetadata.options.push(...newOptions);
+    members.forEach((member) => {
+      const foundInSkippedOrgUnits = skippedOrgUnits.find((sou) => sou.id === member.id);
+      if (!foundInSkippedOrgUnits) {
+        clonedMetadata.programs[0].organisationUnits.push({
+          id: member.id
+        });
+      }
+    });
     setStepData("summary", "metadataPackage", clonedMetadata);
   }, []);
 
@@ -121,6 +140,7 @@ const Summary = () => {
             </DataTableHead>
             <DataTableBody>
               {Object.keys(metadataPackage).map((key) => {
+                console.log(key);
                 const foundSchema = schemas.find((schema) => schema.plural === key);
                 const currentMetadata = metadataPackage[key];
                 return (

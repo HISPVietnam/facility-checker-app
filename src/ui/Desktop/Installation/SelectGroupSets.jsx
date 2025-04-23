@@ -19,11 +19,12 @@ const SelectGroupSets = () => {
       locale: state.locale
     }))
   );
-  const { selectGroupSets, actions, valid } = useInstallationModuleStore(
+  const { selectGroupSets, actions, valid, status } = useInstallationModuleStore(
     useShallow((state) => ({
       selectGroupSets: state.selectGroupSets,
       valid: state.valid,
-      actions: state.actions
+      actions: state.actions,
+      status: state.status
     }))
   );
   const { selectedGroupSets, skippedOrgUnits, members } = selectGroupSets;
@@ -74,6 +75,7 @@ const SelectGroupSets = () => {
       <div>{t("selectGroupSetsParagraph1")}</div>
       <div>
         <CustomizedInputField
+          disabled={status !== "pending"}
           value={selectedGroupSets}
           onChange={(value) => {
             setStepData("selectGroupSets", "selectedGroupSets", value);

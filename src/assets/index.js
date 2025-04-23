@@ -80,4 +80,9 @@ metadata.trackedEntityAttributes.forEach(tea=>{
     delete tea.lastUpdatedBy;
     delete tea.translations;
 });
+metadata.dataEntryForms.forEach(tea=>{
+    delete tea.created;
+    delete tea.lastUpdated;
+    delete tea.lastUpdatedBy;
+});
 jsonfile.writeFileSync("./payload.json", metadata)

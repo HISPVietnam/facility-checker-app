@@ -148,6 +148,7 @@ export default {
   install: "Install",
   installParagraph1: "This is the final step 🏁, click Install button to start the installation process.",
   installParagraph2: "Installation process has been started, please do not close the app until it's completed.",
+  installParagraph3: "Congratulations! 🎉🎉🎉, installation process has been done successfully, click this button to start using the app 👉",
   importMetadata: "Importing metadata",
   importFacilities: "Importing facilities"
 };

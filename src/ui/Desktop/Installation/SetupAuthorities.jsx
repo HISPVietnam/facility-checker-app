@@ -17,11 +17,12 @@ const SetupAuthorities = () => {
       users: state.users
     }))
   );
-  const { actions, valid, setupAuthorities } = useInstallationModuleStore(
+  const { actions, valid, setupAuthorities, status } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
-      setupAuthorities: state.setupAuthorities
+      setupAuthorities: state.setupAuthorities,
+      status: state.status
     }))
   );
   const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers } = setupAuthorities;
@@ -76,6 +77,7 @@ const SetupAuthorities = () => {
             </div>
             <div>
               <CustomizedInputField
+                disabled={status !== "pending"}
                 value={mapping[name]}
                 onChange={(value) => {
                   setStepData("setupAuthorities", name + "Users", value);

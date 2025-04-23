@@ -13,11 +13,6 @@ import { pushMetadata } from "@/api/metadata";
 
 const Install = () => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState({
-    overall: false,
-    importMetadata: false
-    // importFacilities: true
-  });
   const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
@@ -27,21 +22,26 @@ const Install = () => {
     }))
   );
 
-  const { actions, valid, selectGroupSets, setupAuthorities, summary } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, setupAuthorities, summary, install, status } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       setupAuthorities: state.setupAuthorities,
-      summary: state.summary
+      summary: state.summary,
+      status: state.status,
+      install: state.install
     }))
   );
+  const { loading } = install;
+  const { setStatus, setStepData } = actions;
   const { metadataPackage } = summary;
   const { members, skippedOrgUnits, selectedGroupSets } = selectGroupSets;
 
   const changeLoading = (key, value) => {
-    loading[key] = value;
-    setLoading({ ...loading });
+    const cloned = _.cloneDeep(loading);
+    cloned[key] = value;
+    setStepData("install", "loading", cloned);
   };
 
   return (
@@ -51,26 +51,26 @@ const Install = () => {
       <br />
       <div>
         <CustomizedButton
+          disabled={status !== "pending"}
           loading={loading.overall}
           primary
           icon={<FontAwesomeIcon icon={faPlay} />}
           onClick={async () => {
-            changeLoading("overall", true);
+            setStatus("importing");
             changeLoading("importMetadata", true);
             await pushMetadata(metadataPackage);
             changeLoading("importMetadata", false);
-            changeLoading("overall", false);
+            setStatus("done");
           }}
         >
           {t("install")}
         </CustomizedButton>
       </div>
+      {status === "importing" && <div>{t("installParagraph2")}</div>}
       <br />
-      {loading.overall && <div>{t("installParagraph2")}</div>}
-      <br />
-      {loading.overall &&
+      {(status === "importing" || status === "done") &&
         Object.keys(loading).map((key) => {
-          if (key === "overall") {
+          if (key === "status") {
             return null;
           }
           return (
@@ -80,6 +80,8 @@ const Install = () => {
             </div>
           );
         })}
+      <br />
+      {status === "done" && <div>{t("installParagraph3")}</div>}
     </div>
   );
 };
