@@ -14,6 +14,10 @@ const useInstallationModuleStore = create((set) => ({
     synchronizationRoleUsers: "[]",
     adminRoleUsers: "[]"
   },
+  summary: {
+    metadataPackage: null
+  },
+  status: "pending",
   step: 0,
   valid: false,
   actions: {
@@ -33,6 +37,12 @@ const useInstallationModuleStore = create((set) => ({
       set(
         produce((state) => {
           state.valid = valid;
+        })
+      ),
+    setStatus: (status) =>
+      set(
+        produce((state) => {
+          state.status = status;
         })
       )
   }

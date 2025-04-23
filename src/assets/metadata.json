@@ -1601,5 +1601,27 @@
       "id": "prbjtVvKNet",
       "attributeValues": []
     }
+  ],
+  "userGroups": [
+    {
+      "name": "FCA - Admin",
+      "id": "MJK6n5PLXM6",
+      "users": []
+    },
+    {
+      "name": "FCA - Approval",
+      "id": "xd865kZFSRw",
+      "users": []
+    },
+    {
+      "name": "FCA - Capture",
+      "id": "m6GidmfEK48",
+      "users": []
+    },
+    {
+      "name": "FCA - Synchronization",
+      "id": "shYXBFb3lpw",
+      "users": []
+    }
   ]
 }

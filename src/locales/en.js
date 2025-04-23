@@ -147,6 +147,7 @@ export default {
   validSummary: "If you are ok will all these 👍 , click Next to proceed.",
   install: "Install",
   installParagraph1: "This is the final step 🏁, click Install button to start the installation process.",
+  installParagraph2: "Installation process has been started, please do not close the app until it's completed.",
   importMetadata: "Importing metadata",
   importFacilities: "Importing facilities"
 };

@@ -17,16 +17,18 @@ const Summary = () => {
       orgUnitGroups: state.orgUnitGroups
     }))
   );
-  const [metadataPackage, setMetadataPackage] = useState(metadata);
 
-  const { actions, valid, selectGroupSets, setupAuthorities } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, setupAuthorities, summary } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
-      setupAuthorities: state.setupAuthorities
+      setupAuthorities: state.setupAuthorities,
+      summary: state.summary
     }))
   );
+  const { metadataPackage } = summary;
+  const { setStepData } = actions;
   const { members, skippedOrgUnits, selectedGroupSets } = selectGroupSets;
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const Summary = () => {
       newDataElements.push({
         id: newDataElementId,
         name: foundGs.name,
-        shortName: foundGs.shortName,
+        shortName: foundGs.name,
         valueType: "TEXT",
         domainType: "TRACKER",
         aggregationType: "COUNT",
@@ -64,7 +66,7 @@ const Summary = () => {
       const newOptionSet = {
         id: newOptionSetId,
         name: foundGs.name,
-        shortName: foundGs.shortName,
+        shortName: foundGs.name,
         valueType: "TEXT",
         options: []
       };
@@ -76,19 +78,21 @@ const Summary = () => {
           name: foundOug.name,
           code: foundOug.id,
           sortOrder: index + 1,
-          optionSet: newOptionSetId
+          optionSet: {
+            id: newOptionSetId
+          }
         };
         newOptionSet.options.push(newOption);
         newOptions.push(newOption);
       });
       newOptionSets.push(newOptionSet);
     });
-    const clonedMetadata = _.cloneDeep(metadataPackage);
+    const clonedMetadata = _.cloneDeep(metadata);
     clonedMetadata.programStageDataElements.push(...newProgramStageDataElements);
     clonedMetadata.dataElements.push(...newDataElements);
     clonedMetadata.optionSets.push(...newOptionSets);
     clonedMetadata.options.push(...newOptions);
-    setMetadataPackage(clonedMetadata);
+    setStepData("summary", "metadataPackage", clonedMetadata);
   }, []);
 
   return (
@@ -96,48 +100,50 @@ const Summary = () => {
       <div className="font-bold text-[20px]">{t("summary")}</div>
       <div>{t("summaryParagraph1")}</div>
       <br />
-      <div>
-        <DataTable scrollHeight="450px">
-          <DataTableHead>
-            <DataTableRow>
-              <DataTableColumnHeader fixed top="0">
-                {t("dataMetadata")}
-              </DataTableColumnHeader>
-              <DataTableColumnHeader fixed top="0">
-                {t("willBeImported")}
-              </DataTableColumnHeader>
-              <DataTableColumnHeader fixed top="0">
-                {t("willBeSkipped")}
-              </DataTableColumnHeader>
-              <DataTableColumnHeader fixed top="0">
-                {t("description")}
-              </DataTableColumnHeader>
-            </DataTableRow>
-          </DataTableHead>
-          <DataTableBody>
-            {Object.keys(metadataPackage).map((key) => {
-              const foundSchema = schemas.find((schema) => schema.plural === key);
-              const currentMetadata = metadataPackage[key];
-              return (
-                <DataTableRow>
-                  <DataTableCell>{foundSchema.displayName}</DataTableCell>
-                  <DataTableCell>{currentMetadata.length}</DataTableCell>
-                  <DataTableCell>{0}</DataTableCell>
-                  <DataTableCell>
-                    <div className="underline cursor-pointer">{t("show")}</div>
-                  </DataTableCell>
-                </DataTableRow>
-              );
-            })}
-            <DataTableRow>
-              <DataTableCell>{t("facility")}</DataTableCell>
-              <DataTableCell>{members.length - skippedOrgUnits.length}</DataTableCell>
-              <DataTableCell>{skippedOrgUnits.length}</DataTableCell>
-              <DataTableCell>{<div className="underline cursor-pointer">{t("show")}</div>}</DataTableCell>
-            </DataTableRow>
-          </DataTableBody>
-        </DataTable>
-      </div>
+      {metadataPackage && (
+        <div>
+          <DataTable scrollHeight="450px">
+            <DataTableHead>
+              <DataTableRow>
+                <DataTableColumnHeader fixed top="0">
+                  {t("dataMetadata")}
+                </DataTableColumnHeader>
+                <DataTableColumnHeader fixed top="0">
+                  {t("willBeImported")}
+                </DataTableColumnHeader>
+                <DataTableColumnHeader fixed top="0">
+                  {t("willBeSkipped")}
+                </DataTableColumnHeader>
+                <DataTableColumnHeader fixed top="0">
+                  {t("description")}
+                </DataTableColumnHeader>
+              </DataTableRow>
+            </DataTableHead>
+            <DataTableBody>
+              {Object.keys(metadataPackage).map((key) => {
+                const foundSchema = schemas.find((schema) => schema.plural === key);
+                const currentMetadata = metadataPackage[key];
+                return (
+                  <DataTableRow>
+                    <DataTableCell>{foundSchema.displayName}</DataTableCell>
+                    <DataTableCell>{currentMetadata.length}</DataTableCell>
+                    <DataTableCell>{0}</DataTableCell>
+                    <DataTableCell>
+                      <div className="underline cursor-pointer">{t("show")}</div>
+                    </DataTableCell>
+                  </DataTableRow>
+                );
+              })}
+              <DataTableRow>
+                <DataTableCell>{t("facility")}</DataTableCell>
+                <DataTableCell>{members.length - skippedOrgUnits.length}</DataTableCell>
+                <DataTableCell>{skippedOrgUnits.length}</DataTableCell>
+                <DataTableCell>{<div className="underline cursor-pointer">{t("show")}</div>}</DataTableCell>
+              </DataTableRow>
+            </DataTableBody>
+          </DataTable>
+        </div>
+      )}
       <br />
       <div>{t("validSummary")}</div>
     </div>

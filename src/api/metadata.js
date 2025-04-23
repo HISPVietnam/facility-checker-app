@@ -1,4 +1,4 @@
-import { pull } from "./fetch";
+import { pull, push } from "./fetch";
 
 const getOrgUnits = async () => {
   const result = await pull(
@@ -58,6 +58,10 @@ const getSchemas = async () => {
   return result.schemas;
 };
 
+const pushMetadata = async (metadata) => {
+  const result = await push("/api/metadata?async=false", metadata, "POST");
+};
+
 export {
   getOrgUnits,
   getOrgUnitGeoJson,
@@ -68,5 +72,6 @@ export {
   getUsers,
   getOrgUnitGroups,
   getCustomAttributes,
-  getSchemas
+  getSchemas,
+  pushMetadata
 };
