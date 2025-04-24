@@ -15,7 +15,8 @@ const useInstallationModuleStore = create((set) => ({
     adminRoleUsers: "[]"
   },
   summary: {
-    metadataPackage: null
+    metadataPackage: null,
+    data: null
   },
   install: {
     loading: {

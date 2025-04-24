@@ -7,6 +7,7 @@ import metadata from "@/assets/metadata.json";
 import { useEffect, useState } from "react";
 import { generateUid } from "@/utils";
 import _ from "lodash";
+import convertData from "./temp";
 const Summary = () => {
   const { t } = useTranslation();
   const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
@@ -45,6 +46,7 @@ const Summary = () => {
         id: newDataElementId,
         name: "FC:" + foundGs.name,
         shortName: foundGs.name,
+        description: "FCGS:" + foundGs.id,
         valueType: "TEXT",
         domainType: "TRACKER",
         aggregationType: "COUNT",
@@ -112,6 +114,7 @@ const Summary = () => {
       }
     });
     setStepData("summary", "metadataPackage", clonedMetadata);
+    convertData(clonedMetadata);
   }, []);
 
   return (
