@@ -58,6 +58,26 @@ const getSchemas = async () => {
   return result.schemas;
 };
 
+const getUserByIds = async (userIds) => {
+  const result = await pull(`/api/users?fields=id,userRoles&filter=id:in:[${userIds.join(",")}]`);
+  return result.users;
+};
+
+const addUserRole = async (userId, userRoles) => {
+  const result = await push(
+    `/api/users/${userId}`,
+    [
+      {
+        op: "add",
+        path: "/userRoles",
+        value: userRoles
+      }
+    ],
+    "PATCH",
+    "application/json-patch+json"
+  );
+};
+
 const pushMetadata = async (metadata) => {
   const result = await push("/api/metadata?async=false", metadata, "POST");
 };
@@ -73,5 +93,7 @@ export {
   getOrgUnitGroups,
   getCustomAttributes,
   getSchemas,
+  getUserByIds,
+  addUserRole,
   pushMetadata
 };

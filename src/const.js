@@ -112,6 +112,16 @@ const APP_ROLES = [
     icon: faScrewdriverWrench
   }
 ];
+
+const USER_GROUPS = {
+  CAPTURE: "m6GidmfEK48",
+  APPROVAL: "xd865kZFSRw",
+  SYNCHRONIZATION: "shYXBFb3lpw",
+  ADMIN: "MJK6n5PLXM6"
+};
+
+const USER_ROLE = "WdelLCFTyqe";
+
 export {
   DATA_ELEMENTS,
   PROFILE_LOGS_PROGRAM_STAGE_ID,
@@ -125,5 +135,7 @@ export {
   APPROVAL_FILTERS,
   SYNCHRONIZATION_FILTERS,
   STEPS,
-  APP_ROLES
+  APP_ROLES,
+  USER_GROUPS,
+  USER_ROLE
 };

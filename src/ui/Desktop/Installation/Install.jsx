@@ -9,10 +9,13 @@ import _ from "lodash";
 import CustomizedButton from "@/ui/common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { pushMetadata } from "@/api/metadata";
+import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
 
 const Install = () => {
   const { t } = useTranslation();
+  const [importMetadataLoading, setImportMetadataLoading] = useState(true);
+  const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
+  const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
   const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
@@ -22,18 +25,16 @@ const Install = () => {
     }))
   );
 
-  const { actions, valid, selectGroupSets, setupAuthorities, summary, install, status } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, setupAuthorities, summary, status } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       setupAuthorities: state.setupAuthorities,
       summary: state.summary,
-      status: state.status,
-      install: state.install
+      status: state.status
     }))
   );
-  const { loading } = install;
   const { setStatus, setStepData } = actions;
   const { metadataPackage } = summary;
   const { members, skippedOrgUnits, selectedGroupSets } = selectGroupSets;
@@ -44,6 +45,19 @@ const Install = () => {
     setStepData("install", "loading", cloned);
   };
 
+  const settingUserRole = async () => {
+    const userChunks = _.chunk(metadataPackage.userRoles[0].users, 10);
+    for (let i = 0; i < userChunks.length; i++) {
+      const users = await getUserByIds(userChunks[i].map((user) => user.id));
+      const promises = [];
+      users.forEach((user) => {
+        user.userRoles.push({ id: metadataPackage.userRoles[0].id });
+        promises.push(addUserRole(user.id, user.userRoles));
+      });
+      await Promise.all(promises);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("install")}</div>
@@ -52,14 +66,15 @@ const Install = () => {
       <div>
         <CustomizedButton
           disabled={status !== "pending"}
-          loading={loading.overall}
           primary
           icon={<FontAwesomeIcon icon={faPlay} />}
           onClick={async () => {
             setStatus("importing");
-            changeLoading("importMetadata", true);
             await pushMetadata(metadataPackage);
-            changeLoading("importMetadata", false);
+            setImportMetadataLoading(false);
+            await settingUserRole();
+            setSettingUserRoleLoading(false);
+            setImportFacilitiesLoading(false);
             setStatus("done");
           }}
         >
@@ -68,18 +83,39 @@ const Install = () => {
       </div>
       {status === "importing" && <div>{t("installParagraph2")}</div>}
       <br />
-      {(status === "importing" || status === "done") &&
-        Object.keys(loading).map((key) => {
-          if (key === "status") {
-            return null;
-          }
-          return (
-            <div className="flex items-center">
-              {loading[key] ? <CircularLoader extrasmall /> : <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />}&nbsp;&nbsp;
-              {t(key)}
-            </div>
-          );
-        })}
+      {(status === "importing" || status === "done") && (
+        <div className="flex items-center">
+          {status === "done" || !importMetadataLoading ? (
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+          ) : (
+            <CircularLoader extrasmall />
+          )}
+          &nbsp;&nbsp;
+          {t("importMetadata")}
+        </div>
+      )}
+      {(status === "importing" || status === "done") && (
+        <div className="flex items-center">
+          {status === "done" || !importFacilitiesLoading ? (
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+          ) : (
+            <CircularLoader extrasmall />
+          )}
+          &nbsp;&nbsp;
+          {t("importFacilities")}
+        </div>
+      )}
+      {(status === "importing" || status === "done") && (
+        <div className="flex items-center">
+          {status === "done" || !settingUserRole ? (
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+          ) : (
+            <CircularLoader extrasmall />
+          )}
+          &nbsp;&nbsp;
+          {t("settingUserRole")}
+        </div>
+      )}
       <br />
       {status === "done" && <div>{t("installParagraph3")}</div>}
     </div>
