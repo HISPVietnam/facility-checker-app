@@ -1,3 +1,18 @@
+## [1.6.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.5.0...v1.6.0) (2025-04-25)
+
+### Features
+
+* add installation module ([cdcb8d5](https://github.com/HISPVietnam/facility-checker-app/commit/cdcb8d5e69bce600b240a17f7ce0494dacf4d002))
+
+### Bug Fixes
+
+* active status is not default to open in tracked entity payload in installation module ([06e47a1](https://github.com/HISPVietnam/facility-checker-app/commit/06e47a1839eafb76588d6bbc4f8dbc7b609b2396))
+* disable filters of synchronization module ([1187bee](https://github.com/HISPVietnam/facility-checker-app/commit/1187beea5560dc878f9c520e2160c5124bdbb77f))
+* occurredAt is missing from enrollment in tracked entity payload in installation module ([76a6489](https://github.com/HISPVietnam/facility-checker-app/commit/76a6489bca469bd1691314ac94ae31994439d54e))
+* option set is still assigned to FCGS data elments in installation module ([c3dc6b6](https://github.com/HISPVietnam/facility-checker-app/commit/c3dc6b6eac3696b29744f21a6c1c90042942e8d8))
+* replace magic string by constant in covertData function ([4ec277f](https://github.com/HISPVietnam/facility-checker-app/commit/4ec277f3339ff6344dd11f9c7733cd2431e1c124))
+* wrong format for tracked entity data in installation module ([95baa82](https://github.com/HISPVietnam/facility-checker-app/commit/95baa820cc301740160cda101133e6daa024a36b))
+
 ## [1.5.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.4.2...v1.5.0) (2025-04-18)
 
 ### Features
