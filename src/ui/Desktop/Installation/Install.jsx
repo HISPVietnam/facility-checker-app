@@ -10,6 +10,7 @@ import CustomizedButton from "@/ui/common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
+import { postTeis } from "@/api/data";
 
 const Install = () => {
   const { t } = useTranslation();
@@ -58,6 +59,13 @@ const Install = () => {
     }
   };
 
+  const importFacilities = async () => {
+    const facilityChunks = _.chunk(data, 50);
+    for (let i = 0; i < facilityChunks.length; i++) {
+      await postTeis(facilityChunks[i]);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("install")}</div>
@@ -74,6 +82,7 @@ const Install = () => {
             setImportMetadataLoading(false);
             await settingUserRole();
             setSettingUserRoleLoading(false);
+            await importFacilities();
             setImportFacilitiesLoading(false);
             setStatus("done");
           }}
@@ -96,6 +105,17 @@ const Install = () => {
       )}
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
+          {status === "done" || !settingUserRoleLoading ? (
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+          ) : (
+            <CircularLoader extrasmall />
+          )}
+          &nbsp;&nbsp;
+          {t("settingUserRole")}
+        </div>
+      )}
+      {(status === "importing" || status === "done") && (
+        <div className="flex items-center">
           {status === "done" || !importFacilitiesLoading ? (
             <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
@@ -103,17 +123,6 @@ const Install = () => {
           )}
           &nbsp;&nbsp;
           {t("importFacilities")}
-        </div>
-      )}
-      {(status === "importing" || status === "done") && (
-        <div className="flex items-center">
-          {status === "done" || !settingUserRole ? (
-            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
-          ) : (
-            <CircularLoader extrasmall />
-          )}
-          &nbsp;&nbsp;
-          {t("settingUserRole")}
         </div>
       )}
       <br />

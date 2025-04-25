@@ -35,6 +35,17 @@ const postTei = async (tei) => {
   return result;
 };
 
+const postTeis = async (teis) => {
+  const result = await push(
+    "/api/tracker?async=false",
+    {
+      trackedEntities: teis
+    },
+    "POST"
+  );
+  return result;
+};
+
 const findEventByDataElement = async (dataElement, value) => {
   const result = await pull(`/api/tracker/events?program=dJELklAE1ZZ&ouMode=ACCESSIBLE&fields=*&skipPaging=true`);
   return result.instances;
@@ -57,4 +68,4 @@ const findFacilityByCode = async (trackedEntity, code) => {
   }
 };
 
-export { getFacilityTeis, postEvent, postTei, getTeiById, findFacilityByCode };
+export { getFacilityTeis, postEvent, postTei, getTeiById, findFacilityByCode, postTeis };
