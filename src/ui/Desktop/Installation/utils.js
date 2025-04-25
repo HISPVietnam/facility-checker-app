@@ -1,9 +1,6 @@
 import { format } from "date-fns";
 
-import {
-  DATA_ELEMENTS,
-  MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE,
-} from "@/const";
+import { DATA_ELEMENTS, MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE } from "@/const";
 
 import useInstallationModuleStore from "@/states/installationModule";
 import useMetadataStore from "@/states/metadata";
@@ -17,9 +14,7 @@ const convertData = (clonedMetadata) => {
   const { setStepData } = actions;
   const { members, skippedOrgUnits } = selectGroupSets;
   //
-  const filteredMembers = members.filter(
-    (member) => !skippedOrgUnits.some((ou) => ou.id === member.id)
-  );
+  const filteredMembers = members.filter((member) => !skippedOrgUnits.some((ou) => ou.id === member.id));
   let trackedEntities = [];
   filteredMembers.forEach((member) => {
     const trackedEntityId = generateUid();
@@ -33,17 +28,17 @@ const convertData = (clonedMetadata) => {
       attributes: [
         {
           attribute: "PUYl7QIbEov", //active status
-          value: "open",
+          value: "open"
         },
         {
           attribute: "d9FXpa9ndGO", //code
-          value: member.code,
+          value: member.code
         },
         {
           attribute: "prbjtVvKNet", //dhis2 uid
-          value: member.name,
-        },
-      ],
+          value: member.name
+        }
+      ]
     };
     const enrollment = {
       trackedEntity: trackedEntityId,
@@ -52,7 +47,8 @@ const convertData = (clonedMetadata) => {
       orgUnit: member.id,
       status: "ACTIVE",
       enrolledAt: format(new Date(), "yyyy-MM-dd"),
-      ...(member.geometry ? { geometry: member.geometry } : {}),
+      occurredAt: format(new Date(), "yyyy-MM-dd"),
+      ...(member.geometry ? { geometry: member.geometry } : {})
     };
     const event = {
       trackedEntity: trackedEntityId,
@@ -70,46 +66,35 @@ const convertData = (clonedMetadata) => {
           if (de.description?.includes("FCGS")) {
             const ouGroups = member.organisationUnitGroups
               .filter((oug) => {
-                const foundOuGroup = orgUnitGroups.find(
-                  (ouGroup) => ouGroup.id === oug.id
-                );
-                if (
-                  foundOuGroup.groupSets.some(
-                    (gs) => gs.id === de.description.replace("FCGS:", "")
-                  )
-                ) {
+                const foundOuGroup = orgUnitGroups.find((ouGroup) => ouGroup.id === oug.id);
+                if (foundOuGroup.groupSets.some((gs) => gs.id === de.description.replace("FCGS:", ""))) {
                   return oug;
                 }
               })
               .map((oug) => oug.id);
             return {
               dataElement: de.id,
-              value: JSON.stringify(ouGroups),
+              value: JSON.stringify(ouGroups)
             };
           }
           switch (de.id) {
             case "rMnWeGTBnKo":
               return {
                 dataElement: de.id,
-                value: JSON.stringify(member.attributeValues),
+                value: JSON.stringify(member.attributeValues)
               };
             case "pf27agpzDak":
               return {
                 dataElement: de.id,
-                value: JSON.stringify(member.translations),
+                value: JSON.stringify(member.translations)
               };
             case DATA_ELEMENTS.CLOSED_DATE:
             case DATA_ELEMENTS.OPENING_DATE:
               return {
                 dataElement: de.id,
                 value: member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]]
-                  ? format(
-                      new Date(
-                        member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]]
-                      ),
-                      "yyyy-MM-dd"
-                    )
-                  : "",
+                  ? format(new Date(member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]]), "yyyy-MM-dd")
+                  : ""
               };
             case "wetRbzCTyYO":
             case "guutPq3seaj":
@@ -123,13 +108,11 @@ const convertData = (clonedMetadata) => {
             default:
               return {
                 dataElement: de.id,
-                value:
-                  member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]] ||
-                  "",
+                value: member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]] || ""
               };
           }
         })
-        .filter(Boolean),
+        .filter(Boolean)
     };
     enrollment.events = [event];
     trackedEntity.enrollments = [enrollment];

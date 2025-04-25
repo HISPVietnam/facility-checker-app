@@ -7,7 +7,7 @@ import metadata from "@/assets/metadata.json";
 import { useEffect, useState } from "react";
 import { generateUid } from "@/utils";
 import _ from "lodash";
-import convertData from "./temp";
+import convertData from "./utils";
 import { USER_GROUPS } from "@/const";
 const { CAPTURE, APPROVAL, SYNCHRONIZATION, ADMIN } = USER_GROUPS;
 const userGroupMapping = {
@@ -111,6 +111,7 @@ const Summary = () => {
     });
     const clonedMetadata = _.cloneDeep(metadata);
     clonedMetadata.programStageDataElements.push(...newProgramStageDataElements);
+    clonedMetadata.programStages[0].programStageDataElements.push(...newProgramStageDataElements);
     clonedMetadata.dataElements.push(...newDataElements);
     clonedMetadata.optionSets.push(...newOptionSets);
     clonedMetadata.options.push(...newOptions);
