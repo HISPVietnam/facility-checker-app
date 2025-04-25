@@ -1,4 +1,9 @@
-import { faCheck, faPenToSquare, faRotate, faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faPenToSquare,
+  faRotate,
+  faScrewdriverWrench,
+} from "@fortawesome/free-solid-svg-icons";
 
 const DATA_ELEMENTS = {
   PATH: "eqSFoW6vuam",
@@ -15,12 +20,19 @@ const DATA_ELEMENTS = {
   IS_NEW_FACILITY: "guutPq3seaj",
   SHORT_NAME: "eb7SYR3EHEZ",
   OPENING_DATE: "PCoXOnxAzwr",
-  CODE: "nEAFd0oKJzb"
+  CODE: "nEAFd0oKJzb",
+  DESCRIPTION: "L5YKpJEzCR1",
+  CLOSING_DATE: "jR58BZSMB6B",
+  URL: "kDreDTHEauZ",
+  CONTACT_PERSON: "XioJoxZsHVn",
+  EMAIL: "Wno4M1rmwHr",
+  ADDRESS: "YLxv92NmyFD",
+  PHONE_NUMBER: "HAOSMsp1TXB",
 };
 const TRACKED_ENTITY_ATTRIBUTES = {
   UID: "prbjtVvKNet",
   ACTIVE_STATUS: "PUYl7QIbEov",
-  ATTRIBUTE_CODE: "d9FXpa9ndGO"
+  ATTRIBUTE_CODE: "d9FXpa9ndGO",
 };
 const TRACKED_ENTITY_TYPE = "ER5qgJDCfUh";
 const PROFILE_LOGS_PROGRAM_STAGE_ID = "VdBma23iRTw";
@@ -34,94 +46,121 @@ const HIDDEN_DATA_ELEMENTS = [
   DATA_ELEMENTS.APPROVED_BY,
   DATA_ELEMENTS.APPROVED_AT,
   DATA_ELEMENTS.REASON_FOR_REJECT,
-  DATA_ELEMENTS.IS_NEW_FACILITY
+  DATA_ELEMENTS.IS_NEW_FACILITY,
 ];
 
-const MANDATORY_FIELDS = [DATA_ELEMENTS.NAME, DATA_ELEMENTS.PATH, DATA_ELEMENTS.SHORT_NAME, DATA_ELEMENTS.OPENING_DATE];
+const MANDATORY_FIELDS = [
+  DATA_ELEMENTS.NAME,
+  DATA_ELEMENTS.PATH,
+  DATA_ELEMENTS.SHORT_NAME,
+  DATA_ELEMENTS.OPENING_DATE,
+];
 
 const CUSTOM_COLUMNS_LIST_VIEW = [
   {
     id: "status",
     name: "status",
     optionSet: null,
-    position: 0
+    position: 0,
   },
   {
     id: "coordinates",
     name: "coordinates",
     optionSet: null,
-    position: 2
-  }
+    position: 2,
+  },
 ];
 
 const BASE_LAYER_TYPES = {
   satellite: {
     attribution: `&copy; <a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community`,
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   },
   normal: {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`,
-    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"
-  }
+    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
+  },
 };
 
 const APPROVAL_FILTERS = [
   { id: "approved" },
   { id: "pending" },
   {
-    id: "isNewFacility"
-  }
+    id: "isNewFacility",
+  },
 ];
 
 const SYNCHRONIZATION_FILTERS = [
   { id: "synced" },
   { id: "notYetSynced" },
   {
-    id: "isNewFacility"
-  }
+    id: "isNewFacility",
+  },
 ];
 
-const STEPS = ["welcome", "selectGroupSets", "setupAuthorities", "summary", "install"];
+const STEPS = [
+  "welcome",
+  "selectGroupSets",
+  "setupAuthorities",
+  "summary",
+  "install",
+];
 const APP_ROLES = [
   {
     name: "captureRole",
     description: "captureRoleDescription",
     borderColor: "border-cyan-700",
     color: "text-cyan-700",
-    icon: faPenToSquare
+    icon: faPenToSquare,
   },
   {
     name: "approvalRole",
     description: "approvalRoleDescription",
     borderColor: "border-green-700",
     color: "text-green-700",
-    icon: faCheck
+    icon: faCheck,
   },
   {
     name: "synchronizationRole",
     description: "synchronizationRoleDescription",
     borderColor: "border-red-700",
     color: "text-red-700",
-    icon: faRotate
+    icon: faRotate,
   },
   {
     name: "adminRole",
     description: "adminRoleDescription",
     borderColor: "border-amber-600",
     color: "text-amber-600",
-    icon: faScrewdriverWrench
-  }
+    icon: faScrewdriverWrench,
+  },
 ];
 
 const USER_GROUPS = {
   CAPTURE: "m6GidmfEK48",
   APPROVAL: "xd865kZFSRw",
   SYNCHRONIZATION: "shYXBFb3lpw",
-  ADMIN: "MJK6n5PLXM6"
+  ADMIN: "MJK6n5PLXM6",
 };
 
 const USER_ROLE = "WdelLCFTyqe";
 
+const MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE = {
+  [DATA_ELEMENTS.PATH]: "path",
+  [DATA_ELEMENTS.NAME]: "name",
+  [DATA_ELEMENTS.OPENING_DATE]: "openingDate",
+  [DATA_ELEMENTS.CODE]: "code",
+  [DATA_ELEMENTS.DESCRIPTION]: "description",
+  [DATA_ELEMENTS.CLOSING_DATE]: "closedDate",
+  [DATA_ELEMENTS.URL]: "url",
+  [DATA_ELEMENTS.CONTACT_PERSON]: "contactPerson",
+  [DATA_ELEMENTS.UID]: "id",
+  [DATA_ELEMENTS.EMAIL]: "email",
+  [DATA_ELEMENTS.SHORT_NAME]: "shortName",
+  [DATA_ELEMENTS.ACTIVE_STATUS]: "active",
+  [DATA_ELEMENTS.ADDRESS]: "address",
+  [DATA_ELEMENTS.PHONE_NUMBER]: "phoneNumber",
+};
 export {
   DATA_ELEMENTS,
   PROFILE_LOGS_PROGRAM_STAGE_ID,
@@ -137,5 +176,6 @@ export {
   STEPS,
   APP_ROLES,
   USER_GROUPS,
-  USER_ROLE
+  USER_ROLE,
+  MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE,
 };

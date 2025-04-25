@@ -49,7 +49,7 @@ const Synchronization = () => {
     );
   const { resetFilters, toggleFilter, selectFacilities } = actions;
 
-  const filterApprovalFacilities = (facilities) => {
+  const filterSyncFacilities = (facilities) => {
     const filterByIsNewFacility = (facility) => {
       const isNewFacility =
         facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
@@ -83,7 +83,7 @@ const Synchronization = () => {
     const isSelectAll =
       !isSelected &&
       [...selectedFacilities, facility.tei].length ===
-        filterApprovalFacilities(facilities).length;
+        filterSyncFacilities(facilities).length;
     if (isSelected) {
       selectFacilities(
         selectedFacilities.filter(
@@ -117,7 +117,7 @@ const Synchronization = () => {
                       ? []
                       : [
                           "all",
-                          ...filterApprovalFacilities(facilities).map(
+                          ...filterSyncFacilities(facilities).map(
                             (facility) => facility.tei
                           ),
                         ]
@@ -135,7 +135,7 @@ const Synchronization = () => {
           </DataTableRow>
         </DataTableHead>
         <DataTableBody>
-          {filterApprovalFacilities(facilities).map((facility) => {
+          {filterSyncFacilities(facilities).map((facility) => {
             const foundPendingEvent = facility.events.find(
               (event) => event[APPROVAL_STATUS] === "pending"
             );

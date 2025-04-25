@@ -8,25 +8,28 @@ import { useShallow } from "zustand/react/shallow";
 import CustomizedInputField from "@/ui/common/InputField";
 import { NoticeBox } from "@dhis2/ui";
 import { convertDisplayValueForPath, pickTranslation } from "@/utils";
+import _ from "lodash";
 
 const SelectGroupSets = () => {
   const { t } = useTranslation();
-  const { orgUnitGroupSets, orgUnits, orgUnitGeoJson, locale } = useMetadataStore(
-    useShallow((state) => ({
-      orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnits: state.orgUnits,
-      orgUnitGeoJson: state.orgUnitGeoJson,
-      locale: state.locale
-    }))
-  );
-  const { selectGroupSets, actions, valid, status } = useInstallationModuleStore(
-    useShallow((state) => ({
-      selectGroupSets: state.selectGroupSets,
-      valid: state.valid,
-      actions: state.actions,
-      status: state.status
-    }))
-  );
+  const { orgUnitGroupSets, orgUnits, orgUnitGeoJson, locale } =
+    useMetadataStore(
+      useShallow((state) => ({
+        orgUnitGroupSets: state.orgUnitGroupSets,
+        orgUnits: state.orgUnits,
+        orgUnitGeoJson: state.orgUnitGeoJson,
+        locale: state.locale,
+      }))
+    );
+  const { selectGroupSets, actions, valid, status } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        selectGroupSets: state.selectGroupSets,
+        valid: state.valid,
+        actions: state.actions,
+        status: state.status,
+      }))
+    );
   const { selectedGroupSets, skippedOrgUnits, members } = selectGroupSets;
   const { setValid, setStepData } = actions;
 
@@ -51,21 +54,29 @@ const SelectGroupSets = () => {
         });
         return isMember;
       });
-      members.forEach((member) => {
-        const foundGeoJson = orgUnitGeoJson.features.find((f) => f.id === member.id);
+      const membersWithGeometry = members.map((member) => {
+        const foundGeoJson = orgUnitGeoJson.features.find(
+          (f) => f.id === member.id
+        );
+        const newMember = _.cloneDeep(member);
+        newMember.geometry = foundGeoJson?.geometry;
         if (foundGeoJson && foundGeoJson.geometry.type !== "Point") {
-          currentSkippedOrgUnits.push(member);
+          currentSkippedOrgUnits.push(newMember);
         }
+        return newMember;
       });
-      if (members.length === 0) {
+      if (membersWithGeometry.length === 0) {
         setValid(false);
-      } else if (members.length - currentSkippedOrgUnits.length === 0) {
+      } else if (
+        membersWithGeometry.length - currentSkippedOrgUnits.length ===
+        0
+      ) {
         setValid(false);
       } else {
         setValid(true);
       }
       setStepData("selectGroupSets", "skippedOrgUnits", currentSkippedOrgUnits);
-      setStepData("selectGroupSets", "members", members);
+      setStepData("selectGroupSets", "members", membersWithGeometry);
     }
   }, [selectedGroupSets]);
 
@@ -85,7 +96,7 @@ const SelectGroupSets = () => {
           options={orgUnitGroupSets.map((ougs) => {
             return {
               value: ougs.id,
-              label: pickTranslation(ougs, locale, "name")
+              label: pickTranslation(ougs, locale, "name"),
             };
           })}
         />
@@ -110,7 +121,8 @@ const SelectGroupSets = () => {
               {skippedOrgUnits.map((orgUnit) => {
                 return (
                   <div>
-                    <strong>{pickTranslation(orgUnit, locale, "name")}</strong> ({convertDisplayValueForPath(orgUnit.path)})
+                    <strong>{pickTranslation(orgUnit, locale, "name")}</strong>{" "}
+                    ({convertDisplayValueForPath(orgUnit.path)})
                   </div>
                 );
               })}
