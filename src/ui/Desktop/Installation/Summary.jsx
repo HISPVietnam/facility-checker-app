@@ -8,6 +8,15 @@ import { useEffect, useState } from "react";
 import { generateUid } from "@/utils";
 import _ from "lodash";
 import convertData from "./temp";
+import { USER_GROUPS } from "@/const";
+const { CAPTURE, APPROVAL, SYNCHRONIZATION, ADMIN } = USER_GROUPS;
+const userGroupMapping = {
+  [CAPTURE]: "captureRoleUsers",
+  [APPROVAL]: "approvalRoleUsers",
+  [SYNCHRONIZATION]: "synchronizationRoleUsers",
+  [ADMIN]: "adminRoleUsers"
+};
+
 const Summary = () => {
   const { t } = useTranslation();
   const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
@@ -57,10 +66,10 @@ const Summary = () => {
           external: false,
           users: {},
           userGroups: {
-            MJK6n5PLXM6: { access: "rw------", id: "MJK6n5PLXM6" },
-            m6GidmfEK48: { access: "r-------", id: "m6GidmfEK48" },
-            shYXBFb3lpw: { access: "r-------", id: "shYXBFb3lpw" },
-            xd865kZFSRw: { access: "r-------", id: "xd865kZFSRw" }
+            [ADMIN]: { access: "rw------", id: ADMIN },
+            [CAPTURE]: { access: "r-------", id: CAPTURE },
+            [SYNCHRONIZATION]: { access: "r-------", id: SYNCHRONIZATION },
+            [APPROVAL]: { access: "r-------", id: APPROVAL }
           },
           public: "--------"
         }
@@ -113,6 +122,15 @@ const Summary = () => {
         });
       }
     });
+    Object.keys(userGroupMapping).forEach((userGroupId) => {
+      const foundUserGroupIndex = clonedMetadata.userGroups.findIndex((ug) => ug.id === userGroupId);
+      const groupMembers = JSON.parse(setupAuthorities[userGroupMapping[userGroupId]]).map((id) => ({
+        id: id
+      }));
+      clonedMetadata.userGroups[foundUserGroupIndex].users = groupMembers;
+      clonedMetadata.userRoles[0].users.push(...groupMembers);
+      clonedMetadata.userRoles[0].users = _.uniqBy(clonedMetadata.userRoles[0].users, "id");
+    });
     setStepData("summary", "metadataPackage", clonedMetadata);
     convertData(clonedMetadata);
   }, []);
@@ -143,7 +161,6 @@ const Summary = () => {
             </DataTableHead>
             <DataTableBody>
               {Object.keys(metadataPackage).map((key) => {
-                console.log(key);
                 const foundSchema = schemas.find((schema) => schema.plural === key);
                 const currentMetadata = metadataPackage[key];
                 return (

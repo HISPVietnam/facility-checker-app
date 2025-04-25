@@ -1,0 +1,461 @@
+{
+  "users": [
+    {
+      "href": "http://localhost/api/users/K1WFUMywPzp",
+      "name": "TEST FCA CAPTURE TEST FCA CAPTURE",
+      "created": "2025-04-24T21:17:47.776",
+      "lastUpdated": "2025-04-24T21:17:47.776",
+      "translations": [],
+      "externalAccess": false,
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "userGroupAccesses": [],
+      "userAccesses": [],
+      "access": {
+        "manage": true,
+        "externalize": true,
+        "write": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "favorites": [],
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {}
+      },
+      "username": "test_fca_capture",
+      "externalAuth": false,
+      "passwordLastUpdated": "2025-04-24T21:17:47.790",
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "selfRegistered": false,
+      "invitation": false,
+      "disabled": false,
+      "surname": "TEST FCA CAPTURE",
+      "firstName": "TEST FCA CAPTURE",
+      "organisationUnits": [
+        {
+          "id": "O6uvpzGd5pu"
+        }
+      ],
+      "dataViewOrganisationUnits": [
+        {
+          "id": "O6uvpzGd5pu"
+        }
+      ],
+      "teiSearchOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "userCredentials": {
+        "id": "K1WFUMywPzp",
+        "username": "test_fca_capture",
+        "password": "Abcd@1234",
+        "externalAuth": false,
+        "twoFA": false,
+        "passwordLastUpdated": "2025-04-24T21:17:47.790",
+        "cogsDimensionConstraints": [],
+        "catDimensionConstraints": [],
+        "previousPasswords": [],
+        "selfRegistered": false,
+        "invitation": false,
+        "disabled": false,
+        "access": {
+          "manage": true,
+          "externalize": true,
+          "write": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "sharing": {
+          "external": false,
+          "users": {},
+          "userGroups": {}
+        },
+        "userRoles": [
+          {
+            "id": "UYXOT4A7JMI"
+          }
+        ]
+      },
+      "twoFactorEnabled": false,
+      "displayName": "TEST FCA CAPTURE TEST FCA CAPTURE",
+      "user": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "favorite": false,
+      "id": "K1WFUMywPzp",
+      "attributeValues": [],
+      "userRoles": [
+        {
+          "id": "UYXOT4A7JMI"
+        }
+      ],
+      "userGroups": []
+    },
+    {
+      "href": "http://localhost/api/users/KY9l6PTctpB",
+      "name": "TEST FCA APPROVAL TEST FCA APPROVAL",
+      "created": "2025-04-24T21:18:19.242",
+      "lastUpdated": "2025-04-24T21:18:19.242",
+      "translations": [],
+      "externalAccess": false,
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "userGroupAccesses": [],
+      "userAccesses": [],
+      "access": {
+        "manage": true,
+        "externalize": true,
+        "write": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "favorites": [],
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {}
+      },
+      "username": "test_fca_approval",
+      "externalAuth": false,
+      "passwordLastUpdated": "2025-04-24T21:18:19.249",
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "selfRegistered": false,
+      "invitation": false,
+      "disabled": false,
+      "surname": "TEST FCA APPROVAL",
+      "firstName": "TEST FCA APPROVAL",
+      "organisationUnits": [
+        {
+          "id": "O6uvpzGd5pu"
+        }
+      ],
+      "dataViewOrganisationUnits": [
+        {
+          "id": "O6uvpzGd5pu"
+        }
+      ],
+      "teiSearchOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "userCredentials": {
+        "id": "KY9l6PTctpB",
+        "username": "test_fca_approval",
+        "password": "Abcd@1234",
+
+        "externalAuth": false,
+        "twoFA": false,
+        "passwordLastUpdated": "2025-04-24T21:18:19.249",
+        "cogsDimensionConstraints": [],
+        "catDimensionConstraints": [],
+        "previousPasswords": [],
+        "selfRegistered": false,
+        "invitation": false,
+        "disabled": false,
+        "access": {
+          "manage": true,
+          "externalize": true,
+          "write": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "sharing": {
+          "external": false,
+          "users": {},
+          "userGroups": {}
+        },
+        "userRoles": [
+          {
+            "id": "UYXOT4A7JMI"
+          }
+        ]
+      },
+      "twoFactorEnabled": false,
+      "displayName": "TEST FCA APPROVAL TEST FCA APPROVAL",
+      "user": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "favorite": false,
+      "id": "KY9l6PTctpB",
+      "attributeValues": [],
+      "userRoles": [
+        {
+          "id": "UYXOT4A7JMI"
+        }
+      ],
+      "userGroups": []
+    },
+    {
+      "href": "http://localhost/api/users/OyHJzAeUNhe",
+      "name": "TEST FCA ADMIN TEST FCA ADMIN",
+      "created": "2025-04-24T21:19:20.492",
+      "lastUpdated": "2025-04-24T21:19:20.492",
+      "translations": [],
+      "externalAccess": false,
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "userGroupAccesses": [],
+      "userAccesses": [],
+      "access": {
+        "manage": true,
+        "externalize": true,
+        "write": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "favorites": [],
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {}
+      },
+      "username": "test_fca_admin",
+      "externalAuth": false,
+      "passwordLastUpdated": "2025-04-24T21:19:20.497",
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "selfRegistered": false,
+      "invitation": false,
+      "disabled": false,
+      "surname": "TEST FCA ADMIN",
+      "firstName": "TEST FCA ADMIN",
+      "organisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "dataViewOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "teiSearchOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "userCredentials": {
+        "id": "OyHJzAeUNhe",
+        "username": "test_fca_admin",
+        "password": "Abcd@1234",
+
+        "externalAuth": false,
+        "twoFA": false,
+        "passwordLastUpdated": "2025-04-24T21:19:20.497",
+        "cogsDimensionConstraints": [],
+        "catDimensionConstraints": [],
+        "previousPasswords": [],
+        "selfRegistered": false,
+        "invitation": false,
+        "disabled": false,
+        "access": {
+          "manage": true,
+          "externalize": true,
+          "write": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "sharing": {
+          "external": false,
+          "users": {},
+          "userGroups": {}
+        },
+        "userRoles": [
+          {
+            "id": "UYXOT4A7JMI"
+          }
+        ]
+      },
+      "twoFactorEnabled": false,
+      "displayName": "TEST FCA ADMIN TEST FCA ADMIN",
+      "user": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "favorite": false,
+      "id": "OyHJzAeUNhe",
+      "attributeValues": [],
+      "userRoles": [
+        {
+          "id": "UYXOT4A7JMI"
+        }
+      ],
+      "userGroups": []
+    },
+    {
+      "href": "http://localhost/api/users/sNIC8XbhChe",
+      "name": "TEST FCA SYNC TEST FCA SYNC",
+      "created": "2025-04-24T21:18:52.767",
+      "lastUpdated": "2025-04-24T21:18:52.767",
+      "translations": [],
+      "externalAccess": false,
+      "createdBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "userGroupAccesses": [],
+      "userAccesses": [],
+      "access": {
+        "manage": true,
+        "externalize": true,
+        "write": true,
+        "read": true,
+        "update": true,
+        "delete": true
+      },
+      "favorites": [],
+      "lastUpdatedBy": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {}
+      },
+      "username": "test_fca_sync",
+      "externalAuth": false,
+      "passwordLastUpdated": "2025-04-24T21:18:52.773",
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "selfRegistered": false,
+      "invitation": false,
+      "disabled": false,
+      "surname": "TEST FCA SYNC",
+      "firstName": "TEST FCA SYNC",
+      "organisationUnits": [
+        {
+          "id": "O6uvpzGd5pu"
+        },
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "dataViewOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "teiSearchOrganisationUnits": [
+        {
+          "id": "ImspTQPwCqd"
+        }
+      ],
+      "userCredentials": {
+        "id": "sNIC8XbhChe",
+        "username": "test_fca_sync",
+        "password": "Abcd@1234",
+        "externalAuth": false,
+        "twoFA": false,
+        "passwordLastUpdated": "2025-04-24T21:18:52.773",
+        "cogsDimensionConstraints": [],
+        "catDimensionConstraints": [],
+        "previousPasswords": [],
+        "selfRegistered": false,
+        "invitation": false,
+        "disabled": false,
+        "access": {
+          "manage": true,
+          "externalize": true,
+          "write": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "sharing": {
+          "external": false,
+          "users": {},
+          "userGroups": {}
+        },
+        "userRoles": [
+          {
+            "id": "LGWLyWNro4x"
+          }
+        ]
+      },
+      "twoFactorEnabled": false,
+      "displayName": "TEST FCA SYNC TEST FCA SYNC",
+      "user": {
+        "id": "GOLswS44mh8",
+        "code": null,
+        "name": "Tom Wakiki",
+        "displayName": "Tom Wakiki",
+        "username": "system"
+      },
+      "favorite": false,
+      "id": "sNIC8XbhChe",
+      "attributeValues": [],
+      "userRoles": [
+        {
+          "id": "LGWLyWNro4x"
+        }
+      ],
+      "userGroups": []
+    }
+  ]
+}

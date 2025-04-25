@@ -1828,5 +1828,36 @@
       "id": "shYXBFb3lpw",
       "users": []
     }
+  ],
+  "userRoles": [
+    {
+      "name": "FCA - Tracker data capture",
+      "translations": [],
+      "externalAccess": false,
+      "publicAccess": "r-------",
+      "description": "Use FCA module",
+      "authorities": [
+        "F_TRACKED_ENTITY_INSTANCE_SEARCH_IN_ALL_ORGUNITS",
+        "F_DATAVALUE_DELETE",
+        "F_DATAVALUE_ADD",
+        "M_dhis-web-maps",
+        "F_ENROLLMENT_CASCADE_DELETE",
+        "F_VIEW_EVENT_ANALYTICS",
+        "M_dhis-web-event-reports",
+        "M_dhis-web-data-visualizer",
+        "M_dhis-web-dashboard",
+        "F_TEI_CASCADE_DELETE",
+        "M_dhis-web-cache-cleaner",
+        "M_dhis-web-event-visualizer",
+        "M_dhis-web-capture",
+        "F_TRACKED_ENTITY_UPDATE",
+        "M_dhis-web-reports",
+        "F_UNCOMPLETE_EVENT",
+        "M_fca"
+      ],
+      "restrictions": [],
+      "users": [],
+      "id": "WdelLCFTyqe"
+    }
   ]
 }
