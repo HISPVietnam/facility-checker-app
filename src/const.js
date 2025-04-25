@@ -28,6 +28,8 @@ const DATA_ELEMENTS = {
   EMAIL: "Wno4M1rmwHr",
   ADDRESS: "YLxv92NmyFD",
   PHONE_NUMBER: "HAOSMsp1TXB",
+  TRANSLATIONS: "pf27agpzDak",
+  IMAGE: "QRaMM9LMM3y",
 };
 const TRACKED_ENTITY_ATTRIBUTES = {
   UID: "prbjtVvKNet",

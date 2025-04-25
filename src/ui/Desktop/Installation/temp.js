@@ -3,6 +3,8 @@ import { format } from "date-fns";
 import {
   DATA_ELEMENTS,
   MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE,
+  TRACKED_ENTITY_ATTRIBUTES,
+  TRACKED_ENTITY_TYPE,
 } from "@/const";
 
 import useInstallationModuleStore from "@/states/installationModule";
@@ -27,20 +29,20 @@ const convertData = (clonedMetadata) => {
     const eventId = generateUid();
     const trackedEntity = {
       trackedEntity: trackedEntityId,
-      trackedEntityType: clonedMetadata.trackedEntityTypes[0].id,
+      trackedEntityType: TRACKED_ENTITY_TYPE,
       orgUnit: member.id,
       ...(member.geometry ? { geometry: member.geometry } : {}),
       attributes: [
         {
-          attribute: "PUYl7QIbEov", //active status
+          attribute: TRACKED_ENTITY_ATTRIBUTES.ACTIVE_STATUS, //active status
           value: "open",
         },
         {
-          attribute: "d9FXpa9ndGO", //code
+          attribute: TRACKED_ENTITY_ATTRIBUTES.ATTRIBUTE_CODE, //code
           value: member.code,
         },
         {
-          attribute: "prbjtVvKNet", //dhis2 uid
+          attribute: TRACKED_ENTITY_ATTRIBUTES.UID, //dhis2 uid
           value: member.name,
         },
       ],
@@ -88,12 +90,12 @@ const convertData = (clonedMetadata) => {
             };
           }
           switch (de.id) {
-            case "rMnWeGTBnKo":
+            case DATA_ELEMENTS.ATTRIBUTE_VALUES:
               return {
                 dataElement: de.id,
                 value: JSON.stringify(member.attributeValues),
               };
-            case "pf27agpzDak":
+            case DATA_ELEMENTS.TRANSLATIONS:
               return {
                 dataElement: de.id,
                 value: JSON.stringify(member.translations),
@@ -111,13 +113,13 @@ const convertData = (clonedMetadata) => {
                     )
                   : "",
               };
-            case "wetRbzCTyYO":
-            case "guutPq3seaj":
-            case "jmUQ1B95ZP9":
-            case "m75JpouZBy8":
-            case "p4m3y1jLgpv":
-            case "QRaMM9LMM3y":
-            case "z3Qe8czE7LE":
+            case DATA_ELEMENTS.REASON_FOR_REJECT:
+            case DATA_ELEMENTS.IS_NEW_FACILITY:
+            case DATA_ELEMENTS.APPROVED_BY:
+            case DATA_ELEMENTS.SYNCED:
+            case DATA_ELEMENTS.APPROVAL_STATUS:
+            case DATA_ELEMENTS.IMAGE:
+            case DATA_ELEMENTS.APPROVED_AT:
               return;
 
             default:
