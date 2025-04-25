@@ -114,6 +114,11 @@ const convertData = (clonedMetadata) => {
                     )
                   : "",
               };
+            case DATA_ELEMENTS.ACTIVE_STATUS:
+              return {
+                dataElement: de.id,
+                value: "open",
+              };
             case DATA_ELEMENTS.REASON_FOR_REJECT:
             case DATA_ELEMENTS.IS_NEW_FACILITY:
             case DATA_ELEMENTS.APPROVED_BY:
