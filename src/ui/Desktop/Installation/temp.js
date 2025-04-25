@@ -1,8 +1,14 @@
-import { MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE } from "@/const";
+import { format } from "date-fns";
+
+import {
+  DATA_ELEMENTS,
+  MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE,
+} from "@/const";
+
 import useInstallationModuleStore from "@/states/installationModule";
 import useMetadataStore from "@/states/metadata";
+
 import { generateUid } from "@/utils";
-import { format } from "date-fns";
 
 const convertData = (clonedMetadata) => {
   //remove when move function to component
@@ -46,8 +52,6 @@ const convertData = (clonedMetadata) => {
       orgUnit: member.id,
       status: "ACTIVE",
       enrolledAt: format(new Date(), "yyyy-MM-dd"),
-      occurredAt: format(new Date(), "yyyy-MM-dd"),
-      scheduledAt: format(new Date(), "yyyy-MM-dd"),
       ...(member.geometry ? { geometry: member.geometry } : {}),
     };
     const event = {
@@ -93,6 +97,19 @@ const convertData = (clonedMetadata) => {
               return {
                 dataElement: de.id,
                 value: JSON.stringify(member.translations),
+              };
+            case DATA_ELEMENTS.CLOSED_DATE:
+            case DATA_ELEMENTS.OPENING_DATE:
+              return {
+                dataElement: de.id,
+                value: member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]]
+                  ? format(
+                      new Date(
+                        member[MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE[de.id]]
+                      ),
+                      "yyyy-MM-dd"
+                    )
+                  : "",
               };
             case "wetRbzCTyYO":
             case "guutPq3seaj":
