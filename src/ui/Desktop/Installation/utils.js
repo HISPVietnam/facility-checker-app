@@ -54,6 +54,7 @@ const convertData = (clonedMetadata) => {
       orgUnit: member.id,
       status: "ACTIVE",
       enrolledAt: format(new Date(), "yyyy-MM-dd"),
+      occurredAt: format(new Date(), "yyyy-MM-dd"),
       ...(member.geometry ? { geometry: member.geometry } : {}),
     };
     const event = {
@@ -112,11 +113,6 @@ const convertData = (clonedMetadata) => {
                       "yyyy-MM-dd"
                     )
                   : "",
-              };
-            case DATA_ELEMENTS.ACTIVE_STATUS:
-              return {
-                dataElement: de.id,
-                value: "open",
               };
             case DATA_ELEMENTS.REASON_FOR_REJECT:
             case DATA_ELEMENTS.IS_NEW_FACILITY:

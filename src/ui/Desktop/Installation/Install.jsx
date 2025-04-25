@@ -36,7 +36,7 @@ const Install = () => {
     }))
   );
   const { setStatus, setStepData } = actions;
-  const { metadataPackage } = summary;
+  const { metadataPackage, data } = summary;
   const { members, skippedOrgUnits, selectedGroupSets } = selectGroupSets;
 
   const changeLoading = (key, value) => {

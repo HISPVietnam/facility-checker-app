@@ -56,6 +56,12 @@ const useInit = () => {
           const events = tei.enrollments[0].events;
           tei.enrollments[0].events = _.sortBy(events, "occurredAt").reverse();
         });
+        setMetadata("orgUnits", orgUnits);
+        setMetadata("orgUnitGroups", orgUnitGroups);
+        setMetadata("orgUnitGroupSets", orgUnitGroupSets);
+        setMetadata("orgUnitGeoJson", orgUnitGeoJson);
+        setMetadata("users", users);
+        setMetadata("schemas", schemas);
         setTeis(teis);
         setMetadata("orgUnitLevels", orgUnitLevels);
         setMetadata("me", me);
