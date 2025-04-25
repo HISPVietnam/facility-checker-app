@@ -41,7 +41,7 @@ const Summary = () => {
     groupSets.forEach((gs) => {
       const foundGs = orgUnitGroupSets.find((ougs) => ougs.id === gs);
       const newDataElementId = generateUid();
-      const newOptionSetId = generateUid();
+      // const newOptionSetId = generateUid();
       newDataElements.push({
         id: newDataElementId,
         name: "FC:" + foundGs.name,
@@ -50,9 +50,9 @@ const Summary = () => {
         valueType: "TEXT",
         domainType: "TRACKER",
         aggregationType: "COUNT",
-        optionSet: {
-          id: newOptionSetId
-        },
+        // optionSet: {
+        //   id: newOptionSetId
+        // },
         sharing: {
           external: false,
           users: {},
@@ -76,29 +76,29 @@ const Summary = () => {
         skipAnalytics: false,
         skipSynchronization: false
       });
-      const newOptionSet = {
-        id: newOptionSetId,
-        name: "FC:" + foundGs.name,
-        shortName: foundGs.name,
-        valueType: "TEXT",
-        options: []
-      };
+      // const newOptionSet = {
+      //   id: newOptionSetId,
+      //   name: "FC:" + foundGs.name,
+      //   shortName: foundGs.name,
+      //   valueType: "TEXT",
+      //   options: []
+      // };
 
-      foundGs.items.forEach((item, index) => {
-        const foundOug = orgUnitGroups.find((oug) => oug.id === item.id);
-        const newOption = {
-          id: generateUid(),
-          name: foundOug.name,
-          code: foundOug.id,
-          sortOrder: index + 1,
-          optionSet: {
-            id: newOptionSetId
-          }
-        };
-        newOptionSet.options.push(newOption);
-        newOptions.push(newOption);
-      });
-      newOptionSets.push(newOptionSet);
+      // foundGs.items.forEach((item, index) => {
+      //   const foundOug = orgUnitGroups.find((oug) => oug.id === item.id);
+      //   const newOption = {
+      //     id: generateUid(),
+      //     name: foundOug.name,
+      //     code: foundOug.id,
+      //     sortOrder: index + 1,
+      //     optionSet: {
+      //       id: newOptionSetId
+      //     }
+      //   };
+      //   newOptionSet.options.push(newOption);
+      //   newOptions.push(newOption);
+      // });
+      // newOptionSets.push(newOptionSet);
     });
     const clonedMetadata = _.cloneDeep(metadata);
     clonedMetadata.programStageDataElements.push(...newProgramStageDataElements);

@@ -450,51 +450,6 @@
           "favorites": [],
           "sharing": { "external": false, "users": {}, "userGroups": {} },
           "programStage": { "id": "VdBma23iRTw" },
-          "dataElement": { "id": "zqiHZrr50rJ" },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 7,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "MDxo6eAYWED",
-          "attributeValues": []
-        },
-        {
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
-          "favorites": [],
-          "sharing": { "external": false, "users": {}, "userGroups": {} },
-          "programStage": { "id": "VdBma23iRTw" },
-          "dataElement": { "id": "jGlGi4ABpTL" },
-          "compulsory": false,
-          "allowProvidedElsewhere": false,
-          "sortOrder": 8,
-          "displayInReports": true,
-          "allowFutureDate": false,
-          "renderOptionsAsRadio": false,
-          "skipSynchronization": false,
-          "skipAnalytics": false,
-          "favorite": false,
-          "id": "pKyUggTuXSW",
-          "attributeValues": []
-        },
-
-        {
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
-          "favorites": [],
-          "sharing": { "external": false, "users": {}, "userGroups": {} },
-          "programStage": { "id": "VdBma23iRTw" },
           "dataElement": { "id": "PCoXOnxAzwr" },
           "compulsory": false,
           "allowProvidedElsewhere": false,
@@ -1125,19 +1080,6 @@
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "zqiHZrr50rJ" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 7,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "MDxo6eAYWED"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "m75JpouZBy8" },
       "compulsory": false,
       "allowProvidedElsewhere": false,
@@ -1175,19 +1117,7 @@
       "skipAnalytics": false,
       "id": "hyslcRQpYwU"
     },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "jGlGi4ABpTL" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 8,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "pKyUggTuXSW"
-    },
+
     {
       "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "p4m3y1jLgpv" },
@@ -1471,34 +1401,6 @@
       "attributeValues": []
     },
     {
-      "code": "FCA_019",
-      "name": "FC:Type",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "Facility type",
-      "description": "FCGS:J5jldMd8OHv",
-      "formName": "Facility type",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "zqiHZrr50rJ",
-      "attributeValues": []
-    },
-    {
       "code": "FCA_010",
       "name": "FC:Description",
       "translations": [],
@@ -1553,34 +1455,6 @@
       "attributeValues": []
     },
 
-    {
-      "code": "FCA_021",
-      "name": "FC:Owner",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "Facility owner",
-      "description": "FCGS:Bpx0589u8y0",
-      "formName": "Facility owner",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jGlGi4ABpTL",
-      "attributeValues": []
-    },
     {
       "code": "FCA_018",
       "name": "FC:Url",
