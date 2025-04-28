@@ -4,6 +4,7 @@ import { produce } from "immer";
 const useApprovalModuleStore = create((set) => ({
   selectedFacility: null,
   selectedOrgUnit: null,
+  isReadOnly: false,
   filters: [],
   actions: {
     selectFacility: (facility) =>
@@ -16,6 +17,12 @@ const useApprovalModuleStore = create((set) => ({
       set(
         produce((state) => {
           state.selectedOrgUnit = orgUnit;
+        })
+      ),
+    setIsReadOnly: (isReadOnly) =>
+      set(
+        produce((state) => {
+          state.isReadOnly = isReadOnly;
         })
       ),
     toggleFilter: (filter) =>
@@ -34,8 +41,8 @@ const useApprovalModuleStore = create((set) => ({
           state.filters = [];
           state.selectedOrgUnit = null;
         })
-      ),
-  },
+      )
+  }
 }));
 
 export default useApprovalModuleStore;

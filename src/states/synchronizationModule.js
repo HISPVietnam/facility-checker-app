@@ -5,6 +5,7 @@ const useSynchronizationModuleStore = create((set) => ({
   selectedOrgUnit: null,
   filters: [],
   selectedFacilities: [],
+  isReadOnly: false,
   actions: {
     selectOrgUnit: (orgUnit) =>
       set(
@@ -16,6 +17,12 @@ const useSynchronizationModuleStore = create((set) => ({
       set(
         produce((state) => {
           state.selectedFacilities = facilities;
+        })
+      ),
+    setIsReadOnly: (isReadOnly) =>
+      set(
+        produce((state) => {
+          state.isReadOnly = isReadOnly;
         })
       ),
     toggleFilter: (filter) =>
@@ -35,8 +42,8 @@ const useSynchronizationModuleStore = create((set) => ({
           state.selectedOrgUnit = null;
           state.selectedFacilities = [];
         })
-      ),
-  },
+      )
+  }
 }));
 
 export default useSynchronizationModuleStore;

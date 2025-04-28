@@ -19,12 +19,13 @@ const userGroupMapping = {
 
 const Summary = () => {
   const { t } = useTranslation();
-  const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
+  const { me, schemas, orgUnitGroupSets, orgUnitGroups, orgUnits } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       schemas: state.schemas,
       orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups
+      orgUnitGroups: state.orgUnitGroups,
+      orgUnits: state.orgUnits
     }))
   );
 
@@ -115,14 +116,17 @@ const Summary = () => {
     clonedMetadata.dataElements.push(...newDataElements);
     clonedMetadata.optionSets.push(...newOptionSets);
     clonedMetadata.options.push(...newOptions);
-    members.forEach((member) => {
-      const foundInSkippedOrgUnits = skippedOrgUnits.find((sou) => sou.id === member.id);
-      if (!foundInSkippedOrgUnits) {
-        clonedMetadata.programs[0].organisationUnits.push({
-          id: member.id
-        });
-      }
-    });
+    // members.forEach((member) => {
+    //   const foundInSkippedOrgUnits = skippedOrgUnits.find((sou) => sou.id === member.id);
+    //   if (!foundInSkippedOrgUnits) {
+    //     clonedMetadata.programs[0].organisationUnits.push({
+    //       id: member.id
+    //     });
+    //   }
+    // });
+    clonedMetadata.programs[0].organisationUnits = orgUnits.map((orgUnit) => ({
+      id: orgUnit.id
+    }));
     Object.keys(userGroupMapping).forEach((userGroupId) => {
       const foundUserGroupIndex = clonedMetadata.userGroups.findIndex((ug) => ug.id === userGroupId);
       const groupMembers = JSON.parse(setupAuthorities[userGroupMapping[userGroupId]]).map((id) => ({

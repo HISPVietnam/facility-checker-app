@@ -34,9 +34,9 @@ const useInit = () => {
       const orgUnitGroups = await getOrgUnitGroups();
       const orgUnitGroupSets = await getOrgUnitGroupSets();
       const orgUnitGeoJson = await getOrgUnitGeoJson();
-      const users = await getUsers();
       const schemas = await getSchemas();
       if (program.httpStatusCode === 404) {
+        const users = await getUsers();
         setMetadata("me", me);
         const locale = me.settings.keyUiLocale;
         setMetadata("locale", locale);
@@ -61,7 +61,7 @@ const useInit = () => {
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
-        setMetadata("users", users);
+        // setMetadata("users", users);
         setMetadata("schemas", schemas);
         setTeis(teis);
         setMetadata("orgUnitLevels", orgUnitLevels);

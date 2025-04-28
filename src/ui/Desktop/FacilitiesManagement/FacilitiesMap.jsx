@@ -32,12 +32,13 @@ const TooltipContent = (props) => {
       orgUnitGeoJson: state.orgUnitGeoJson
     }))
   );
-  const { selectedFacility, editing, actions, draggingMode } = useFacilityCheckModuleStore(
+  const { selectedFacility, editing, actions, draggingMode, isReadOnly } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
       draggingMode: state.draggingMode,
       editing: state.editing,
-      actions: state.actions
+      actions: state.actions,
+      isReadOnly: state.isReadOnly
     }))
   );
   const { facilities, dataStoreActions } = useDataStore(
@@ -170,10 +171,10 @@ const TooltipContent = (props) => {
             toggleDialog("facilityProfileDialog");
           }}
         >
-          {isPending ? t("viewProfile") : t("editProfile")}
+          {isPending || isReadOnly ? t("viewProfile") : t("editProfile")}
         </CustomizedButton>
         &nbsp;
-        <CustomizedButton small={true} disabled={isPending} onClick={toggleEditing} hidden={editing}>
+        <CustomizedButton small={true} disabled={isPending || isReadOnly} onClick={toggleEditing} hidden={editing}>
           {t("editLocation")}
         </CustomizedButton>
         <CustomizedButton loading={loading} small={true} hidden={!editing} disabled={!valid || !isWithinParent} primary onClick={saveChanges}>

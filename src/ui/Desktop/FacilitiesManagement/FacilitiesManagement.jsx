@@ -49,7 +49,7 @@ const FacilitiesManagement = () => {
       facilityProfileDialog: state.facilityProfileDialog
     }))
   );
-  const { selectOrgUnit, setAllFilters } = actions;
+  const { selectOrgUnit, setAllFilters, setIsReadOnly } = actions;
   const { facilities, dataStoreActions } = useDataStore(
     useShallow((state) => ({
       facilities: state.facilities,
@@ -70,6 +70,12 @@ const FacilitiesManagement = () => {
     const foundOu = orgUnits.find((orgUnit) => orgUnit.id === ou.id);
     return foundOu;
   });
+
+  useEffect(() => {
+    if (!me.authorities.includes("CAPTURE")) {
+      setIsReadOnly(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedOrgUnit) {

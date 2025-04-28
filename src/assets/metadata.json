@@ -196,7 +196,7 @@
     {
       "name": "FCA:Facility",
       "translations": [],
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "r-rw----" },
       "description": "Facility checker: Facility",
       "trackedEntityTypeAttributes": [
         {
@@ -1837,6 +1837,7 @@
       "publicAccess": "r-------",
       "description": "Use FCA module",
       "authorities": [
+        "F_METADATA_EXPORT",
         "F_TRACKED_ENTITY_INSTANCE_SEARCH_IN_ALL_ORGUNITS",
         "F_DATAVALUE_DELETE",
         "F_DATAVALUE_ADD",

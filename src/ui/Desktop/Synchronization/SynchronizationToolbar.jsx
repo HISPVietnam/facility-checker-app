@@ -18,12 +18,13 @@ const SynchronizationToolbar = () => {
   //button ref
   const filterButtonRef = useRef();
   //store
-  const { selectedOrgUnit, currentFilters, actions, selectedFacilities } = useSynchronizationModuleStore(
+  const { selectedOrgUnit, currentFilters, actions, selectedFacilities, isReadOnly } = useSynchronizationModuleStore(
     useShallow((state) => ({
       selectedOrgUnit: state.selectedOrgUnit,
       currentFilters: state.filters,
       actions: state.actions,
-      selectedFacilities: state.selectedFacilities
+      selectedFacilities: state.selectedFacilities,
+      isReadOnly: state.isReadOnly
     }))
   );
   const { selectOrgUnit, toggleFilter } = actions;
@@ -42,7 +43,12 @@ const SynchronizationToolbar = () => {
           {t("filters")}
         </CustomizedButton>
       </div> */}
-      <CustomizedButton primary icon={<FontAwesomeIcon icon={faRotate} />} onClick={() => {}} disabled={selectedFacilities.length === 0}>
+      <CustomizedButton
+        primary
+        icon={<FontAwesomeIcon icon={faRotate} />}
+        onClick={() => {}}
+        disabled={selectedFacilities.length === 0 || isReadOnly}
+      >
         {t("sync")}
       </CustomizedButton>
       {filtersPopover && (

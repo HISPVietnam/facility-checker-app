@@ -7,6 +7,7 @@ const useFacilityCheckModuleStore = create((set) => ({
   editing: false,
   draggingMode: false,
   isDirty: false,
+  isReadOnly: false,
   view: "mapView",
   newFacilityDialog: false,
   facilityProfileDialog: false,
@@ -88,6 +89,12 @@ const useFacilityCheckModuleStore = create((set) => ({
       set(
         produce((state) => {
           state.allFilters = filters;
+        })
+      ),
+    setIsReadOnly: (isReadOnly) =>
+      set(
+        produce((state) => {
+          state.isReadOnly = isReadOnly;
         })
       ),
     toggleFilter: (filter) =>

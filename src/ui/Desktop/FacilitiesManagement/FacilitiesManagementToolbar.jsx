@@ -20,7 +20,7 @@ const FacilitiesManagementToolbar = () => {
   const { t } = useTranslation();
   const dataActions = useDataStore((state) => state.actions);
   const { initNewFacility } = dataActions;
-  const { selectedFacility, selectedOrgUnit, view, allFilters, currentFilters, editing, actions } = useFacilityCheckModuleStore(
+  const { selectedFacility, selectedOrgUnit, view, allFilters, currentFilters, editing, isReadOnly, actions } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
       selectedOrgUnit: state.selectedOrgUnit,
@@ -28,7 +28,8 @@ const FacilitiesManagementToolbar = () => {
       currentFilters: state.filters,
       actions: state.actions,
       view: state.view,
-      editing: state.editing
+      editing: state.editing,
+      isReadOnly: state.isReadOnly
     }))
   );
   const { selectOrgUnit, setView, toggleFilter, toggleDialog } = actions;
@@ -68,7 +69,7 @@ const FacilitiesManagementToolbar = () => {
       <div>
         <CustomizedButton
           primary
-          disabled={editing}
+          disabled={editing || isReadOnly}
           icon={<FontAwesomeIcon icon={faPlus} />}
           onClick={() => {
             initNewFacility();

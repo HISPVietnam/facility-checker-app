@@ -71,10 +71,11 @@ const FacilityProfileDialog = () => {
     }))
   );
   const [currentFacility, setCurrentFacility] = useState({});
-  const { selectedFacility, facilityCheckModuleActions } = useFacilityCheckModuleStore(
+  const { selectedFacility, facilityCheckModuleActions, isReadOnly } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       facilityCheckModuleActions: state.actions,
-      selectedFacility: state.selectedFacility
+      selectedFacility: state.selectedFacility,
+      isReadOnly: state.isReadOnly
     }))
   );
 
@@ -321,7 +322,7 @@ const FacilityProfileDialog = () => {
                   <DataValueLabel dataElement={de} />
                   <div>
                     <InputField
-                      disabled={isPending || loading}
+                      disabled={isPending || loading || isReadOnly}
                       filter={filter}
                       displayValue={convertDisplayValueForPath(currentValue)}
                       valueType="ORGANISATION_UNIT"
@@ -343,7 +344,7 @@ const FacilityProfileDialog = () => {
                   <CustomizedInputField
                     error={foundCoordinatesError ? true : false}
                     valueType="COORDINATES"
-                    disabled={isPending || loading}
+                    disabled={isPending || loading || isReadOnly}
                     value={[currentFacility.longitude, currentFacility.latitude]}
                     onChange={(value) => {
                       changeCoordinates(value);
@@ -384,7 +385,7 @@ const FacilityProfileDialog = () => {
                     <DataValueLabel dataElement={de.id} />
                     <DataValueField
                       dataElement={de.id}
-                      disabled={isPending || loading}
+                      disabled={isPending || loading || isReadOnly}
                       value={currentFacility[de.id]}
                       onChange={(value) => {
                         changeValue(de.id, value);
@@ -405,6 +406,7 @@ const FacilityProfileDialog = () => {
                   <CustomAttributeLabel attribute={id} />
                   <div>
                     <CustomAttributeField
+                      disabled={isPending || loading || isReadOnly}
                       attribute={id}
                       value={currentValue}
                       onChange={(value) => {
@@ -489,14 +491,18 @@ const FacilityProfileDialog = () => {
           &nbsp;
           <CustomizedButton
             loading={loading}
-            disabled={loading || isPending || helpers.find((h) => h.type === "error")}
+            disabled={loading || isPending || helpers.find((h) => h.type === "error") || isReadOnly}
             primary={true}
             onClick={saveChanges}
           >
             {t("save")}
           </CustomizedButton>
           &nbsp;
-          <CustomizedButton loading={loading} disabled={loading || isPending || helpers.find((h) => h.type === "error")} onClick={complete}>
+          <CustomizedButton
+            loading={loading}
+            disabled={loading || isPending || helpers.find((h) => h.type === "error") || isReadOnly}
+            onClick={complete}
+          >
             {t("applyForApproval")}
           </CustomizedButton>
           &nbsp;

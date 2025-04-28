@@ -15,7 +15,9 @@ const { PATH, UID } = DATA_ELEMENTS;
 const BoundaryLayer = ({ mapOpen, path }) => {
   const ref = useRef();
   const map = useMap();
-  const { selectedFacility } = useFacilityCheckModuleStore(useShallow((state) => ({ selectedFacility: state.selectedFacility })));
+  const { selectedFacility, isReadOnly } = useFacilityCheckModuleStore(
+    useShallow((state) => ({ selectedFacility: state.selectedFacility, isReadOnly: state.isReadOnly }))
+  );
   const [data, setData] = useState(null);
   const { orgUnitGeoJson } = useMetadataStore(
     useShallow((state) => ({
@@ -93,16 +95,18 @@ const FacilitiesLayer = ({ position, setPosition }) => {
     iconSize: [18, 18],
     html: `<div></div>`
   });
-  const { selectedFacility, actions } = useFacilityCheckModuleStore(
+  const { selectedFacility, actions, isReadOnly } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
-      actions: state.actions
+      actions: state.actions,
+      isReadOnly: state.isReadOnly
     }))
   );
   const isPending = selectedFacility ? selectedFacility.isPending : true;
 
   const map = useMapEvents({
     click(e) {
+      if (isReadOnly) return;
       if (!isPending) {
         setPosition([e.latlng.lat, e.latlng.lng]);
       }
@@ -129,7 +133,7 @@ const FacilitiesLayer = ({ position, setPosition }) => {
             setPosition([latLng.lat, latLng.lng]);
           }
         }}
-        draggable={!isPending}
+        draggable={!isPending && !isReadOnly}
         position={position}
         icon={draggedFacilityIcon}
         key={selectedFacility[UID]}
@@ -142,8 +146,12 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates, path }
   const { t } = useTranslation();
   const [position, setPosition] = useState(null);
 
-  const { coordinatesPickerMapControl, selectedFacility } = useFacilityCheckModuleStore(
-    useShallow((state) => ({ coordinatesPickerMapControl: state.coordinatesPickerMapControl, selectedFacility: state.selectedFacility }))
+  const { coordinatesPickerMapControl, selectedFacility, isReadOnly } = useFacilityCheckModuleStore(
+    useShallow((state) => ({
+      coordinatesPickerMapControl: state.coordinatesPickerMapControl,
+      selectedFacility: state.selectedFacility,
+      isReadOnly: state.isReadOnly
+    }))
   );
   const { baseLayerType } = coordinatesPickerMapControl;
   const Closed = ({ children }) => {
@@ -213,7 +221,7 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates, path }
       </ModalContent>
       <ModalActions>
         <div className="flex items-center">
-          {!isPending && (
+          {!isPending && !isReadOnly && (
             <CustomizedButton
               disabled={position ? false : true}
               primary={true}

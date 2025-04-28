@@ -8,11 +8,11 @@ const UserInfo = () => {
   const { firstName, surname, authorities } = me;
   return (
     <div>
-      <Tag bold>
+      <Tag bold maxWidth="1000px">
         {t("user")}: {firstName} {surname}
       </Tag>
       &nbsp;
-      <Tag bold positive>
+      <Tag bold positive maxWidth="1000px">
         {t("authorities")}: {me.authorities.join(", ")}
       </Tag>
     </div>

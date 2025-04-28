@@ -45,10 +45,11 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
   );
   const actions = useDataStore((state) => state.actions);
   const { approve } = actions;
-  const { approvalModuleActions, selectedFacility } = useApprovalModuleStore(
+  const { approvalModuleActions, selectedFacility, isReadOnly } = useApprovalModuleStore(
     useShallow((state) => ({
       approvalModuleActions: state.actions,
-      selectedFacility: state.selectedFacility
+      selectedFacility: state.selectedFacility,
+      isReadOnly: state.isReadOnly
     }))
   );
   const { selectFacility } = approvalModuleActions;
@@ -78,6 +79,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     const result = await postEvent(convertedEvent);
     setLoading(false);
   };
+
   return (
     selectedFacility && (
       <Modal fluid hide={!open}>
@@ -284,11 +286,11 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         <ModalActions>
           {foundPendingEvent && (
             <div className="flex items-center">
-              <CustomizedButton loading={loading} disabled={foundApprovedEvent} primary={true} onClick={handleApprove}>
+              <CustomizedButton loading={loading} disabled={foundApprovedEvent || isReadOnly} primary={true} onClick={handleApprove}>
                 {t("approve")}
               </CustomizedButton>
               &nbsp;
-              <CustomizedButton loading={loading} disabled={foundApprovedEvent} destructive={true}>
+              <CustomizedButton loading={loading} disabled={foundApprovedEvent || isReadOnly} destructive={true}>
                 {t("reject")}
               </CustomizedButton>
             </div>
