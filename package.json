@@ -24,6 +24,7 @@
     "@mui/material": "^6.4.4",
     "@turf/turf": "^7.2.0",
     "date-fns": "^4.1.0",
+    "flag-icons": "^7.3.2",
     "i18next": "^24.2.1",
     "immer": "^10.1.1",
     "is-mobile": "^5.0.0",
