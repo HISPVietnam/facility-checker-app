@@ -20,6 +20,7 @@ const useInstallationModuleStore = create((set) => ({
   },
   install: {},
   status: "pending",
+  refreshingMetadata: false,
   step: 0,
   valid: false,
   actions: {
@@ -45,6 +46,12 @@ const useInstallationModuleStore = create((set) => ({
       set(
         produce((state) => {
           state.status = status;
+        })
+      ),
+    toggleRefreshingMetadata: () =>
+      set(
+        produce((state) => {
+          state.refreshingMetadata = !state.refreshingMetadata;
         })
       )
   }

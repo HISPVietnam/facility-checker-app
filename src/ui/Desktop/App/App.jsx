@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router";
 import Sidebar from "@/ui/Desktop/Sidebar/Sidebar";
 import CollapsedSidebar from "@/ui/Desktop/Sidebar/CollapsedSidebar";
 import Home from "@/ui/Desktop/Home/Home";
+import HomeToolbar from "@/ui/Desktop/Home/HomeToolbar";
 import FacilitiesManagement from "@/ui/Desktop/FacilitiesManagement/FacilitiesManagement";
 import FacilitiesManagementToolbar from "@/ui/Desktop/FacilitiesManagement/FacilitiesManagementToolbar";
 import Synchronization from "@/ui/Desktop/Synchronization/Synchronization";
@@ -51,15 +52,13 @@ const App = () => {
                   </Button>
                 </div>
                 <VerticalDivider /> */}
-                <div>
-                  <Routes>
-                    <Route path="/home" element={<div />} />
-                    <Route path="/" element={<div />} />
-                    <Route path="/facility-check" element={<FacilitiesManagementToolbar />} />
-                    <Route path="/approval" element={<ApprovalToolbar />} />
-                    <Route path="/synchronization" element={<SynchronizationToolbar />} />
-                  </Routes>
-                </div>
+                <Routes>
+                  <Route path="/home" element={<HomeToolbar />} />
+                  <Route path="/" element={<HomeToolbar />} />
+                  <Route path="/facility-check" element={<FacilitiesManagementToolbar />} />
+                  <Route path="/approval" element={<ApprovalToolbar />} />
+                  <Route path="/synchronization" element={<SynchronizationToolbar />} />
+                </Routes>
               </div>
               <div className="h-[calc(100%-60px)] w-full flex items-center justify-center">
                 <Routes>

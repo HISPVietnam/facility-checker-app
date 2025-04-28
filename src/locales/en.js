@@ -109,8 +109,9 @@ export default {
   welcomeParagraph1:
     "Hi {{fullName}} 👋 , it looks like this is your first time running the application — welcome aboard! Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
   welcomeParagraph2:
-    "This installation wizard will guide you through each step of the installation process. It won't take long, and we'll be with you the whole way.",
+    "This installation wizard will guide you through each step of the installation process. It won't take long, and we'll be with you the whole way. During the installation if you need  to refresh the metadata, click Refresh button.",
   welcomeParagraph3: "Before we start, your user will need certain privileges as follow:",
+  refreshMetadata: "Refresh metadata",
   superuserRole: "Superuser role",
   accessToRootOrgUnit: "Access to root organisation unit (level 1)",
   validWelcome: "Your user has all the needed privileges 👏 , click Next to proceed.",
@@ -148,8 +149,11 @@ export default {
   install: "Install",
   installParagraph1: "This is the final step 🏁, click Install button to start the installation process.",
   installParagraph2: "Installation process has been started, please do not close the app until it's completed.",
-  installParagraph3: "Congratulations! 🎉🎉🎉, installation process has been done successfully, click this button to start using the app 👉",
+  installParagraph3: "Congratulations! 🎉🎉🎉, installation process has been done successfully, click the button below to start the app.",
   importMetadata: "Importing metadata",
   importFacilities: "Importing facilities",
-  settingUserRole: "Setting up user role"
+  settingUserRole: "Setting up user role",
+  start: "Start",
+  user: "User",
+  authorities: "Authorities"
 };

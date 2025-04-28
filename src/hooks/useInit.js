@@ -17,6 +17,7 @@ import useDataStore from "@/states/data";
 import { useTranslation } from "react-i18next";
 import { convertTeis } from "@/utils";
 import _ from "lodash";
+import { USER_GROUPS } from "@/const";
 
 const useInit = () => {
   const { i18n } = useTranslation();
@@ -64,6 +65,13 @@ const useInit = () => {
         setMetadata("schemas", schemas);
         setTeis(teis);
         setMetadata("orgUnitLevels", orgUnitLevels);
+        me.authorities = [];
+        Object.keys(USER_GROUPS).forEach((authorityName) => {
+          const foundUg = me.userGroups.find((ug) => ug.id === USER_GROUPS[authorityName]);
+          if (foundUg) {
+            me.authorities.push(authorityName);
+          }
+        });
         setMetadata("me", me);
         const locale = me.settings.keyUiLocale;
         setMetadata("locale", locale);

@@ -12,24 +12,23 @@ import _ from "lodash";
 
 const SelectGroupSets = () => {
   const { t } = useTranslation();
-  const { orgUnitGroupSets, orgUnits, orgUnitGeoJson, locale } =
-    useMetadataStore(
-      useShallow((state) => ({
-        orgUnitGroupSets: state.orgUnitGroupSets,
-        orgUnits: state.orgUnits,
-        orgUnitGeoJson: state.orgUnitGeoJson,
-        locale: state.locale,
-      }))
-    );
-  const { selectGroupSets, actions, valid, status } =
-    useInstallationModuleStore(
-      useShallow((state) => ({
-        selectGroupSets: state.selectGroupSets,
-        valid: state.valid,
-        actions: state.actions,
-        status: state.status,
-      }))
-    );
+  const { orgUnitGroupSets, orgUnits, orgUnitGeoJson, locale } = useMetadataStore(
+    useShallow((state) => ({
+      orgUnitGroupSets: state.orgUnitGroupSets,
+      orgUnits: state.orgUnits,
+      orgUnitGeoJson: state.orgUnitGeoJson,
+      locale: state.locale
+    }))
+  );
+  const { refreshingMetadata, selectGroupSets, actions, valid, status } = useInstallationModuleStore(
+    useShallow((state) => ({
+      refreshingMetadata: state.refreshingMetadata,
+      selectGroupSets: state.selectGroupSets,
+      valid: state.valid,
+      actions: state.actions,
+      status: state.status
+    }))
+  );
   const { selectedGroupSets, skippedOrgUnits, members } = selectGroupSets;
   const { setValid, setStepData } = actions;
 
@@ -55,9 +54,7 @@ const SelectGroupSets = () => {
         return isMember;
       });
       const membersWithGeometry = members.map((member) => {
-        const foundGeoJson = orgUnitGeoJson.features.find(
-          (f) => f.id === member.id
-        );
+        const foundGeoJson = orgUnitGeoJson.features.find((f) => f.id === member.id);
         const newMember = _.cloneDeep(member);
         newMember.geometry = foundGeoJson?.geometry;
         if (foundGeoJson && foundGeoJson.geometry.type !== "Point") {
@@ -67,10 +64,7 @@ const SelectGroupSets = () => {
       });
       if (membersWithGeometry.length === 0) {
         setValid(false);
-      } else if (
-        membersWithGeometry.length - currentSkippedOrgUnits.length ===
-        0
-      ) {
+      } else if (membersWithGeometry.length - currentSkippedOrgUnits.length === 0) {
         setValid(false);
       } else {
         setValid(true);
@@ -86,7 +80,7 @@ const SelectGroupSets = () => {
       <div>{t("selectGroupSetsParagraph1")}</div>
       <div>
         <CustomizedInputField
-          disabled={status !== "pending"}
+          disabled={status !== "pending" || refreshingMetadata}
           value={selectedGroupSets}
           onChange={(value) => {
             setStepData("selectGroupSets", "selectedGroupSets", value);
@@ -96,7 +90,7 @@ const SelectGroupSets = () => {
           options={orgUnitGroupSets.map((ougs) => {
             return {
               value: ougs.id,
-              label: pickTranslation(ougs, locale, "name"),
+              label: pickTranslation(ougs, locale, "name")
             };
           })}
         />
@@ -121,8 +115,7 @@ const SelectGroupSets = () => {
               {skippedOrgUnits.map((orgUnit) => {
                 return (
                   <div>
-                    <strong>{pickTranslation(orgUnit, locale, "name")}</strong>{" "}
-                    ({convertDisplayValueForPath(orgUnit.path)})
+                    <strong>{pickTranslation(orgUnit, locale, "name")}</strong> ({convertDisplayValueForPath(orgUnit.path)})
                   </div>
                 );
               })}

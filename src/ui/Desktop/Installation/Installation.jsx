@@ -7,21 +7,48 @@ import Install from "./Install";
 import CustomizedButton from "@/ui/common/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackwardStep, faCaretLeft, faCaretRight, faForwardStep } from "@fortawesome/free-solid-svg-icons";
+import { faBackwardStep, faCaretLeft, faCaretRight, faForwardStep, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import useInstallationModuleStore from "@/states/installationModule";
 import { useShallow } from "zustand/react/shallow";
 import { STEPS } from "@/const";
+import { getMe, getOrgUnits, getOrgUnitGroups, getOrgUnitGroupSets, getOrgUnitGeoJson, getUsers, getSchemas } from "@/api/metadata";
+import useMetadataStore from "@/states/metadata";
 
 const Installation = () => {
   const { t } = useTranslation();
-  const { step, valid, actions } = useInstallationModuleStore(
+
+  const { status, step, valid, refreshingMetadata, actions } = useInstallationModuleStore(
     useShallow((state) => ({
+      status: state.status,
       step: state.step,
       valid: state.valid,
-      actions: state.actions
+      actions: state.actions,
+      refreshingMetadata: state.refreshingMetadata
     }))
   );
-  const { setStep } = actions;
+  const metadataActions = useMetadataStore((state) => state.actions);
+  const { setMetadata } = metadataActions;
+  const { setStep, toggleRefreshingMetadata } = actions;
+
+  const refreshMetadata = async () => {
+    toggleRefreshingMetadata();
+    const me = await getMe();
+    const orgUnits = await getOrgUnits();
+    const orgUnitGroups = await getOrgUnitGroups();
+    const orgUnitGroupSets = await getOrgUnitGroupSets();
+    const orgUnitGeoJson = await getOrgUnitGeoJson();
+    const users = await getUsers();
+    const schemas = await getSchemas();
+    setMetadata("me", me);
+    setMetadata("orgUnits", orgUnits);
+    setMetadata("orgUnitGroups", orgUnitGroups);
+    setMetadata("orgUnitGroupSets", orgUnitGroupSets);
+    setMetadata("orgUnitGeoJson", orgUnitGeoJson);
+    setMetadata("users", users);
+    setMetadata("schemas", schemas);
+    toggleRefreshingMetadata();
+  };
+
   return (
     <div className="w-[calc(100%-50px)] h-[calc(100%-50px)] shadow-xl border-slate-300 border rounded-md p-1 flex items-center flex-col">
       <div className="mb-5 mt-5 w-[1200px]">
@@ -46,6 +73,11 @@ const Installation = () => {
           <FontAwesomeIcon icon={faCaretLeft} />
           &nbsp;
           {t("back")}
+        </CustomizedButton>
+        <CustomizedButton disabled={status === "importing"} loading={refreshingMetadata} primary onClick={refreshMetadata}>
+          <FontAwesomeIcon icon={faRotateRight} />
+          &nbsp;
+          {t("refreshMetadata")}
         </CustomizedButton>
         <CustomizedButton
           disabled={!valid || step === STEPS.length - 1}

@@ -155,9 +155,9 @@ const Summary = () => {
                 <DataTableColumnHeader fixed top="0">
                   {t("willBeSkipped")}
                 </DataTableColumnHeader>
-                <DataTableColumnHeader fixed top="0">
+                {/* <DataTableColumnHeader fixed top="0">
                   {t("description")}
-                </DataTableColumnHeader>
+                </DataTableColumnHeader> */}
               </DataTableRow>
             </DataTableHead>
             <DataTableBody>
@@ -169,9 +169,9 @@ const Summary = () => {
                     <DataTableCell>{foundSchema.displayName}</DataTableCell>
                     <DataTableCell>{currentMetadata.length}</DataTableCell>
                     <DataTableCell>{0}</DataTableCell>
-                    <DataTableCell>
+                    {/* <DataTableCell>
                       <div className="underline cursor-pointer">{t("show")}</div>
-                    </DataTableCell>
+                    </DataTableCell> */}
                   </DataTableRow>
                 );
               })}
@@ -179,7 +179,7 @@ const Summary = () => {
                 <DataTableCell>{t("facility")}</DataTableCell>
                 <DataTableCell>{members.length - skippedOrgUnits.length}</DataTableCell>
                 <DataTableCell>{skippedOrgUnits.length}</DataTableCell>
-                <DataTableCell>{<div className="underline cursor-pointer">{t("show")}</div>}</DataTableCell>
+                {/* <DataTableCell>{<div className="underline cursor-pointer">{t("show")}</div>}</DataTableCell> */}
               </DataTableRow>
             </DataTableBody>
           </DataTable>

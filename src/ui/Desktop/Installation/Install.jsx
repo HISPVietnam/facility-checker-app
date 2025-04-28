@@ -26,14 +26,15 @@ const Install = () => {
     }))
   );
 
-  const { actions, valid, selectGroupSets, setupAuthorities, summary, status } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, setupAuthorities, summary, status, refreshingMetadata } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       setupAuthorities: state.setupAuthorities,
       summary: state.summary,
-      status: state.status
+      status: state.status,
+      refreshingMetadata: state.refreshingMetadata
     }))
   );
   const { setStatus, setStepData } = actions;
@@ -73,7 +74,7 @@ const Install = () => {
       <br />
       <div>
         <CustomizedButton
-          disabled={status !== "pending"}
+          disabled={status !== "pending" || refreshingMetadata}
           primary
           icon={<FontAwesomeIcon icon={faPlay} />}
           onClick={async () => {
@@ -127,6 +128,16 @@ const Install = () => {
       )}
       <br />
       {status === "done" && <div>{t("installParagraph3")}</div>}
+      {status === "done" && (
+        <CustomizedButton
+          onClick={() => {
+            location.reload();
+          }}
+          success
+        >
+          {t("start")}
+        </CustomizedButton>
+      )}
     </div>
   );
 };
