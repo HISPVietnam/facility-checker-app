@@ -22,12 +22,12 @@ const UserInfo = () => {
   const {
     me,
     locale,
-    actions: { setMetadata },
+    actions: { setMetadata }
   } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       locale: state.locale,
-      actions: state.actions,
+      actions: state.actions
     }))
   );
   const { firstName, surname, authorities } = me;
@@ -41,14 +41,14 @@ const UserInfo = () => {
   };
 
   return (
-    <div>
-      <Tag bold maxWidth="1000px">
-        {t("user")}: {firstName} {surname}
-      </Tag>
+    <div className="flex items-center">
+      <div className="rounded-md bg-slate-500 h-[36px] p-2 flex items-center text-white text-[14px]">
+        <strong>{t("user")}:</strong>&nbsp;{firstName} {surname}
+      </div>
       &nbsp;
-      <Tag bold positive maxWidth="1000px">
-        {t("authorities")}: {me.authorities.join(", ")}
-      </Tag>
+      <div className="rounded-md bg-teal-700 h-[36px] p-2 flex items-center text-white text-[14px]">
+        <strong>{t("authorities")}:</strong>&nbsp;{me.authorities.join(", ")}
+      </div>
       &nbsp;
       <div ref={localeButtonRef} className="inline-block">
         <CustomizedButton
@@ -69,7 +69,7 @@ const UserInfo = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "right",
+            horizontal: "right"
           }}
         >
           <div className="flex flex-col p-2">
