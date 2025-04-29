@@ -7,25 +7,41 @@ import Install from "./Install";
 import CustomizedButton from "@/ui/common/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackwardStep, faCaretLeft, faCaretRight, faForwardStep, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBackwardStep,
+  faCaretLeft,
+  faCaretRight,
+  faForwardStep,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 import useInstallationModuleStore from "@/states/installationModule";
 import { useShallow } from "zustand/react/shallow";
 import { STEPS } from "@/const";
-import { getMe, getOrgUnits, getOrgUnitGroups, getOrgUnitGroupSets, getOrgUnitGeoJson, getUsers, getSchemas } from "@/api/metadata";
+import {
+  getMe,
+  getOrgUnits,
+  getOrgUnitGroups,
+  getOrgUnitGroupSets,
+  getOrgUnitGeoJson,
+  getUsers,
+  getSchemas,
+} from "@/api/metadata";
 import useMetadataStore from "@/states/metadata";
+import LanguageSelectButton from "@/ui/common/LanguageSelectButton";
 
 const Installation = () => {
   const { t } = useTranslation();
 
-  const { status, step, valid, refreshingMetadata, actions } = useInstallationModuleStore(
-    useShallow((state) => ({
-      status: state.status,
-      step: state.step,
-      valid: state.valid,
-      actions: state.actions,
-      refreshingMetadata: state.refreshingMetadata
-    }))
-  );
+  const { status, step, valid, refreshingMetadata, actions } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        status: state.status,
+        step: state.step,
+        valid: state.valid,
+        actions: state.actions,
+        refreshingMetadata: state.refreshingMetadata,
+      }))
+    );
   const metadataActions = useMetadataStore((state) => state.actions);
   const { setMetadata } = metadataActions;
   const { setStep, toggleRefreshingMetadata } = actions;
@@ -74,11 +90,19 @@ const Installation = () => {
           &nbsp;
           {t("back")}
         </CustomizedButton>
-        <CustomizedButton disabled={status === "importing"} loading={refreshingMetadata} primary onClick={refreshMetadata}>
-          <FontAwesomeIcon icon={faRotateRight} />
-          &nbsp;
-          {t("refreshMetadata")}
-        </CustomizedButton>
+        <div className="flex items-center gap-2">
+          <CustomizedButton
+            disabled={status === "importing"}
+            loading={refreshingMetadata}
+            primary
+            onClick={refreshMetadata}
+          >
+            <FontAwesomeIcon icon={faRotateRight} />
+            &nbsp;
+            {t("refreshMetadata")}
+          </CustomizedButton>
+          <LanguageSelectButton />
+        </div>
         <CustomizedButton
           disabled={!valid || step === STEPS.length - 1}
           className="w-[60px] justify-self-end"
