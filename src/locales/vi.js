@@ -153,5 +153,8 @@ export default {
   importMetadata: "Importing metadata",
   importFacilities: "Importing facilities",
   settingUserRole: "Setting up user role",
-  start: "Start"
+  start: "Start",
+  authorities: "Authorities",
+  orgUnitGroupSets: "Org unit group sets",
+  translations: "Translations"
 };

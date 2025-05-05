@@ -11,6 +11,8 @@ import SynchronizationToolbar from "@/ui/Desktop/Synchronization/Synchronization
 import Approval from "@/ui/Desktop/Approval/Approval";
 import ApprovalToolbar from "@/ui/Desktop/Approval/ApprovalToolbar";
 import Installation from "@/ui/Desktop/Installation/Installation";
+import Configuration from "@/ui/Desktop/Configuration/Configuration";
+import ConfigurationToolbar from "@/ui/Desktop/Configuration/ConfigurationToolbar";
 import useLayoutStore from "@/states/layout";
 import { useShallow } from "zustand/react/shallow";
 import { useTranslation } from "react-i18next";
@@ -58,6 +60,7 @@ const App = () => {
                   <Route path="/facility-check" element={<FacilitiesManagementToolbar />} />
                   <Route path="/approval" element={<ApprovalToolbar />} />
                   <Route path="/synchronization" element={<SynchronizationToolbar />} />
+                  <Route path="/configuration" element={<ConfigurationToolbar />} />
                 </Routes>
               </div>
               <div className="h-[calc(100%-60px)] w-full flex items-center justify-center">
@@ -67,6 +70,7 @@ const App = () => {
                   <Route path="/facility-check" element={<FacilitiesManagement />} />
                   <Route path="/approval" element={<Approval />} />
                   <Route path="/synchronization" element={<Synchronization />} />
+                  <Route path="/configuration" element={<Configuration />} />
                 </Routes>
               </div>
             </div>

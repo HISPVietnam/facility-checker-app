@@ -10,7 +10,9 @@ import CustomizedButton from "@/ui/common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
-import { postTeis, saveDataStore } from "@/api/data";
+import { postTeis } from "@/api/data";
+import { saveDataStore } from "@/api/metadata";
+
 import resources from "@/locales";
 const Install = () => {
   const { t, i18n } = useTranslation();
@@ -84,11 +86,11 @@ const Install = () => {
           onClick={async () => {
             setStatus("importing");
             await importDataStore();
-            // await pushMetadata(metadataPackage);
+            await pushMetadata(metadataPackage);
             setImportMetadataLoading(false);
-            // await settingUserRole();
+            await settingUserRole();
             setSettingUserRoleLoading(false);
-            // await importFacilities();
+            await importFacilities();
             setImportFacilitiesLoading(false);
             setStatus("done");
           }}

@@ -1,5 +1,5 @@
 import { pull, push } from "./fetch";
-import { TRACKED_ENTITY_ATTRIBUTES, DATA_STORE_NAMESPACE } from "@/const";
+import { TRACKED_ENTITY_ATTRIBUTES } from "@/const";
 import useMetadataStore from "@/states/metadata";
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 
@@ -68,13 +68,4 @@ const findFacilityByCode = async (trackedEntity, code) => {
   }
 };
 
-const getDataStore = async () => {
-  const result = await pull(`/api/dataStore/${DATA_STORE_NAMESPACE}?fields=.`);
-};
-
-const saveDataStore = async (key, value, type) => {
-  const result = await push(`/api/dataStore/${DATA_STORE_NAMESPACE}/${key}`, value, type === "CREATE" ? "POST" : "PUT", null);
-  return result;
-};
-
-export { getFacilityTeis, postEvent, postTei, getTeiById, findFacilityByCode, postTeis, getDataStore, saveDataStore };
+export { getFacilityTeis, postEvent, postTei, getTeiById, findFacilityByCode, postTeis };

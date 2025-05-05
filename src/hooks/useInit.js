@@ -8,7 +8,8 @@ import {
   getOrgUnitGroups,
   getCustomAttributes,
   getUsers,
-  getSchemas
+  getSchemas,
+  getDataStore
 } from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
@@ -51,12 +52,18 @@ const useInit = () => {
       } else {
         const orgUnitLevels = await getOrgUnitLevels();
         const customAttributes = await getCustomAttributes();
+        const dataStore = await getDataStore();
         const teis = await getFacilityTeis(me.organisationUnits[0].id);
         teis.forEach((tei) => {
           tei.hidden = false;
           const events = tei.enrollments[0].events;
           tei.enrollments[0].events = _.sortBy(events, "occurredAt").reverse();
         });
+        const convertedDataStore = dataStore.entries.reduce((prev, current) => {
+          prev[current.key] = current.value;
+          return prev;
+        }, {});
+        setMetadata("dataStore", convertedDataStore);
         setMetadata("orgUnits", orgUnits);
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
@@ -77,29 +84,10 @@ const useInit = () => {
         setMetadata("locale", locale);
         setMetadata("program", program);
         setMetadata("customAttributes", customAttributes);
+        Object.keys(convertedDataStore.locales).forEach((locale) => {
+          i18n.addResourceBundle(locale, "translation", convertedDataStore.locales[locale]);
+        });
         i18n.changeLanguage(locale);
-        const foundOugs = orgUnitGroupSets.find((ougs) => ougs.id === "J5jldMd8OHv");
-        const foundOrgUnits = orgUnits
-          .filter((ou) => {
-            let valid = false;
-            ou.organisationUnitGroups.forEach((oug) => {
-              const ougsGroups = foundOugs.items.map((item) => item.id);
-              if (ougsGroups.includes(oug.id)) {
-                valid = true;
-              }
-            });
-            return valid;
-          })
-          .map((ou) => {
-            const foundGeometry = orgUnitGeoJson.features.find((feature) => feature.id === ou.id);
-            const newOu = { ...ou };
-            if (foundGeometry) {
-              newOu.geometry = foundGeometry.geometry;
-            } else {
-              newOu.geometry = null;
-            }
-            return newOu;
-          });
         const facilities = convertTeis(teis, program);
         setFacilities(facilities);
         setReady(true);
