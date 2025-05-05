@@ -10,10 +10,10 @@ import CustomizedButton from "@/ui/common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
-import { postTeis } from "@/api/data";
-
+import { postTeis, saveDataStore } from "@/api/data";
+import resources from "@/locales";
 const Install = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
   const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
   const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
@@ -67,6 +67,10 @@ const Install = () => {
     }
   };
 
+  const importDataStore = async () => {
+    await saveDataStore("locales", resources, "CREATE");
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("install")}</div>
@@ -79,11 +83,12 @@ const Install = () => {
           icon={<FontAwesomeIcon icon={faPlay} />}
           onClick={async () => {
             setStatus("importing");
-            await pushMetadata(metadataPackage);
+            await importDataStore();
+            // await pushMetadata(metadataPackage);
             setImportMetadataLoading(false);
-            await settingUserRole();
+            // await settingUserRole();
             setSettingUserRoleLoading(false);
-            await importFacilities();
+            // await importFacilities();
             setImportFacilitiesLoading(false);
             setStatus("done");
           }}
