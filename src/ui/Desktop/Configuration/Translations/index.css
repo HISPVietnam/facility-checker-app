@@ -1,0 +1,13 @@
+.translations-config-table th,
+.translations-config-table td {
+  border: 1px solid #ccc !important;
+  padding: 5px !important;
+}
+.translations-config-table th {
+  font-weight: 700;
+  text-align: center;
+}
+
+.translations-config-table {
+  border-collapse: collapse !important;
+}

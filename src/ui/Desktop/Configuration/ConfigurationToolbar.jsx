@@ -1,20 +1,27 @@
-import { useTranslation } from "react-i18next";
-import useConfigurationModuleStore from "@/states/configurationModule";
 import { useShallow } from "zustand/react/shallow";
-import CustomizedButton from "@/ui/common/Button";
+
+import useConfigurationModuleStore from "@/states/configurationModule";
+
+import OrgUnitGroupSetsToolbar from "./OrgUnitGroupSets/OrgUnitGroupSetsToolbar";
+import AuthoritiesToolbar from "./Authorities/AuthoritiesToolbar";
+import TranslationsToolbar from "./Translations/TranslationsToolbar";
+
+const SUB_MODULES_TOOLBAR_MAPPING = {
+  orgUnitGroupSets: <OrgUnitGroupSetsToolbar />,
+  authorities: <AuthoritiesToolbar />,
+  translations: <TranslationsToolbar />,
+};
 
 const ConfigurationToolbar = () => {
-  const { t } = useTranslation();
-  const { selectedFunction, actions } = useConfigurationModuleStore(
+  const { selectedFunction } = useConfigurationModuleStore(
     useShallow((state) => ({
       selectedFunction: state.selectedFunction,
-      actions: state.actions
     }))
   );
 
   return (
     <div className="flex items-center w-full">
-      <CustomizedButton>asdasdasd</CustomizedButton>
+      {SUB_MODULES_TOOLBAR_MAPPING[selectedFunction]}
     </div>
   );
 };
