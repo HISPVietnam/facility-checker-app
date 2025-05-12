@@ -1,14 +1,7 @@
 import { Button } from "@dhis2/ui";
 import MenuItem from "./MenuItem";
 import { useTranslation } from "react-i18next";
-import {
-  faHome,
-  faLocationDot,
-  faWrench,
-  faCheck,
-  faBars,
-  faRotate,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faLocationDot, faWrench, faCheck, faBars, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -43,7 +36,7 @@ const Sidebar = () => {
   const { t } = useTranslation();
   return (
     <div
-      className="h-full w-[250px] bg-[#212934] text-white relative"
+      className="h-full w-[250px] bg-[#333739] text-white relative"
       onMouseOver={() => {
         setHovered(true);
       }}
