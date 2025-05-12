@@ -1,4 +1,13 @@
-import { InputField, MultiSelect, SingleSelect, SingleSelectOption, MultiSelectOption, OrganisationUnitTree, Popover } from "@dhis2/ui";
+import {
+  InputField,
+  TextAreaField,
+  MultiSelect,
+  SingleSelect,
+  SingleSelectOption,
+  MultiSelectOption,
+  OrganisationUnitTree,
+  Popover
+} from "@dhis2/ui";
 import { useTranslation } from "react-i18next";
 import { DayPicker } from "react-day-picker";
 import { useRef, useState } from "react";
@@ -226,6 +235,16 @@ const CustomizedInputField = (props) => {
       })();
     case "GEOJSON":
       return null;
+    case "LONG_TEXT":
+      return (
+        <TextAreaField
+          {...props}
+          onChange={(value) => {
+            onChange(value.value);
+          }}
+          className="font-normal"
+        />
+      );
     case "TEXT":
     case "NUMBER":
     default:

@@ -6,6 +6,7 @@ const initObject = {
   resources: {},
   lng: "en",
   fallbackLng: "en",
+  returnEmptyString: false,
   interpolation: {
     escapeValue: false
   }

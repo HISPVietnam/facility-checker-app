@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import useMetadataStore from "@/states/metadata";
 import useDataStore from "@/states/data";
 import { useTranslation } from "react-i18next";
-import { convertTeis } from "@/utils";
+import { convertTeis, convertLanguageCode } from "@/utils";
 import _ from "lodash";
 import { USER_GROUPS } from "@/const";
 
@@ -80,7 +80,7 @@ const useInit = () => {
           }
         });
         setMetadata("me", me);
-        const locale = me.settings.keyUiLocale;
+        const locale = convertLanguageCode(me.settings.keyUiLocale);
         setMetadata("locale", locale);
         setMetadata("program", program);
         setMetadata("customAttributes", customAttributes);
