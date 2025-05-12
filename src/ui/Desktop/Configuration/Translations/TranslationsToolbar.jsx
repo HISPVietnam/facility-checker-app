@@ -52,6 +52,7 @@ const TranslationsToolbar = () => {
   const [searchLanguage, setSearchLanguage] = useState("");
   const [searchLanguageForAddNewLanguagePopover, setSearchLanguageForAddNewLanguagePopover] = useState("");
 
+<<<<<<< HEAD
   const addNewLanguage = async (lang) => {
     async () => {
       try {
@@ -73,8 +74,31 @@ const TranslationsToolbar = () => {
         }
       } catch (error) {
         console.log(error);
+=======
+  const addNewLanguageHandle = async (lang) => {
+    try {
+      const newLocales = {
+        ...locales,
+        [lang]: cloneAndClearValues(locales["en"]),
+      };
+      const result = await saveDataStore("locales", newLocales, "UPDATED");
+      if (result.ok) {
+        setMetadata("dataStore", {
+          ...dataStore,
+          locales: newLocales,
+        });
+        selectLanguage(lang);
+        // will show toast success message
+      } else {
+        // will show toast error message
+        console.log("Error saving data store", result.error);
+>>>>>>> 7c9942f544287a7e9862d5daefdff96be8172501
       }
-    };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setAddNewLanguagePopover(false);
+    }
   };
 
   return (
@@ -181,7 +205,7 @@ const TranslationsToolbar = () => {
                 .map((key) => {
                   return (
                     <MenuItem
-                      onClick={() => addNewLanguage(key)}
+                      onClick={() => addNewLanguageHandle(key)}
                       className="cursor-pointer"
                       key={key}
                       dense
