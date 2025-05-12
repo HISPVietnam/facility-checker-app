@@ -29,45 +29,41 @@ const TranslationsToolbar = () => {
   //global store
   const {
     dataStore,
-    actions: { setMetadata },
+    actions: { setMetadata }
   } = useMetadataStore(
     useShallow((state) => ({
       dataStore: state.dataStore,
-      actions: state.actions,
+      actions: state.actions
     }))
   );
   const {
     translations: { selectedLanguages, searchTranslation },
-    actions: { toggleSelectedLanguages, setSearchTranslation, selectLanguage },
+    actions: { toggleSelectedLanguages, setSearchTranslation, selectLanguage }
   } = useConfigurationModuleStore(
     useShallow((state) => ({
       translations: state.translations,
-      actions: state.actions,
+      actions: state.actions
     }))
   );
   const { locales } = dataStore;
   //local store
-  const [showHideLanguagesPopover, setShowHideLanguagesPopover] =
-    useState(false);
+  const [showHideLanguagesPopover, setShowHideLanguagesPopover] = useState(false);
   const [addNewLanguagePopover, setAddNewLanguagePopover] = useState(false);
   const [searchLanguage, setSearchLanguage] = useState("");
-  const [
-    searchLanguageForAddNewLanguagePopover,
-    setSearchLanguageForAddNewLanguagePopover,
-  ] = useState("");
+  const [searchLanguageForAddNewLanguagePopover, setSearchLanguageForAddNewLanguagePopover] = useState("");
 
   const addNewLanguage = async (lang) => {
     async () => {
       try {
         const newLocales = {
           ...locales,
-          [lang]: cloneAndClearValues(locales["en"]),
+          [lang]: cloneAndClearValues(locales["en"])
         };
         const result = await saveDataStore("locales", newLocales, "UPDATED");
         if (result.ok) {
           setMetadata("dataStore", {
             ...dataStore,
-            locales: newLocales,
+            locales: newLocales
           });
           selectLanguage(lang);
           // will show toast success message
@@ -116,7 +112,7 @@ const TranslationsToolbar = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left",
+            horizontal: "left"
           }}
         >
           <div className="flex p-2 flex-col gap-2">
@@ -130,11 +126,7 @@ const TranslationsToolbar = () => {
               {Object.keys(locales)
                 .sort()
                 .filter((key) =>
-                  removeVietnameseTones(NATIVE_LANGUAGES[key].name)
-                    .toLowerCase()
-                    .includes(
-                      removeVietnameseTones(searchLanguage.toLowerCase())
-                    )
+                  removeVietnameseTones(NATIVE_LANGUAGES[key].name).toLowerCase().includes(removeVietnameseTones(searchLanguage.toLowerCase()))
                 )
                 .map((key) => {
                   return (
@@ -147,9 +139,7 @@ const TranslationsToolbar = () => {
                       }}
                       label={
                         <div className="flex items-center gap-1">
-                          <span
-                            className={`fi fi-${NATIVE_LANGUAGES[key].flag}`}
-                          />
+                          <span className={`fi fi-${NATIVE_LANGUAGES[key].flag}`} />
                           <span>{NATIVE_LANGUAGES[key].name}</span>
                         </div>
                       }
@@ -169,30 +159,24 @@ const TranslationsToolbar = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left",
+            horizontal: "left"
           }}
         >
-          <div className="flex p-2 flex-col gap-2">
+          <div className="flex p-2 flex-col gap-2 w-[300px]">
             <CustomizedInputField
               placeholder={t("searchLanguage")}
               prefixIcon={<FontAwesomeIcon icon={faSearch} />}
               value={searchLanguageForAddNewLanguagePopover}
-              onChange={(value) =>
-                setSearchLanguageForAddNewLanguagePopover(value)
-              }
+              onChange={(value) => setSearchLanguageForAddNewLanguagePopover(value)}
             />
-            <div className="max-h-40 overflow-auto">
+            <div className="overflow-auto h-[300px]">
               {Object.keys(NATIVE_LANGUAGES)
                 .sort()
                 .filter((key) => !locales[key])
                 .filter((key) =>
                   removeVietnameseTones(NATIVE_LANGUAGES[key].name)
                     .toLowerCase()
-                    .includes(
-                      removeVietnameseTones(
-                        searchLanguageForAddNewLanguagePopover.toLowerCase()
-                      )
-                    )
+                    .includes(removeVietnameseTones(searchLanguageForAddNewLanguagePopover.toLowerCase()))
                 )
                 .map((key) => {
                   return (
@@ -203,9 +187,7 @@ const TranslationsToolbar = () => {
                       dense
                       label={
                         <div className="flex items-center gap-1">
-                          <span
-                            className={`fi fi-${NATIVE_LANGUAGES[key].flag}`}
-                          />
+                          <span className={`fi fi-${NATIVE_LANGUAGES[key].flag}`} />
                           <span>{NATIVE_LANGUAGES[key].name}</span>
                         </div>
                       }
