@@ -41,8 +41,8 @@ const Translations = () => {
   const { locales } = dataStore;
 
   const {
-    translations: { selectedLanguages, searchKey },
-    actions: { selectLanguage, setSearchKey },
+    translations: { selectedLanguages, searchTranslation },
+    actions: { selectLanguage, setSearchTranslation },
   } = useConfigurationModuleStore(
     useShallow((state) => ({
       translations: state.translations,
@@ -95,7 +95,7 @@ const Translations = () => {
 
   useEffect(() => {
     // Set default languages show in table and reset search key
-    setSearchKey("");
+    setSearchTranslation("");
     selectLanguage("en");
     locale !== "en" && selectLanguage(locale);
   }, []);
@@ -105,11 +105,19 @@ const Translations = () => {
       <DataTable className="translations-config-table">
         <DataTableHead>
           <DataTableRow>
-            <DataTableCell className="!font-bold !text-center" top="0" fixed>
+            <DataTableCell
+              className="!font-bold !text-center w-[200px]"
+              top="0"
+              fixed
+            >
               {t("key")}
             </DataTableCell>
             {selectedLanguages.map((lang) => (
-              <DataTableCell className="!font-bold !text-center" top="0" fixed>
+              <DataTableCell
+                className="!font-bold !text-center min-w-[300px]"
+                top="0"
+                fixed
+              >
                 {NATIVE_LANGUAGES[lang]["name"]}
               </DataTableCell>
             ))}
@@ -121,13 +129,15 @@ const Translations = () => {
             .filter(
               (key) =>
                 removeVietnameseTones(key.toLowerCase()).includes(
-                  removeVietnameseTones(searchKey.toLowerCase())
+                  removeVietnameseTones(searchTranslation.toLowerCase())
                 ) ||
                 // Check if any of the selected languages contain the search key
                 Object.keys(locales).some((lang) =>
                   removeVietnameseTones(
                     locales[lang][key]?.toLowerCase() || ""
-                  ).includes(removeVietnameseTones(searchKey.toLowerCase()))
+                  ).includes(
+                    removeVietnameseTones(searchTranslation.toLowerCase())
+                  )
                 )
             )
             .map((key) => {
@@ -146,7 +156,7 @@ const Translations = () => {
                         }}
                       >
                         {editedKeys[lang]?.[key] !== undefined ? (
-                          <div className="flex items-center gap-1 relative">
+                          <div className="flex items-center gap-1">
                             <div className="flex-1">
                               <CustomizedInputField
                                 disabled={savingLoading}

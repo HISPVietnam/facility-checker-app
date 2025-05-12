@@ -438,6 +438,21 @@ const removeVietnameseTones = (str) => {
     .trim(); // Xóa khoảng trắng đầu cuối
 };
 
+const cloneAndClearValues = (obj) => {
+  const clone = {};
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      clone[key] =
+        typeof obj[key] === "object" && obj[key] !== null
+          ? cloneAndClearValues(obj[key]) // recursive for nested objects
+          : ""; // or null, undefined, 0 — depending on your needs
+    }
+  }
+
+  return clone;
+};
+
 export {
   pickTranslation,
   isValidPoint,
@@ -459,4 +474,5 @@ export {
   isWaitingForApproval,
   convertDisplayValueForPath,
   removeVietnameseTones,
+  cloneAndClearValues,
 };

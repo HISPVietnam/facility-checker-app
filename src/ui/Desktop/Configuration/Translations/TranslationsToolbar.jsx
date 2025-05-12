@@ -2,34 +2,43 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 
-import { Checkbox } from "@dhis2/ui";
+import { Checkbox, MenuItem } from "@dhis2/ui";
 import { faPlus, faSearch, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Popover } from "@mui/material";
 
 import { NATIVE_LANGUAGES } from "@/const";
-import { removeVietnameseTones } from "@/utils";
+import { cloneAndClearValues, removeVietnameseTones } from "@/utils";
 
 import useMetadataStore from "@/states/metadata";
 import useConfigurationModuleStore from "@/states/configurationModule";
 
 import CustomizedButton from "@/ui/common/Button";
 import CustomizedInputField from "@/ui/common/InputField";
+
+import { saveDataStore } from "@/api/metadata";
+
 //import css for flag library
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const TranslationsToolbar = () => {
   const { t } = useTranslation();
   const showHideLanguagesButtonRef = useRef();
+  const addNewLanguageButtonRef = useRef();
+
   //global store
-  const { dataStore } = useMetadataStore(
+  const {
+    dataStore,
+    actions: { setMetadata },
+  } = useMetadataStore(
     useShallow((state) => ({
       dataStore: state.dataStore,
+      actions: state.actions,
     }))
   );
   const {
-    translations: { selectedLanguages, searchKey },
-    actions: { toggleSelectedLanguages, setSearchKey },
+    translations: { selectedLanguages, searchTranslation },
+    actions: { toggleSelectedLanguages, setSearchTranslation, selectLanguage },
   } = useConfigurationModuleStore(
     useShallow((state) => ({
       translations: state.translations,
@@ -40,7 +49,37 @@ const TranslationsToolbar = () => {
   //local store
   const [showHideLanguagesPopover, setShowHideLanguagesPopover] =
     useState(false);
+  const [addNewLanguagePopover, setAddNewLanguagePopover] = useState(false);
   const [searchLanguage, setSearchLanguage] = useState("");
+  const [
+    searchLanguageForAddNewLanguagePopover,
+    setSearchLanguageForAddNewLanguagePopover,
+  ] = useState("");
+
+  const addNewLanguage = async (lang) => {
+    async () => {
+      try {
+        const newLocales = {
+          ...locales,
+          [lang]: cloneAndClearValues(locales["en"]),
+        };
+        const result = await saveDataStore("locales", newLocales, "UPDATED");
+        if (result.ok) {
+          setMetadata("dataStore", {
+            ...dataStore,
+            locales: newLocales,
+          });
+          selectLanguage(lang);
+          // will show toast success message
+        } else {
+          // will show toast error message
+          console.log("Error saving data store", result.error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
 
   return (
     <div className="flex items-center gap-2 w-full">
@@ -55,18 +94,18 @@ const TranslationsToolbar = () => {
       <CustomizedButton
         primary
         className="!h-10"
-        ref={showHideLanguagesButtonRef}
+        ref={addNewLanguageButtonRef}
         icon={<FontAwesomeIcon icon={faPlus} />}
-        onClick={() => {}}
+        onClick={() => setAddNewLanguagePopover(true)}
       >
         {t("addNewLanguage")}
       </CustomizedButton>
       <CustomizedInputField
         className="!h-8"
-        placeholder={t("searchKey")}
+        placeholder={t("search")}
         prefixIcon={<FontAwesomeIcon icon={faSearch} />}
-        value={searchKey}
-        onChange={(value) => setSearchKey(value)}
+        value={searchTranslation}
+        onChange={(value) => setSearchTranslation(value)}
       />
       {showHideLanguagesPopover && (
         <Popover
@@ -106,6 +145,62 @@ const TranslationsToolbar = () => {
                       onChange={() => {
                         toggleSelectedLanguages(key);
                       }}
+                      label={
+                        <div className="flex items-center gap-1">
+                          <span
+                            className={`fi fi-${NATIVE_LANGUAGES[key].flag}`}
+                          />
+                          <span>{NATIVE_LANGUAGES[key].name}</span>
+                        </div>
+                      }
+                    />
+                  );
+                })}
+            </div>
+          </div>
+        </Popover>
+      )}
+      {addNewLanguagePopover && (
+        <Popover
+          open={addNewLanguagePopover}
+          anchorEl={addNewLanguageButtonRef.current}
+          onClose={() => {
+            setAddNewLanguagePopover(false);
+          }}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <div className="flex p-2 flex-col gap-2">
+            <CustomizedInputField
+              placeholder={t("searchLanguage")}
+              prefixIcon={<FontAwesomeIcon icon={faSearch} />}
+              value={searchLanguageForAddNewLanguagePopover}
+              onChange={(value) =>
+                setSearchLanguageForAddNewLanguagePopover(value)
+              }
+            />
+            <div className="max-h-40 overflow-auto">
+              {Object.keys(NATIVE_LANGUAGES)
+                .sort()
+                .filter((key) => !locales[key])
+                .filter((key) =>
+                  removeVietnameseTones(NATIVE_LANGUAGES[key].name)
+                    .toLowerCase()
+                    .includes(
+                      removeVietnameseTones(
+                        searchLanguageForAddNewLanguagePopover.toLowerCase()
+                      )
+                    )
+                )
+                .map((key) => {
+                  return (
+                    <MenuItem
+                      onClick={() => addNewLanguage(key)}
+                      className="cursor-pointer"
+                      key={key}
+                      dense
                       label={
                         <div className="flex items-center gap-1">
                           <span

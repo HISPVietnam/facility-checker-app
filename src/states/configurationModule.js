@@ -5,7 +5,7 @@ const useConfigurationModuleStore = create((set) => ({
   selectedFunction: "orgUnitGroupSets",
   translations: {
     selectedLanguages: [],
-    searchKey: "",
+    searchTranslation: "",
   },
   actions: {
     selectFunction: (f) =>
@@ -38,10 +38,10 @@ const useConfigurationModuleStore = create((set) => ({
           }
         })
       ),
-    setSearchKey: (key) =>
+    setSearchTranslation: (translation) =>
       set(
         produce((state) => {
-          state.translations.searchKey = key;
+          state.translations.searchTranslation = translation;
         })
       ),
   },
