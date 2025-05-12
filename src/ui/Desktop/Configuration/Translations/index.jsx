@@ -100,11 +100,11 @@ const Translations = () => {
       <DataTable className="translations-config-table" scrollHeight="100%">
         <DataTableHead>
           <DataTableRow>
-            <DataTableCell className="!font-bold !text-center w-[200px]" top="0" fixed>
+            <DataTableCell className="!font-bold w-[200px]" top="0" fixed>
               {t("key")}
             </DataTableCell>
             {selectedLanguages.map((lang) => (
-              <DataTableCell className="!font-bold !text-center min-w-[300px]" top="0" fixed>
+              <DataTableCell className="!font-bold min-w-[300px]" top="0" fixed>
                 {NATIVE_LANGUAGES[lang]["name"]}
               </DataTableCell>
             ))}
@@ -132,6 +132,7 @@ const Translations = () => {
                     }
                     return (
                       <DataTableCell
+                        bordered
                         className="cursor-pointer"
                         onClick={() => {
                           if (editedKeys[lang]?.[key] !== undefined) {
