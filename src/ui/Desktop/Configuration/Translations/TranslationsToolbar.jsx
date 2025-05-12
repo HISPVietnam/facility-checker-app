@@ -56,29 +56,29 @@ const TranslationsToolbar = () => {
     setSearchLanguageForAddNewLanguagePopover,
   ] = useState("");
 
-  const addNewLanguage = async (lang) => {
-    async () => {
-      try {
-        const newLocales = {
-          ...locales,
-          [lang]: cloneAndClearValues(locales["en"]),
-        };
-        const result = await saveDataStore("locales", newLocales, "UPDATED");
-        if (result.ok) {
-          setMetadata("dataStore", {
-            ...dataStore,
-            locales: newLocales,
-          });
-          selectLanguage(lang);
-          // will show toast success message
-        } else {
-          // will show toast error message
-          console.log("Error saving data store", result.error);
-        }
-      } catch (error) {
-        console.log(error);
+  const addNewLanguageHandle = async (lang) => {
+    try {
+      const newLocales = {
+        ...locales,
+        [lang]: cloneAndClearValues(locales["en"]),
+      };
+      const result = await saveDataStore("locales", newLocales, "UPDATED");
+      if (result.ok) {
+        setMetadata("dataStore", {
+          ...dataStore,
+          locales: newLocales,
+        });
+        selectLanguage(lang);
+        // will show toast success message
+      } else {
+        // will show toast error message
+        console.log("Error saving data store", result.error);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setAddNewLanguagePopover(false);
+    }
   };
 
   return (
@@ -197,7 +197,7 @@ const TranslationsToolbar = () => {
                 .map((key) => {
                   return (
                     <MenuItem
-                      onClick={() => addNewLanguage(key)}
+                      onClick={() => addNewLanguageHandle(key)}
                       className="cursor-pointer"
                       key={key}
                       dense
