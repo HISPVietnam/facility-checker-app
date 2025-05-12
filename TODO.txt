@@ -1,0 +1,4 @@
+- Todo list (2025-05-12):
+    + Merge the i18n resource object with: resource object in the app + resource object in data store, add missing keys to dataStore during init process
+    + During init process, check the current user authorities, if the user can load the program, users, etc...
+    

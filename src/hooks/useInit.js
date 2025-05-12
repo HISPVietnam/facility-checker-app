@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { convertTeis, convertLanguageCode } from "@/utils";
 import _ from "lodash";
 import { USER_GROUPS } from "@/const";
-
+const { VITE_FCA_MODE } = import.meta.env;
 const useInit = () => {
   const { i18n } = useTranslation();
   const [ready, setReady] = useState(false);
@@ -36,8 +36,8 @@ const useInit = () => {
       const orgUnitGroupSets = await getOrgUnitGroupSets();
       const orgUnitGeoJson = await getOrgUnitGeoJson();
       const schemas = await getSchemas();
-      if (program.httpStatusCode === 404) {
-        const users = await getUsers();
+      const users = await getUsers();
+      if (program.httpStatusCode === 404 || VITE_FCA_MODE === "installation") {
         setMetadata("me", me);
         const locale = me.settings.keyUiLocale;
         setMetadata("locale", locale);
@@ -68,7 +68,7 @@ const useInit = () => {
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
-        // setMetadata("users", users);
+        setMetadata("users", users);
         setMetadata("schemas", schemas);
         setTeis(teis);
         setMetadata("orgUnitLevels", orgUnitLevels);
