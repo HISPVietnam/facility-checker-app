@@ -1,20 +1,10 @@
 .translations-config-table th,
 .translations-config-table td {
-  border: 0 !important;
-  border-right: 1px solid #ccc !important;
-  border-bottom: 1px solid #ccc !important;
-
   padding: 5px !important;
 }
 .translations-config-table th {
   font-weight: 700;
   text-align: center;
-}
-.translations-config-table td:first-child,
-.translations-config-table th:first-child {
-  border-left: 1px solid #ccc !important;
-}
-
-.translations-config-table tr:first-child th {
-  border-top: 1px solid #ccc !important;
+  background-color: oklch(87.2% 0.01 258.338) !important;
+  color: black !important;
 }

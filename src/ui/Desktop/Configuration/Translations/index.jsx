@@ -97,7 +97,7 @@ const Translations = () => {
 
   return (
     <div className="w-full h-full overflow-auto">
-      <DataTable className="translations-config-table">
+      <DataTable className="translations-config-table" scrollHeight="100%">
         <DataTableHead>
           <DataTableRow>
             <DataTableCell className="!font-bold !text-center w-[200px]" top="0" fixed>
@@ -124,7 +124,7 @@ const Translations = () => {
             .map((key) => {
               return (
                 <DataTableRow key={key}>
-                  <DataTableCell>{key}</DataTableCell>
+                  <DataTableCell bordered>{key}</DataTableCell>
                   {selectedLanguages.map((lang) => {
                     let valueType = "TEXT";
                     if (editedKeys[lang] && editedKeys[lang][key] && editedKeys[lang][key].length > 100) {
