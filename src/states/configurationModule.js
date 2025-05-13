@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { produce } from "immer";
+import { USER_GROUPS } from "@/const";
 
 const useConfigurationModuleStore = create((set) => ({
   selectedFunction: "orgUnitGroupSets",
@@ -7,7 +8,22 @@ const useConfigurationModuleStore = create((set) => ({
     selectedLanguages: [],
     searchTranslation: "",
   },
+  authorities: {
+    selectedUsersByUserGroup: {
+      [USER_GROUPS.CAPTURE]: null,
+      [USER_GROUPS.APPROVAL]: null,
+      [USER_GROUPS.SYNCHRONIZATION]: null,
+      [USER_GROUPS.ADMIN]: null,
+    },
+  },
   actions: {
+    selectUsersByUserGroup: (users, userGroup) =>
+      set(
+        produce((state) => {
+          const { selectedUsersByUserGroup } = state.authorities;
+          selectedUsersByUserGroup[userGroup] = users;
+        })
+      ),
     selectFunction: (f) =>
       set(
         produce((state) => {

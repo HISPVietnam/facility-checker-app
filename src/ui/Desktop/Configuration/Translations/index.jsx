@@ -4,7 +4,13 @@ import { useShallow } from "zustand/react/shallow";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
-import { DataTable, DataTableBody, DataTableCell, DataTableHead, DataTableRow } from "@dhis2/ui";
+import {
+  DataTable,
+  DataTableBody,
+  DataTableCell,
+  DataTableHead,
+  DataTableRow,
+} from "@dhis2/ui";
 
 import { NATIVE_LANGUAGES } from "@/const";
 import { saveDataStore } from "@/api/metadata";
@@ -24,23 +30,23 @@ const Translations = () => {
   const {
     dataStore,
     locale,
-    actions: { setMetadata }
+    actions: { setMetadata },
   } = useMetadataStore(
     useShallow((state) => ({
       dataStore: state.dataStore,
       locale: state.locale,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
   const { locales } = dataStore;
 
   const {
     translations: { selectedLanguages, searchTranslation },
-    actions: { selectLanguage, setSearchTranslation }
+    actions: { selectLanguage, setSearchTranslation },
   } = useConfigurationModuleStore(
     useShallow((state) => ({
       translations: state.translations,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
   //local store
@@ -50,14 +56,14 @@ const Translations = () => {
   const handleEdit = (key, lang, value) => {
     setEditedKeys((prevEditedKeys) => ({
       ...prevEditedKeys,
-      [lang]: { ...prevEditedKeys[lang], [key]: value }
+      [lang]: { ...prevEditedKeys[lang], [key]: value },
     }));
   };
 
   const handleCancel = (key, lang) => {
     setEditedKeys((prevEditedKeys) => ({
       ...prevEditedKeys,
-      [lang]: { ...prevEditedKeys[lang], [key]: undefined }
+      [lang]: { ...prevEditedKeys[lang], [key]: undefined },
     }));
   };
 
@@ -66,12 +72,18 @@ const Translations = () => {
       setSavingLoading(true);
       const newLocales = {
         ...locales,
-        [lang]: { ...locales[lang], [key]: editedKeys[lang][key] }
+        [lang]: { ...locales[lang], [key]: editedKeys[lang][key] },
       };
       const result = await saveDataStore("locales", newLocales, "UPDATED");
       if (result.ok) {
         setMetadata("dataStore", { ...dataStore, locales: newLocales });
-        i18n.addResourceBundle(lang, "translation", newLocales[lang], true, true);
+        i18n.addResourceBundle(
+          lang,
+          "translation",
+          newLocales[lang],
+          true,
+          true
+        );
         // will show toast success message
       } else {
         // will show toast error message
@@ -83,7 +95,7 @@ const Translations = () => {
       setSavingLoading(false);
       setEditedKeys((prevEditedKeys) => ({
         ...prevEditedKeys,
-        [lang]: { ...prevEditedKeys[lang], [key]: undefined }
+        [lang]: { ...prevEditedKeys[lang], [key]: undefined },
       }));
     }
   };
@@ -115,10 +127,16 @@ const Translations = () => {
             .sort()
             .filter(
               (key) =>
-                removeVietnameseTones(key.toLowerCase()).includes(removeVietnameseTones(searchTranslation.toLowerCase())) ||
+                removeVietnameseTones(key.toLowerCase()).includes(
+                  removeVietnameseTones(searchTranslation.toLowerCase())
+                ) ||
                 // Check if any of the selected languages contain the search key
                 Object.keys(locales).some((lang) =>
-                  removeVietnameseTones(locales[lang][key]?.toLowerCase() || "").includes(removeVietnameseTones(searchTranslation.toLowerCase()))
+                  removeVietnameseTones(
+                    locales[lang][key]?.toLowerCase() || ""
+                  ).includes(
+                    removeVietnameseTones(searchTranslation.toLowerCase())
+                  )
                 )
             )
             .map((key) => {
@@ -127,7 +145,11 @@ const Translations = () => {
                   <DataTableCell bordered>{key}</DataTableCell>
                   {selectedLanguages.map((lang) => {
                     let valueType = "TEXT";
-                    if (editedKeys[lang] && editedKeys[lang][key] && editedKeys[lang][key].length > 100) {
+                    if (
+                      editedKeys[lang] &&
+                      editedKeys[lang][key] &&
+                      editedKeys[lang][key].length > 100
+                    ) {
                       valueType = "LONG_TEXT";
                     }
                     return (
@@ -151,6 +173,14 @@ const Translations = () => {
                                 onChange={(value) => {
                                   handleEdit(key, lang, value);
                                 }}
+                                onKeyDown={(_, e) => {
+                                  if (e.key === "Enter") {
+                                    handleSave(key, lang);
+                                  }
+                                  if (e.key === "Escape") {
+                                    handleCancel(key, lang);
+                                  }
+                                }}
                               />
                             </div>
                             <CustomizedButton
@@ -160,7 +190,12 @@ const Translations = () => {
                               onClick={() => {
                                 handleSave(key, lang);
                               }}
-                              icon={<FontAwesomeIcon className="text-white text-xl" icon={faCheck} />}
+                              icon={
+                                <FontAwesomeIcon
+                                  className="text-white text-xl"
+                                  icon={faCheck}
+                                />
+                              }
                             />
                             <CustomizedButton
                               disabled={savingLoading}
@@ -169,7 +204,12 @@ const Translations = () => {
                               onClick={() => {
                                 handleCancel(key, lang);
                               }}
-                              icon={<FontAwesomeIcon className="text-white text-xl" icon={faClose} />}
+                              icon={
+                                <FontAwesomeIcon
+                                  className="text-white text-xl"
+                                  icon={faClose}
+                                />
+                              }
                             />
                           </div>
                         ) : (

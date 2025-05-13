@@ -5,6 +5,7 @@ import useConfigurationModuleStore from "@/states/configurationModule";
 import OrgUnitGroupSetsToolbar from "./OrgUnitGroupSets/OrgUnitGroupSetsToolbar";
 import AuthoritiesToolbar from "./Authorities/AuthoritiesToolbar";
 import TranslationsToolbar from "./Translations/TranslationsToolbar";
+import LanguageSelectButton from "@/ui/common/LanguageSelectButton";
 
 const SUB_MODULES_TOOLBAR_MAPPING = {
   orgUnitGroupSets: <OrgUnitGroupSetsToolbar />,
@@ -20,8 +21,9 @@ const ConfigurationToolbar = () => {
   );
 
   return (
-    <div className="flex items-center w-full">
-      {SUB_MODULES_TOOLBAR_MAPPING[selectedFunction]}
+    <div className="flex justify-between w-full items-center">
+      <div>{SUB_MODULES_TOOLBAR_MAPPING[selectedFunction]}</div>
+      <LanguageSelectButton />
     </div>
   );
 };
