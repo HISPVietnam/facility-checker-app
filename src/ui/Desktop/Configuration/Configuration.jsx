@@ -12,9 +12,9 @@ import Authorities from "./Authorities";
 import Translations from "./Translations";
 
 const SUB_MODULES_MAPPING = {
-  orgUnitGroupSets: <OrgUnitGroupSets />,
-  authorities: <Authorities />,
   translations: <Translations />,
+  authorities: <Authorities />,
+  orgUnitGroupSets: <OrgUnitGroupSets />
 };
 
 const Configuration = () => {
@@ -23,7 +23,7 @@ const Configuration = () => {
   const { selectedFunction, actions } = useConfigurationModuleStore(
     useShallow((state) => ({
       selectedFunction: state.selectedFunction,
-      actions: state.actions,
+      actions: state.actions
     }))
   );
   const { selectFunction } = actions;
@@ -44,15 +44,13 @@ const Configuration = () => {
                 icon={<FontAwesomeIcon icon={icon} />}
                 label={t(key)}
               />,
-              index < CONFIGURATION_SUB_MODULES.length - 1 && <MenuDivider />,
+              index < CONFIGURATION_SUB_MODULES.length - 1 && <MenuDivider />
             ];
           })}
         </Menu>
       </div>
       <div className="h-full w-[calc(100%-200px)] p-2">
-        <div className="w-full h-full bg-white rounded-md shadow-md">
-          {SUB_MODULES_MAPPING[selectedFunction]}
-        </div>
+        <div className="w-full h-full bg-white rounded-md shadow-md">{SUB_MODULES_MAPPING[selectedFunction]}</div>
       </div>
     </div>
   );

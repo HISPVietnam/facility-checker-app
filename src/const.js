@@ -151,9 +151,9 @@ const MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE = {
 const DATA_STORE_NAMESPACE = "fca";
 
 const CONFIGURATION_SUB_MODULES = [
-  { key: "orgUnitGroupSets", icon: faLayerGroup },
-  { key: "authorities", icon: faUsersGear },
-  { key: "translations", icon: faLanguage }
+  { key: "translations", icon: faLanguage },
+  { key: "authorities", icon: faUsersGear }
+  // { key: "orgUnitGroupSets", icon: faLayerGroup }
 ];
 
 const NATIVE_LANGUAGES = {
