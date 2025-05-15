@@ -21,8 +21,8 @@ const ConfigurationToolbar = () => {
   );
 
   return (
-    <div className="flex justify-between w-full items-center">
-      <div>{SUB_MODULES_TOOLBAR_MAPPING[selectedFunction]}</div>
+    <div className="flex justify-between w-full items-center gap-2">
+      {SUB_MODULES_TOOLBAR_MAPPING[selectedFunction]}
       <LanguageSelectButton />
     </div>
   );

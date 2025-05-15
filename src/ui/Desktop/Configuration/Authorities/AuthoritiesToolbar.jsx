@@ -1,12 +1,16 @@
-import { getUsers, pushMetadata } from "@/api/metadata";
-import useConfigurationModuleStore from "@/states/configurationModule";
-import useMetadataStore from "@/states/metadata";
-import CustomizedButton from "@/ui/common/Button";
+import React, { useState } from "react";
+
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
+
+import { getUsers, pushMetadata } from "@/api/metadata";
+import CustomizedButton from "@/ui/common/Button";
+import useConfigurationModuleStore from "@/states/configurationModule";
+import useMetadataStore from "@/states/metadata";
+
 import metadata from "@/assets/metadata.json";
 
 const AuthoritiesToolbar = () => {

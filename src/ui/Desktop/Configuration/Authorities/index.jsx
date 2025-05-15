@@ -1,11 +1,14 @@
-import { APP_ROLES, USER_GROUPS } from "@/const";
-import useConfigurationModuleStore from "@/states/configurationModule";
-import useMetadataStore from "@/states/metadata";
-import CustomizedInputField from "@/ui/common/InputField";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
+
+import { APP_ROLES, USER_GROUPS } from "@/const";
+import CustomizedInputField from "@/ui/common/InputField";
+import useConfigurationModuleStore from "@/states/configurationModule";
+import useMetadataStore from "@/states/metadata";
 
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
