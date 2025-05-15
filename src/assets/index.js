@@ -1,4 +1,4 @@
-import metadata from "./metadata-package.json" with { type: "json" };
+import metadata from "./metadata.json" with { type: "json" };
 import jsonfile from "jsonfile"
 delete metadata.programs[0].createdBy;
 delete metadata.programs[0].lastUpdatedBy;
@@ -85,4 +85,11 @@ metadata.dataEntryForms.forEach(tea=>{
     delete tea.lastUpdated;
     delete tea.lastUpdatedBy;
 });
+
+metadata.dataElements.forEach(de=>{
+    de.name = de.name.replace("FC:", "FCA_")
+    de.shortName = "FCA_"+de.shortName
+
+})
+
 jsonfile.writeFileSync("./payload.json", metadata)

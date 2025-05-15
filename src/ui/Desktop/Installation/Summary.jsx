@@ -54,8 +54,9 @@ const Summary = () => {
       // const newOptionSetId = generateUid();
       newDataElements.push({
         id: newDataElementId,
-        name: "FC:" + foundGs.name,
+        name: "FCA_" + foundGs.name,
         shortName: foundGs.name,
+        formName: foundGs.name,
         description: "FCGS:" + foundGs.id,
         valueType: "TEXT",
         domainType: "TRACKER",

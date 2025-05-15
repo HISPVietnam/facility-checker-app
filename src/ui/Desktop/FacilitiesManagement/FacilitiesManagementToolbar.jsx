@@ -51,7 +51,6 @@ const FacilitiesManagementToolbar = () => {
   useEffect(() => {
     selectOrgUnit(foundMeOrgUnits[0]);
   }, []);
-
   return (
     <div className="flex items-center justify-center w-full">
       <div ref={filterButtonRef}>
