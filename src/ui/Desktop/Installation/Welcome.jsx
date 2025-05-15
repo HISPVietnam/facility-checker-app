@@ -57,6 +57,8 @@ const Welcome = () => {
       <br />
       <div>{t("welcomeParagraph2")}</div>
       <br />
+      <div>{t("welcomeParagraph2.1")}</div>
+      <br />
       <div>{t("welcomeParagraph3")}</div>
       <div>
         <div className="flex">

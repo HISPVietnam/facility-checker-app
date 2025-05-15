@@ -1,4 +1,8 @@
 export default {
+  // locales
+  englishLocale: "English",
+  vietnameseLocale: "Tiếng Việt",
+  //
   home: "Home",
   "facility-check": "Facility check",
   approval: "Approval",
@@ -106,9 +110,9 @@ export default {
   welcome: "Welcome",
   selectGroupSets: "Select group sets",
   welcomeToFacilityChecker: "Welcome to Facility Checker App",
-  welcomeParagraph1:
-    "Hi {{fullName}} 👋 , it looks like this is your first time running the application — welcome aboard! Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
-  welcomeParagraph2:
+  welcomeParagraph1: "Hi {{fullName}} 👋 , it looks like this is your first time running the application — welcome aboard!",
+  welcomeParagraph2: "Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
+  "welcomeParagraph2.1":
     "This installation wizard will guide you through each step of the installation process. It won't take long, and we'll be with you the whole way. During the installation if you need  to refresh the metadata, click Refresh button.",
   welcomeParagraph3: "Before we start, your user will need certain privileges as follow:",
   refreshMetadata: "Refresh metadata",
@@ -154,6 +158,7 @@ export default {
   importFacilities: "Importing facilities",
   settingUserRole: "Setting up user role",
   start: "Start",
+  user: "User",
   authorities: "Authorities",
   orgUnitGroupSets: "Org unit group sets",
   translations: "Translations"
