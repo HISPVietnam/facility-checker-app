@@ -1,3 +1,33 @@
+## [1.7.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.6.0...v1.7.0) (2025-05-16)
+
+### Features
+
+* add configuration module ([534648f](https://github.com/HISPVietnam/facility-checker-app/commit/534648f230bede7cb0c66329c96ccb4a3d63b7f6))
+* add DataStore api helpers ([8b3440b](https://github.com/HISPVietnam/facility-checker-app/commit/8b3440bb1962401dbe104f77d6f78557efd56cfa))
+* add excel format to locales download, config module ([dda8c18](https://github.com/HISPVietnam/facility-checker-app/commit/dda8c18889215a9ce8e5b722ccfb521619433dd1))
+* add language selector to installation module ([cecbd11](https://github.com/HISPVietnam/facility-checker-app/commit/cecbd11f3771385c6f6474ffa74af24a2a577424))
+* add new language functionality in translations part, configuration module ([c04895f](https://github.com/HISPVietnam/facility-checker-app/commit/c04895f58bb75ab7e3432a5841145bf6074d0709))
+* add refresh cache button to installation ([0342dc0](https://github.com/HISPVietnam/facility-checker-app/commit/0342dc0c4a7a78f05f3566e1df219d68e332d7b2))
+* allow download locales object in translations, config module ([3ba3ff1](https://github.com/HISPVietnam/facility-checker-app/commit/3ba3ff1c359cfa2315064b76ced445d1276420fb))
+* config module, implement authorities function ([35eed00](https://github.com/HISPVietnam/facility-checker-app/commit/35eed00bc68d26031f5dfcd19b64b4a43830e399))
+* config module, translations, add minor features ([65cb0aa](https://github.com/HISPVietnam/facility-checker-app/commit/65cb0aab744ddaa5740e02535faefa9f6b333515))
+* configuration module, add translation functionality [#9434](https://projects.hispvietnam.org/work_packages/9434) ([697a907](https://github.com/HISPVietnam/facility-checker-app/commit/697a9070fd1a4d018c86c79e27adb90840e9d753))
+* implement authorities restrictions for all the modules ([66c081f](https://github.com/HISPVietnam/facility-checker-app/commit/66c081f9a2b7735cced030c55c4cc7340ff33e09))
+* make change language button on the toolbar for all module [#9412](https://projects.hispvietnam.org/work_packages/9412) ([353093d](https://github.com/HISPVietnam/facility-checker-app/commit/353093d3e4b72ff86bcab268d60a2e07a40a5246))
+
+### Bug Fixes
+
+* add line break to paragraph1 in welcome page of installation module ([e66c399](https://github.com/HISPVietnam/facility-checker-app/commit/e66c399133fef91861da313f6e477b63558ad1d4))
+* change the background color of the side bar ([5ad5cda](https://github.com/HISPVietnam/facility-checker-app/commit/5ad5cda195d389978e780f1a7e497d9b9ad93375))
+* config module, translations, fix table header style ([e8a0d63](https://github.com/HISPVietnam/facility-checker-app/commit/e8a0d638e9b88a21879cb855e9de72e7deb94906))
+* config module, translations, fix table style ([81f863b](https://github.com/HISPVietnam/facility-checker-app/commit/81f863b8a1f64611b5b75a9ed5518d28d9eb464c))
+* configmodule, translations part, language selector is not clickable when adding new language ([7c9942f](https://github.com/HISPVietnam/facility-checker-app/commit/7c9942f544287a7e9862d5daefdff96be8172501))
+* fix the UI of the tags in user info ([dd3b748](https://github.com/HISPVietnam/facility-checker-app/commit/dd3b748052e7506cb5c8d305be95e7a1138ce1e3))
+* increase the size of the language selector, config module, translation part ([ea6d5b2](https://github.com/HISPVietnam/facility-checker-app/commit/ea6d5b26c28f367b7e86a8ab82409d247753557a))
+* major issues after fresh installation [#9489](https://projects.hispvietnam.org/work_packages/9489) ([aa5ae73](https://github.com/HISPVietnam/facility-checker-app/commit/aa5ae736de90a049052daca9d97abad820eb10b2))
+* minor issues of translation sub module, config module ([aa8a58f](https://github.com/HISPVietnam/facility-checker-app/commit/aa8a58f1ca75c97486f91c452d6bcaa2ef2bd637))
+* rearrange sub modules of configuration module ([e3fc8ab](https://github.com/HISPVietnam/facility-checker-app/commit/e3fc8ab902c210ec0e54c97ffc855e6fe71f5e04))
+
 ## [1.6.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.5.0...v1.6.0) (2025-04-25)
 
 ### Features
