@@ -7,6 +7,8 @@ import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import useLayoutStore from "@/states/layout";
 import { NavLink } from "react-router";
+import useMetadataStore from "@/states/metadata";
+import { useShallow } from "zustand/react/shallow";
 
 const SideBarItem = ({ label, icon }) => {
   const { t } = useTranslation();
@@ -34,6 +36,11 @@ const Sidebar = () => {
   const { toggleSidebar } = actions;
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
+  const { me } = useMetadataStore(
+    useShallow((state) => ({
+      me: state.me
+    }))
+  );
   return (
     <div
       className="h-full w-[250px] bg-[#333739] text-white relative"
@@ -53,7 +60,7 @@ const Sidebar = () => {
       <SideBarItem label="facility-check" icon={faLocationDot} />
       <SideBarItem label="approval" icon={faCheck} />
       <SideBarItem label="synchronization" icon={faRotate} />
-      <SideBarItem label="configuration" icon={faWrench} />
+      {me.authorities.includes("ADMIN") && <SideBarItem label="configuration" icon={faWrench} />}
     </div>
   );
 };

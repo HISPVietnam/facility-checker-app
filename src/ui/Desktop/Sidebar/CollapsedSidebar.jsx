@@ -1,18 +1,12 @@
 import { Button, Tooltip } from "@dhis2/ui";
 import MenuItem from "./MenuItem";
 import { useTranslation } from "react-i18next";
-import {
-  faHome,
-  faLocationDot,
-  faWrench,
-  faCheck,
-  faBars,
-  faRotate,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faLocationDot, faWrench, faCheck, faBars, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import useLayoutStore from "@/states/layout";
+import useMetadataStore from "@/states/metadata";
 import { NavLink } from "react-router";
 
 const SideBarItem = ({ label, icon }) => {
@@ -43,6 +37,11 @@ const CollapsedSidebar = () => {
   const { toggleSidebar } = actions;
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
+  const { me } = useMetadataStore(
+    useShallow((state) => ({
+      me: state.me
+    }))
+  );
   return (
     <div
       className="h-full w-[60px] bg-[#212934] text-white relative"
@@ -62,7 +61,7 @@ const CollapsedSidebar = () => {
       <SideBarItem label="facility-check" icon={faLocationDot} />
       <SideBarItem label="approval" icon={faCheck} />
       <SideBarItem label="synchronization" icon={faRotate} />
-      <SideBarItem label="configuration" icon={faWrench} />
+      {me.authorities.includes("ADMIN") && <SideBarItem label="configuration" icon={faWrench} />}
     </div>
   );
 };
