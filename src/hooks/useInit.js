@@ -9,7 +9,8 @@ import {
   getCustomAttributes,
   getUsers,
   getSchemas,
-  getDataStore
+  getDataStore,
+  saveDataStore
 } from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
@@ -63,7 +64,6 @@ const useInit = () => {
           prev[current.key] = current.value;
           return prev;
         }, {});
-        setMetadata("dataStore", convertedDataStore);
         setMetadata("orgUnits", orgUnits);
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
@@ -85,8 +85,16 @@ const useInit = () => {
         setMetadata("program", program);
         setMetadata("customAttributes", customAttributes);
         Object.keys(convertedDataStore.locales).forEach((locale) => {
-          i18n.addResourceBundle(locale, "translation", convertedDataStore.locales[locale]);
+          i18n.addResourceBundle(locale, "translation", convertedDataStore.locales[locale], true, true);
         });
+        const localeDataStore = {};
+
+        Object.keys(i18n.options.resources).forEach((language) => {
+          localeDataStore[language] = i18n.options.resources[language].translation;
+        });
+        convertedDataStore.locales = localeDataStore;
+        await saveDataStore("locales", localeDataStore, "UDPATE");
+        setMetadata("dataStore", convertedDataStore);
         i18n.changeLanguage(locale);
         const facilities = convertTeis(teis, program);
         setFacilities(facilities);

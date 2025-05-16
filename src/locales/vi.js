@@ -161,5 +161,13 @@ export default {
   user: "User",
   authorities: "Authorities",
   orgUnitGroupSets: "Org unit group sets",
-  translations: "Translations"
+  translations: "Translations",
+  key: "Key",
+  showHideLanguages: "Show/Hide languages",
+  searchLanguage: "Search language",
+  addNewLanguage: "Add new language",
+  search: "Search",
+  export: "Export",
+  exportAsJsonFile: "Export as JSON",
+  exportAsExcelFile: "Export as Excel"
 };
