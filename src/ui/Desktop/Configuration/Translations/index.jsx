@@ -112,7 +112,12 @@ const Translations = () => {
       <DataTable className="translations-config-table" scrollHeight="100%">
         <DataTableHead>
           <DataTableRow>
-            <DataTableCell className="!font-bold w-[200px]" top="0" fixed>
+            <DataTableCell
+              className="!font-bold w-[200px]"
+              top="0"
+              left="0"
+              fixed
+            >
               {t("key")}
             </DataTableCell>
             {selectedLanguages.map((lang) => (
@@ -142,7 +147,9 @@ const Translations = () => {
             .map((key) => {
               return (
                 <DataTableRow key={key}>
-                  <DataTableCell bordered>{key}</DataTableCell>
+                  <DataTableCell fixed left="0" bordered className="!bg-white">
+                    {key}
+                  </DataTableCell>
                   {selectedLanguages.map((lang) => {
                     let valueType = "TEXT";
                     if (

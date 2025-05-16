@@ -2,9 +2,8 @@
 .translations-config-table td {
   padding: 5px !important;
 }
-.translations-config-table th {
+.translations-config-table thead th {
   font-weight: 700;
-  text-align: center;
   background-color: oklch(87.2% 0.01 258.338) !important;
   color: black !important;
 }

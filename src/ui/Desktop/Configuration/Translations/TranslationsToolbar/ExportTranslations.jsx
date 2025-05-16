@@ -43,7 +43,7 @@ const ExportTranslations = () => {
     // Create table headers from object keys
     const headers = Object.keys(locales);
     const tableHeaders =
-      `<th></th>` +
+      `<th>${t("key")}</th>` +
       headers
         .map((key) => `<th>${NATIVE_LANGUAGES[key]["name"]}</th>`)
         .join("");
