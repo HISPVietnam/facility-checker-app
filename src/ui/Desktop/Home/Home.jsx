@@ -1,11 +1,14 @@
-import { Card } from "@dhis2/ui";
+import { Card, NoticeBox } from "@dhis2/ui";
 import appIcon from "@/assets/icon.png";
 import hispvnLogo from "@/assets/hispvn.png";
 import version from "@/assets/version.json";
 import { useTranslation } from "react-i18next";
-
+import useMetadataStore from "@/states/metadata";
 const Home = () => {
   const { t } = useTranslation();
+  const me = useMetadataStore((state) => state.me);
+
+  const noAuthorities = me.authorities.length === 0;
   return (
     <div className="p-5 w-full h-full">
       <Card className="p-10 w-full h-full !flex !items-center flex-col">
@@ -22,6 +25,14 @@ const Home = () => {
         </div>
         <br />
         <div className="w-full text-justify">- Administration: Used for settings of the app, e.g: translations...</div>
+        <br />
+        {noAuthorities && (
+          <div className="w-full">
+            <NoticeBox warning title={t("importantNotice")}>
+              {t("noAuthoritiesNotice")}
+            </NoticeBox>
+          </div>
+        )}
         <div className="w-full mt-auto flex items-center">
           Developed by <img className="h-[60px]" src={hispvnLogo} />
         </div>

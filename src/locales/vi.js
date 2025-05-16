@@ -153,11 +153,12 @@ export default {
   install: "Install",
   installParagraph1: "This is the final step 🏁, click Install button to start the installation process.",
   installParagraph2: "Installation process has been started, please do not close the app until it's completed.",
-  installParagraph3: "Congratulations! 🎉🎉🎉, installation process has been done successfully, click the button below to start the app.",
+  installParagraph3:
+    "Congratulations! 🎉🎉🎉, installation process has been done successfully. In order for the authorities to work properly, you will be logged out, we will redirect you to login page, please login again and you can start using the app. Click OK to conclude the installation.",
   importMetadata: "Importing metadata",
   importFacilities: "Importing facilities",
   settingUserRole: "Setting up user role",
-  start: "Start",
+  ok: "OK",
   user: "User",
   authorities: "Authorities",
   orgUnitGroupSets: "Org unit group sets",
@@ -169,5 +170,7 @@ export default {
   search: "Search",
   export: "Export",
   exportAsJsonFile: "Export as JSON",
-  exportAsExcelFile: "Export as Excel"
+  exportAsExcelFile: "Export as Excel",
+  importantNotice: "Important notice !!",
+  noAuthoritiesNotice: "It seems your user does not have any authorities to use the app, please contact the administrator."
 };

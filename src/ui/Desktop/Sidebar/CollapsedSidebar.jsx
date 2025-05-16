@@ -59,9 +59,9 @@ const CollapsedSidebar = () => {
         </div>
       </div>
       <SideBarItem label="home" icon={faHome} />
-      <SideBarItem label="facility-check" icon={faLocationDot} />
-      <SideBarItem label="approval" icon={faCheck} />
-      <SideBarItem label="synchronization" icon={faRotate} />
+      {me.authorities.includes("CAPTURE") && <SideBarItem label="facility-check" icon={faLocationDot} />}
+      {me.authorities.includes("APPROVAL") && <SideBarItem label="approval" icon={faCheck} />}
+      {me.authorities.includes("SYNCHRONIZATION") && <SideBarItem label="synchronization" icon={faRotate} />}
       {me.authorities.includes("ADMIN") && <SideBarItem label="configuration" icon={faWrench} />}
     </div>
   );

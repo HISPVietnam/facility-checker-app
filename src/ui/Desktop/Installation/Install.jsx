@@ -14,6 +14,7 @@ import { postTeis } from "@/api/data";
 import { saveDataStore } from "@/api/metadata";
 
 import resources from "@/locales";
+import { pull } from "@/api/fetch";
 const Install = () => {
   const { t, i18n } = useTranslation();
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
@@ -137,12 +138,12 @@ const Install = () => {
       {status === "done" && <div>{t("installParagraph3")}</div>}
       {status === "done" && (
         <CustomizedButton
-          onClick={() => {
-            location.reload();
+          onClick={async () => {
+            window.location = "/dhis-web-commons-security/logout.action";
           }}
           success
         >
-          {t("start")}
+          {t("ok")}
         </CustomizedButton>
       )}
     </div>
