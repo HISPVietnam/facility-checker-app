@@ -1117,7 +1117,6 @@
       "skipAnalytics": false,
       "id": "hyslcRQpYwU"
     },
-
     {
       "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "p4m3y1jLgpv" },
@@ -1187,7 +1186,7 @@
   "dataElements": [
     {
       "code": "FCA_005",
-      "name": "FC:DHIS2 path",
+      "name": "FCA_DHIS2 path",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1201,7 +1200,7 @@
         },
         "public": "--------"
       },
-      "shortName": "DHIS2 path",
+      "shortName": "FCA_DHIS2 path",
       "formName": "DHIS2 path",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1213,7 +1212,7 @@
       "attributeValues": []
     },
     {
-      "name": "FC:Approval status",
+      "name": "FCA_Approval status",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1227,7 +1226,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Approval status",
+      "shortName": "FCA_Approval status",
       "formName": "Approval status",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1241,7 +1240,7 @@
     },
     {
       "code": "FCA_001",
-      "name": "FC:Name",
+      "name": "FCA_Name",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1255,7 +1254,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Facility name",
+      "shortName": "FCA_Facility name",
       "formName": "Facility name",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1267,7 +1266,7 @@
       "attributeValues": []
     },
     {
-      "name": "FC:Synced",
+      "name": "FCA_Synced",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1281,7 +1280,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Synced",
+      "shortName": "FCA_Synced",
       "formName": "Sync status",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1294,7 +1293,7 @@
     },
     {
       "code": "FCA_007",
-      "name": "FC:Translations",
+      "name": "FCA_Translations",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1308,7 +1307,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Translations",
+      "shortName": "FCA_Translations",
       "formName": "Translations",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1321,7 +1320,7 @@
     },
     {
       "code": "FCA_011",
-      "name": "FC:Opening date",
+      "name": "FCA_Opening date",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1335,7 +1334,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Opening date",
+      "shortName": "FCA_Opening date",
       "formName": "Facility opening date",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1348,7 +1347,7 @@
     },
     {
       "code": "FCA_009",
-      "name": "FC:Image",
+      "name": "FCA_Image",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1362,7 +1361,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Facility Image",
+      "shortName": "FCA_Facility Image",
       "formName": "Facility Image",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1375,7 +1374,7 @@
     },
     {
       "code": "FCA_003",
-      "name": "FC:Code",
+      "name": "FCA_Code",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1389,7 +1388,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Facility code",
+      "shortName": "FCA_Facility code",
       "formName": "Facility code",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1402,7 +1401,7 @@
     },
     {
       "code": "FCA_010",
-      "name": "FC:Description",
+      "name": "FCA_Description",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1416,7 +1415,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Facility Description",
+      "shortName": "FCA_Facility Description",
       "formName": "Facility Description",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1429,7 +1428,7 @@
     },
     {
       "code": "FCA_012",
-      "name": "FC:Closing date",
+      "name": "FCA_Closing date",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1443,7 +1442,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Closing date",
+      "shortName": "FCA_Closing date",
       "formName": "Facility closing date",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1454,10 +1453,9 @@
       "id": "jR58BZSMB6B",
       "attributeValues": []
     },
-
     {
       "code": "FCA_018",
-      "name": "FC:Url",
+      "name": "FCA_Url",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1471,7 +1469,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Url",
+      "shortName": "FCA_Url",
       "formName": "Facility Url",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1484,7 +1482,7 @@
     },
     {
       "code": "FCA_Aprby",
-      "name": "FC:Approved by",
+      "name": "FCA_Approved by",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1498,7 +1496,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Approved by",
+      "shortName": "FCA_Approved by",
       "formName": "Approved by",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1511,7 +1509,7 @@
     },
     {
       "code": "FCA_016",
-      "name": "FC:Contact person",
+      "name": "FCA_Contact person",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1525,7 +1523,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Contact person",
+      "shortName": "FCA_Contact person",
       "formName": "Facility Contact person",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1538,7 +1536,7 @@
     },
     {
       "code": "FCA_017",
-      "name": "FC:Attributevalues",
+      "name": "FCA_Attributevalues",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1552,7 +1550,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Attributevalues",
+      "shortName": "FCA_Attributevalues",
       "formName": "Attributevalues",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1565,7 +1563,7 @@
     },
     {
       "code": "FCA_004",
-      "name": "FC:DHIS2 UID",
+      "name": "FCA_DHIS2 UID",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1579,7 +1577,7 @@
         },
         "public": "--------"
       },
-      "shortName": "DHIS2 UID",
+      "shortName": "FCA_DHIS2 UID",
       "formName": "DHIS2 UID",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1592,7 +1590,7 @@
     },
     {
       "code": "FC:INF",
-      "name": "FC:Is new facility",
+      "name": "FCA_Is new facility",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1606,7 +1604,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Is new facility",
+      "shortName": "FCA_Is new facility",
       "formName": "Is new facility",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1619,7 +1617,7 @@
     },
     {
       "code": "FCA_015",
-      "name": "FC:Email",
+      "name": "FCA_Email",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1633,7 +1631,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Email",
+      "shortName": "FCA_Email",
       "formName": "Facility contact email",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1646,7 +1644,7 @@
     },
     {
       "code": "FCA_Aprat",
-      "name": "FC:Approved at",
+      "name": "FCA_Approved at",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1660,7 +1658,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Approved at",
+      "shortName": "FCA_Approved at",
       "formName": "Approved at",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1673,7 +1671,7 @@
     },
     {
       "code": "FCA_002",
-      "name": "FC:Short name",
+      "name": "FCA_Short name",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1687,7 +1685,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Facility short name",
+      "shortName": "FCA_Facility short name",
       "formName": "Facility short name",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1699,7 +1697,7 @@
       "attributeValues": []
     },
     {
-      "name": "FC:Active status",
+      "name": "FCA_Active status",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1713,7 +1711,7 @@
         },
         "public": "--------"
       },
-      "shortName": "FC:Active status",
+      "shortName": "FCA_FC:Active status",
       "formName": "Active status",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1727,7 +1725,7 @@
     },
     {
       "code": "FCA_014",
-      "name": "FC:Address",
+      "name": "FCA_Address",
       "translations": [{ "locale": "vi", "property": "FORM_NAME", "value": "Địa chỉ" }],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1741,7 +1739,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Address",
+      "shortName": "FCA_Address",
       "formName": "Facility Address",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1754,7 +1752,7 @@
     },
     {
       "code": "FCA_RR",
-      "name": "FC:Reason for Reject",
+      "name": "FCA_Reason for Reject",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1768,7 +1766,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Reason for Reject",
+      "shortName": "FCA_Reason for Reject",
       "formName": "Reason for Reject",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1781,7 +1779,7 @@
     },
     {
       "code": "FCA_013",
-      "name": "FC:Phone",
+      "name": "FCA_Phone",
       "translations": [],
       "sharing": {
         "owner": "GOLswS44mh8",
@@ -1795,7 +1793,7 @@
         },
         "public": "--------"
       },
-      "shortName": "Phone",
+      "shortName": "FCA_Phone",
       "formName": "Facility contact number",
       "legendSets": [],
       "aggregationType": "NONE",
@@ -1808,26 +1806,10 @@
     }
   ],
   "userGroups": [
-    {
-      "name": "FCA - Admin",
-      "id": "MJK6n5PLXM6",
-      "users": []
-    },
-    {
-      "name": "FCA - Approval",
-      "id": "xd865kZFSRw",
-      "users": []
-    },
-    {
-      "name": "FCA - Capture",
-      "id": "m6GidmfEK48",
-      "users": []
-    },
-    {
-      "name": "FCA - Synchronization",
-      "id": "shYXBFb3lpw",
-      "users": []
-    }
+    { "name": "FCA - Admin", "id": "MJK6n5PLXM6", "users": [] },
+    { "name": "FCA - Approval", "id": "xd865kZFSRw", "users": [] },
+    { "name": "FCA - Capture", "id": "m6GidmfEK48", "users": [] },
+    { "name": "FCA - Synchronization", "id": "shYXBFb3lpw", "users": [] }
   ],
   "userRoles": [
     {

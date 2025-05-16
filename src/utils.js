@@ -338,7 +338,7 @@ const belongToMultipleGroups = (facility) => {
 
 const isNotInGroup = (facility, de) => {
   let passed = false;
-  if (!facility[de.id]) {
+  if (!facility[de.id] || facility[de.id] === "[]") {
     passed = true;
   }
   return passed;
