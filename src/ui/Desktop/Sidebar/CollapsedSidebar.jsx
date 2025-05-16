@@ -7,6 +7,7 @@ import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import useLayoutStore from "@/states/layout";
 import useMetadataStore from "@/states/metadata";
+import { useShallow } from "zustand/react/shallow";
 import { NavLink } from "react-router";
 
 const SideBarItem = ({ label, icon }) => {
