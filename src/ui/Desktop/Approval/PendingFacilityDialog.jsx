@@ -309,7 +309,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
               setPendingFacilityDialog(false);
             }}
           >
-            {t("cancel")}
+            {t("close")}
           </CustomizedButton>
         </ModalActions>
       </Modal>
