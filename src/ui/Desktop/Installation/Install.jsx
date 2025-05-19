@@ -139,7 +139,7 @@ const Install = () => {
       {status === "done" && (
         <CustomizedButton
           onClick={async () => {
-            window.location = "/dhis-web-commons-security/logout.action";
+            window.location = "../../../dhis-web-commons-security/logout.action";
           }}
           success
         >

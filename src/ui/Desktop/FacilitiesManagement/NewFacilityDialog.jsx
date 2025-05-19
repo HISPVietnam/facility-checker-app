@@ -299,7 +299,7 @@ const NewFacilityDialog = () => {
       }
 
       const path = selectedFacility[PATH];
-      if (selectedFacility.latitude && selectedFacility.longitude && path) {
+      if (path && (selectedFacility.latitude || selectedFacility.longitude)) {
         const isInside = isInsideParent(path, selectedFacility.latitude, selectedFacility.longitude);
         if (!isInside) {
           currentHelpers.push({
