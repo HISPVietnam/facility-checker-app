@@ -1,3 +1,15 @@
+## [1.8.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.7.0...v1.8.0) (2025-05-19)
+
+### Features
+
+* synchronize locales between app core and datastore ([ceac0ec](https://github.com/HISPVietnam/facility-checker-app/commit/ceac0ecf14c181c2fd83875699408ab8eb4738aa))
+
+### Bug Fixes
+
+* disable config module if current logged in user does not have ADMIN authoirity ([3f260b3](https://github.com/HISPVietnam/facility-checker-app/commit/3f260b3a7b6524ee24b16440d19c52826f1f36f9))
+* force the user to re-login after the installation is finished ([2145f58](https://github.com/HISPVietnam/facility-checker-app/commit/2145f5859ff42d3eac7634777f099faa075e2f49))
+* sidebar crashed when it got collapsed ([0013809](https://github.com/HISPVietnam/facility-checker-app/commit/00138092f18b69d49661062e5caef3072b6847ea))
+
 ## [1.7.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.6.0...v1.7.0) (2025-05-16)
 
 ### Features
