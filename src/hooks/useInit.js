@@ -38,6 +38,7 @@ const useInit = () => {
       const orgUnitGeoJson = await getOrgUnitGeoJson();
       const schemas = await getSchemas();
       const users = await getUsers();
+
       if (program.httpStatusCode === 404 || VITE_FCA_MODE === "installation") {
         setMetadata("me", me);
         const locale = me.settings.keyUiLocale;

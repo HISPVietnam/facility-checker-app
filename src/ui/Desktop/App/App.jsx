@@ -19,11 +19,20 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import useInit from "@/hooks/useInit";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import useMetadataStore from "@/states/metadata";
+import { getSystemInfo } from "@/api/metadata";
 
 const App = () => {
+  const { systemInfo, metadataStoreActions } = useMetadataStore(
+    useShallow((state) => ({
+      systemInfo: state.systemInfo,
+      metadataStoreActions: state.actions
+    }))
+  );
   const { ready, firstRun } = useInit();
   const { t } = useTranslation();
+  const { setMetadata } = metadataStoreActions;
   const { layout, actions } = useLayoutStore(
     useShallow((state) => ({
       layout: state.layout,
@@ -38,10 +47,26 @@ const App = () => {
     navigate("/home");
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const systemInfoResult = await getSystemInfo();
+      setMetadata("systemInfo", systemInfoResult);
+    })();
+  }, []);
+
+  let appHeightClassName = "";
+  let withHeaderBar = false;
+  if (systemInfo && systemInfo.version < "2.42") {
+    appHeightClassName = "h-[calc(100%-48px)]";
+    withHeaderBar = true;
+  } else {
+    appHeightClassName = "h-full";
+  }
+
   return (
     <div className="w-full h-full text-slate-700">
-      <HeaderBar />
-      <div className="w-full h-[calc(100%-48px)] flex items-center justify-center">
+      {withHeaderBar && <HeaderBar />}
+      <div className={`w-full ${appHeightClassName} flex items-center justify-center`}>
         {!ready && <CircularLoader />}
         {ready && !firstRun && (
           <>
