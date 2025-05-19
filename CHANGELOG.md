@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.1...v1.8.2) (2025-05-19)
+
+### Bug Fixes
+
+* change the label from Cancel to Close in approval dialog ([17587fa](https://github.com/HISPVietnam/facility-checker-app/commit/17587fa9bef1aabb12e7abd2852a9304c1641ea9))
+* duplicated header bars if DHIS2 version is 2.42+ ([93e679b](https://github.com/HISPVietnam/facility-checker-app/commit/93e679bf02bc46e53113758d997b441df9a5a0d2))
+* list view is not updated when facility profile is saved ([51c80e2](https://github.com/HISPVietnam/facility-checker-app/commit/51c80e24c963b1ba95ae482b76b497f4ebbd1236))
+
 ## [1.8.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.0...v1.8.1) (2025-05-19)
 
 ### Bug Fixes
