@@ -1,3 +1,9 @@
+## [1.8.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.0...v1.8.1) (2025-05-19)
+
+### Bug Fixes
+
+* major issues after the installation and the facility profile dialog ([c675204](https://github.com/HISPVietnam/facility-checker-app/commit/c675204ae79bb578a8f5323737843f3cb5bcd019))
+
 ## [1.8.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.7.0...v1.8.0) (2025-05-19)
 
 ### Features
