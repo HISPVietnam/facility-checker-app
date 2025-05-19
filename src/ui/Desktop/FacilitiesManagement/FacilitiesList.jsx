@@ -72,7 +72,16 @@ const FacilitiesList = () => {
 
   useEffect(() => {
     generateFacilityList();
-  }, [selectedOrgUnit ? selectedOrgUnit.id : "", filters.length, sortedFacilities.length, paging.page, paging.pageSize, filter, sorting]);
+  }, [
+    selectedOrgUnit ? selectedOrgUnit.id : "",
+    filters.length,
+    JSON.stringify(sortedFacilities),
+    sortedFacilities.length,
+    paging.page,
+    paging.pageSize,
+    filter,
+    sorting
+  ]);
 
   // useEffect(() => {
   //   if (profileDialog === false) {
