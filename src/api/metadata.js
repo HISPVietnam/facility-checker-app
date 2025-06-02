@@ -7,34 +7,46 @@ const getOrgUnits = async () => {
   return result.organisationUnits;
 };
 const getOrgUnitGeoJson = async () => {
-  const orgUnitLevelResult = await pull("/api/organisationUnitLevels?paging=false");
+  const orgUnitLevelResult = await pull(
+    "/api/organisationUnitLevels?paging=false"
+  );
   let orgUnitGeoJsonUrl = "/api/organisationUnits.geojson";
   const levels = [];
   for (let i = 1; i <= orgUnitLevelResult.organisationUnitLevels.length; i++) {
     levels.push(i);
   }
   if (levels.length > 0) {
-    orgUnitGeoJsonUrl += `?${levels.map((level) => `level=${level}`).join("&")}`;
+    orgUnitGeoJsonUrl += `?${levels
+      .map((level) => `level=${level}`)
+      .join("&")}`;
   }
 
   const result = await pull(orgUnitGeoJsonUrl);
   return result;
 };
 const getOrgUnitLevels = async () => {
-  const result = await pull("/api/organisationUnitLevels?paging=false&fields=*");
+  const result = await pull(
+    "/api/organisationUnitLevels?paging=false&fields=*"
+  );
   return result.organisationUnitLevels;
 };
 const getOrgUnitGroups = async () => {
-  const result = await pull("/api/organisationUnitGroups?paging=false&fields=*,!organisationUnits");
+  const result = await pull(
+    "/api/organisationUnitGroups?paging=false&fields=*,!organisationUnits"
+  );
   return result.organisationUnitGroups;
 };
 const getOrgUnitGroupSets = async () => {
-  const result = await pull("/api/organisationUnitGroupSets?fields=id,name,items,translations&paging=false");
+  const result = await pull(
+    "/api/organisationUnitGroupSets?fields=id,name,items,translations&paging=false"
+  );
   return result.organisationUnitGroupSets;
 };
 
 const getMe = async () => {
-  const result = await pull("/api/me?fields=*,organisationUnits[id,name,level],userRoles[id,name,authorities]");
+  const result = await pull(
+    "/api/me?fields=*,organisationUnits[id,name,level],userRoles[id,name,authorities]"
+  );
   return result;
 };
 
@@ -44,13 +56,25 @@ const getProgram = async () => {
 };
 
 const getUsers = async () => {
-  const result = await pull("/api/users?fields=id,username,firstName,surname,userGroups[id]&paging=false");
+  const result = await pull(
+    "/api/users?fields=id,username,firstName,surname,userGroups[id]&paging=false"
+  );
   return result.users;
+};
+const getUserGroups = async () => {
+  const result = await pull(
+    "/api/userGroups?fields=id,translations,displayName,users[id]&paging=false"
+  );
+  return result.userGroups;
 };
 
 const getCustomAttributes = async () => {
-  const result = await pull("/api/attributes?paging=false&fields=organisationUnitAttribute,id,name,translations,valueType");
-  return result.attributes.filter((attr) => attr.organisationUnitAttribute === true);
+  const result = await pull(
+    "/api/attributes?paging=false&fields=organisationUnitAttribute,id,name,translations,valueType"
+  );
+  return result.attributes.filter(
+    (attr) => attr.organisationUnitAttribute === true
+  );
 };
 
 const getSchemas = async () => {
@@ -59,7 +83,9 @@ const getSchemas = async () => {
 };
 
 const getUserByIds = async (userIds) => {
-  const result = await pull(`/api/users?fields=id,userRoles&filter=id:in:[${userIds.join(",")}]`);
+  const result = await pull(
+    `/api/users?fields=id,userRoles&filter=id:in:[${userIds.join(",")}]`
+  );
   return result.users;
 };
 
@@ -70,8 +96,8 @@ const addUserRole = async (userId, userRoles) => {
       {
         op: "add",
         path: "/userRoles",
-        value: userRoles
-      }
+        value: userRoles,
+      },
     ],
     "PATCH",
     "application/json-patch+json"
@@ -82,12 +108,19 @@ const pushMetadata = async (metadata) => {
   const result = await push("/api/metadata?async=false", metadata, "POST");
 };
 const getDataStore = async () => {
-  const result = await pull(`/api/dataStore/${DATA_STORE_NAMESPACE}?fields=.&pageSize=1000`);
+  const result = await pull(
+    `/api/dataStore/${DATA_STORE_NAMESPACE}?fields=.&pageSize=1000`
+  );
   return result;
 };
 
 const saveDataStore = async (key, value, type) => {
-  const result = await push(`/api/dataStore/${DATA_STORE_NAMESPACE}/${key}`, value, type === "CREATE" ? "POST" : "PUT", null);
+  const result = await push(
+    `/api/dataStore/${DATA_STORE_NAMESPACE}/${key}`,
+    value,
+    type === "CREATE" ? "POST" : "PUT",
+    null
+  );
   return result;
 };
 
@@ -112,5 +145,6 @@ export {
   pushMetadata,
   getDataStore,
   saveDataStore,
-  getSystemInfo
+  getSystemInfo,
+  getUserGroups,
 };

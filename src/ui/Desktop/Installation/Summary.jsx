@@ -1,4 +1,11 @@
-import { DataTable, DataTableHead, DataTableRow, DataTableColumnHeader, DataTableBody, DataTableCell } from "@dhis2/ui";
+import {
+  DataTable,
+  DataTableHead,
+  DataTableRow,
+  DataTableColumnHeader,
+  DataTableBody,
+  DataTableCell,
+} from "@dhis2/ui";
 import useMetadataStore from "@/states/metadata";
 import useInstallationModuleStore from "@/states/installationModule";
 import { useTranslation } from "react-i18next";
@@ -14,30 +21,33 @@ const userGroupMapping = {
   [CAPTURE]: "captureRoleUsers",
   [APPROVAL]: "approvalRoleUsers",
   [SYNCHRONIZATION]: "synchronizationRoleUsers",
-  [ADMIN]: "adminRoleUsers"
+  [ADMIN]: "adminRoleUsers",
 };
 
 const Summary = () => {
   const { t } = useTranslation();
-  const { me, schemas, orgUnitGroupSets, orgUnitGroups, orgUnits } = useMetadataStore(
-    useShallow((state) => ({
-      me: state.me,
-      schemas: state.schemas,
-      orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups,
-      orgUnits: state.orgUnits
-    }))
-  );
+  const { me, schemas, orgUnitGroupSets, orgUnitGroups, orgUnits, userGroups } =
+    useMetadataStore(
+      useShallow((state) => ({
+        me: state.me,
+        schemas: state.schemas,
+        orgUnitGroupSets: state.orgUnitGroupSets,
+        orgUnitGroups: state.orgUnitGroups,
+        orgUnits: state.orgUnits,
+        userGroups: state.userGroups,
+      }))
+    );
 
-  const { actions, valid, selectGroupSets, setupAuthorities, summary } = useInstallationModuleStore(
-    useShallow((state) => ({
-      valid: state.valid,
-      actions: state.actions,
-      selectGroupSets: state.selectGroupSets,
-      setupAuthorities: state.setupAuthorities,
-      summary: state.summary
-    }))
-  );
+  const { actions, valid, selectGroupSets, setupAuthorities, summary } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        valid: state.valid,
+        actions: state.actions,
+        selectGroupSets: state.selectGroupSets,
+        setupAuthorities: state.setupAuthorities,
+        summary: state.summary,
+      }))
+    );
   const { metadataPackage } = summary;
   const { setStepData } = actions;
   const { members, skippedOrgUnits, selectedGroupSets } = selectGroupSets;
@@ -71,10 +81,10 @@ const Summary = () => {
             [ADMIN]: { access: "rw------", id: ADMIN },
             [CAPTURE]: { access: "r-------", id: CAPTURE },
             [SYNCHRONIZATION]: { access: "r-------", id: SYNCHRONIZATION },
-            [APPROVAL]: { access: "r-------", id: APPROVAL }
+            [APPROVAL]: { access: "r-------", id: APPROVAL },
           },
-          public: "--------"
-        }
+          public: "--------",
+        },
       });
       newProgramStageDataElements.push({
         allowFutureDate: false,
@@ -85,7 +95,7 @@ const Summary = () => {
         programStage: { id: "VdBma23iRTw" },
         renderOptionsAsRadio: false,
         skipAnalytics: false,
-        skipSynchronization: false
+        skipSynchronization: false,
       });
       // const newOptionSet = {
       //   id: newOptionSetId,
@@ -112,8 +122,12 @@ const Summary = () => {
       // newOptionSets.push(newOptionSet);
     });
     const clonedMetadata = _.cloneDeep(metadata);
-    clonedMetadata.programStageDataElements.push(...newProgramStageDataElements);
-    clonedMetadata.programStages[0].programStageDataElements.push(...newProgramStageDataElements);
+    clonedMetadata.programStageDataElements.push(
+      ...newProgramStageDataElements
+    );
+    clonedMetadata.programStages[0].programStageDataElements.push(
+      ...newProgramStageDataElements
+    );
     clonedMetadata.dataElements.push(...newDataElements);
     clonedMetadata.optionSets.push(...newOptionSets);
     clonedMetadata.options.push(...newOptions);
@@ -126,16 +140,33 @@ const Summary = () => {
     //   }
     // });
     clonedMetadata.programs[0].organisationUnits = orgUnits.map((orgUnit) => ({
-      id: orgUnit.id
+      id: orgUnit.id,
     }));
     Object.keys(userGroupMapping).forEach((userGroupId) => {
-      const foundUserGroupIndex = clonedMetadata.userGroups.findIndex((ug) => ug.id === userGroupId);
-      const groupMembers = JSON.parse(setupAuthorities[userGroupMapping[userGroupId]]).map((id) => ({
-        id: id
-      }));
+      const foundUserGroupIndex = clonedMetadata.userGroups.findIndex(
+        (ug) => ug.id === userGroupId
+      );
+      const groupMembers = JSON.parse(
+        setupAuthorities[userGroupMapping[userGroupId]]
+      )
+        .map((id) => {
+          if (id.includes("userGroup")) {
+            const foundUserGroup = userGroups.find(
+              (ug) => ug.id === id.replace("-userGroup", "")
+            );
+            return foundUserGroup.users.map((user) => ({ id: user.id }));
+          }
+          return {
+            id: id,
+          };
+        })
+        .flat();
       clonedMetadata.userGroups[foundUserGroupIndex].users = groupMembers;
       clonedMetadata.userRoles[0].users.push(...groupMembers);
-      clonedMetadata.userRoles[0].users = _.uniqBy(clonedMetadata.userRoles[0].users, "id");
+      clonedMetadata.userRoles[0].users = _.uniqBy(
+        clonedMetadata.userRoles[0].users,
+        "id"
+      );
     });
     setStepData("summary", "metadataPackage", clonedMetadata);
     convertData(clonedMetadata);
@@ -167,7 +198,9 @@ const Summary = () => {
             </DataTableHead>
             <DataTableBody>
               {Object.keys(metadataPackage).map((key) => {
-                const foundSchema = schemas.find((schema) => schema.plural === key);
+                const foundSchema = schemas.find(
+                  (schema) => schema.plural === key
+                );
                 const currentMetadata = metadataPackage[key];
                 return (
                   <DataTableRow>
@@ -182,7 +215,9 @@ const Summary = () => {
               })}
               <DataTableRow>
                 <DataTableCell>{t("facility")}</DataTableCell>
-                <DataTableCell>{members.length - skippedOrgUnits.length}</DataTableCell>
+                <DataTableCell>
+                  {members.length - skippedOrgUnits.length}
+                </DataTableCell>
                 <DataTableCell>{skippedOrgUnits.length}</DataTableCell>
                 {/* <DataTableCell>{<div className="underline cursor-pointer">{t("show")}</div>}</DataTableCell> */}
               </DataTableRow>

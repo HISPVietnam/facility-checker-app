@@ -1,6 +1,11 @@
 import useMetadataStore from "@/states/metadata";
 import useInstallationModuleStore from "@/states/installationModule";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faUser,
+  faUsers,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,22 +16,29 @@ import { NoticeBox } from "@dhis2/ui";
 import { pickTranslation } from "@/utils";
 import { APP_ROLES } from "@/const";
 const SetupAuthorities = () => {
-  const { t } = useTranslation();
-  const { users } = useMetadataStore(
+  const { t, i18n } = useTranslation();
+  const { users, userGroups } = useMetadataStore(
     useShallow((state) => ({
-      users: state.users
+      users: state.users,
+      userGroups: state.userGroups,
     }))
   );
-  const { actions, valid, setupAuthorities, status, refreshingMetadata } = useInstallationModuleStore(
-    useShallow((state) => ({
-      valid: state.valid,
-      actions: state.actions,
-      setupAuthorities: state.setupAuthorities,
-      status: state.status,
-      refreshingMetadata: state.refreshingMetadata
-    }))
-  );
-  const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers } = setupAuthorities;
+  const { actions, valid, setupAuthorities, status, refreshingMetadata } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        valid: state.valid,
+        actions: state.actions,
+        setupAuthorities: state.setupAuthorities,
+        status: state.status,
+        refreshingMetadata: state.refreshingMetadata,
+      }))
+    );
+  const {
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  } = setupAuthorities;
   const { setValid, setStepData } = actions;
   useEffect(() => {
     if (
@@ -43,12 +55,36 @@ const SetupAuthorities = () => {
     } else {
       setValid(false);
     }
-  }, [captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers]);
+  }, [
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  ]);
+
+  const userGroupOptions = userGroups.map((ug) => {
+    return {
+      value: `${ug.id}-userGroup`,
+      label: (
+        <>
+          <FontAwesomeIcon icon={faUsers} className="pr-2" />
+          <span>{pickTranslation(ug, i18n.language, "name")}</span>
+        </>
+      ),
+    };
+  });
 
   const userOptions = users.map((user) => {
     return {
       value: user.id,
-      label: `${user.username} (${user.firstName} ${user.surname})`
+      label: (
+        <>
+          <FontAwesomeIcon icon={faUser} className="pr-2" />
+          <span>
+            {user.username} (${user.firstName} ${user.surname})
+          </span>
+        </>
+      ),
     };
   });
 
@@ -56,7 +92,7 @@ const SetupAuthorities = () => {
     captureRole: captureRoleUsers,
     approvalRole: approvalRoleUsers,
     synchronizationRole: synchronizationRoleUsers,
-    adminRole: adminRoleUsers
+    adminRole: adminRoleUsers,
   };
 
   return (
@@ -74,7 +110,8 @@ const SetupAuthorities = () => {
         return (
           <div className="mt-2">
             <div>
-              {t("selectUsersFor")}&nbsp;<span className={`font-bold ${color}`}>{t(name)}</span>
+              {t("selectUsersFor")}&nbsp;
+              <span className={`font-bold ${color}`}>{t(name)}</span>
             </div>
             <div>
               <CustomizedInputField
@@ -85,7 +122,7 @@ const SetupAuthorities = () => {
                 }}
                 multiSelection={true}
                 valueType="TEXT"
-                options={userOptions}
+                options={[...userOptions, ...userGroupOptions]}
               />
             </div>
           </div>
