@@ -1,6 +1,11 @@
 import useMetadataStore from "@/states/metadata";
 import useInstallationModuleStore from "@/states/installationModule";
-import { faCheck, faUser, faUsers, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faUser,
+  faUsers,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,19 +21,25 @@ const SetupAuthorities = () => {
   const { users, userGroups } = useMetadataStore(
     useShallow((state) => ({
       users: state.users,
-      userGroups: state.userGroups
+      userGroups: state.userGroups,
     }))
   );
-  const { actions, valid, setupAuthorities, status, refreshingMetadata } = useInstallationModuleStore(
-    useShallow((state) => ({
-      valid: state.valid,
-      actions: state.actions,
-      setupAuthorities: state.setupAuthorities,
-      status: state.status,
-      refreshingMetadata: state.refreshingMetadata
-    }))
-  );
-  const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers } = setupAuthorities;
+  const { actions, valid, setupAuthorities, status, refreshingMetadata } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        valid: state.valid,
+        actions: state.actions,
+        setupAuthorities: state.setupAuthorities,
+        status: state.status,
+        refreshingMetadata: state.refreshingMetadata,
+      }))
+    );
+  const {
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  } = setupAuthorities;
   const { setValid, setStepData } = actions;
   useEffect(() => {
     if (
@@ -45,13 +56,18 @@ const SetupAuthorities = () => {
     } else {
       setValid(false);
     }
-  }, [captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers]);
+  }, [
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  ]);
 
   const userGroupOptions = userGroups.map((ug) => {
     return {
       value: `${ug.id}-userGroup`,
       prefix: <FontAwesomeIcon icon={faUsers} className="pr-2" />,
-      label: pickTranslation(ug, i18n.language, "name")
+      label: pickTranslation(ug, i18n.language, "name"),
     };
   });
 
@@ -60,7 +76,7 @@ const SetupAuthorities = () => {
       value: user.id,
       prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
 
-      label: `${user.username} (${user.firstName} ${user.surname})`
+      label: `${user.username} (${user.firstName} ${user.surname})`,
     };
   });
 
@@ -68,7 +84,7 @@ const SetupAuthorities = () => {
     captureRole: captureRoleUsers,
     approvalRole: approvalRoleUsers,
     synchronizationRole: synchronizationRoleUsers,
-    adminRole: adminRoleUsers
+    adminRole: adminRoleUsers,
   };
 
   return (
@@ -94,10 +110,15 @@ const SetupAuthorities = () => {
                 disabled={status !== "pending" || refreshingMetadata}
                 selected={mapping[name] ? JSON.parse(mapping[name]) : []}
                 onChange={(value) => {
-                  setStepData("setupAuthorities", name + "Users", JSON.stringify(value));
+                  setStepData(
+                    "setupAuthorities",
+                    name + "Users",
+                    JSON.stringify(value)
+                  );
                 }}
                 options={[...userOptions, ...userGroupOptions]}
                 filterable
+                placeholder={t("selectOption")}
               />
             </div>
           </div>
