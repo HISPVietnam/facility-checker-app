@@ -7,7 +7,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import CustomizedInputField from "@/ui/common/InputField";
@@ -15,6 +15,7 @@ import AppRole from "./AppRole";
 import { NoticeBox } from "@dhis2/ui";
 import { pickTranslation } from "@/utils";
 import { APP_ROLES } from "@/const";
+import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 const SetupAuthorities = () => {
   const { t, i18n } = useTranslation();
   const { users, userGroups } = useMetadataStore(
@@ -65,26 +66,17 @@ const SetupAuthorities = () => {
   const userGroupOptions = userGroups.map((ug) => {
     return {
       value: `${ug.id}-userGroup`,
-      label: (
-        <>
-          <FontAwesomeIcon icon={faUsers} className="pr-2" />
-          <span>{pickTranslation(ug, i18n.language, "name")}</span>
-        </>
-      ),
+      prefix: <FontAwesomeIcon icon={faUsers} className="pr-2" />,
+      label: pickTranslation(ug, i18n.language, "name"),
     };
   });
 
   const userOptions = users.map((user) => {
     return {
       value: user.id,
-      label: (
-        <>
-          <FontAwesomeIcon icon={faUser} className="pr-2" />
-          <span>
-            {user.username} (${user.firstName} ${user.surname})
-          </span>
-        </>
-      ),
+      prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
+
+      label: `${user.username} (${user.firstName} ${user.surname})`,
     };
   });
 
@@ -114,15 +106,18 @@ const SetupAuthorities = () => {
               <span className={`font-bold ${color}`}>{t(name)}</span>
             </div>
             <div>
-              <CustomizedInputField
+              <CustomizedMultipleSelector
                 disabled={status !== "pending" || refreshingMetadata}
-                value={mapping[name]}
+                selected={mapping[name] ? JSON.parse(mapping[name]) : []}
                 onChange={(value) => {
-                  setStepData("setupAuthorities", name + "Users", value);
+                  setStepData(
+                    "setupAuthorities",
+                    name + "Users",
+                    JSON.stringify(value)
+                  );
                 }}
-                multiSelection={true}
-                valueType="TEXT"
                 options={[...userOptions, ...userGroupOptions]}
+                filterable
               />
             </div>
           </div>
