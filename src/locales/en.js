@@ -2,7 +2,6 @@ export default {
   // locales
   englishLocale: "English",
   vietnameseLocale: "Tiếng Việt",
-  //
   home: "Home",
   "facility-check": "Facility check",
   approval: "Approval",
@@ -174,5 +173,6 @@ export default {
   exportAsExcelFile: "Export as Excel",
   importantNotice: "Important notice !!",
   noAuthoritiesNotice: "It seems your user does not have any authorities to use the app, please contact the administrator.",
-  selectOption: "Select option..."
+  selectOption: "Select option...",
+  projectHomepage: "Project homepage"
 };

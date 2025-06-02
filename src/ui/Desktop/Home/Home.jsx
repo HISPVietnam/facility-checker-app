@@ -11,21 +11,23 @@ const Home = () => {
   const noAuthorities = me.authorities.length === 0;
   return (
     <div className="p-5 w-full h-full">
-      <Card className="p-10 w-full h-full !flex !items-center flex-col">
-        <div>
-          <img className="w-[80px]" src={appIcon}></img>
-        </div>
-        <div className="font-bold text-[30px]">Welcome to Facility Checker App</div>
+      <Card className="p-5 w-full h-full !flex flex-col">
+        <div className="font-bold text-2xl">Welcome to Facility Checker App</div>
         <br />
-        <div className="w-full text-left font-bold">Getting started:</div>
+        <p>
+          The Facility Checker App (FCA) is a user-friendly map interface DHIS2 App which allow facility / district users to check the coordinates of
+          the facilities which are often incomplete, outdated, or incorrect or located outside their district / province / country boundary. It also
+          allows user to do integrity check on various orgunit groups and its group set. FCA app allow user to create new facility or edit facility
+          information and its coordinates details either manually enter the facility coordinate or selecting point on the map with its district
+          boundary.
+        </p>
         <br />
-        <div className="w-full text-justify">
-          - Facilities management: A user-friendly map interface that allows district officers to zoom in on their district boundaries and visualize
-          facility locations, labeled by name, with satellite or/and OpenStreetmap imagery in the background for reference.
-        </div>
-        <br />
-        <div className="w-full text-justify">- Administration: Used for settings of the app, e.g: translations...</div>
-        <br />
+        <p>
+          Manager can review all the facility changes before synchronizing to DHIS2 organisation unit. FCA module has guide installation which allows
+          DHIS2 administrator to install and import all the health facility from DHIS2 Organisation units to FCA module. FCA app contain custom filter
+          which allow users to filter facility which has no coordinates or facilities coordinate outside district boundary. FCA has inbuilt
+          translation module which allow user to switch language within app with out changing user setting or re-login to dhis2.
+        </p>
         {noAuthorities && (
           <div className="w-full">
             <NoticeBox warning title={t("importantNotice")}>
@@ -33,10 +35,8 @@ const Home = () => {
             </NoticeBox>
           </div>
         )}
-        <div className="w-full mt-auto flex items-center">
-          Developed by <img className="h-[60px]" src={hispvnLogo} />
-        </div>
-        <div className="w-full text-[12px] flex flex-col items-start text-slate-400">
+
+        <div className="w-full text-[14px] mt-auto flex flex-col items-start text-slate-600">
           <div>
             {t("version")}: {version.version}
           </div>
@@ -46,6 +46,15 @@ const Home = () => {
           <div>
             {t("buildRevision")}: {version.buildRevision}
           </div>
+          <div>
+            {t("projectHomepage")}:{" "}
+            <a className="underline" href="https://projects.hispvietnam.org/projects/130" target="_blank">
+              https://projects.hispvietnam.org/projects/130
+            </a>
+          </div>
+        </div>
+        <div className="w-full flex items-center">
+          Developed by <img className="h-[60px]" src={hispvnLogo} />
         </div>
       </Card>
     </div>
