@@ -1,28 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleDown,
-  faCancel,
-  faClose,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faCancel, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "@dhis2/ui";
 
-const CustomizedMultipleSelector = ({
-  disabled,
-  selected,
-  filterable = false,
-  onChange,
-  options = [],
-}) => {
+const CustomizedMultipleSelector = ({ disabled, selected, filterable = false, onChange, options = [], placeholder }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const containerRef = useRef(null);
 
-  const filteredOptions = options.filter((item) =>
-    item.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
+  const filteredOptions = options.filter((item) => item.label.toLowerCase().includes(inputValue.toLowerCase()));
 
   const handleInputClick = () => {
     if (!disabled) setShowDropdown(true);
@@ -59,26 +47,19 @@ const CustomizedMultipleSelector = ({
     <div className="relative" ref={containerRef}>
       <div
         onClick={handleInputClick}
-        className={`flex flex-wrap items-center gap-2 p-2 min-h-[40px] border rounded-md ${
+        className={`flex flex-wrap items-center gap-2 p-2 min-h-[40px] border border-slate-400 rounded-md ${
           disabled ? "bg-gray-100 cursor-not-allowed" : "cursor-text"
         }`}
       >
         {selected.map((value) => {
           const option = options.find((o) => o.value === value);
           return (
-            <div
-              key={value}
-              style={{
-                background:
-                  "linear-gradient(rgb(21, 101, 192) 0%, rgb(6, 80, 163) 100%) rgb(43, 97, 179)",
-              }}
-              className="flex items-center gap-1 text-white px-3 py-1 rounded-full text-sm"
-            >
+            <div key={value} className="flex items-center py-[2px] gap-1 px-2 rounded-lg text-sm bg-[#f3f5f7]">
               {option?.prefix} {option?.label} {option?.suffix}
               <button
                 onClick={() => handleRemove(value)}
                 disabled={disabled}
-                className={`ml-1 w-6 h-6 flex items-center justify-center rounded-full text-white hover:bg-blue-800 focus:outline-none ${
+                className={`ml-1 w-6 h-6 flex items-center justify-center rounded-full transition-all hover:bg-slate-300 focus:outline-none ${
                   disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
                 }`}
                 title="Remove"
@@ -94,7 +75,7 @@ const CustomizedMultipleSelector = ({
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder={t("selectOption")}
+          placeholder={placeholder ? placeholder : undefined}
           className="flex-1 min-w-[50px] outline-none border-none focus:ring-0 bg-transparent"
         />
 
@@ -113,20 +94,15 @@ const CustomizedMultipleSelector = ({
                 <li
                   key={item.value}
                   onClick={() => handleSelect(item.value)}
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="flex items-center p-1 hover:bg-gray-100 cursor-pointer text-sm"
                 >
-                  <Checkbox
-                    checked={selected.includes(item.value)}
-                    className="mr-2"
-                  />
+                  <Checkbox checked={selected.includes(item.value)} className="mr-2" />
                   {item.prefix} {item.label} {item.suffix}
                 </li>
               ))}
             </ul>
           ) : (
-            <div className="px-4 py-2 text-sm text-gray-500">
-              {t("noMatchFound")}
-            </div>
+            <div className="px-4 py-2 text-sm text-gray-500">{t("noMatchFound")}</div>
           )}
         </div>
       )}
