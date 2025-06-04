@@ -1,3 +1,9 @@
+## [1.9.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.1...v1.9.2) (2025-06-04)
+
+### Bug Fixes
+
+* add translations to metadata package ([5e1b0b3](https://github.com/HISPVietnam/facility-checker-app/commit/5e1b0b3a1f8cea81250643fac4f63703cd1ab106))
+
 ## [1.9.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.0...v1.9.1) (2025-06-04)
 
 ### Bug Fixes
