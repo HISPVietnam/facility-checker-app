@@ -170,11 +170,63 @@
     }
   ],
   "options": [
-    { "code": "open", "name": "Open", "optionSet": { "id": "It38VvS3E2c" }, "sortOrder": 1, "id": "epSrOaPxNrL", "attributeValues": [] },
-    { "code": "rejected", "name": "Rejected", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 2, "id": "kDzsaqyIaPo", "attributeValues": [] },
-    { "code": "approved", "name": "Approved", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 1, "id": "VdllG4CKoD4", "attributeValues": [] },
-    { "code": "closed", "name": "Closed", "optionSet": { "id": "It38VvS3E2c" }, "sortOrder": 2, "id": "qpcng3oFHS9", "attributeValues": [] },
-    { "code": "pending", "name": "Pending", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 3, "id": "N7MSTvv0PbV", "attributeValues": [] }
+    {
+      "code": "open",
+      "name": "Open",
+      "optionSet": { "id": "It38VvS3E2c" },
+      "sortOrder": 1,
+      "id": "epSrOaPxNrL",
+      "attributeValues": [],
+      "translations": [
+        { "property": "NAME", "locale": "fr", "value": "Ouvert" },
+        { "property": "NAME", "locale": "es", "value": "Abierto" },
+        { "property": "NAME", "locale": "pt", "value": "Aberto" },
+        { "property": "NAME", "locale": "vi", "value": "Mở" },
+        { "property": "NAME", "locale": "lo", "value": "ເປີດ" }
+      ]
+    },
+    {
+      "code": "rejected",
+      "name": "Rejected",
+      "optionSet": { "id": "GvCWttSR2pv" },
+      "sortOrder": 2,
+      "id": "kDzsaqyIaPo",
+      "attributeValues": [],
+      "translations": []
+    },
+    {
+      "code": "approved",
+      "name": "Approved",
+      "optionSet": { "id": "GvCWttSR2pv" },
+      "sortOrder": 1,
+      "id": "VdllG4CKoD4",
+      "attributeValues": [],
+      "translations": []
+    },
+    {
+      "code": "closed",
+      "name": "Closed",
+      "optionSet": { "id": "It38VvS3E2c" },
+      "sortOrder": 2,
+      "id": "qpcng3oFHS9",
+      "attributeValues": [],
+      "translations": [
+        { "property": "NAME", "locale": "fr", "value": "Fermé" },
+        { "property": "NAME", "locale": "es", "value": "Cerrado" },
+        { "property": "NAME", "locale": "pt", "value": "Fechado" },
+        { "property": "NAME", "locale": "vi", "value": "Đóng" },
+        { "property": "NAME", "locale": "lo", "value": "ປິດ" }
+      ]
+    },
+    {
+      "code": "pending",
+      "name": "Pending",
+      "optionSet": { "id": "GvCWttSR2pv" },
+      "sortOrder": 3,
+      "id": "N7MSTvv0PbV",
+      "attributeValues": [],
+      "translations": []
+    }
   ],
   "dataEntryForms": [
     {
@@ -1241,7 +1293,13 @@
     {
       "code": "FCA_001",
       "name": "FCA_Name",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Nom de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Nombre del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Nome da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Tên cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ຊື່ສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1321,7 +1379,13 @@
     {
       "code": "FCA_011",
       "name": "FCA_Opening date",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Date d'ouverture de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Fecha de apertura del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Data de abertura da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Ngày mở cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ວັນທີເລີ້ມບໍລິການຂອງສະຖານທີ່ສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1348,7 +1412,13 @@
     {
       "code": "FCA_009",
       "name": "FCA_Image",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Image de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Imagen del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Imagem da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Hình ảnh cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ຮູບພາບສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1375,7 +1445,13 @@
     {
       "code": "FCA_003",
       "name": "FCA_Code",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Code de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Código del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Código da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Mã cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ລະຫັດສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1402,7 +1478,13 @@
     {
       "code": "FCA_010",
       "name": "FCA_Description",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Description de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Descripción del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Descrição da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Mô tả cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ລາຍລະອຽດຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1429,7 +1511,13 @@
     {
       "code": "FCA_012",
       "name": "FCA_Closing date",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Date de fermeture de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Fecha de cierre del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Data de encerramento da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Ngày đóng cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ວັນ​ທີ​ສະຖານທີ່ບໍລິການສາທາລະນະສຸກປິດໃຫ້ບໍລິການ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1456,7 +1544,13 @@
     {
       "code": "FCA_018",
       "name": "FCA_Url",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "URL de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "URL del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "URL da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "URL của cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "URL ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1510,7 +1604,13 @@
     {
       "code": "FCA_016",
       "name": "FCA_Contact person",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Personne à contacter à l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Persona de contacto del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Pessoa de contacto da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Người liên hệ cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ຜູ້ປະສານງານຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1618,7 +1718,13 @@
     {
       "code": "FCA_015",
       "name": "FCA_Email",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "E-mail de contact de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Correo electrónico de contacto del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "E-mail de contacto da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Email liên hệ cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ອີເມວຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1672,7 +1778,13 @@
     {
       "code": "FCA_002",
       "name": "FCA_Short name",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Nom abrégé de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Nombre corto del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Nome abreviado da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Tên viết tắt của cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ຊື່ຫຍໍ້ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1698,7 +1810,13 @@
     },
     {
       "name": "FCA_Active status",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Statut" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Estado operativo" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Estado operativo" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Trạng thái hoạt động" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ສະຖານະຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1726,7 +1844,13 @@
     {
       "code": "FCA_014",
       "name": "FCA_Address",
-      "translations": [{ "locale": "vi", "property": "FORM_NAME", "value": "Địa chỉ" }],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Adresse de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Dirección del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Endereço da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Địa chỉ cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ທີ່ຢູ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,
@@ -1780,7 +1904,13 @@
     {
       "code": "FCA_013",
       "name": "FCA_Phone",
-      "translations": [],
+      "translations": [
+        { "property": "FORM_NAME", "locale": "fr", "value": "Numéro de téléphone de l'établissement de santé" },
+        { "property": "FORM_NAME", "locale": "es", "value": "Número de contacto del centro de salud" },
+        { "property": "FORM_NAME", "locale": "pt", "value": "Número de contacto da Unidade de Saúde" },
+        { "property": "FORM_NAME", "locale": "vi", "value": "Số điện thoại liên hệ cơ sở y tế" },
+        { "property": "FORM_NAME", "locale": "lo", "value": "ເບີໂທຕິດຕໍ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
       "sharing": {
         "owner": "GOLswS44mh8",
         "external": false,

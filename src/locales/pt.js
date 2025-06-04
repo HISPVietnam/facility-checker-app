@@ -106,7 +106,7 @@ export default {
   welcome: "Bem-vindo",
   selectGroupSets: "Selecionar conjuntos de grupos de unidades de organização de instalações",
   welcomeToFacilityChecker: "Bem-vindo à aplicação Facility Checker",
-  welcomeParagraph1: "Olá. '' parece que esta é a primeira vez que está a executar a aplicação - bem-vindo a bordo!",
+  welcomeParagraph1: "Olá {{fullName}}, parece que esta é a primeira vez que está a executar a aplicação - bem-vindo a bordo!",
   welcomeParagraph2: "Antes de começar, é necessário definir alguns pré-requisitos para garantir que tudo corra tranquilamente.",
   "welcomeParagraph2.1":
     "Este assistente de instalação guiá-lo-á através de cada passo do processo de instalação. Não demorará muito tempo e acompanhá-lo-emos durante todo o processo. Durante a instalação, se precisar de atualizar os metadados, clique no botão Actualizar.",
