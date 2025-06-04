@@ -43,7 +43,7 @@ const Sidebar = () => {
   );
   return (
     <div
-      className="h-full w-[250px] bg-[#333739] text-white relative"
+      className="h-full w-[300px] bg-[#333739] text-white relative"
       onMouseOver={() => {
         setHovered(true);
       }}

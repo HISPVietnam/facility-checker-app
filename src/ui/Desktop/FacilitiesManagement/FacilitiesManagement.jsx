@@ -58,11 +58,12 @@ const FacilitiesManagement = () => {
   );
   const { setFacilities } = dataStoreActions;
 
-  const { me, orgUnits, program } = useMetadataStore(
+  const { me, orgUnits, program, locale } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       orgUnits: state.orgUnits,
-      program: state.program
+      program: state.program,
+      locale: state.locale
     }))
   );
 
@@ -158,7 +159,7 @@ const FacilitiesManagement = () => {
       }
     ];
     setAllFilters(filters);
-  }, []);
+  }, [locale]);
 
   // useEffect(() => {
   //   if (selectedOrgUnit) {

@@ -71,7 +71,7 @@ const App = () => {
         {ready && !firstRun && (
           <>
             {sidebar ? <Sidebar /> : <CollapsedSidebar />}
-            <div className={`h-full ${sidebar ? "w-[calc(100%-250px)]" : "w-[calc(100%-60px)]"} bg-slate-100`}>
+            <div className={`h-full ${sidebar ? "w-[calc(100%-300px)]" : "w-[calc(100%-60px)]"} bg-slate-100`}>
               <div className="h-[60px] w-full bg-white border-b-slate-300 border-b flex items-center p-2">
                 {/* <div>
                   <Button icon={<FontAwesomeIcon icon={sidebar ? faCaretLeft : faCaretRight} />} onClick={toggleSidebar}>
