@@ -1,3 +1,9 @@
+## [1.9.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.0...v1.9.1) (2025-06-04)
+
+### Bug Fixes
+
+* the issue that prevent filter section get updated when language is changed ([76b5fd3](https://github.com/HISPVietnam/facility-checker-app/commit/76b5fd37f56f33b6f974401392db406696eaf61d))
+
 ## [1.9.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.2...v1.9.0) (2025-06-04)
 
 ### Features
