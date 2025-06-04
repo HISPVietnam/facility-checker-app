@@ -1,3 +1,17 @@
+## [1.9.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.2...v1.9.0) (2025-06-04)
+
+### Features
+
+* add es, fr, lo, pt, vi to default locales ([aba100f](https://github.com/HISPVietnam/facility-checker-app/commit/aba100fc88a490193a0fd89ffdc561d7b69e9e66))
+* allow select usergroups configuration module (setting authorities) ([e2d8f9d](https://github.com/HISPVietnam/facility-checker-app/commit/e2d8f9d474aff5e6c20f8ed2104b39470da471b1))
+* create new customized multiple selector ([0b113e5](https://github.com/HISPVietnam/facility-checker-app/commit/0b113e5375e47b1c43f048f0e7b782ac72109215))
+
+### Bug Fixes
+
+* change the content of home screen ([688cd01](https://github.com/HISPVietnam/facility-checker-app/commit/688cd01ae4143c36c0f270d047b20010f61067e6))
+* fix major issues of customized multiple selector ([72d88f0](https://github.com/HISPVietnam/facility-checker-app/commit/72d88f0e008f43d1a01e37033745bec7707a9640))
+* minor fixes to the styles of customized multi selector ([3b8384b](https://github.com/HISPVietnam/facility-checker-app/commit/3b8384b48153e288e4cf1ffa3c673b21718997a5))
+
 ## [1.8.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.8.1...v1.8.2) (2025-05-19)
 
 ### Bug Fixes
