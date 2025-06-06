@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleDown,
-  faAngleUp,
-  faCancel,
-  faClose,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "@dhis2/ui";
+import VirtualizedList from "./VirtualizedList";
+import {
+  DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST,
+  DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST,
+} from "@/const";
 
 const CustomizedMultipleSelector = ({
   disabled,
@@ -131,25 +131,29 @@ const CustomizedMultipleSelector = ({
       </div>
 
       {showDropdown && (
-        <div
-          className={` absolute left-0 right-0 mt-1 z-50 bg-white border rounded-md shadow max-h-60 overflow-y-auto`}
-        >
+        <div className="absolute left-0 right-0 mt-1 z-50 bg-white border rounded-md shadow">
           {filteredOptions.length > 0 ? (
-            <ul className="divide-y divide-gray-100">
-              {filteredOptions.map((item) => (
-                <li
+            <VirtualizedList
+              items={filteredOptions}
+              selected={selected}
+              onSelect={handleToggleSelect}
+              itemHeight={DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST}
+              visibleItemCount={DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST}
+              renderItem={({ item, isSelected, onSelect }) => (
+                <div
                   key={item.value}
-                  onClick={() => handleToggleSelect(item.value)}
+                  onClick={() => onSelect(item.value)}
                   className="flex items-center p-1 hover:bg-gray-100 cursor-pointer text-sm"
                 >
                   <Checkbox
-                    checked={selected.includes(item.value)}
+                    checked={isSelected}
                     className="mr-2"
+                    onChange={() => onSelect(item.value)}
                   />
                   {item.prefix} {item.label} {item.suffix}
-                </li>
-              ))}
-            </ul>
+                </div>
+              )}
+            />
           ) : (
             <div className="px-4 py-2 text-sm text-gray-500">
               {t("noMatchFound")}
