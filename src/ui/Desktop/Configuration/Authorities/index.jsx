@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 
 import { APP_ROLES, USER_GROUPS } from "@/const";
-import CustomizedInputField from "@/ui/common/InputField";
 import useConfigurationModuleStore from "@/states/configurationModule";
 import useMetadataStore from "@/states/metadata";
+import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
@@ -78,17 +78,16 @@ const Authorities = () => {
               <span className={`font-bold ${color}`}>{t(name)}</span>
             </div>
             <div>
-              <CustomizedInputField
-                value={JSON.stringify(
+              <CustomizedMultipleSelector
+                selected={
                   selectedUsersByUserGroup[userGroupId] ||
-                    userInUserGroup.map((user) => user.id)
-                )}
+                  userInUserGroup.map((user) => user.id)
+                }
                 onChange={(value) => {
-                  selectUsersByUserGroup(JSON.parse(value), userGroupId);
+                  selectUsersByUserGroup(value, userGroupId);
                 }}
-                multiSelection={true}
-                valueType="TEXT"
                 options={userOptions}
+                filterable
               />
             </div>
           </div>

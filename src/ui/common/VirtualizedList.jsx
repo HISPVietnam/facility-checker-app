@@ -28,23 +28,19 @@ const VirtualizedList = ({
   return (
     <div
       className="overflow-y-auto"
-      style={{ height, overflowY: "auto" }}
+      style={{ height: `${height}px` }}
       onScroll={handleScroll}
       ref={listRef}
     >
-      <div style={{ height: totalHeight, position: "relative" }}>
+      <div className="relative" style={{ height: totalHeight }}>
         <div
-          style={{
-            position: "absolute",
-            top: startIndex * itemHeight,
-            left: 0,
-            right: 0,
-          }}
+          className="absolute left-0 right-0"
+          style={{ top: `${startIndex * itemHeight}px` }}
         >
           {visibleItems.map((item, i) => (
             <div
               style={{
-                height: itemHeight,
+                height: `${itemHeight}px`,
               }}
             >
               {renderItem({
