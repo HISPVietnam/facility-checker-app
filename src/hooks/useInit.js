@@ -20,7 +20,8 @@ import useDataStore from "@/states/data";
 import { useTranslation } from "react-i18next";
 import { convertTeis, convertLanguageCode } from "@/utils";
 import _ from "lodash";
-import { USER_GROUPS } from "@/const";
+import { USER_GROUPS, DATA_ELEMENTS } from "@/const";
+const { PATH } = DATA_ELEMENTS;
 const { VITE_FCA_MODE } = import.meta.env;
 const useInit = () => {
   const { i18n } = useTranslation();
@@ -75,7 +76,7 @@ const useInit = () => {
           prev[current.key] = current.value;
           return prev;
         }, {});
-        setMetadata("orgUnits", orgUnits);
+        // setMetadata("orgUnits", orgUnits);
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
@@ -108,6 +109,15 @@ const useInit = () => {
         setMetadata("dataStore", convertedDataStore);
         i18n.changeLanguage(locale);
         const facilities = convertTeis(teis, program);
+        facilities.forEach((f) => {
+          const foundInOrgUnits = orgUnits.find((ou) => ou.path === f[PATH]);
+          if (foundInOrgUnits) {
+            foundInOrgUnits.isFacility = true;
+          } else {
+            foundInOrgUnits.isFacility = false;
+          }
+        });
+        setMetadata("orgUnits", orgUnits);
         setFacilities(facilities);
         setReady(true);
       }

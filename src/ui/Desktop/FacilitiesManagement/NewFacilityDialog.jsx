@@ -58,6 +58,7 @@ const NewFacilityDialog = () => {
   const [orgUnit, setOrgUnit] = useState("");
   const [helpers, setHelpers] = useState([]);
   const [isDuplicated, setIsDuplicated] = useState(false);
+  const [filterForPathSelector, setFilterForPathSelector] = useState([]);
   const { t } = useTranslation();
   const { facilities, actions } = useDataStore(
     useShallow((state) => ({
@@ -317,6 +318,11 @@ const NewFacilityDialog = () => {
     setHelpers([...currentHelpers]);
   }, [selectedFacility ? Object.values(selectedFacility).join(";") : ""]);
 
+  useEffect(() => {
+    const filter = orgUnits.filter((ou) => !ou.isFacility).map((ou) => ou.path);
+    setFilterForPathSelector(filter);
+  }, []);
+
   const foundCoordinatesError = helpers.find((h) => h.target === "coordinates" && h.type === "ERROR");
   return (
     selectedFacility && (
@@ -356,35 +362,14 @@ const NewFacilityDialog = () => {
               {(() => {
                 const value = selectedFacility[PATH];
                 const tempValue = selectedFacility[NAME] ? selectedFacility[NAME] : t("newFacilityName");
-                const filter = orgUnits
-                  .filter((orgUnit) => {
-                    let valid = false;
-                    me.organisationUnits.forEach((meOrgUnit) => {
-                      if (orgUnit.path.includes(meOrgUnit.id)) {
-                        valid = true;
-                      }
-                    });
-                    if (orgUnit.level === 1) {
-                      valid = true;
-                    }
-                    return valid;
-                  })
-                  .filter((orgUnit) => {
-                    const foundInFacilities = facilities.find((f) => f[PATH] === orgUnit.path);
-                    if (!foundInFacilities) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  })
-                  .map((orgUnit) => orgUnit.path);
+
                 return (
                   <Row>
                     <DataValueLabel dataElement={PATH} mandatory={true} />
                     <div>
                       <InputField
                         roots={orgUnits.filter((orgUnit) => orgUnit.level === 1).map((orgUnit) => orgUnit.id)}
-                        filter={filter}
+                        filter={filterForPathSelector}
                         displayValue={convertDisplayValueForPath(value, tempValue)}
                         valueType="ORGANISATION_UNIT"
                         value={value}

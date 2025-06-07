@@ -25,25 +25,18 @@ const Install = () => {
       me: state.me,
       schemas: state.schemas,
       orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups,
+      orgUnitGroups: state.orgUnitGroups
     }))
   );
 
-  const {
-    actions,
-    valid,
-    selectGroupSets,
-    summary,
-    status,
-    refreshingMetadata,
-  } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, summary, status, refreshingMetadata } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       summary: state.summary,
       status: state.status,
-      refreshingMetadata: state.refreshingMetadata,
+      refreshingMetadata: state.refreshingMetadata
     }))
   );
   const { setStatus, setStepData } = actions;
@@ -70,9 +63,13 @@ const Install = () => {
   };
 
   const importFacilities = async () => {
-    const facilityChunks = _.chunk(data, 50);
+    const facilityChunks = _.chunk(data, 500);
     for (let i = 0; i < facilityChunks.length; i++) {
-      await postTeis(facilityChunks[i]);
+      const parallelChunks = _.chunk(facilityChunks[i], 50);
+      const promises = parallelChunks.map((chunk) => {
+        return postTeis(chunk);
+      });
+      await Promise.all(promises);
     }
   };
 
@@ -110,10 +107,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importMetadataLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -124,10 +118,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !settingUserRoleLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -138,10 +129,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importFacilitiesLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -154,8 +142,7 @@ const Install = () => {
       {status === "done" && (
         <CustomizedButton
           onClick={async () => {
-            window.location =
-              "../../../dhis-web-commons-security/logout.action";
+            window.location = "../../../dhis-web-commons-security/logout.action";
           }}
           success
         >
