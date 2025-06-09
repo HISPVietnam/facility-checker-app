@@ -12,6 +12,7 @@ const VirtualizedList = ({
   itemHeight = DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST,
   visibleItemCount = DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST,
   maxHeight,
+  buffer = 5,
 }) => {
   const [scrollTop, setScrollTop] = useState(0);
   const listRef = useRef(null);
@@ -21,8 +22,11 @@ const VirtualizedList = ({
   };
 
   const totalHeight = items.length * itemHeight;
-  const startIndex = Math.floor(scrollTop / itemHeight);
-  const endIndex = Math.min(items.length, startIndex + visibleItemCount + 1);
+  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - buffer);
+  const endIndex = Math.min(
+    items.length,
+    Math.ceil(scrollTop / itemHeight) + visibleItemCount + buffer
+  );
   const visibleItems = items.slice(startIndex, endIndex);
 
   return (
@@ -39,6 +43,7 @@ const VirtualizedList = ({
         >
           {visibleItems.map((item, i) => (
             <div
+              key={i}
               style={{
                 height: `${itemHeight}px`,
               }}

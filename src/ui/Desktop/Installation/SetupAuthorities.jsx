@@ -1,21 +1,17 @@
-import useMetadataStore from "@/states/metadata";
-import useInstallationModuleStore from "@/states/installationModule";
-import {
-  faCheck,
-  faUser,
-  faUsers,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useShallow } from "zustand/react/shallow";
-import CustomizedInputField from "@/ui/common/InputField";
-import AppRole from "./AppRole";
-import { NoticeBox } from "@dhis2/ui";
+
+import useInstallationModuleStore from "@/states/installationModule";
+import useMetadataStore from "@/states/metadata";
 import { pickTranslation } from "@/utils";
 import { APP_ROLES } from "@/const";
+
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
+import AppRole from "./AppRole";
+
 const SetupAuthorities = () => {
   const { t, i18n } = useTranslation();
   const { users, userGroups } = useMetadataStore(
