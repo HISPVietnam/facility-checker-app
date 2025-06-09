@@ -15,4 +15,20 @@ const AppRole = ({ role }) => {
   );
 };
 
-export default AppRole;
+const AppRoleSelectable = ({ role, selected, onClick }) => {
+  const { t } = useTranslation();
+  const { name, description, borderColor, color, icon } = role;
+  const containerClassName = `flex-1 p-3 rounded-md border-2 border-slate-300 hover:border-sky-700 hover:bg-sky-50 cursor-pointer`;
+  const containerSelectedClassName = `flex-1 p-3 rounded-md border-2 border-slate-300 border-sky-700 bg-sky-50 cursor-pointer`;
+  return (
+    <div className={selected ? containerSelectedClassName : containerClassName} onClick={onClick}>
+      <div className={`text-[18px] ${selected && "font-bold"} ${color}`}>
+        <FontAwesomeIcon icon={icon} />
+        &nbsp;{t(name)}
+      </div>
+      <div className={`text-[15px] ${selected && "font-bold"}`}>{t(description)}</div>
+    </div>
+  );
+};
+
+export { AppRoleSelectable, AppRole };

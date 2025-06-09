@@ -53,7 +53,7 @@ const Installation = () => {
   return (
     <div className="w-[calc(100%-50px)] h-[calc(100%-50px)] shadow-xl border-slate-300 border rounded-md p-1 flex items-center flex-col">
       <div className="w-[1200px]">
-        <div className="mb-5 mt-5">
+        <div className="mb-2 mt-2">
           <Stepper activeStep={step}>
             {STEPS.map((step) => {
               return (
