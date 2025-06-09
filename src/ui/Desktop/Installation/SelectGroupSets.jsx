@@ -31,7 +31,6 @@ const SelectGroupSets = () => {
   );
   const { selectedGroupSets, skippedOrgUnits, members } = selectGroupSets;
   const { setValid, setStepData } = actions;
-
   useEffect(() => {
     if (!selectGroupSets || JSON.parse(selectedGroupSets).length === 0) {
       setValid(false);
@@ -40,7 +39,7 @@ const SelectGroupSets = () => {
     } else {
       const currentSkippedOrgUnits = [];
       const groupSets = JSON.parse(selectedGroupSets);
-      const members = orgUnits.filter((orgUnit) => {
+      const membersWithGeometry = orgUnits.filter((orgUnit) => {
         let isMember = false;
         groupSets.forEach((gs) => {
           const foundOugs = orgUnitGroupSets.find((ougs) => ougs.id === gs);
@@ -53,14 +52,10 @@ const SelectGroupSets = () => {
         });
         return isMember;
       });
-      const membersWithGeometry = members.map((member) => {
-        const foundGeoJson = orgUnitGeoJson.features.find((f) => f.id === member.id);
-        const newMember = _.cloneDeep(member);
-        newMember.geometry = foundGeoJson?.geometry;
-        if (foundGeoJson && foundGeoJson.geometry.type !== "Point") {
-          currentSkippedOrgUnits.push(newMember);
+      membersWithGeometry.forEach((member) => {
+        if (member.geometry && member.geometry.type !== "Point") {
+          currentSkippedOrgUnits.push(member);
         }
-        return newMember;
       });
       if (membersWithGeometry.length === 0) {
         setValid(false);
@@ -98,7 +93,7 @@ const SelectGroupSets = () => {
       {members.length > 0 && (
         <div className="mt-3 w-full">
           <NoticeBox info title={t("summary")}>
-            <div className="w-[930px] overflow-auto">
+            <div>
               {t("totalOrgUnits")}: {members.length}
               <br />
               {t("willBeImported")}: {members.length - skippedOrgUnits.length}

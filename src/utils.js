@@ -289,19 +289,33 @@ const convertDisplayValueForPath = (value, tempValue) => {
   const { orgUnits, locale } = useMetadataStore.getState();
   const { facilities } = useDataStore.getState();
   const currentOrgUnits = _.compact(value.split("/"));
+  const currentOrgUnitNames = currentOrgUnits.map((id) => null);
   // currentOrgUnits.pop();
-  const foundOrgUnits = currentOrgUnits.map((ou) => {
-    const foundOrgUnit = orgUnits.find((o) => o.id === ou);
-    const foundFacility = facilities.find((f) => f[UID] === ou);
-    if (foundFacility) {
-      return foundFacility[NAME];
-    } else {
-      return foundOrgUnit
-        ? pickTranslation(foundOrgUnit, locale, "name")
-        : tempValue;
-    }
+  const filtered = orgUnits.filter((ou) => !ou.isFacility);
+  filtered.forEach((ou) => {
+    currentOrgUnits.forEach((id, index) => {
+      if (ou.id === id) {
+        currentOrgUnitNames[index] = pickTranslation(ou, locale, "name");
+      }
+    });
   });
-  return foundOrgUnits.join(" / ");
+  facilities.forEach((f) => {
+    currentOrgUnits.forEach((id, index) => {
+      if (f[UID] === id) {
+        currentOrgUnitNames[index] = f[NAME];
+      }
+    });
+  });
+  // const foundOrgUnits = currentOrgUnits.map((ou) => {
+  //   const foundOrgUnit = orgUnits.find((o) => o.id === ou);
+  //   const foundFacility = facilities.find((f) => f[UID] === ou);
+  //   if (foundFacility) {
+  //     return foundFacility[NAME];
+  //   } else {
+  //     return foundOrgUnit ? pickTranslation(foundOrgUnit, locale, "name") : tempValue;
+  //   }
+  // });
+  return currentOrgUnitNames.join(" / ");
 };
 
 const sample = (d = [], fn = Math.random) => {

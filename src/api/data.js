@@ -37,7 +37,7 @@ const postTei = async (tei) => {
 
 const postTeis = async (teis) => {
   const result = await push(
-    "/api/tracker?async=false",
+    "/api/tracker?async=false&skipSideEffects=true&skipRuleEngine=true",
     {
       trackedEntities: teis
     },

@@ -11,7 +11,7 @@ import {
   getSchemas,
   getDataStore,
   saveDataStore,
-  getUserGroups,
+  getUserGroups
 } from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
@@ -20,7 +20,8 @@ import useDataStore from "@/states/data";
 import { useTranslation } from "react-i18next";
 import { convertTeis, convertLanguageCode } from "@/utils";
 import _ from "lodash";
-import { USER_GROUPS } from "@/const";
+import { USER_GROUPS, DATA_ELEMENTS } from "@/const";
+const { PATH } = DATA_ELEMENTS;
 const { VITE_FCA_MODE } = import.meta.env;
 const useInit = () => {
   const { i18n } = useTranslation();
@@ -40,6 +41,13 @@ const useInit = () => {
       const schemas = await getSchemas();
       const users = await getUsers();
       const userGroups = await getUserGroups();
+
+      orgUnits.forEach((ou) => {
+        const foundGeoJson = orgUnitGeoJson.features.find((f) => f.id === ou.id);
+        if (foundGeoJson && foundGeoJson.geometry) {
+          ou.geometry = foundGeoJson.geometry;
+        }
+      });
 
       if (program.httpStatusCode === 404 || VITE_FCA_MODE === "installation") {
         setMetadata("me", me);
@@ -68,7 +76,7 @@ const useInit = () => {
           prev[current.key] = current.value;
           return prev;
         }, {});
-        setMetadata("orgUnits", orgUnits);
+        // setMetadata("orgUnits", orgUnits);
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
@@ -78,9 +86,7 @@ const useInit = () => {
         setMetadata("orgUnitLevels", orgUnitLevels);
         me.authorities = [];
         Object.keys(USER_GROUPS).forEach((authorityName) => {
-          const foundUg = me.userGroups.find(
-            (ug) => ug.id === USER_GROUPS[authorityName]
-          );
+          const foundUg = me.userGroups.find((ug) => ug.id === USER_GROUPS[authorityName]);
           if (foundUg) {
             me.authorities.push(authorityName);
           }
@@ -91,25 +97,27 @@ const useInit = () => {
         setMetadata("program", program);
         setMetadata("customAttributes", customAttributes);
         Object.keys(convertedDataStore.locales).forEach((locale) => {
-          i18n.addResourceBundle(
-            locale,
-            "translation",
-            convertedDataStore.locales[locale],
-            true,
-            true
-          );
+          i18n.addResourceBundle(locale, "translation", convertedDataStore.locales[locale], true, true);
         });
         const localeDataStore = {};
 
         Object.keys(i18n.options.resources).forEach((language) => {
-          localeDataStore[language] =
-            i18n.options.resources[language].translation;
+          localeDataStore[language] = i18n.options.resources[language].translation;
         });
         convertedDataStore.locales = localeDataStore;
         await saveDataStore("locales", localeDataStore, "UDPATE");
         setMetadata("dataStore", convertedDataStore);
         i18n.changeLanguage(locale);
         const facilities = convertTeis(teis, program);
+        facilities.forEach((f) => {
+          const foundInOrgUnits = orgUnits.find((ou) => ou.path === f[PATH]);
+          if (foundInOrgUnits) {
+            foundInOrgUnits.isFacility = true;
+          } else {
+            foundInOrgUnits.isFacility = false;
+          }
+        });
+        setMetadata("orgUnits", orgUnits);
         setFacilities(facilities);
         setReady(true);
       }

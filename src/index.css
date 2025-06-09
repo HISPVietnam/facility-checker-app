@@ -41,3 +41,6 @@ body {
 /* button {
   height: 40px !important;
 } */
+.root-input {
+  overflow: hidden !important;
+}
