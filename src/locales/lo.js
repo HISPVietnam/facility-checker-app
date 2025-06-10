@@ -170,5 +170,6 @@ export default {
   importantNotice: "ແຈ້ງເຕືອນສຳຄັນ!!",
   noAuthoritiesNotice: "ເບິ່ງຄືວ່າບັນຊີຜູ້ໃຊ້ຂອງທ່ານບໍ່ມີສິດທີ່ຈະໃຊ້ແອັບດັ່ງກ່າວ, ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບ.",
   selectOption: "",
-  projectHomepage: ""
+  projectHomepage: "",
+  done: "Done"
 };

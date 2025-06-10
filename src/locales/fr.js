@@ -173,5 +173,6 @@ export default {
   noAuthoritiesNotice:
     "Il semble que votre utilisateur n'ait pas les autorisations nécessaires pour utiliser l'application, veuillez contacter l'administrateur.",
   selectOption: "",
-  projectHomepage: ""
+  projectHomepage: "",
+  done: "Done"
 };

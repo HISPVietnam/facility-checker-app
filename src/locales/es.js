@@ -171,5 +171,6 @@ export default {
   importantNotice: "¡Aviso importante!",
   noAuthoritiesNotice: "Parece que su usuario no tiene autorización para utilizar la aplicación, por favor contacte al administrador.",
   selectOption: "",
-  projectHomepage: ""
+  projectHomepage: "",
+  done: "Done"
 };

@@ -169,5 +169,6 @@ export default {
   importantNotice: "Chú ý quan trọng !!",
   noAuthoritiesNotice: "Bạn không có quyền truy cập vào ứng dụng này, hãy liên hệ quản trị viên.",
   selectOption: "",
-  projectHomepage: ""
+  projectHomepage: "",
+  done: "Done"
 };

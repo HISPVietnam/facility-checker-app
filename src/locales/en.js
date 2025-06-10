@@ -174,5 +174,6 @@ export default {
   importantNotice: "Important notice !!",
   noAuthoritiesNotice: "It seems your user does not have any authorities to use the app, please contact the administrator.",
   selectOption: "Select option...",
-  projectHomepage: "Project homepage"
+  projectHomepage: "Project homepage",
+  done: "Done"
 };
