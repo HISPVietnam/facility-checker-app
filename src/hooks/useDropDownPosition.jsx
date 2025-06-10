@@ -32,7 +32,11 @@ export const useDropdownPosition = (dropdownHeight) => {
       window.removeEventListener("resize", checkPosition);
       window.removeEventListener("scroll", checkPosition, true);
     };
-  }, []);
+  }, [
+    triggerRef.current?.getBoundingClientRect?.()?.height,
+    dropdownRef.current,
+    dropdownHeight,
+  ]);
 
   return { triggerRef, dropdownRef, position };
 };

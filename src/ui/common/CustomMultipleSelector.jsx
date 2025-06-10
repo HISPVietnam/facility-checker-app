@@ -113,9 +113,7 @@ const CustomizedMultipleSelector = ({
 
         {selected.length > 0 && (
           <div
-            className={`flex items-center gap-2 ${
-              showDropdown ? "flex-wrap" : ""
-            } max-h-[150px] overflow-auto w-[calc(100%-50px)]`}
+            className={`flex items-center gap-2 flex-wrap max-h-[150px] overflow-auto w-[calc(100%-50px)]`}
           >
             {visibleTags.map((value) => {
               const option = options.find((o) => o.value === value);
