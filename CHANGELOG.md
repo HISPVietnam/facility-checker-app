@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.3...v1.9.4) (2025-06-11)
+
+### Bug Fixes
+
+* add experimental app warning ([a978a7a](https://github.com/HISPVietnam/facility-checker-app/commit/a978a7a508bed3ba3bf37961865718c2a2ecda3c))
+* major issues related facility dialog and new facility dialog ([b6dc3ee](https://github.com/HISPVietnam/facility-checker-app/commit/b6dc3ee550a08832ba1fe3a25a198a4a52b49418))
+
 ## [1.9.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.2...v1.9.3) (2025-06-11)
 
 ### Bug Fixes
