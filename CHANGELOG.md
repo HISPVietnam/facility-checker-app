@@ -1,3 +1,9 @@
+## [1.9.5](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.4...v1.9.5) (2025-06-11)
+
+### Bug Fixes
+
+* list view headers not updated when language is changed ([43dcc34](https://github.com/HISPVietnam/facility-checker-app/commit/43dcc347a68f7aa16027c93bbbbdde9155f3515d))
+
 ## [1.9.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.3...v1.9.4) (2025-06-11)
 
 ### Bug Fixes
