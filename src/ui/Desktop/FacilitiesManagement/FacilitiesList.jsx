@@ -42,9 +42,10 @@ const FacilitiesList = () => {
     }))
   );
   const { selectFacility, toggleDialog } = actions;
-  const { program } = useMetadataStore(
+  const { program, locale } = useMetadataStore(
     useShallow((state) => ({
-      program: state.program
+      program: state.program,
+      locale: state.locale
     }))
   );
 
@@ -80,7 +81,8 @@ const FacilitiesList = () => {
     paging.page,
     paging.pageSize,
     filter,
-    sorting
+    sorting,
+    locale
   ]);
 
   // useEffect(() => {
@@ -99,7 +101,7 @@ const FacilitiesList = () => {
           if (foundDataElement) {
             columns.push({
               id: foundDataElement.id,
-              name: pickTranslation(foundDataElement, "en", "formName"),
+              name: pickTranslation(foundDataElement, locale, "formName"),
               optionSet: foundDataElement.optionSet?.id ?? null
             });
           }
