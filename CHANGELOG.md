@@ -1,3 +1,16 @@
+## [1.9.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.2...v1.9.3) (2025-06-11)
+
+### Bug Fixes
+
+* change the wording for authorities description ([19813f7](https://github.com/HISPVietnam/facility-checker-app/commit/19813f744c59b819279d0cf15ebec06fd25acf6f))
+* highlight the authority that has been set up ([f1bd878](https://github.com/HISPVietnam/facility-checker-app/commit/f1bd8786c285f28fccd9d33c27ce10dda693ae94))
+* increase the size of users/userGroups selector in installation ([de91e56](https://github.com/HISPVietnam/facility-checker-app/commit/de91e5602f8c04539e7e3b537f94b65aafae2681))
+* major fixes for multi selector ([cdbdda7](https://github.com/HISPVietnam/facility-checker-app/commit/cdbdda7a751d9c972687601654087b7a20c6b4f3))
+* optimize major performance issues ([8e51ccf](https://github.com/HISPVietnam/facility-checker-app/commit/8e51ccfd5b6c70ba7b203f4d8cbe60952aa8b9d8))
+* optimize the layout for authorities selector in installation ([0785a65](https://github.com/HISPVietnam/facility-checker-app/commit/0785a65b600e7268a6d7c8321cf5442904f7c56e))
+* performance issue of groupsets selector during installation ([655cd12](https://github.com/HISPVietnam/facility-checker-app/commit/655cd12e813364679e0df11dc7a33914e850e5dd))
+* performance issue of users/userGroups selector when there are too many users ([c9312cc](https://github.com/HISPVietnam/facility-checker-app/commit/c9312ccc9db2329a2dcd446ae383909ef2d1d77e))
+
 ## [1.9.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.1...v1.9.2) (2025-06-04)
 
 ### Bug Fixes
