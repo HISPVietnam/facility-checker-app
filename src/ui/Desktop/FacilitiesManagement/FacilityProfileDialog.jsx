@@ -164,10 +164,10 @@ const FacilityProfileDialog = () => {
       setLoading(false);
       return;
     }
+    await updateTei();
     save(currentFacility);
     const convertedEvent = convertToDhis2Event(currentFacility, program);
     const result = await postEvent(convertedEvent);
-    await updateTei();
     setLoading(false);
     setSaved(true);
   };
@@ -180,6 +180,7 @@ const FacilityProfileDialog = () => {
       setLoading(false);
       return;
     }
+    await updateTei();
     changeValue(APPROVAL_STATUS, "pending");
     changeValue("status", "COMPLETED");
     changeValue("isPending", true);
@@ -196,13 +197,12 @@ const FacilityProfileDialog = () => {
     save(currentFacility);
     const convertedEvent = convertToDhis2Event(currentFacility, program);
     const result = await postEvent(convertedEvent);
-    await updateTei();
     setLoading(false);
     setSaved(true);
   };
 
   const updateTei = async () => {
-    if (currentFacility[CODE] && currentFacility[CODE] !== currentFacility.code) {
+    if (currentFacility[CODE] !== selectedFacility[CODE]) {
       const foundTei = teis.find((tei) => tei.trackedEntity === currentFacility.tei);
       if (foundTei) {
         const clonedTei = _.cloneDeep(foundTei);
@@ -222,7 +222,10 @@ const FacilityProfileDialog = () => {
   };
 
   const checkDuplicatedCode = async () => {
-    const foundDuplicated = await findFacilityByCode(currentFacility.tei, currentFacility[CODE]);
+    let foundDuplicated = false;
+    if (currentFacility[CODE]) {
+      foundDuplicated = await findFacilityByCode(selectedFacility.tei, currentFacility[CODE]);
+    }
     if (foundDuplicated) {
       setIsDuplicated(true);
       return true;
@@ -253,6 +256,7 @@ const FacilityProfileDialog = () => {
     }
     setHelpers(currentHelpers);
   }, [JSON.stringify(currentFacility)]);
+
   const foundCoordinatesError = helpers.find((h) => h.type === "error" && h.target === "coordinates");
   return (
     <Modal fluid>
@@ -383,7 +387,10 @@ const FacilityProfileDialog = () => {
               .map((psde) => {
                 const de = psde.dataElement;
                 const currentValue = currentFacility[de.id];
-                const value = currentValue ? selectedFacility.previousValues[de.id] : selectedFacility[de.id];
+                let value = currentValue ? selectedFacility.previousValues[de.id] : selectedFacility[de.id];
+                if (currentFacility[IS_NEW_FACILITY] === "true" && !currentValue) {
+                  value = "";
+                }
                 return (
                   <Row>
                     <DataValueLabel dataElement={de.id} />

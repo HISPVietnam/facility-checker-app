@@ -174,7 +174,15 @@ const TooltipContent = (props) => {
           {isPending || isReadOnly ? t("viewProfile") : t("editProfile")}
         </CustomizedButton>
         &nbsp;
-        <CustomizedButton small={true} disabled={isPending || isReadOnly} onClick={toggleEditing} hidden={editing}>
+        <CustomizedButton
+          small={true}
+          disabled={isPending || isReadOnly}
+          onClick={() => {
+            toggleEditing();
+            toggleDraggingMode();
+          }}
+          hidden={editing}
+        >
           {t("editLocation")}
         </CustomizedButton>
         <CustomizedButton loading={loading} small={true} hidden={!editing} disabled={!valid || !isWithinParent} primary onClick={saveChanges}>

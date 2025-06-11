@@ -113,8 +113,6 @@ const useInit = () => {
           const foundInOrgUnits = orgUnits.find((ou) => ou.path === f[PATH]);
           if (foundInOrgUnits) {
             foundInOrgUnits.isFacility = true;
-          } else {
-            foundInOrgUnits.isFacility = false;
           }
         });
         setMetadata("orgUnits", orgUnits);

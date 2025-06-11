@@ -125,7 +125,10 @@ const NewFacilityDialog = () => {
   };
 
   const saveChanges = async () => {
-    const foundDuplicated = await findFacilityByCode(selectedFacility.tei, selectedFacility[CODE]);
+    let foundDuplicated = false;
+    if (selectedFacility[CODE]) {
+      foundDuplicated = await findFacilityByCode(selectedFacility.tei, selectedFacility[CODE]);
+    }
     if (foundDuplicated) {
       setIsDuplicated(true);
       return;
