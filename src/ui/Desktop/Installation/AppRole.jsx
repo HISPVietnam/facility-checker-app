@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
-
+import { Card } from "@dhis2/ui";
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
   const { name, description, borderColor, color, icon } = role;
@@ -18,8 +18,8 @@ const AppRole = ({ role }) => {
 const AppRoleSelectable = ({ role, selected, onClick, completed }) => {
   const { t } = useTranslation();
   const { name, description, borderColor, color, icon } = role;
-  const containerClassName = `flex flex-col flex-1 p-3 rounded-md border-2 border-slate-300 hover:border-sky-700 hover:bg-sky-50 cursor-pointer`;
-  const containerSelectedClassName = `flex flex-col flex-1 p-3 rounded-md border-2 border-slate-300 border-sky-700 bg-sky-50 cursor-pointer`;
+  const containerClassName = `flex flex-col flex-1 p-3 rounded-md border border-slate-400 hover:border-sky-700 hover:bg-sky-50 cursor-pointer`;
+  const containerSelectedClassName = `flex flex-col flex-1 p-3 rounded-md border border-sky-700 border-sky-800 bg-sky-100 cursor-pointer`;
   return (
     <div className={selected ? containerSelectedClassName : containerClassName} onClick={onClick}>
       <div className={`text-[18px] ${selected && "font-bold"} ${color}`}>
