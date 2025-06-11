@@ -13,6 +13,13 @@ const Home = () => {
     <div className="p-5 w-full h-full">
       <Card className="p-5 w-full h-full !flex flex-col">
         <div className="font-bold text-2xl">Welcome to Facility Checker App</div>
+        <NoticeBox title={t("importantNotice")} warning>
+          This app is still in an experimental phase. Please DO NOT use it in any production DHIS2. Users may encounter bugs and other issues. If you
+          come across any, please report them to our project homepage:{" "}
+          <a className="underline text-sky-800" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
+            https://projects.hispvietnam.org/projects/facility-checker-app-public
+          </a>
+        </NoticeBox>
         <br />
         <p>
           The Facility Checker App (FCA) is a user-friendly map interface DHIS2 App which allow facility / district users to check the coordinates of
@@ -30,7 +37,7 @@ const Home = () => {
         </p>
         {noAuthorities && (
           <div className="w-full">
-            <NoticeBox warning title={t("importantNotice")}>
+            <NoticeBox error title={t("importantNotice")}>
               {t("noAuthoritiesNotice")}
             </NoticeBox>
           </div>
@@ -48,8 +55,8 @@ const Home = () => {
           </div>
           <div>
             {t("projectHomepage")}:{" "}
-            <a className="underline" href="https://projects.hispvietnam.org/projects/130" target="_blank">
-              https://projects.hispvietnam.org/projects/130
+            <a className="underline" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
+              https://projects.hispvietnam.org/projects/facility-checker-app-public
             </a>
           </div>
         </div>

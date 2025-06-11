@@ -1,3 +1,4 @@
+import { NoticeBox } from "@dhis2/ui";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Welcome from "./Welcome";
 import SelectGroupSets from "./SelectGroupSets";
@@ -53,6 +54,13 @@ const Installation = () => {
   return (
     <div className="w-[calc(100%-50px)] h-[calc(100%-50px)] shadow-xl border-slate-300 border rounded-md p-1 flex items-center flex-col">
       <div className="w-[1200px]">
+        <NoticeBox title={t("importantNotice")} warning>
+          This app is still in an experimental phase. Please DO NOT use it in any production DHIS2. Users may encounter bugs and other issues. If you
+          come across any, please report them to our project homepage:{" "}
+          <a className="underline text-sky-800" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
+            https://projects.hispvietnam.org/projects/facility-checker-app-public
+          </a>
+        </NoticeBox>
         <div className="mb-2 mt-2">
           <Stepper activeStep={step}>
             {STEPS.map((step) => {
