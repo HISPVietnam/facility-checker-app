@@ -120,7 +120,7 @@ const convertToDhis2Event = (event, program) => {
   program.dataElements.forEach((de) => {
     convertedEvent.dataValues.push({
       dataElement: de.id,
-      value: event[de.id]
+      value: event[de.id] ? event[de.id] : ""
     });
   });
   return convertedEvent;
