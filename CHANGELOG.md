@@ -1,3 +1,9 @@
+## [1.10.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.7...v1.10.0) (2025-06-12)
+
+### Features
+
+* add functionality to reject button in approval module ([ddcc53c](https://github.com/HISPVietnam/facility-checker-app/commit/ddcc53c50026d77476fb46cc3d90d59ee929810f))
+
 ## [1.9.7](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.6...v1.9.7) (2025-06-12)
 
 ### Bug Fixes
