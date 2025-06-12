@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { DataTable, DataTableHead, DataTableRow, DataTableBody, DataTableCell, DataTableColumnHeader, Checkbox } from "@dhis2/ui";
+import {
+  DataTable,
+  DataTableHead,
+  DataTableRow,
+  DataTableBody,
+  DataTableCell,
+  DataTableColumnHeader,
+  Checkbox,
+} from "@dhis2/ui";
 
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
@@ -15,32 +23,50 @@ import useDataStore from "@/states/data";
 import useSynchronizationModuleStore from "@/states/synchronizationModule";
 import useMetadataStore from "@/states/metadata";
 
-const { UID, NAME, APPROVAL_STATUS, SYNCED, IS_NEW_FACILITY, PATH } = DATA_ELEMENTS;
-const columns = [UID, NAME, "latitude", "longitude", APPROVAL_STATUS, SYNCED, "dateOfRequest"];
+const { UID, NAME, APPROVAL_STATUS, SYNCED, IS_NEW_FACILITY, PATH } =
+  DATA_ELEMENTS;
+const columns = [
+  UID,
+  NAME,
+  "latitude",
+  "longitude",
+  APPROVAL_STATUS,
+  SYNCED,
+  "dateOfRequest",
+];
 
 const Synchronization = () => {
   const { t } = useTranslation();
   //store
   const facilities = useDataStore((state) => state.facilities);
-  const { selectedOrgUnit, currentFilters, actions, selectedFacilities, isReadOnly } = useSynchronizationModuleStore(
+  const {
+    selectedOrgUnit,
+    currentFilters,
+    actions,
+    selectedFacilities,
+    isReadOnly,
+  } = useSynchronizationModuleStore(
     useShallow((state) => ({
       selectedOrgUnit: state.selectedOrgUnit,
       currentFilters: state.filters,
       actions: state.actions,
       selectedFacilities: state.selectedFacilities,
-      isReadOnly: state.isReadOnly
+      isReadOnly: state.isReadOnly,
     }))
   );
   const me = useMetadataStore((state) => state.me);
-  const { resetFilters, toggleFilter, selectFacilities, setIsReadOnly } = actions;
+  const { resetFilters, toggleFilter, selectFacilities, setIsReadOnly } =
+    actions;
 
   const filterSyncFacilities = (facilities) => {
     const filterByIsNewFacility = (facility) => {
-      const isNewFacility = facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
+      const isNewFacility =
+        facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
       return currentFilters.includes(isNewFacility);
     };
     const filterBySyncStatus = (facility) => {
-      const syncStatus = facility[SYNCED] === "true" ? "synced" : "notYetSynced";
+      const syncStatus =
+        facility[SYNCED] === "true" ? "synced" : "notYetSynced";
       return currentFilters.includes(syncStatus);
     };
     const filterByOrgUnit = (facility) => {
@@ -50,7 +76,9 @@ const Synchronization = () => {
       const facilityPath = facility[PATH];
       return facilityPath.includes(selectedOrgUnit.id);
     };
-    return facilities.filter((facility) => facility[APPROVAL_STATUS] === "approved");
+    return facilities.filter(
+      (facility) => facility[APPROVAL_STATUS] === "approved"
+    );
     //   .filter((facility) => {
     //     return (
     //       (filterBySyncStatus(facility) || filterByIsNewFacility(facility)) &&
@@ -63,9 +91,16 @@ const Synchronization = () => {
     if (isReadOnly) return;
 
     const isSelected = selectedFacilities.includes(facility.tei);
-    const isSelectAll = !isSelected && [...selectedFacilities, facility.tei].length === filterSyncFacilities(facilities).length;
+    const isSelectAll =
+      !isSelected &&
+      [...selectedFacilities, facility.tei].length ===
+        filterSyncFacilities(facilities).length;
     if (isSelected) {
-      selectFacilities(selectedFacilities.filter((item) => item !== facility.tei && item !== "all"));
+      selectFacilities(
+        selectedFacilities.filter(
+          (item) => item !== facility.tei && item !== "all"
+        )
+      );
       return;
     }
     if (isSelectAll) {
@@ -88,12 +123,21 @@ const Synchronization = () => {
           <DataTableRow>
             <DataTableColumnHeader fixed top="0">
               <Checkbox
-                disabled={isReadOnly}
+                disabled={
+                  filterSyncFacilities(facilities).length === 0 || isReadOnly
+                }
                 checked={selectedFacilities.includes("all")}
                 value={"all"}
                 onChange={() => {
                   selectFacilities(
-                    selectedFacilities.includes("all") ? [] : ["all", ...filterSyncFacilities(facilities).map((facility) => facility.tei)]
+                    selectedFacilities.includes("all")
+                      ? []
+                      : [
+                          "all",
+                          ...filterSyncFacilities(facilities).map(
+                            (facility) => facility.tei
+                          ),
+                        ]
                   );
                 }}
               />
@@ -109,11 +153,20 @@ const Synchronization = () => {
         </DataTableHead>
         <DataTableBody>
           {filterSyncFacilities(facilities).map((facility) => {
-            const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
-            const foundApprovedEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "approved");
-            const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
+            const foundPendingEvent = facility.events.find(
+              (event) => event[APPROVAL_STATUS] === "pending"
+            );
+            const foundApprovedEvent = facility.events.find(
+              (event) => event[APPROVAL_STATUS] === "approved"
+            );
+            const finalEvent = foundPendingEvent
+              ? foundPendingEvent
+              : foundApprovedEvent;
             return (
-              <DataTableRow className="cursor-pointer" onClick={() => handleCheckFacility(facility)}>
+              <DataTableRow
+                className="cursor-pointer"
+                onClick={() => handleCheckFacility(facility)}
+              >
                 <DataTableCell>
                   <Checkbox
                     disabled={isReadOnly}
@@ -126,7 +179,13 @@ const Synchronization = () => {
                   if (column === "dateOfRequest") {
                     return (
                       <DataTableCell>
-                        <DataValueText dataElement="completedAt" value={format(new Date(finalEvent.completedAt), "yyyy-MM-dd")} />
+                        <DataValueText
+                          dataElement="completedAt"
+                          value={format(
+                            new Date(finalEvent.completedAt),
+                            "yyyy-MM-dd"
+                          )}
+                        />
                       </DataTableCell>
                     );
                   } else {
@@ -139,14 +198,23 @@ const Synchronization = () => {
                         children.push(<Approved>{t("approved")}</Approved>);
                       }
                       if (facility[IS_NEW_FACILITY] === "true") {
-                        children.push(...[<>&nbsp;</>, <New>{t("newFacility")}</New>]);
+                        children.push(
+                          ...[<>&nbsp;</>, <New>{t("newFacility")}</New>]
+                        );
                       }
                     } else if (column === SYNCED) {
                       if (!facility[SYNCED]) {
-                        children = <NotYetSynced>{t("notYetSynced")}</NotYetSynced>;
+                        children = (
+                          <NotYetSynced>{t("notYetSynced")}</NotYetSynced>
+                        );
                       }
                     } else {
-                      children = <DataValueText dataElement={column} value={facility[column]} />;
+                      children = (
+                        <DataValueText
+                          dataElement={column}
+                          value={facility[column]}
+                        />
+                      );
                     }
                     return <DataTableCell>{children}</DataTableCell>;
                   }

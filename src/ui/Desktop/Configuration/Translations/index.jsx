@@ -81,7 +81,7 @@ const Translations = () => {
           lang,
           "translation",
           newLocales[lang],
-          true,
+          false,
           true
         );
         // will show toast success message
