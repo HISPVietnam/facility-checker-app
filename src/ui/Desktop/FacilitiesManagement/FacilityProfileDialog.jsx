@@ -262,7 +262,7 @@ const FacilityProfileDialog = () => {
     <Modal fluid>
       <ModalTitle>{t("facilityProfile")}</ModalTitle>
       <ModalContent>
-        <div className="h-[700px]">
+        <div className="h-[550px]">
           <div className="w-full h-[80px]">
             {["z6u0MJRMxOw", "jDSCfb245G5", "WvwRmFG7udm"].map((de) => {
               const value = currentFacility[de]
