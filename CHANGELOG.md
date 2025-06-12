@@ -1,3 +1,9 @@
+## [1.9.7](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.6...v1.9.7) (2025-06-12)
+
+### Bug Fixes
+
+* reduce the facility dialog height, to fit small screens ([ec9818b](https://github.com/HISPVietnam/facility-checker-app/commit/ec9818be22c670911c62df32cac241c9f55935af))
+
 ## [1.9.6](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.5...v1.9.6) (2025-06-12)
 
 ### Bug Fixes
