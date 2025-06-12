@@ -81,9 +81,9 @@ const useDataStore = create((set) => ({
           if (foundFacilityIndex !== -1) {
             const foundActiveEventIndex = state.facilities[foundFacilityIndex].events.findIndex((event) => event.status === "ACTIVE");
             program.dataElements.forEach((de) => {
-              // if (event[de.id]) {
-              state.facilities[foundFacilityIndex][de.id] = event[de.id] ? event[de.id] : "";
-              // }
+              if (event[de.id]) {
+                state.facilities[foundFacilityIndex][de.id] = event[de.id];
+              }
             });
             if (event.latitude) {
               state.facilities[foundFacilityIndex].latitude = event.latitude;
