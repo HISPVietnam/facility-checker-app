@@ -1,3 +1,10 @@
+## [1.9.6](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.5...v1.9.6) (2025-06-12)
+
+### Bug Fixes
+
+* major issues when edit facility profile ([fbc3f9a](https://github.com/HISPVietnam/facility-checker-app/commit/fbc3f9ac24218544606a500a61d84f5adffb6ff9))
+* ui translations not updated with live configuration ([41c6994](https://github.com/HISPVietnam/facility-checker-app/commit/41c6994d5db9228c735a8b6ef2a29cf0cbfeac62))
+
 ## [1.9.5](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.4...v1.9.5) (2025-06-11)
 
 ### Bug Fixes
