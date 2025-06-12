@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faStar, faRotate, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faStar, faRotate, faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
 const Pending = ({ children }) => {
   return (
     <span className="text-[14px] text-white p-1 rounded-md bg-orange-500">
@@ -13,6 +13,14 @@ const Approved = ({ children }) => {
   return (
     <span className="text-[14px] text-white p-1 rounded-md bg-cyan-700 ">
       <FontAwesomeIcon icon={faCheck} />
+      &nbsp;{children}
+    </span>
+  );
+};
+const Rejected = ({ children }) => {
+  return (
+    <span className="text-[14px] text-white p-1 rounded-md bg-red-500 ">
+      <FontAwesomeIcon icon={faClose} />
       &nbsp;{children}
     </span>
   );
@@ -32,11 +40,11 @@ const New = ({ children }) => {
 };
 const NotYetSynced = ({ children }) => {
   return (
-    <span className="text-[14px] text-white p-1 rounded-md bg-red-500 ">
+    <span className="text-[14px] p-1 rounded-md bg-slate-200">
       <FontAwesomeIcon icon={faRotate} />
       &nbsp;{children}
     </span>
   );
 };
 
-export { Pending, Approved, Edited, New, NotYetSynced };
+export { Pending, Approved, Rejected, Edited, New, NotYetSynced };

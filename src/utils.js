@@ -67,7 +67,7 @@ const convertEvent = (event, dataElements) => {
 
 const getLatestValues = (events, program, includeActiveEvents = true) => {
   const latestValues = {};
-  let tempEvents = events;
+  let tempEvents = events.filter((event) => event[APPROVAL_STATUS] !== "rejected");
   if (!includeActiveEvents) {
     tempEvents = events
       .filter((event) => event.status !== "ACTIVE")

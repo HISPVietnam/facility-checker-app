@@ -99,6 +99,7 @@ export default {
   buildRevision: "Révision de la construction",
   notYetSynced: "Pas encore synchronisé",
   approved: "Approuvé",
+  rejected: "Rejected",
   isNewFacility: "C'est une nouveu établissement",
   clickToView: "Cliquer pour visualiser",
   synced: "Synchronisé",

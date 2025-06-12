@@ -4,13 +4,15 @@ import { produce } from "immer";
 const useApprovalModuleStore = create((set) => ({
   selectedFacility: null,
   selectedOrgUnit: null,
+  selectedEventId: null,
   isReadOnly: false,
   filters: [],
   actions: {
-    selectFacility: (facility) =>
+    selectFacility: (facility, eventId) =>
       set(
         produce((state) => {
           state.selectedFacility = facility;
+          state.selectedEventId = eventId;
         })
       ),
     selectOrgUnit: (orgUnit) =>

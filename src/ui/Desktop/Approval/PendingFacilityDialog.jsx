@@ -1,9 +1,8 @@
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
 import CustomizedButton from "@/ui/common/Button";
-import { Approved, New, NotYetSynced, Pending } from "@/ui/common/Labels";
-import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox } from "@dhis2/ui";
-import { Tooltip } from "@mui/material";
+import { Approved, New, NotYetSynced, Pending, Rejected } from "@/ui/common/Labels";
+import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox, ButtonStrip } from "@dhis2/ui";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
@@ -19,10 +18,23 @@ import { postEvent } from "@/api/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
-import _ from "lodash";
+import _, { reject } from "lodash";
 import useApprovalModuleStore from "@/states/approvalModule";
 import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
-const { UID, APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, NAME, PATH, IS_NEW_FACILITY, SYNCED, ATTRIBUTE_VALUES } = DATA_ELEMENTS;
+const {
+  UID,
+  APPROVAL_STATUS,
+  APPROVED_BY,
+  APPROVED_AT,
+  NAME,
+  PATH,
+  IS_NEW_FACILITY,
+  SYNCED,
+  ATTRIBUTE_VALUES,
+  REJECTED_BY,
+  REJECTED_AT,
+  REASON_FOR_REJECT
+} = DATA_ELEMENTS;
 
 const OldValue = ({ children }) => {
   return <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>;
@@ -33,6 +45,8 @@ const NewValue = ({ children }) => {
 };
 
 const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
+  const [rejectDialog, setRejectDialog] = useState(false);
+  const [reasonForReject, setReasonForReject] = useState("");
   const [geoJsonViewer, setGeoJsonViewer] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -44,20 +58,20 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     }))
   );
   const actions = useDataStore((state) => state.actions);
-  const { approve } = actions;
-  const { approvalModuleActions, selectedFacility, isReadOnly } = useApprovalModuleStore(
+  const { approve, reject } = actions;
+  const { approvalModuleActions, selectedFacility, selectedEventId, isReadOnly } = useApprovalModuleStore(
     useShallow((state) => ({
       approvalModuleActions: state.actions,
       selectedFacility: state.selectedFacility,
+      selectedEventId: state.selectedEventId,
       isReadOnly: state.isReadOnly
     }))
   );
   const { selectFacility } = approvalModuleActions;
   const foundPendingEvent = selectedFacility ? selectedFacility.events.find((event) => event[APPROVAL_STATUS] === "pending") : null;
   const foundApprovedEvent = selectedFacility ? selectedFacility.events.find((event) => event[APPROVAL_STATUS] === "approved") : null;
-  const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
+  const finalEvent = selectedFacility ? selectedFacility.events.find((event) => event.event === selectedEventId) : null;
   const { dataElements } = program;
-
   const handleApprove = async () => {
     setLoading(true);
     const { username } = me;
@@ -71,7 +85,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     cloned[APPROVAL_STATUS] = "approved";
     cloned[APPROVED_BY] = username;
     cloned[APPROVED_AT] = now;
-    selectFacility(cloned);
+    selectFacility(cloned, selectedEventId);
     const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
     convertedEvent.orgUnit = selectedFacility.orgUnit;
     convertedEvent.trackedEntity = selectedFacility.tei;
@@ -80,12 +94,36 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     setLoading(false);
   };
 
+  const handleReject = async () => {
+    setLoading(true);
+    const { username } = me;
+    const now = format(new Date(), "yyyy-MM-dd");
+    reject(selectedFacility, reasonForReject);
+    const cloned = _.cloneDeep(selectedFacility);
+    const foundPendingEventIndex = cloned.events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
+    cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
+    cloned.events[foundPendingEventIndex][REJECTED_BY] = username;
+    cloned.events[foundPendingEventIndex][REJECTED_AT] = now;
+    cloned.events[foundPendingEventIndex][REASON_FOR_REJECT] = reasonForReject;
+    cloned[APPROVAL_STATUS] = "rejected";
+    cloned[REJECTED_BY] = username;
+    cloned[REJECTED_AT] = now;
+    cloned[REASON_FOR_REJECT] = reasonForReject;
+    selectFacility(cloned, selectedEventId);
+    const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
+    convertedEvent.orgUnit = selectedFacility.orgUnit;
+    convertedEvent.trackedEntity = selectedFacility.tei;
+    convertedEvent.enrollment = selectedFacility.enr;
+    const result = await postEvent(convertedEvent);
+    setLoading(false);
+    setRejectDialog(false);
+  };
   return (
     selectedFacility && (
       <Modal fluid hide={!open}>
         <ModalTitle>{t("pendingApprovalValues")}</ModalTitle>
         <ModalContent>
-          <div className="w-[1000px]">
+          <div className="w-[1000px] h-[550px]">
             <div className="text-[15px]">
               <DataValueLabel dataElement={NAME} />: <DataValueText dataElement={NAME} value={selectedFacility[NAME]} />
             </div>
@@ -98,34 +136,55 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
             <div className="text-[15px]">
               {t("requestedBy")}: {finalEvent.updatedBy.username}
             </div>
-            {selectedFacility[APPROVAL_STATUS] == "approved" && (
+            {finalEvent[APPROVAL_STATUS] == "approved" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_BY} />: <DataValueText dataElement={APPROVED_BY} value={selectedFacility[APPROVED_BY]} />
+                <DataValueLabel dataElement={APPROVED_BY} />: <DataValueText dataElement={APPROVED_BY} value={finalEvent[APPROVED_BY]} />
               </div>
             )}
-            {selectedFacility[APPROVAL_STATUS] == "approved" && (
+            {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_AT} />: <DataValueText dataElement={APPROVED_AT} value={selectedFacility[APPROVED_AT]} />
+                <DataValueLabel dataElement={REJECTED_BY} />: <DataValueText dataElement={REJECTED_BY} value={finalEvent[REJECTED_BY]} />
+              </div>
+            )}
+            {finalEvent[APPROVAL_STATUS] == "approved" && (
+              <div className="text-[15px]">
+                <DataValueLabel dataElement={APPROVED_AT} />: <DataValueText dataElement={APPROVED_AT} value={finalEvent[APPROVED_AT]} />
+              </div>
+            )}
+            {finalEvent[APPROVAL_STATUS] == "rejected" && (
+              <div className="text-[15px]">
+                <DataValueLabel dataElement={REJECTED_AT} />: <DataValueText dataElement={REJECTED_AT} value={finalEvent[REJECTED_AT]} />
+              </div>
+            )}
+            {finalEvent[APPROVAL_STATUS] == "rejected" && (
+              <div className="text-[15px]">
+                <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
+                <DataValueText dataElement={REASON_FOR_REJECT} value={finalEvent[REASON_FOR_REJECT]} />
               </div>
             )}
 
             <div className="text-[15px]">
-              {selectedFacility[APPROVAL_STATUS] == "pending" && (
+              {finalEvent[APPROVAL_STATUS] == "pending" && (
                 <span>
                   <Pending>{t("pending")}</Pending>&nbsp;
                 </span>
               )}
-              {selectedFacility[APPROVAL_STATUS] == "approved" && (
+              {finalEvent[APPROVAL_STATUS] == "approved" && (
                 <span>
                   <Approved>{t("approved")}</Approved>&nbsp;
                 </span>
               )}
-              {selectedFacility[IS_NEW_FACILITY] == "true" && (
+              {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                <span>
+                  <Rejected>{t("rejected")}</Rejected>&nbsp;
+                </span>
+              )}
+              {finalEvent[IS_NEW_FACILITY] == "true" && (
                 <span>
                   <New>{t("newFacility")}</New>&nbsp;
                 </span>
               )}
-              {!selectedFacility[SYNCED] && (
+              {!finalEvent[SYNCED] && finalEvent[APPROVAL_STATUS] == "approved" && (
                 <span>
                   <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
                 </span>
@@ -142,7 +201,11 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                 };
               })
               .filter(
-                (dataValue) => dataValue.value && ![APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, ATTRIBUTE_VALUES].includes(dataValue.dataElement)
+                (dataValue) =>
+                  dataValue.value &&
+                  ![APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, REJECTED_BY, REJECTED_AT, REASON_FOR_REJECT, ATTRIBUTE_VALUES].includes(
+                    dataValue.dataElement
+                  )
               )
               .map((dataValue) => {
                 return (
@@ -284,15 +347,52 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
           </div>
         </ModalContent>
         <ModalActions>
-          {foundPendingEvent && (
+          {finalEvent[APPROVAL_STATUS] === "pending" && (
             <div className="flex items-center">
-              <CustomizedButton loading={loading} disabled={foundApprovedEvent || isReadOnly} primary={true} onClick={handleApprove}>
+              <CustomizedButton loading={loading} disabled={isReadOnly} primary={true} onClick={handleApprove}>
                 {t("approve")}
               </CustomizedButton>
               &nbsp;
-              <CustomizedButton loading={loading} disabled={foundApprovedEvent || isReadOnly} destructive={true}>
+              <CustomizedButton
+                loading={loading}
+                disabled={isReadOnly}
+                destructive={true}
+                onClick={() => {
+                  setRejectDialog(true);
+                }}
+              >
                 {t("reject")}
               </CustomizedButton>
+              {rejectDialog && (
+                <Modal>
+                  <ModalTitle>
+                    <DataValueLabel dataElement={REASON_FOR_REJECT} />
+                  </ModalTitle>
+                  <ModalContent>
+                    <DataValueField
+                      dataElement={REASON_FOR_REJECT}
+                      value={reasonForReject}
+                      onChange={(value) => {
+                        setReasonForReject(value);
+                      }}
+                    />
+                  </ModalContent>
+                  <ModalActions>
+                    <CustomizedButton primary onClick={handleReject}>
+                      {t("ok")}
+                    </CustomizedButton>
+                    &nbsp;
+                    <CustomizedButton
+                      destructive
+                      onClick={() => {
+                        setRejectDialog(false);
+                      }}
+                    >
+                      {t("cancel")}
+                    </CustomizedButton>
+                  </ModalActions>
+                </Modal>
+              )}
             </div>
           )}
           {/* {foundApprovedEvent && (

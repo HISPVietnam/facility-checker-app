@@ -136,7 +136,7 @@ const NewFacilityDialog = () => {
       setIsDuplicated(false);
     }
     const event = { ...selectedFacility };
-    const today = format(new Date(), "yyyy-MM-dd");
+    const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
     event.occurredAt = today;
     event.scheduledAt = today;
     event.orgUnit = orgUnit;
@@ -190,7 +190,7 @@ const NewFacilityDialog = () => {
   const complete = async () => {
     await saveChanges();
     let newFacility = { ...selectedFacility };
-    const today = format(new Date(), "yyyy-MM-dd");
+    const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
     newFacility.occurredAt = today;
     newFacility.scheduledAt = today;
     newFacility.orgUnit = orgUnit;
@@ -206,7 +206,8 @@ const NewFacilityDialog = () => {
     newFacility.completedAt = format(new Date(), "yyyy-MM-dd");
     newFacility.updatedBy = {
       firstName: me.firstName,
-      surname: me.surname
+      surname: me.surname,
+      username: me.username
     };
     save(newFacility);
     const convertedEvent = convertToDhis2Event(newFacility, program);

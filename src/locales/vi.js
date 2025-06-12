@@ -98,6 +98,7 @@ export default {
   buildRevision: "Bản sửa đổi",
   notYetSynced: "Chưa đồng bộ",
   approved: "Đã phê duyệt",
+  rejected: "Rejected",
   isNewFacility: "Là Cơ sở mới",
   clickToView: "Bấm để xem",
   synced: "Đã đồng bộ",

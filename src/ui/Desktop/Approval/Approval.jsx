@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { DATA_ELEMENTS } from "@/const";
-import { Pending, New, Approved, NotYetSynced } from "@/ui/common/Labels";
+import { Pending, New, Approved, NotYetSynced, Rejected } from "@/ui/common/Labels";
 import DataValueLabel from "@/ui/common/DataValueLabel";
 import DataValueText from "@/ui/common/DataValueText";
 import useDataStore from "@/states/data";
@@ -33,16 +33,15 @@ const Approval = () => {
   const filterApprovalFacilities = (facilities) => {
     const filterByIsNewFacility = (facility) => {
       if (currentFilters.length === 0) {
-        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved";
+        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved" || facility[APPROVAL_STATUS] === "rejected";
       }
       const isNewFacility = facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
       return currentFilters.includes(isNewFacility);
     };
     const filterByApprovalStatus = (facility) => {
       if (currentFilters.length === 0) {
-        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved";
+        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved" || facility[APPROVAL_STATUS] === "rejected";
       }
-
       const approvalStatus = facility[APPROVAL_STATUS];
       return currentFilters.includes(approvalStatus);
     };
@@ -82,48 +81,57 @@ const Approval = () => {
         </DataTableHead>
         <DataTableBody>
           {filterApprovalFacilities(facilities).map((facility) => {
-            const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
-            const foundApprovedEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "approved");
-            const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
-            return (
-              <DataTableRow
-                className="cursor-pointer"
-                onClick={() => {
-                  setPendingFacilityDialog(true);
-                  selectFacility(facility);
-                }}
-              >
-                {columns.map((column) => {
-                  if (column === "dateOfRequest") {
-                    return (
-                      <DataTableCell>
-                        <DataValueText dataElement="completedAt" value={format(new Date(finalEvent.completedAt), "yyyy-MM-dd")} />
-                      </DataTableCell>
-                    );
-                  } else {
-                    let children = null;
-                    if (column === APPROVAL_STATUS) {
-                      children = [];
-                      if (facility[column] === "pending") {
-                        children.push(<Pending>{t("pending")}</Pending>);
-                      } else if (facility[column] === "approved") {
-                        children.push(<Approved>{t("approved")}</Approved>);
-                      }
-                      if (facility[IS_NEW_FACILITY] === "true") {
-                        children.push(...[<>&nbsp;</>, <New>{t("newFacility")}</New>]);
-                      }
-                    } else if (column === SYNCED) {
-                      if (!facility[SYNCED]) {
-                        children = <NotYetSynced>{t("notYetSynced")}</NotYetSynced>;
-                      }
-                    } else {
-                      children = <DataValueText dataElement={column} value={facility[column]} />;
-                    }
-                    return <DataTableCell>{children}</DataTableCell>;
-                  }
-                })}
-              </DataTableRow>
+            // const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
+            // const foundApprovedEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "approved");
+            // const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
+            const filtered = facility.events.filter(
+              (event) => event[APPROVAL_STATUS] === "approved" || event[APPROVAL_STATUS] === "pending" || event[APPROVAL_STATUS] === "rejected"
             );
+            return filtered.map((row) => {
+              return (
+                <DataTableRow
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setPendingFacilityDialog(true);
+                    selectFacility(facility, row.event);
+                  }}
+                >
+                  {columns.map((column) => {
+                    if (column === "dateOfRequest") {
+                      return (
+                        <DataTableCell>
+                          <DataValueText dataElement="completedAt" value={format(new Date(row.completedAt), "yyyy-MM-dd")} />
+                        </DataTableCell>
+                      );
+                    } else {
+                      let children = null;
+                      if (column === APPROVAL_STATUS) {
+                        children = [];
+                        if (row[column] === "pending") {
+                          children.push(<Pending>{t("pending")}</Pending>);
+                        } else if (row[column] === "approved") {
+                          children.push(<Approved>{t("approved")}</Approved>);
+                        } else if (row[column] === "rejected") {
+                          children.push(<Rejected>{t("rejected")}</Rejected>);
+                        }
+                        if (row[IS_NEW_FACILITY] === "true") {
+                          children.push(...[<>&nbsp;</>, <New>{t("newFacility")}</New>]);
+                        }
+                      } else if (column === SYNCED) {
+                        if (row[APPROVAL_STATUS] === "rejected") {
+                          children = null;
+                        } else if (!row[SYNCED]) {
+                          children = <NotYetSynced>{t("notYetSynced")}</NotYetSynced>;
+                        }
+                      } else {
+                        children = <DataValueText dataElement={column} value={facility[column]} />;
+                      }
+                      return <DataTableCell>{children}</DataTableCell>;
+                    }
+                  })}
+                </DataTableRow>
+              );
+            });
           })}
         </DataTableBody>
       </DataTable>

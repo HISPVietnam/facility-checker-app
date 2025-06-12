@@ -98,6 +98,7 @@ export default {
   buildRevision: "ສ້າງ​ການ​ປັບ​ປຸງ​",
   notYetSynced: "ຍັງບໍ່ໄດ້ເຊື່ອມ",
   approved: "ອະນຸມັດແລ້ວ",
+  rejected: "Rejected",
   isNewFacility: "ແມ່ນສະຖານບໍລິການໃໝ່",
   clickToView: "ເລືອກເພື່ອເບິ່ງ",
   synced: "ເຊື່ອມແລ້ວ",

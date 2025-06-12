@@ -98,7 +98,7 @@ const TooltipContent = (props) => {
         tei: facility.tei,
         enr: facility.enr,
         status: "ACTIVE",
-        occurredAt: format(new Date(), "yyyy-MM-dd"),
+        occurredAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS"),
         latitude: lat,
         longitude: long
       };

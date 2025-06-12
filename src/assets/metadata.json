@@ -1,11 +1,48 @@
 {
+  "optionSets": [
+    {
+      "name": "FC: Approval status",
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "options": [{ "id": "VdllG4CKoD4" }, { "id": "kDzsaqyIaPo" }, { "id": "N7MSTvv0PbV" }],
+      "valueType": "TEXT",
+      "version": 3,
+      "id": "GvCWttSR2pv",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA001",
+      "name": "FC:Active status",
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "options": [{ "id": "epSrOaPxNrL" }, { "id": "qpcng3oFHS9" }],
+      "valueType": "TEXT",
+      "version": 6,
+      "id": "It38VvS3E2c",
+      "attributeValues": []
+    }
+  ],
+  "dataEntryForms": [
+    {
+      "name": "FC:Facility checker",
+      "translations": [],
+      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
+      "format": 0,
+      "id": "luXQOrb9npU"
+    },
+    {
+      "name": "Profile logs",
+      "translations": [],
+      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
+      "format": 0,
+      "id": "jtRQ5PD72D8"
+    }
+  ],
   "programs": [
     {
       "code": "FCA",
       "name": "FC:Facility checker",
       "translations": [],
       "sharing": {
-        "owner": "GOLswS44mh8",
+        "owner": "Syfgez4v6hZ",
         "external": false,
         "users": {},
         "userGroups": {
@@ -40,7 +77,7 @@
       "accessLevel": "OPEN",
       "id": "dJELklAE1ZZ",
       "attributeValues": [],
-      "organisationUnits": [{ "id": "DiszpKrYNg8" }],
+      "organisationUnits": [],
       "programStages": [{ "id": "VdBma23iRTw" }],
       "programSections": [],
       "programTrackedEntityAttributes": [
@@ -59,8 +96,8 @@
           "mandatory": true,
           "renderOptionsAsRadio": false,
           "searchable": true,
-          "valueType": "TEXT",
           "displayShortName": "FC:Facility checker DHIS2 UID",
+          "valueType": "TEXT",
           "displayName": "FC:Facility checker FC:DHIS2 UID",
           "favorite": false,
           "id": "ykweto65RhK",
@@ -82,8 +119,8 @@
           "mandatory": true,
           "renderOptionsAsRadio": false,
           "searchable": false,
-          "valueType": "TEXT",
           "displayShortName": "FC:Facility checker Active status",
+          "valueType": "TEXT",
           "displayName": "FC:Facility checker FC:Active status",
           "favorite": false,
           "id": "syKHfq2X6YP",
@@ -105,8 +142,8 @@
           "mandatory": false,
           "renderOptionsAsRadio": false,
           "searchable": true,
-          "valueType": "TEXT",
           "displayShortName": "FC:Facility checker Facility code",
+          "valueType": "TEXT",
           "displayName": "FC:Facility checker FC:Code",
           "favorite": false,
           "id": "uyzP1gDnEpf",
@@ -116,216 +153,12 @@
       ]
     }
   ],
-  "optionSets": [
-    {
-      "name": "FC: Approval status",
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
-      "options": [{ "id": "VdllG4CKoD4" }, { "id": "kDzsaqyIaPo" }, { "id": "N7MSTvv0PbV" }],
-      "valueType": "TEXT",
-      "version": 3,
-      "id": "GvCWttSR2pv",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA001",
-      "name": "FC:Active status",
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
-      "options": [{ "id": "epSrOaPxNrL" }, { "id": "qpcng3oFHS9" }],
-      "valueType": "TEXT",
-      "version": 6,
-      "id": "It38VvS3E2c",
-      "attributeValues": []
-    }
-  ],
-  "programTrackedEntityAttributes": [
-    {
-      "program": { "id": "dJELklAE1ZZ" },
-      "displayInList": true,
-      "sortOrder": 2,
-      "mandatory": true,
-      "renderOptionsAsRadio": false,
-      "searchable": false,
-      "id": "syKHfq2X6YP",
-      "trackedEntityAttribute": { "id": "PUYl7QIbEov" }
-    },
-    {
-      "program": { "id": "dJELklAE1ZZ" },
-      "displayInList": true,
-      "sortOrder": 1,
-      "mandatory": true,
-      "renderOptionsAsRadio": false,
-      "searchable": true,
-      "id": "ykweto65RhK",
-      "trackedEntityAttribute": { "id": "prbjtVvKNet" }
-    },
-    {
-      "program": { "id": "dJELklAE1ZZ" },
-      "displayInList": true,
-      "sortOrder": 3,
-      "mandatory": false,
-      "renderOptionsAsRadio": false,
-      "searchable": true,
-      "id": "uyzP1gDnEpf",
-      "trackedEntityAttribute": { "id": "d9FXpa9ndGO" }
-    }
-  ],
-  "options": [
-    {
-      "code": "open",
-      "name": "Open",
-      "optionSet": { "id": "It38VvS3E2c" },
-      "sortOrder": 1,
-      "id": "epSrOaPxNrL",
-      "attributeValues": [],
-      "translations": [
-        { "property": "NAME", "locale": "fr", "value": "Ouvert" },
-        { "property": "NAME", "locale": "es", "value": "Abierto" },
-        { "property": "NAME", "locale": "pt", "value": "Aberto" },
-        { "property": "NAME", "locale": "vi", "value": "Mở" },
-        { "property": "NAME", "locale": "lo", "value": "ເປີດ" }
-      ]
-    },
-    {
-      "code": "rejected",
-      "name": "Rejected",
-      "optionSet": { "id": "GvCWttSR2pv" },
-      "sortOrder": 2,
-      "id": "kDzsaqyIaPo",
-      "attributeValues": [],
-      "translations": []
-    },
-    {
-      "code": "approved",
-      "name": "Approved",
-      "optionSet": { "id": "GvCWttSR2pv" },
-      "sortOrder": 1,
-      "id": "VdllG4CKoD4",
-      "attributeValues": [],
-      "translations": []
-    },
-    {
-      "code": "closed",
-      "name": "Closed",
-      "optionSet": { "id": "It38VvS3E2c" },
-      "sortOrder": 2,
-      "id": "qpcng3oFHS9",
-      "attributeValues": [],
-      "translations": [
-        { "property": "NAME", "locale": "fr", "value": "Fermé" },
-        { "property": "NAME", "locale": "es", "value": "Cerrado" },
-        { "property": "NAME", "locale": "pt", "value": "Fechado" },
-        { "property": "NAME", "locale": "vi", "value": "Đóng" },
-        { "property": "NAME", "locale": "lo", "value": "ປິດ" }
-      ]
-    },
-    {
-      "code": "pending",
-      "name": "Pending",
-      "optionSet": { "id": "GvCWttSR2pv" },
-      "sortOrder": 3,
-      "id": "N7MSTvv0PbV",
-      "attributeValues": [],
-      "translations": []
-    }
-  ],
-  "dataEntryForms": [
-    {
-      "name": "FC:Facility checker",
-      "translations": [],
-      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
-      "format": 0,
-      "id": "luXQOrb9npU"
-    },
-    {
-      "name": "Profile logs",
-      "translations": [],
-      "htmlCode": "<style type=\"text/css\">.fca-warning {\n    background-color: #fff3cd;\n    color: #856404;\n    border: 1px solid #ffeeba;\n    padding: 20px 30px;\n    border-radius: 5px;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    max-width: 600px;\n    text-align: center;\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n  }\n  .fca-warning a {\n    color: #0c5460;\n    text-decoration: underline;\n    font-weight: bold;\n  }\n  .fca-warning-text {\n    margin-bottom: 1em;\n  }\n</style>\n<div class=\"fca-warning\">\n<div class=\"fca-warning-text\"><strong>Warning:</strong> Please do not use Capture App / Tracker Capture App to work with this program or it will break the Facility Checker module.</div>\n\n<div>Please <a href=\"/api/apps/fca/index.html\">click here</a> to go to the Facility Checker module.</div>\n</div>\n",
-      "format": 0,
-      "id": "jtRQ5PD72D8"
-    }
-  ],
-  "trackedEntityTypes": [
-    {
-      "name": "FCA:Facility",
-      "translations": [],
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "r-rw----" },
-      "description": "Facility checker: Facility",
-      "trackedEntityTypeAttributes": [
-        {
-          "name": "FCA:Facility FC:DHIS2 UID",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
-          "favorites": [],
-          "sharing": { "external": false, "users": {}, "userGroups": {} },
-          "trackedEntityType": { "id": "ER5qgJDCfUh" },
-          "trackedEntityAttribute": { "id": "prbjtVvKNet" },
-          "displayInList": true,
-          "searchable": true,
-          "valueType": "TEXT",
-          "displayShortName": "null DHIS2 UID",
-          "displayName": "FCA:Facility FC:DHIS2 UID",
-          "favorite": false,
-          "id": "lPo2If0KtK3",
-          "attributeValues": []
-        },
-        {
-          "name": "FCA:Facility FC:Active status",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
-          "favorites": [],
-          "sharing": { "external": false, "users": {}, "userGroups": {} },
-          "trackedEntityType": { "id": "ER5qgJDCfUh" },
-          "trackedEntityAttribute": { "id": "PUYl7QIbEov" },
-          "displayInList": true,
-          "searchable": false,
-          "valueType": "TEXT",
-          "displayShortName": "null Active status",
-          "displayName": "FCA:Facility FC:Active status",
-          "favorite": false,
-          "id": "laDwH1JOQAN",
-          "attributeValues": []
-        },
-        {
-          "name": "FCA:Facility FC:Code",
-          "translations": [],
-          "externalAccess": false,
-          "userGroupAccesses": [],
-          "userAccesses": [],
-          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
-          "favorites": [],
-          "sharing": { "external": false, "users": {}, "userGroups": {} },
-          "trackedEntityType": { "id": "ER5qgJDCfUh" },
-          "trackedEntityAttribute": { "id": "d9FXpa9ndGO" },
-          "displayInList": true,
-          "searchable": true,
-          "valueType": "TEXT",
-          "displayShortName": "null Facility code",
-          "displayName": "FCA:Facility FC:Code",
-          "favorite": false,
-          "id": "fJ06Ysxbcpj",
-          "attributeValues": []
-        }
-      ],
-      "featureType": "POINT",
-      "minAttributesRequiredToSearch": 1,
-      "maxTeiCountToReturn": 0,
-      "allowAuditLog": false,
-      "id": "ER5qgJDCfUh",
-      "attributeValues": []
-    }
-  ],
   "programStages": [
     {
       "name": "Profile logs",
       "translations": [],
       "sharing": {
-        "owner": "GOLswS44mh8",
+        "owner": "Syfgez4v6hZ",
         "external": false,
         "users": {},
         "userGroups": {
@@ -844,6 +677,50 @@
           "favorite": false,
           "id": "hyslcRQpYwU",
           "attributeValues": []
+        },
+        {
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
+          "favorites": [],
+          "sharing": { "external": false, "users": {}, "userGroups": {} },
+          "programStage": { "id": "VdBma23iRTw" },
+          "dataElement": { "id": "LSn3R8HJuFp" },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 28,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "hk58VKZWXCj",
+          "attributeValues": []
+        },
+        {
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
+          "favorites": [],
+          "sharing": { "external": false, "users": {}, "userGroups": {} },
+          "programStage": { "id": "VdBma23iRTw" },
+          "dataElement": { "id": "bLlrOgPdBvD" },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 29,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "favorite": false,
+          "id": "MRWtm1iAEBd",
+          "attributeValues": []
         }
       ],
       "dataEntryForm": { "id": "jtRQ5PD72D8" },
@@ -868,11 +745,18 @@
       "notificationTemplates": []
     }
   ],
+  "options": [
+    { "code": "open", "name": "Open", "optionSet": { "id": "It38VvS3E2c" }, "sortOrder": 1, "id": "epSrOaPxNrL", "attributeValues": [] },
+    { "code": "rejected", "name": "Rejected", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 2, "id": "kDzsaqyIaPo", "attributeValues": [] },
+    { "code": "approved", "name": "Approved", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 1, "id": "VdllG4CKoD4", "attributeValues": [] },
+    { "code": "closed", "name": "Closed", "optionSet": { "id": "It38VvS3E2c" }, "sortOrder": 2, "id": "qpcng3oFHS9", "attributeValues": [] },
+    { "code": "pending", "name": "Pending", "optionSet": { "id": "GvCWttSR2pv" }, "sortOrder": 3, "id": "N7MSTvv0PbV", "attributeValues": [] }
+  ],
   "trackedEntityAttributes": [
     {
       "code": "FCA:005",
       "name": "FC:Active status",
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
       "shortName": "Active status",
       "formName": "Facility operational status",
       "legendSets": [],
@@ -894,7 +778,7 @@
     {
       "code": "FCA:003",
       "name": "FC:Code",
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
       "shortName": "Facility code",
       "formName": "Facility code",
       "legendSets": [],
@@ -915,7 +799,7 @@
     {
       "code": "FCA:004",
       "name": "FC:DHIS2 UID",
-      "sharing": { "owner": "GOLswS44mh8", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "rw------" },
       "shortName": "DHIS2 UID",
       "formName": "Facility DHIS2 UID",
       "legendSets": [],
@@ -934,6 +818,871 @@
       "attributeValues": []
     }
   ],
+  "dataElements": [
+    {
+      "code": "FCA_Aprby",
+      "name": "FCA_Approved by",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Approved by",
+      "formName": "Approved by",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jmUQ1B95ZP9",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_015",
+      "name": "FCA_Email",
+      "translations": [
+        { "locale": "es", "property": "FORM_NAME", "value": "Correo electrónico de contacto del centro de salud" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ອີເມວຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Email liên hệ cơ sở y tế" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "E-mail de contact de l'établissement de santé" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "E-mail de contacto da Unidade de Saúde" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Email",
+      "formName": "Facility contact email",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "Wno4M1rmwHr",
+      "attributeValues": []
+    },
+    {
+      "name": "FCA_Approval status",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Approval status",
+      "formName": "Approval status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "optionSet": { "id": "GvCWttSR2pv" },
+      "id": "p4m3y1jLgpv",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_013",
+      "name": "FCA_Phone",
+      "translations": [
+        { "locale": "pt", "property": "FORM_NAME", "value": "Número de contacto da Unidade de Saúde" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Số điện thoại liên hệ cơ sở y tế" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Numéro de téléphone de l'établissement de santé" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ເບີໂທຕິດຕໍ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Número de contacto del centro de salud" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Phone",
+      "formName": "Facility contact number",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "HAOSMsp1TXB",
+      "attributeValues": []
+    },
+
+    {
+      "code": "FCA_014",
+      "name": "FCA_Address",
+      "translations": [
+        { "locale": "es", "property": "FORM_NAME", "value": "Dirección del centro de salud" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Adresse de l'établissement de santé" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Địa chỉ cơ sở y tế" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ທີ່ຢູ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Endereço da Unidade de Saúde" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Address",
+      "formName": "Facility Address",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "YLxv92NmyFD",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_003",
+      "name": "FCA_Code",
+      "translations": [
+        { "locale": "lo", "property": "FORM_NAME", "value": "ລະຫັດສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Código da Unidade de Saúde" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Code de l'établissement de santé" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Mã cơ sở y tế" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Código del centro de salud" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Facility code",
+      "formName": "Facility code",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "nEAFd0oKJzb",
+      "attributeValues": []
+    },
+    {
+      "code": "FC:INF",
+      "name": "FCA_Is new facility",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Is new facility",
+      "formName": "Is new facility",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TRUE_ONLY",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "guutPq3seaj",
+      "attributeValues": []
+    },
+    {
+      "name": "FCA_Active status",
+      "translations": [
+        { "locale": "lo", "property": "FORM_NAME", "value": "ສະຖານະຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Statut" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Estado operativo" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Estado operativo" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Trạng thái hoạt động" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_FC:Active status",
+      "formName": "Active status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "optionSet": { "id": "It38VvS3E2c" },
+      "id": "WvwRmFG7udm",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_004",
+      "name": "FCA_DHIS2 UID",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_DHIS2 UID",
+      "formName": "DHIS2 UID",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jDSCfb245G5",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_018",
+      "name": "FCA_Url",
+      "translations": [
+        { "locale": "fr", "property": "FORM_NAME", "value": "URL de l'établissement de santé" },
+        { "locale": "es", "property": "FORM_NAME", "value": "URL del centro de salud" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "URL của cơ sở y tế" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "URL ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "URL da Unidade de Saúde" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Url",
+      "formName": "Facility Url",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "kDreDTHEauZ",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_011",
+      "name": "FCA_Opening date",
+      "translations": [
+        { "locale": "fr", "property": "FORM_NAME", "value": "Date d'ouverture de l'établissement de santé" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Ngày mở cơ sở y tế" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ວັນທີເລີ້ມບໍລິການຂອງສະຖານທີ່ສາທາລະນະສຸກ" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Fecha de apertura del centro de salud" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Data de abertura da Unidade de Saúde" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Opening date",
+      "formName": "Facility opening date",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "PCoXOnxAzwr",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_RR",
+      "name": "FCA_Reason for Reject",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Reason for Reject",
+      "formName": "Reason for Reject",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "wetRbzCTyYO",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_012",
+      "name": "FCA_Closing date",
+      "translations": [
+        { "locale": "vi", "property": "FORM_NAME", "value": "Ngày đóng cơ sở y tế" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Data de encerramento da Unidade de Saúde" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Date de fermeture de l'établissement de santé" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Fecha de cierre del centro de salud" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ວັນ​ທີ​ສະຖານທີ່ບໍລິການສາທາລະນະສຸກປິດໃຫ້ບໍລິການ" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Closing date",
+      "formName": "Facility closing date",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "jR58BZSMB6B",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_009",
+      "name": "FCA_Image",
+      "translations": [
+        { "locale": "pt", "property": "FORM_NAME", "value": "Imagem da Unidade de Saúde" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Hình ảnh cơ sở y tế" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Imagen del centro de salud" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ຮູບພາບສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Image de l'établissement de santé" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Facility Image",
+      "formName": "Facility Image",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "IMAGE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "QRaMM9LMM3y",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_017",
+      "name": "FCA_Attributevalues",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Attributevalues",
+      "formName": "Attributevalues",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "rMnWeGTBnKo",
+      "attributeValues": []
+    },
+
+    {
+      "code": "FCA_010",
+      "name": "FCA_Description",
+      "translations": [
+        { "locale": "pt", "property": "FORM_NAME", "value": "Descrição da Unidade de Saúde" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Description de l'établissement de santé" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Mô tả cơ sở y tế" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Descripción del centro de salud" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ລາຍລະອຽດຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Facility Description",
+      "formName": "Facility Description",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "L5YKpJEzCR1",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_016",
+      "name": "FCA_Contact person",
+      "translations": [
+        { "locale": "lo", "property": "FORM_NAME", "value": "ຜູ້ປະສານງານຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Personne à contacter à l'établissement de santé" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Persona de contacto del centro de salud" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Người liên hệ cơ sở y tế" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Pessoa de contacto da Unidade de Saúde" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Contact person",
+      "formName": "Facility Contact person",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "XioJoxZsHVn",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_Aprat",
+      "name": "FCA_Approved at",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Approved at",
+      "formName": "Approved at",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "z3Qe8czE7LE",
+      "attributeValues": []
+    },
+
+    {
+      "code": "FCA_005",
+      "name": "FCA_DHIS2 path",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_DHIS2 path",
+      "formName": "DHIS2 path",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "eqSFoW6vuam",
+      "attributeValues": []
+    },
+    {
+      "name": "FCA_Synced",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Synced",
+      "formName": "Sync status",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TRUE_ONLY",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "m75JpouZBy8",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_RA",
+      "name": "FCA_Rejected at",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Rejected at",
+      "formName": "Rejected at",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "DATE",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "bLlrOgPdBvD",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_001",
+      "name": "FCA_Name",
+      "translations": [
+        { "locale": "fr", "property": "FORM_NAME", "value": "Nom de l'établissement de santé" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ຊື່ສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Nombre del centro de salud" },
+        { "locale": "pt", "property": "FORM_NAME", "value": "Nome da Unidade de Saúde" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Tên cơ sở y tế" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Facility name",
+      "formName": "Facility name",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "z6u0MJRMxOw",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_007",
+      "name": "FCA_Translations",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Translations",
+      "formName": "Translations",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "pf27agpzDak",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_RB",
+      "name": "FCA_Rejected by",
+      "translations": [],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Rejected by",
+      "formName": "Rejected by",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "LSn3R8HJuFp",
+      "attributeValues": []
+    },
+    {
+      "code": "FCA_002",
+      "name": "FCA_Short name",
+      "translations": [
+        { "locale": "pt", "property": "FORM_NAME", "value": "Nome abreviado da Unidade de Saúde" },
+        { "locale": "es", "property": "FORM_NAME", "value": "Nombre corto del centro de salud" },
+        { "locale": "lo", "property": "FORM_NAME", "value": "ຊື່ຫຍໍ້ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" },
+        { "locale": "vi", "property": "FORM_NAME", "value": "Tên viết tắt của cơ sở y tế" },
+        { "locale": "fr", "property": "FORM_NAME", "value": "Nom abrégé de l'établissement de santé" }
+      ],
+      "sharing": {
+        "owner": "Syfgez4v6hZ",
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
+          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
+          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_FCA_Facility short name",
+      "formName": "Facility short name",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "eb7SYR3EHEZ",
+      "attributeValues": []
+    }
+  ],
+  "trackedEntityTypes": [
+    {
+      "name": "FCA:Facility",
+      "translations": [],
+      "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "r-rw----" },
+      "description": "Facility checker: Facility",
+      "trackedEntityTypeAttributes": [
+        {
+          "name": "FCA:Facility FC:DHIS2 UID",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
+          "favorites": [],
+          "sharing": { "external": false, "users": {}, "userGroups": {} },
+          "trackedEntityType": { "id": "ER5qgJDCfUh" },
+          "trackedEntityAttribute": { "id": "prbjtVvKNet" },
+          "displayInList": true,
+          "searchable": true,
+          "displayShortName": "null DHIS2 UID",
+          "valueType": "TEXT",
+          "displayName": "FCA:Facility FC:DHIS2 UID",
+          "favorite": false,
+          "id": "lPo2If0KtK3",
+          "attributeValues": []
+        },
+        {
+          "name": "FCA:Facility FC:Active status",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
+          "favorites": [],
+          "sharing": { "external": false, "users": {}, "userGroups": {} },
+          "trackedEntityType": { "id": "ER5qgJDCfUh" },
+          "trackedEntityAttribute": { "id": "PUYl7QIbEov" },
+          "displayInList": true,
+          "searchable": false,
+          "displayShortName": "null Active status",
+          "valueType": "TEXT",
+          "displayName": "FCA:Facility FC:Active status",
+          "favorite": false,
+          "id": "laDwH1JOQAN",
+          "attributeValues": []
+        },
+        {
+          "name": "FCA:Facility FC:Code",
+          "translations": [],
+          "externalAccess": false,
+          "userGroupAccesses": [],
+          "userAccesses": [],
+          "access": { "manage": true, "externalize": true, "write": true, "read": true, "update": true, "delete": true },
+          "favorites": [],
+          "sharing": { "external": false, "users": {}, "userGroups": {} },
+          "trackedEntityType": { "id": "ER5qgJDCfUh" },
+          "trackedEntityAttribute": { "id": "d9FXpa9ndGO" },
+          "displayInList": true,
+          "searchable": true,
+          "displayShortName": "null Facility code",
+          "valueType": "TEXT",
+          "displayName": "FCA:Facility FC:Code",
+          "favorite": false,
+          "id": "fJ06Ysxbcpj",
+          "attributeValues": []
+        }
+      ],
+      "featureType": "POINT",
+      "minAttributesRequiredToSearch": 1,
+      "maxTeiCountToReturn": 0,
+      "allowAuditLog": false,
+      "id": "ER5qgJDCfUh",
+      "attributeValues": []
+    }
+  ],
+  "programTrackedEntityAttributes": [
+    {
+      "program": { "id": "dJELklAE1ZZ" },
+      "displayInList": true,
+      "sortOrder": 2,
+      "mandatory": true,
+      "renderOptionsAsRadio": false,
+      "searchable": false,
+      "id": "syKHfq2X6YP",
+      "trackedEntityAttribute": { "id": "PUYl7QIbEov" }
+    },
+    {
+      "program": { "id": "dJELklAE1ZZ" },
+      "displayInList": true,
+      "sortOrder": 1,
+      "mandatory": true,
+      "renderOptionsAsRadio": false,
+      "searchable": true,
+      "id": "ykweto65RhK",
+      "trackedEntityAttribute": { "id": "prbjtVvKNet" }
+    },
+    {
+      "program": { "id": "dJELklAE1ZZ" },
+      "displayInList": true,
+      "sortOrder": 3,
+      "mandatory": false,
+      "renderOptionsAsRadio": false,
+      "searchable": true,
+      "id": "uyzP1gDnEpf",
+      "trackedEntityAttribute": { "id": "d9FXpa9ndGO" }
+    }
+  ],
   "programStageDataElements": [
     {
       "programStage": { "id": "VdBma23iRTw" },
@@ -950,17 +1699,202 @@
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "WvwRmFG7udm" },
+      "dataElement": { "id": "z6u0MJRMxOw" },
       "compulsory": false,
       "allowProvidedElsewhere": false,
-      "sortOrder": 4,
+      "sortOrder": 1,
       "displayInReports": true,
       "allowFutureDate": false,
       "renderOptionsAsRadio": false,
       "skipSynchronization": false,
       "skipAnalytics": false,
-      "id": "MmxLKlR30wU"
+      "id": "Az9Eb04yuGu"
     },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "wetRbzCTyYO" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 24,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "gD0qWQeTjxH"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "z3Qe8czE7LE" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 26,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "hyslcRQpYwU"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "jR58BZSMB6B" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 11,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "Nc3jmWKtgII"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "PCoXOnxAzwr" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 10,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "Wytm3NQKX6d"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "XioJoxZsHVn" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 13,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "gJs0ysiQ9hP"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "HAOSMsp1TXB" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 14,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "pHOCD0bg5S3"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "eb7SYR3EHEZ" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 2,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "SzSrqCNGDBT"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "bLlrOgPdBvD" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 29,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "MRWtm1iAEBd"
+    },
+
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "jmUQ1B95ZP9" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 23,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "xH7ytgsoJ3d"
+    },
+
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "eqSFoW6vuam" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 0,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "CYXTkeKZyZD"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "kDreDTHEauZ" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 16,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "CHpQumdteEx"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "LSn3R8HJuFp" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 28,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "hk58VKZWXCj"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "pf27agpzDak" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 19,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "ggYZJPPMGFt"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "m75JpouZBy8" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 20,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "hA6Y8zzDMsk"
+    },
+
     {
       "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "Wno4M1rmwHr" },
@@ -1002,172 +1936,16 @@
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "jmUQ1B95ZP9" },
+      "dataElement": { "id": "QRaMM9LMM3y" },
       "compulsory": false,
       "allowProvidedElsewhere": false,
-      "sortOrder": 23,
+      "sortOrder": 17,
       "displayInReports": false,
       "allowFutureDate": false,
       "renderOptionsAsRadio": false,
       "skipSynchronization": false,
       "skipAnalytics": false,
-      "id": "xH7ytgsoJ3d"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "YLxv92NmyFD" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 12,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "AdjTd5AchEe"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "pf27agpzDak" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 19,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "ggYZJPPMGFt"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "z6u0MJRMxOw" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 1,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Az9Eb04yuGu"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "XioJoxZsHVn" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 13,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "gJs0ysiQ9hP"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "eqSFoW6vuam" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 0,
-      "displayInReports": true,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "CYXTkeKZyZD"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "HAOSMsp1TXB" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 14,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "pHOCD0bg5S3"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "kDreDTHEauZ" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 16,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "CHpQumdteEx"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "jR58BZSMB6B" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 11,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Nc3jmWKtgII"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "wetRbzCTyYO" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 24,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "gD0qWQeTjxH"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "m75JpouZBy8" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 20,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "hA6Y8zzDMsk"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "eb7SYR3EHEZ" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 2,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "SzSrqCNGDBT"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "z3Qe8czE7LE" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 26,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "hyslcRQpYwU"
+      "id": "eWFajkJvoU9"
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
@@ -1184,32 +1962,6 @@
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "PCoXOnxAzwr" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 10,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "Wytm3NQKX6d"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
-      "dataElement": { "id": "QRaMM9LMM3y" },
-      "compulsory": false,
-      "allowProvidedElsewhere": false,
-      "sortOrder": 17,
-      "displayInReports": false,
-      "allowFutureDate": false,
-      "renderOptionsAsRadio": false,
-      "skipSynchronization": false,
-      "skipAnalytics": false,
-      "id": "eWFajkJvoU9"
-    },
-    {
-      "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "nEAFd0oKJzb" },
       "compulsory": false,
       "allowProvidedElsewhere": false,
@@ -1223,6 +1975,32 @@
     },
     {
       "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "WvwRmFG7udm" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 4,
+      "displayInReports": true,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "MmxLKlR30wU"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
+      "dataElement": { "id": "YLxv92NmyFD" },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 12,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "AdjTd5AchEe"
+    },
+    {
+      "programStage": { "id": "VdBma23iRTw" },
       "dataElement": { "id": "jDSCfb245G5" },
       "compulsory": false,
       "allowProvidedElsewhere": false,
@@ -1233,706 +2011,6 @@
       "skipSynchronization": false,
       "skipAnalytics": false,
       "id": "q0jUzjJPXEZ"
-    }
-  ],
-  "dataElements": [
-    {
-      "code": "FCA_005",
-      "name": "FCA_DHIS2 path",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_DHIS2 path",
-      "formName": "DHIS2 path",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "eqSFoW6vuam",
-      "attributeValues": []
-    },
-    {
-      "name": "FCA_Approval status",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Approval status",
-      "formName": "Approval status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "optionSet": { "id": "GvCWttSR2pv" },
-      "id": "p4m3y1jLgpv",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_001",
-      "name": "FCA_Name",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Nom de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Nombre del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Nome da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Tên cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ຊື່ສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Facility name",
-      "formName": "Facility name",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "z6u0MJRMxOw",
-      "attributeValues": []
-    },
-    {
-      "name": "FCA_Synced",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Synced",
-      "formName": "Sync status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TRUE_ONLY",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "m75JpouZBy8",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_007",
-      "name": "FCA_Translations",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Translations",
-      "formName": "Translations",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "pf27agpzDak",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_011",
-      "name": "FCA_Opening date",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Date d'ouverture de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Fecha de apertura del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Data de abertura da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Ngày mở cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ວັນທີເລີ້ມບໍລິການຂອງສະຖານທີ່ສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Opening date",
-      "formName": "Facility opening date",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "PCoXOnxAzwr",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_009",
-      "name": "FCA_Image",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Image de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Imagen del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Imagem da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Hình ảnh cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ຮູບພາບສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Facility Image",
-      "formName": "Facility Image",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "IMAGE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "QRaMM9LMM3y",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_003",
-      "name": "FCA_Code",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Code de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Código del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Código da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Mã cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ລະຫັດສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Facility code",
-      "formName": "Facility code",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "nEAFd0oKJzb",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_010",
-      "name": "FCA_Description",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Description de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Descripción del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Descrição da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Mô tả cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ລາຍລະອຽດຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Facility Description",
-      "formName": "Facility Description",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "L5YKpJEzCR1",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_012",
-      "name": "FCA_Closing date",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Date de fermeture de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Fecha de cierre del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Data de encerramento da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Ngày đóng cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ວັນ​ທີ​ສະຖານທີ່ບໍລິການສາທາລະນະສຸກປິດໃຫ້ບໍລິການ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Closing date",
-      "formName": "Facility closing date",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jR58BZSMB6B",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_018",
-      "name": "FCA_Url",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "URL de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "URL del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "URL da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "URL của cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "URL ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Url",
-      "formName": "Facility Url",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "kDreDTHEauZ",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_Aprby",
-      "name": "FCA_Approved by",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Approved by",
-      "formName": "Approved by",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jmUQ1B95ZP9",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_016",
-      "name": "FCA_Contact person",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Personne à contacter à l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Persona de contacto del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Pessoa de contacto da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Người liên hệ cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ຜູ້ປະສານງານຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Contact person",
-      "formName": "Facility Contact person",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "XioJoxZsHVn",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_017",
-      "name": "FCA_Attributevalues",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Attributevalues",
-      "formName": "Attributevalues",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "rMnWeGTBnKo",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_004",
-      "name": "FCA_DHIS2 UID",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_DHIS2 UID",
-      "formName": "DHIS2 UID",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jDSCfb245G5",
-      "attributeValues": []
-    },
-    {
-      "code": "FC:INF",
-      "name": "FCA_Is new facility",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Is new facility",
-      "formName": "Is new facility",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TRUE_ONLY",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "guutPq3seaj",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_015",
-      "name": "FCA_Email",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "E-mail de contact de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Correo electrónico de contacto del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "E-mail de contacto da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Email liên hệ cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ອີເມວຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Email",
-      "formName": "Facility contact email",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "Wno4M1rmwHr",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_Aprat",
-      "name": "FCA_Approved at",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Approved at",
-      "formName": "Approved at",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "DATE",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "z3Qe8czE7LE",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_002",
-      "name": "FCA_Short name",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Nom abrégé de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Nombre corto del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Nome abreviado da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Tên viết tắt của cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ຊື່ຫຍໍ້ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Facility short name",
-      "formName": "Facility short name",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "eb7SYR3EHEZ",
-      "attributeValues": []
-    },
-    {
-      "name": "FCA_Active status",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Statut" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Estado operativo" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Estado operativo" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Trạng thái hoạt động" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ສະຖານະຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_FC:Active status",
-      "formName": "Active status",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "optionSet": { "id": "It38VvS3E2c" },
-      "id": "WvwRmFG7udm",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_014",
-      "name": "FCA_Address",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Adresse de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Dirección del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Endereço da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Địa chỉ cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ທີ່ຢູ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Address",
-      "formName": "Facility Address",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "LONG_TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "YLxv92NmyFD",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_RR",
-      "name": "FCA_Reason for Reject",
-      "translations": [],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Reason for Reject",
-      "formName": "Reason for Reject",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "wetRbzCTyYO",
-      "attributeValues": []
-    },
-    {
-      "code": "FCA_013",
-      "name": "FCA_Phone",
-      "translations": [
-        { "property": "FORM_NAME", "locale": "fr", "value": "Numéro de téléphone de l'établissement de santé" },
-        { "property": "FORM_NAME", "locale": "es", "value": "Número de contacto del centro de salud" },
-        { "property": "FORM_NAME", "locale": "pt", "value": "Número de contacto da Unidade de Saúde" },
-        { "property": "FORM_NAME", "locale": "vi", "value": "Số điện thoại liên hệ cơ sở y tế" },
-        { "property": "FORM_NAME", "locale": "lo", "value": "ເບີໂທຕິດຕໍ່ຂອງສະຖານທີ່ບໍລິການສາທາລະນະສຸກ" }
-      ],
-      "sharing": {
-        "owner": "GOLswS44mh8",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_Phone",
-      "formName": "Facility contact number",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "HAOSMsp1TXB",
-      "attributeValues": []
     }
   ],
   "userGroups": [

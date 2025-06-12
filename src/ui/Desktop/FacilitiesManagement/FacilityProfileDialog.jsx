@@ -151,7 +151,7 @@ const FacilityProfileDialog = () => {
         tei: selectedFacility.tei,
         enr: selectedFacility.enr,
         status: "ACTIVE",
-        occurredAt: format(new Date(), "yyyy-MM-dd")
+        occurredAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS")
       });
     }
   }, [selectedFacility ? selectedFacility[UID] : "", selectedFacility.lastUpdated]);
@@ -192,7 +192,8 @@ const FacilityProfileDialog = () => {
     currentFacility.completedAt = format(new Date(), "yyyy-MM-dd");
     currentFacility.updatedBy = {
       firstName: me.firstName,
-      surname: me.surname
+      surname: me.surname,
+      username: me.username
     };
     save(currentFacility);
     const convertedEvent = convertToDhis2Event(currentFacility, program);

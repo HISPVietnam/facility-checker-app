@@ -1,12 +1,4 @@
-import {
-  faCheck,
-  faLanguage,
-  faLayerGroup,
-  faPenToSquare,
-  faRotate,
-  faScrewdriverWrench,
-  faUsersGear,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faLanguage, faLayerGroup, faPenToSquare, faRotate, faScrewdriverWrench, faUsersGear } from "@fortawesome/free-solid-svg-icons";
 
 const DATA_ELEMENTS = {
   PATH: "eqSFoW6vuam",
@@ -18,6 +10,8 @@ const DATA_ELEMENTS = {
   TRANSLATIONS: "pf27agpzDak",
   APPROVED_BY: "jmUQ1B95ZP9",
   APPROVED_AT: "z3Qe8czE7LE",
+  REJECTED_BY: "LSn3R8HJuFp",
+  REJECTED_AT: "bLlrOgPdBvD",
   REASON_FOR_REJECT: "wetRbzCTyYO",
   ACTIVE_STATUS: "WvwRmFG7udm",
   IS_NEW_FACILITY: "guutPq3seaj",
@@ -32,12 +26,12 @@ const DATA_ELEMENTS = {
   ADDRESS: "YLxv92NmyFD",
   PHONE_NUMBER: "HAOSMsp1TXB",
   TRANSLATIONS: "pf27agpzDak",
-  IMAGE: "QRaMM9LMM3y",
+  IMAGE: "QRaMM9LMM3y"
 };
 const TRACKED_ENTITY_ATTRIBUTES = {
   UID: "prbjtVvKNet",
   ACTIVE_STATUS: "PUYl7QIbEov",
-  ATTRIBUTE_CODE: "d9FXpa9ndGO",
+  ATTRIBUTE_CODE: "d9FXpa9ndGO"
 };
 const TRACKED_ENTITY_TYPE = "ER5qgJDCfUh";
 const PROFILE_LOGS_PROGRAM_STAGE_ID = "VdBma23iRTw";
@@ -50,102 +44,94 @@ const HIDDEN_DATA_ELEMENTS = [
   DATA_ELEMENTS.APPROVAL_STATUS,
   DATA_ELEMENTS.APPROVED_BY,
   DATA_ELEMENTS.APPROVED_AT,
+  DATA_ELEMENTS.REJECTED_BY,
+  DATA_ELEMENTS.REJECTED_AT,
   DATA_ELEMENTS.REASON_FOR_REJECT,
-  DATA_ELEMENTS.IS_NEW_FACILITY,
+  DATA_ELEMENTS.IS_NEW_FACILITY
 ];
 
-const MANDATORY_FIELDS = [
-  DATA_ELEMENTS.NAME,
-  DATA_ELEMENTS.PATH,
-  DATA_ELEMENTS.SHORT_NAME,
-  DATA_ELEMENTS.OPENING_DATE,
-];
+const MANDATORY_FIELDS = [DATA_ELEMENTS.NAME, DATA_ELEMENTS.PATH, DATA_ELEMENTS.SHORT_NAME, DATA_ELEMENTS.OPENING_DATE];
 
 const CUSTOM_COLUMNS_LIST_VIEW = [
   {
     id: "status",
     name: "status",
     optionSet: null,
-    position: 0,
+    position: 0
   },
   {
     id: "coordinates",
     name: "coordinates",
     optionSet: null,
-    position: 2,
-  },
+    position: 2
+  }
 ];
 
 const BASE_LAYER_TYPES = {
   satellite: {
     attribution: `&copy; <a href="http://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community`,
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
   },
   normal: {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`,
-    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png",
-  },
+    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"
+  }
 };
 
 const APPROVAL_FILTERS = [
   { id: "approved" },
+  { id: "rejected" },
   { id: "pending" },
   {
-    id: "isNewFacility",
-  },
+    id: "isNewFacility"
+  }
 ];
 
 const SYNCHRONIZATION_FILTERS = [
   { id: "synced" },
   { id: "notYetSynced" },
   {
-    id: "isNewFacility",
-  },
+    id: "isNewFacility"
+  }
 ];
 
-const STEPS = [
-  "welcome",
-  "selectGroupSets",
-  "setupAuthorities",
-  "summary",
-  "install",
-];
+const STEPS = ["welcome", "selectGroupSets", "setupAuthorities", "summary", "install"];
 const APP_ROLES = [
   {
     name: "captureRole",
     description: "captureRoleDescription",
     borderColor: "border-cyan-700",
     color: "text-cyan-700",
-    icon: faPenToSquare,
+    icon: faPenToSquare
   },
   {
     name: "approvalRole",
     description: "approvalRoleDescription",
     borderColor: "border-green-700",
     color: "text-green-700",
-    icon: faCheck,
+    icon: faCheck
   },
   {
     name: "synchronizationRole",
     description: "synchronizationRoleDescription",
     borderColor: "border-red-700",
     color: "text-red-700",
-    icon: faRotate,
+    icon: faRotate
   },
   {
     name: "adminRole",
     description: "adminRoleDescription",
     borderColor: "border-amber-600",
     color: "text-amber-600",
-    icon: faScrewdriverWrench,
-  },
+    icon: faScrewdriverWrench
+  }
 ];
 
 const USER_GROUPS = {
   CAPTURE: "m6GidmfEK48",
   APPROVAL: "xd865kZFSRw",
   SYNCHRONIZATION: "shYXBFb3lpw",
-  ADMIN: "MJK6n5PLXM6",
+  ADMIN: "MJK6n5PLXM6"
 };
 
 const USER_ROLE = "WdelLCFTyqe";
@@ -164,14 +150,14 @@ const MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE = {
   [DATA_ELEMENTS.SHORT_NAME]: "shortName",
   [DATA_ELEMENTS.ACTIVE_STATUS]: "active",
   [DATA_ELEMENTS.ADDRESS]: "address",
-  [DATA_ELEMENTS.PHONE_NUMBER]: "phoneNumber",
+  [DATA_ELEMENTS.PHONE_NUMBER]: "phoneNumber"
 };
 
 const DATA_STORE_NAMESPACE = "fca";
 
 const CONFIGURATION_SUB_MODULES = [
   { key: "translations", icon: faLanguage },
-  { key: "authorities", icon: faUsersGear },
+  { key: "authorities", icon: faUsersGear }
   // { key: "orgUnitGroupSets", icon: faLayerGroup }
 ];
 
@@ -261,7 +247,7 @@ const NATIVE_LANGUAGES = {
   xh: { name: "isiXhosa", flag: "za" },
   yi: { name: "ייִדיש", flag: "il" },
   zh: { name: "中文", flag: "cn" },
-  zu: { name: "isiZulu", flag: "za" },
+  zu: { name: "isiZulu", flag: "za" }
 };
 const DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST = 40;
 const DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST = 6;
@@ -286,5 +272,5 @@ export {
   CONFIGURATION_SUB_MODULES,
   NATIVE_LANGUAGES,
   DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST,
-  DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST,
+  DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST
 };

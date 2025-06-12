@@ -6,7 +6,8 @@ import useFacilityCheckModuleStore from "./facilityCheckModule";
 import _ from "lodash";
 import { format } from "date-fns";
 import { generateUid } from "@/utils";
-const { UID, APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, PATH, ACTIVE_STATUS, IS_NEW_FACILITY } = DATA_ELEMENTS;
+const { UID, APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, PATH, ACTIVE_STATUS, IS_NEW_FACILITY, REJECTED_BY, REJECTED_AT, REASON_FOR_REJECT } =
+  DATA_ELEMENTS;
 
 const useDataStore = create((set) => ({
   teis: [],
@@ -96,7 +97,8 @@ const useDataStore = create((set) => ({
               state.facilities[foundFacilityIndex].completedAt = event.completedAt;
               state.facilities[foundFacilityIndex].updatedBy = {
                 firstName: me.firstName,
-                surname: me.surname
+                surname: me.surname,
+                username: me.username
               };
             }
             if (foundActiveEventIndex !== -1) {
@@ -116,7 +118,8 @@ const useDataStore = create((set) => ({
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].completedAt = event.completedAt;
                 state.facilities[foundFacilityIndex].events[foundActiveEventIndex].updatedBy = {
                   firstName: me.firstName,
-                  surname: me.surname
+                  surname: me.surname,
+                  username: me.username
                 };
               }
             } else {
@@ -143,6 +146,28 @@ const useDataStore = create((set) => ({
             state.facilities[foundFacilityIndex][APPROVAL_STATUS] = "approved";
             state.facilities[foundFacilityIndex][APPROVED_BY] = username;
             state.facilities[foundFacilityIndex][APPROVED_AT] = now;
+            state.facilities[foundFacilityIndex].isPending = false;
+          }
+        })
+      ),
+    reject: (facility, reasonForReject) =>
+      set(
+        produce((state) => {
+          const me = useMetadataStore.getState().me;
+          const { username } = me;
+          const now = format(new Date(), "yyyy-MM-dd");
+          const foundFacilityIndex = state.facilities.findIndex((f) => f[UID] === facility[UID]);
+          if (foundFacilityIndex !== -1) {
+            const foundPendingEventIndex = state.facilities[foundFacilityIndex].events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][REJECTED_BY] = username;
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][REJECTED_AT] = now;
+            state.facilities[foundFacilityIndex].events[foundPendingEventIndex][REASON_FOR_REJECT] = reasonForReject;
+            state.facilities[foundFacilityIndex][APPROVAL_STATUS] = "rejected";
+            state.facilities[foundFacilityIndex][REJECTED_BY] = username;
+            state.facilities[foundFacilityIndex][REJECTED_AT] = now;
+            state.facilities[foundFacilityIndex][REASON_FOR_REJECT] = reasonForReject;
+            state.facilities[foundFacilityIndex].isPending = false;
           }
         })
       )

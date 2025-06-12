@@ -98,6 +98,7 @@ export default {
   buildRevision: "Revisão de construção",
   notYetSynced: "Ainda não está sincronizado",
   approved: "Aprovado",
+  rejected: "Rejected",
   isNewFacility: "É uma nova instalação",
   clickToView: "Clica para visualizar",
   synced: "Sincronizado",
