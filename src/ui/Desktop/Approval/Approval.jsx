@@ -1,18 +1,40 @@
 import { useEffect, useState } from "react";
-import { DataTable, DataTableHead, DataTableRow, DataTableBody, DataTableCell, DataTableColumnHeader } from "@dhis2/ui";
+import {
+  DataTable,
+  DataTableHead,
+  DataTableRow,
+  DataTableBody,
+  DataTableCell,
+  DataTableColumnHeader,
+} from "@dhis2/ui";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { DATA_ELEMENTS } from "@/const";
-import { Pending, New, Approved, NotYetSynced, Rejected } from "@/ui/common/Labels";
+import {
+  Pending,
+  New,
+  Approved,
+  NotYetSynced,
+  Rejected,
+} from "@/ui/common/Labels";
 import DataValueLabel from "@/ui/common/DataValueLabel";
 import DataValueText from "@/ui/common/DataValueText";
 import useDataStore from "@/states/data";
 import useApprovalModuleStore from "@/states/approvalModule";
 import PendingFacilityDialog from "./PendingFacilityDialog";
 import useMetadataStore from "@/states/metadata";
-const { UID, NAME, APPROVAL_STATUS, SYNCED, IS_NEW_FACILITY, PATH } = DATA_ELEMENTS;
-const columns = [UID, NAME, "latitude", "longitude", APPROVAL_STATUS, SYNCED, "dateOfRequest"];
+const { UID, NAME, APPROVAL_STATUS, SYNCED, IS_NEW_FACILITY, PATH } =
+  DATA_ELEMENTS;
+const columns = [
+  UID,
+  NAME,
+  "latitude",
+  "longitude",
+  APPROVAL_STATUS,
+  SYNCED,
+  "dateOfRequest",
+];
 
 const Approval = () => {
   const { t } = useTranslation();
@@ -23,37 +45,49 @@ const Approval = () => {
     useShallow((state) => ({
       selectedOrgUnit: state.selectedOrgUnit,
       currentFilters: state.filters,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
   const { selectFacility, resetFilters, setIsReadOnly } = actions;
   //local state
   const [pendingFacilityDialog, setPendingFacilityDialog] = useState(false);
-
-  const filterApprovalFacilities = (facilities) => {
-    const filterByIsNewFacility = (facility) => {
+  const filterApprovalFacilityEvents = (facilityEvents) => {
+    const filterByIsNewFacility = (event) => {
       if (currentFilters.length === 0) {
-        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved" || facility[APPROVAL_STATUS] === "rejected";
+        return (
+          event[APPROVAL_STATUS] === "pending" ||
+          event[APPROVAL_STATUS] === "approved" ||
+          event[APPROVAL_STATUS] === "rejected"
+        );
       }
-      const isNewFacility = facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
+      const isNewFacility =
+        event[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
       return currentFilters.includes(isNewFacility);
     };
-    const filterByApprovalStatus = (facility) => {
+    const filterByApprovalStatus = (event) => {
       if (currentFilters.length === 0) {
-        return facility[APPROVAL_STATUS] === "pending" || facility[APPROVAL_STATUS] === "approved" || facility[APPROVAL_STATUS] === "rejected";
+        return (
+          event[APPROVAL_STATUS] === "pending" ||
+          event[APPROVAL_STATUS] === "approved" ||
+          event[APPROVAL_STATUS] === "rejected"
+        );
       }
-      const approvalStatus = facility[APPROVAL_STATUS];
+      const approvalStatus = event[APPROVAL_STATUS];
       return currentFilters.includes(approvalStatus);
     };
-    const filterByOrgUnit = (facility) => {
+    const filterByOrgUnit = (event) => {
       if (!selectedOrgUnit) {
         return true;
       }
-      const facilityPath = facility[PATH];
+      const facilityPath = event[PATH];
+      if (!facilityPath) return false;
       return facilityPath.includes(selectedOrgUnit.id);
     };
-    return facilities.filter((facility) => {
-      return (filterByApprovalStatus(facility) || filterByIsNewFacility(facility)) && filterByOrgUnit(facility);
+    return facilityEvents.filter((event) => {
+      return (
+        (filterByApprovalStatus(event) || filterByIsNewFacility(event)) &&
+        filterByOrgUnit(event)
+      );
     });
   };
 
@@ -66,7 +100,10 @@ const Approval = () => {
 
   return (
     <div className="w-full h-full p-1">
-      <PendingFacilityDialog open={pendingFacilityDialog} setPendingFacilityDialog={setPendingFacilityDialog} />
+      <PendingFacilityDialog
+        open={pendingFacilityDialog}
+        setPendingFacilityDialog={setPendingFacilityDialog}
+      />
       <DataTable scrollHeight="100%">
         <DataTableHead>
           <DataTableRow>
@@ -80,14 +117,12 @@ const Approval = () => {
           </DataTableRow>
         </DataTableHead>
         <DataTableBody>
-          {filterApprovalFacilities(facilities).map((facility) => {
+          {facilities.map((facility) => {
             // const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
             // const foundApprovedEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "approved");
             // const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
-            const filtered = facility.events.filter(
-              (event) => event[APPROVAL_STATUS] === "approved" || event[APPROVAL_STATUS] === "pending" || event[APPROVAL_STATUS] === "rejected"
-            );
-            return filtered.map((row) => {
+
+            return filterApprovalFacilityEvents(facility.events).map((row) => {
               return (
                 <DataTableRow
                   className="cursor-pointer"
@@ -100,7 +135,13 @@ const Approval = () => {
                     if (column === "dateOfRequest") {
                       return (
                         <DataTableCell>
-                          <DataValueText dataElement="completedAt" value={format(new Date(row.completedAt), "yyyy-MM-dd")} />
+                          <DataValueText
+                            dataElement="completedAt"
+                            value={format(
+                              new Date(row.completedAt),
+                              "yyyy-MM-dd"
+                            )}
+                          />
                         </DataTableCell>
                       );
                     } else {
@@ -115,16 +156,25 @@ const Approval = () => {
                           children.push(<Rejected>{t("rejected")}</Rejected>);
                         }
                         if (row[IS_NEW_FACILITY] === "true") {
-                          children.push(...[<>&nbsp;</>, <New>{t("newFacility")}</New>]);
+                          children.push(
+                            ...[<>&nbsp;</>, <New>{t("newFacility")}</New>]
+                          );
                         }
                       } else if (column === SYNCED) {
                         if (row[APPROVAL_STATUS] === "rejected") {
                           children = null;
                         } else if (!row[SYNCED]) {
-                          children = <NotYetSynced>{t("notYetSynced")}</NotYetSynced>;
+                          children = (
+                            <NotYetSynced>{t("notYetSynced")}</NotYetSynced>
+                          );
                         }
                       } else {
-                        children = <DataValueText dataElement={column} value={facility[column]} />;
+                        children = (
+                          <DataValueText
+                            dataElement={column}
+                            value={facility[column]}
+                          />
+                        );
                       }
                       return <DataTableCell>{children}</DataTableCell>;
                     }

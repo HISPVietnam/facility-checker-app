@@ -23,7 +23,7 @@ const ApprovalToolbar = () => {
     useShallow((state) => ({
       selectedOrgUnit: state.selectedOrgUnit,
       currentFilters: state.filters,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
   const { selectOrgUnit, toggleFilter } = actions;
@@ -51,14 +51,17 @@ const ApprovalToolbar = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left"
+            horizontal: "left",
           }}
         >
           <div className="flex p-2">
             <FilterSection title={t("hierarchy")}>
-              <FacilityHierarchy selectedOrgUnit={selectedOrgUnit} selectOrgUnit={selectOrgUnit} />
+              <FacilityHierarchy
+                selectedOrgUnit={selectedOrgUnit}
+                selectOrgUnit={selectOrgUnit}
+              />
             </FilterSection>
-            {/* <FilterSection title={t("filterForFacility")}>
+            <FilterSection title={t("filterForFacility")}>
               <FilterSubSection title={t("filterForFacility")}>
                 {APPROVAL_FILTERS.map((f) => {
                   const { id } = f;
@@ -74,7 +77,7 @@ const ApprovalToolbar = () => {
                   );
                 })}
               </FilterSubSection>
-            </FilterSection> */}
+            </FilterSection>
           </div>
         </Popover>
       )}
