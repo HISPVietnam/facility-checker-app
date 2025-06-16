@@ -57,57 +57,34 @@ const Synchronization = () => {
   const me = useMetadataStore((state) => state.me);
   const { resetFilters, toggleFilter, selectFacilities, setIsReadOnly } =
     actions;
+  const facilityEvents = facilities.map((f) => f.events).flat();
 
-  const filterSyncFacilities = (facilities) => {
-    const filterByIsNewFacility = (facility) => {
-      const isNewFacility =
-        facility[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
-      return currentFilters.includes(isNewFacility);
-    };
-    const filterBySyncStatus = (facility) => {
-      const syncStatus =
-        facility[SYNCED] === "true" ? "synced" : "notYetSynced";
-      return currentFilters.includes(syncStatus);
-    };
-    const filterByOrgUnit = (facility) => {
-      if (!selectedOrgUnit) {
-        return true;
-      }
-      const facilityPath = facility[PATH];
-      return facilityPath.includes(selectedOrgUnit.id);
-    };
-    return facilities.filter(
-      (facility) => facility[APPROVAL_STATUS] === "approved"
-    );
-    //   .filter((facility) => {
-    //     return (
-    //       (filterBySyncStatus(facility) || filterByIsNewFacility(facility)) &&
-    //       filterByOrgUnit(facility)
-    //     );
-    //   });
-  };
+  const filteredSyncFacilityEvents = facilities
+    .map((f) => f.events)
+    .flat()
+    .filter((event) => event[APPROVAL_STATUS] === "approved");
 
-  const handleCheckFacility = (facility) => {
+  const handleCheckFacility = (event) => {
     if (isReadOnly) return;
 
-    const isSelected = selectedFacilities.includes(facility.tei);
+    const isSelected = selectedFacilities.includes(event.event);
     const isSelectAll =
       !isSelected &&
-      [...selectedFacilities, facility.tei].length ===
-        filterSyncFacilities(facilities).length;
+      [...selectedFacilities, event.event].length ===
+        filteredSyncFacilityEvents.length;
     if (isSelected) {
       selectFacilities(
         selectedFacilities.filter(
-          (item) => item !== facility.tei && item !== "all"
+          (item) => item !== event.event && item !== "all"
         )
       );
       return;
     }
     if (isSelectAll) {
-      selectFacilities([...selectedFacilities, facility.tei, "all"]);
+      selectFacilities([...selectedFacilities, event.event, "all"]);
       return;
     }
-    selectFacilities([...selectedFacilities, facility.tei]);
+    selectFacilities([...selectedFacilities, event.event]);
   };
 
   useEffect(() => {
@@ -123,9 +100,7 @@ const Synchronization = () => {
           <DataTableRow>
             <DataTableColumnHeader fixed top="0">
               <Checkbox
-                disabled={
-                  filterSyncFacilities(facilities).length === 0 || isReadOnly
-                }
+                disabled={filteredSyncFacilityEvents.length === 0 || isReadOnly}
                 checked={selectedFacilities.includes("all")}
                 value={"all"}
                 onChange={() => {
@@ -134,8 +109,8 @@ const Synchronization = () => {
                       ? []
                       : [
                           "all",
-                          ...filterSyncFacilities(facilities).map(
-                            (facility) => facility.tei
+                          ...filteredSyncFacilityEvents.map(
+                            (event) => event.event
                           ),
                         ]
                   );
@@ -152,27 +127,18 @@ const Synchronization = () => {
           </DataTableRow>
         </DataTableHead>
         <DataTableBody>
-          {filterSyncFacilities(facilities).map((facility) => {
-            const foundPendingEvent = facility.events.find(
-              (event) => event[APPROVAL_STATUS] === "pending"
-            );
-            const foundApprovedEvent = facility.events.find(
-              (event) => event[APPROVAL_STATUS] === "approved"
-            );
-            const finalEvent = foundPendingEvent
-              ? foundPendingEvent
-              : foundApprovedEvent;
+          {filteredSyncFacilityEvents.map((event) => {
             return (
               <DataTableRow
                 className="cursor-pointer"
-                onClick={() => handleCheckFacility(facility)}
+                onClick={() => handleCheckFacility(event)}
               >
                 <DataTableCell>
                   <Checkbox
                     disabled={isReadOnly}
-                    checked={selectedFacilities.includes(facility.tei)}
-                    value={facility.tei}
-                    onChange={() => handleCheckFacility(facility)}
+                    checked={selectedFacilities.includes(event.event)}
+                    value={event.event}
+                    onChange={() => handleCheckFacility(event)}
                   />
                 </DataTableCell>
                 {columns.map((column) => {
@@ -182,7 +148,7 @@ const Synchronization = () => {
                         <DataValueText
                           dataElement="completedAt"
                           value={format(
-                            new Date(finalEvent.completedAt),
+                            new Date(event.completedAt),
                             "yyyy-MM-dd"
                           )}
                         />
@@ -192,18 +158,18 @@ const Synchronization = () => {
                     let children = null;
                     if (column === APPROVAL_STATUS) {
                       children = [];
-                      if (facility[column] === "pending") {
+                      if (event[column] === "pending") {
                         children.push(<Pending>{t("pending")}</Pending>);
-                      } else if (facility[column] === "approved") {
+                      } else if (event[column] === "approved") {
                         children.push(<Approved>{t("approved")}</Approved>);
                       }
-                      if (facility[IS_NEW_FACILITY] === "true") {
+                      if (event[IS_NEW_FACILITY] === "true") {
                         children.push(
                           ...[<>&nbsp;</>, <New>{t("newFacility")}</New>]
                         );
                       }
                     } else if (column === SYNCED) {
-                      if (!facility[SYNCED]) {
+                      if (!event[SYNCED]) {
                         children = (
                           <NotYetSynced>{t("notYetSynced")}</NotYetSynced>
                         );
@@ -212,7 +178,7 @@ const Synchronization = () => {
                       children = (
                         <DataValueText
                           dataElement={column}
-                          value={facility[column]}
+                          value={event[column]}
                         />
                       );
                     }
