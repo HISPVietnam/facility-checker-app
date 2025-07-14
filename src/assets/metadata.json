@@ -1416,11 +1416,11 @@
         },
         "public": "--------"
       },
-      "shortName": "Sync number",
+      "shortName": "FCA_Sync number",
       "formName": "Sync number",
       "legendSets": [],
       "aggregationType": "NONE",
-      "valueType": "TRUE_ONLY",
+      "valueType": "INTEGER_ZERO_OR_POSITIVE",
       "domainType": "TRACKER",
       "aggregationLevels": [],
       "zeroIsSignificant": false,
