@@ -1402,7 +1402,7 @@
       "attributeValues": []
     },
     {
-      "name": "FCA_Synced",
+      "name": "FCA_Sync number",
       "translations": [],
       "sharing": {
         "owner": "Syfgez4v6hZ",
@@ -1416,8 +1416,8 @@
         },
         "public": "--------"
       },
-      "shortName": "FCA_FCA_Synced",
-      "formName": "Sync status",
+      "shortName": "Sync number",
+      "formName": "Sync number",
       "legendSets": [],
       "aggregationType": "NONE",
       "valueType": "TRUE_ONLY",
