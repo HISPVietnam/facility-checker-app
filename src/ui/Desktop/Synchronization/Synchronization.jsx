@@ -27,7 +27,7 @@ const Synchronization = () => {
     .map((f) => f.events)
     .flat()
     .filter(
-      (event) => event[APPROVAL_STATUS] === "approved" && event[SYNC_NUMBER]
+      (event) => event[APPROVAL_STATUS] === "approved" && !event[SYNC_NUMBER]
     );
 
   useEffect(() => {
