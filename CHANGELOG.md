@@ -1,3 +1,18 @@
+## [1.11.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.10.0...v1.11.0) (2025-07-16)
+
+### Features
+
+* finalize synchronization function ([785869b](https://github.com/HISPVietnam/facility-checker-app/commit/785869be9ecb3f788ccf4cc32be6a50314473083))
+* finalize synchronization function (continue) ([a016295](https://github.com/HISPVietnam/facility-checker-app/commit/a01629534b1f01cc9fe30add8e14e367e5f65ccf))
+
+### Bug Fixes
+
+* change the value type for Sync number dataelement in metadata package ([02f966e](https://github.com/HISPVietnam/facility-checker-app/commit/02f966eca9e5512ef503eb0926376f28cd83059d))
+* issue of approval module filtering ([c291d59](https://github.com/HISPVietnam/facility-checker-app/commit/c291d597461454935fa366cb0c4f979f7378707f))
+* rename "synced" dataElement to "Sync number" in metadata package ([d696811](https://github.com/HISPVietnam/facility-checker-app/commit/d6968116ea1c75baf5b6caaa46ffeb1e65664e51))
+* wrong filtering for sync number in approval module ([19479bb](https://github.com/HISPVietnam/facility-checker-app/commit/19479bb6421c85268125e6c94f9e400816883eb6))
+* wrong list rendering in sync module ([3722ca9](https://github.com/HISPVietnam/facility-checker-app/commit/3722ca99b25a98eab26c9d8a307dcdb09d6b8aa6))
+
 ## [1.10.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.9.7...v1.10.0) (2025-06-12)
 
 ### Features
