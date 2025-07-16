@@ -62,7 +62,7 @@ const Approval = () => {
       return currentFilters.includes(approvalStatus);
     };
     const filterBySyncStatus = (event) => {
-      const syncStatus = event[SYNC_NUMBER] ? "synced" : "";
+      const syncStatus = Number(event[SYNC_NUMBER] || "0") ? "synced" : "";
       return currentFilters.includes(syncStatus);
     };
     const filterByOrgUnit = (event) => {
