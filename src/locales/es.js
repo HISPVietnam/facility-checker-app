@@ -36,22 +36,26 @@ export default {
   currentValue: "Valor actual",
   previousValue: "Valor anterior",
   applyForApproval: "Solicitar aprobación",
-  isPendingWarning: "Este establecimiento está en espera de aprobación, no se pueden modificar todos los valores.",
+  isPendingWarning:
+    "Este establecimiento está en espera de aprobación, no se pueden modificar todos los valores.",
   awaitingApprovalValue: "Nuevo valor (pendiente de aprobación)",
   noMatchFound: "¡No se ha encontrado ninguna coincidencia!",
   ok: "Aceptar",
   filters: "Filtros",
   filterForFacility: "Filtro por establecimiento",
   noCoordinates: "Sin coordenadas",
-  noCoordinatesTooltip: "Establecimientos sin coordenadas - vistas sólo en lista",
+  noCoordinatesTooltip:
+    "Establecimientos sin coordenadas - vistas sólo en lista",
   wrongLocation: "Fuera de los límites",
   wrongLocationTooltip: "Instalaciones fuera de su distrito/provincia asignada",
   tooCloseToEachOther: "Establecimento muy cercano",
   tooCloseToEachOtherTooltip: "Establecimientos cercanos entre sí (",
   multipleGroups: "Grupo de unidades múltiples",
-  multipleGroupsTooltip: "Los establecimientos pertenecen a varios grupos de orgunit en un conjunto de grupos de orgunit",
+  multipleGroupsTooltip:
+    "Los establecimientos pertenecen a varios grupos de orgunit en un conjunto de grupos de orgunit",
   notInGroup: "No está en ningún {{group}}",
-  notInGroupTooltip: "Los establecimientos que no están en ningún grupo pertenecen al conjunto de grupos {{group}}",
+  notInGroupTooltip:
+    "Los establecimientos que no están en ningún grupo pertenecen al conjunto de grupos {{group}}",
   approve: "Aprobar",
   reject: "Rechazar",
   pendingApprovalValues: "Valores pendientes de aprobación",
@@ -72,28 +76,38 @@ export default {
   nonSpatialFilters: "Filtros no espaciales para el establecimiento",
   notSentForApproval: "No ha sido enviado para su aprobación",
   waitingForApproval: "Esperando aprobación",
-  notSentForApprovalTooltip: "Instalaciones que aún no se han enviado para aprobación",
+  notSentForApprovalTooltip:
+    "Instalaciones que aún no se han enviado para aprobación",
   waitingForApprovalTooltip: "Establecimientos en espera de aprobación",
   set: "Configurar",
   startChoosingPoint: "Haga clic en el mapa para elegir la ubicación",
   dragTheMarker:
     "Haga clic en el mapa o arrastre el marcador para cambiar la ubicación, la ubicación debe estar dentro del establecimiento de salud matriz",
   apply: "Aplicar",
-  outsideBoundaryHelper: "Atención: estás moviendo el establecimiento fuera de los límites",
+  outsideBoundaryHelper:
+    "Atención: estás moviendo el establecimiento fuera de los límites",
   newFacility: "Nuevo establecimiento",
   value: "Valor",
-  selectPathFirst: "Seleccione el establecimiento matriz antes de elegir la ubicación",
+  selectPathFirst:
+    "Seleccione el establecimiento matriz antes de elegir la ubicación",
   newFacilityName: "",
   close: "Cerrar",
   parentNotAssignedToFcaProgram: "La matriz no está asignada al programa FCA",
-  pleaseSelectFacilityParent: "Por favor seleccione la matriz del establecimiento de salud",
-  facilityCannotHaveTheSameNameAsItsParent: "El establecimiento de salud no puede tener el mismo nombre que su establecimiento matriz",
-  facilityNameInSameParentHasBeenTaken: "Este nombre ha sido ya usado por el establecimiento matriz",
-  facilityCannotHaveTheSameShortNameAsItsParent: "El establecimiento de salud no puede tener el mismo nombre corto que su establecimiento matriz",
-  facilityShortNameInSameParentHasBeenTaken: "Este nombre corto del establecimiento se ha utilizado en la matriz",
-  thisCodeHasBeenTaken: "Este código de establecimiento ya está tomado. El código debe ser único",
+  pleaseSelectFacilityParent:
+    "Por favor seleccione la matriz del establecimiento de salud",
+  facilityCannotHaveTheSameNameAsItsParent:
+    "El establecimiento de salud no puede tener el mismo nombre que su establecimiento matriz",
+  facilityNameInSameParentHasBeenTaken:
+    "Este nombre ha sido ya usado por el establecimiento matriz",
+  facilityCannotHaveTheSameShortNameAsItsParent:
+    "El establecimiento de salud no puede tener el mismo nombre corto que su establecimiento matriz",
+  facilityShortNameInSameParentHasBeenTaken:
+    "Este nombre corto del establecimiento se ha utilizado en la matriz",
+  thisCodeHasBeenTaken:
+    "Este código de establecimiento ya está tomado. El código debe ser único",
   facilityHaveBeenSaved: "Los datos del establecimiento se han guardado",
-  mustBeInsideParentBoundaries: "La ubicación del establecimiento debe estar dentro de su matriz",
+  mustBeInsideParentBoundaries:
+    "La ubicación del establecimiento debe estar dentro de su matriz",
   version: "Versión",
   buildDate: "Fecha de compilación",
   buildRevision: "Revisión de compilación",
@@ -106,51 +120,69 @@ export default {
   back: "Atrás",
   next: "Siguiente",
   welcome: "Bienvenido",
-  selectGroupSets: "Seleccionar grupos de unidades organizativas de los establecimientos",
+  selectGroupSets:
+    "Seleccionar grupos de unidades organizativas de los establecimientos",
   welcomeToFacilityChecker: "Bienvenido a Facility Checker App",
-  welcomeParagraph1: "Hola {{fullName}}, parece que es la primera vez que ejecutas la aplicación. ¡Bienvenido a bordo!",
-  welcomeParagraph2: "Antes de comenzar, debemos establecer algunos requisitos previos para garantizar que todo funcione sin problemas.",
+  welcomeParagraph1:
+    "Hola {{fullName}}, parece que es la primera vez que ejecutas la aplicación. ¡Bienvenido a bordo!",
+  welcomeParagraph2:
+    "Antes de comenzar, debemos establecer algunos requisitos previos para garantizar que todo funcione sin problemas.",
   "welcomeParagraph2.1":
     "Este asistente de instalación le guiará a través del proceso de instalación. No le llevará mucho tiempo y le acompañaremos en todo momento. Si necesita actualizar los metadatos durante la instalación, haga clic en el botón Actualizar.",
-  welcomeParagraph3: "Antes de empezar, su usuario necesitará ciertos privilegios, como se indica a continuación:",
+  welcomeParagraph3:
+    "Antes de empezar, su usuario necesitará ciertos privilegios, como se indica a continuación:",
   refreshMetadata: "Actualizar metadatos",
   superuserRole: "Rol de usuario principal",
   accessToRootOrgUnit: "Acceso a la unidad de organización raíz (nivel 1)",
-  validWelcome: "Su usuario tiene todos los privilegios necesarios, haga clic en Siguiente para continuar.",
-  invalidWelcome: "Desafortunadamente, su usuario no tiene todos los privilegiosnecesarios, póngase en contacto con su administrador.",
+  validWelcome:
+    "Su usuario tiene todos los privilegios necesarios, haga clic en Siguiente para continuar.",
+  invalidWelcome:
+    "Desafortunadamente, su usuario no tiene todos los privilegiosnecesarios, póngase en contacto con su administrador.",
   selectGroupSetsParagraph1:
     "En este paso, debe seleccionar los grupos de la unidad organizativa que contienen todas los establecimientos de su instancia. Debe seleccionar al menos un grupo para continuar.",
-  skippedOrgUnits: "Las siguientes unidades orgánicas se omitirán para el módulo FCA, dado que su geometría no es un punto",
-  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "Se ha encontrado una unidad cuya geometría no es un punto y se ignorará:",
+  skippedOrgUnits:
+    "Las siguientes unidades orgánicas se omitirán para el módulo FCA, dado que su geometría no es un punto",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint:
+    "Se ha encontrado una unidad cuya geometría no es un punto y se ignorará:",
   summary: "Resumen",
   totalOrgUnits: "Total de unidades organizativas",
   willBeImported: "Se importará",
   willBeSkipped: "Se omitirá",
-  validSelectGroupSets: "Ha seleccionado los grupos, haga clic en Siguiente para continuar.",
-  invalidSelectGroupSets: "No se puede proceder, ya que no hay unidades disponibles para ser importadas al Módulo FCA como instalaciones.",
+  validSelectGroupSets:
+    "Ha seleccionado los grupos, haga clic en Siguiente para continuar.",
+  invalidSelectGroupSets:
+    "No se puede proceder, ya que no hay unidades disponibles para ser importadas al Módulo FCA como instalaciones.",
   setupAuthorities: "Configurar autoridades",
-  setupAuthoritiesParagraph1: "En este paso, configurará las autoridades necesarias para la aplicación de la siguiente manera",
+  setupAuthoritiesParagraph1:
+    "En este paso, configurará las autoridades necesarias para la aplicación de la siguiente manera",
   captureRole: "FCA - Captura",
   captureRoleDescription: "Users can add new or edit facility information.",
   approvalRole: "FCA - Aprobación",
   approvalRoleDescription: "Users can approve facility information.",
   synchronizationRole: "FCA - Sincronización",
-  synchronizationRoleDescription: "Users can push approved data to DHIS2 orgunit module.",
+  synchronizationRoleDescription:
+    "Users can push approved data to DHIS2 orgunit module.",
   adminRole: "FCA - Administrador",
   adminRoleDescription: "Users can add or update FCA users.",
-  setupAuthoritiesParagraph2: "Seleccione a continuación los usuarios para cada rol",
+  setupAuthoritiesParagraph2:
+    "Seleccione a continuación los usuarios para cada rol",
   selectUsersFor: "Seleccionar usuarios para",
   selectUsersUserGroupsFor: "",
-  validSetupAuthorities: "Ha configurado las autoridades, haga clic en Siguiente para continuar.",
-  summaryParagraph1: "En este paso revisaremos todos los datos y metadatos que serán importados al sistema como en la siguiente tabla:",
+  validSetupAuthorities:
+    "Ha configurado las autoridades, haga clic en Siguiente para continuar.",
+  summaryParagraph1:
+    "En este paso revisaremos todos los datos y metadatos que serán importados al sistema como en la siguiente tabla:",
   dataMetadata: "Datos / Metadatos",
   description: "Descripción",
   show: "Mostrar",
   facility: "Establecimiento de salud",
-  validSummary: "Si está de acuerdo con todo esto, haga clic en Siguiente para continuar.",
+  validSummary:
+    "Si está de acuerdo con todo esto, haga clic en Siguiente para continuar.",
   install: "Instalar",
-  installParagraph1: 'Este es el último paso , haga clic en el botón "Instalar" para iniciar el proceso de instalación.',
-  installParagraph2: "Se ha iniciado el proceso de instalación, no cierre la aplicación hasta que se haya completado.",
+  installParagraph1:
+    'Este es el último paso , haga clic en el botón "Instalar" para iniciar el proceso de instalación.',
+  installParagraph2:
+    "Se ha iniciado el proceso de instalación, no cierre la aplicación hasta que se haya completado.",
   installParagraph3:
     '¡Enhorabuena! , la instalación se ha realizado con éxito. Para que las autoridades funcionen correctamente, se le cerrará la sesión, le redirigiremos a la página de inicio de sesión. Vuelva a iniciar sesión para comenzar a utilizar la aplicación. Haga clic en "Aceptar" para finalizar la instalación.',
   importMetadata: "Importación de metadatos",
@@ -169,8 +201,16 @@ export default {
   exportAsJsonFile: "Exportar como JSON",
   exportAsExcelFile: "Exportar como Excel",
   importantNotice: "¡Aviso importante!",
-  noAuthoritiesNotice: "Parece que su usuario no tiene autorización para utilizar la aplicación, por favor contacte al administrador.",
+  noAuthoritiesNotice:
+    "Parece que su usuario no tiene autorización para utilizar la aplicación, por favor contacte al administrador.",
   selectOption: "",
   projectHomepage: "",
-  done: "Done"
+  done: "Done",
+  syncNotEmpty:
+    "There are {{total}} facilities need to be synchronized to the hierarchy.",
+  syncEmpty:
+    "Currently there are no facilities need to be synchronized to the hierarchy.",
+  syncSuccessfully: "Sync facilities successfully",
+  metadataProcessFailed: "Metadata sync process failed",
+  trackerProcessFailed: "Tracker sync process failed",
 };

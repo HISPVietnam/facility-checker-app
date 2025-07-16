@@ -37,22 +37,26 @@ export default {
   currentValue: "Current value",
   previousValue: "Previous value",
   applyForApproval: "Apply for approval",
-  isPendingWarning: "This facility is waiting for approval, all values cannot be modified",
+  isPendingWarning:
+    "This facility is waiting for approval, all values cannot be modified",
   awaitingApprovalValue: "New value (awaiting approval)",
   noMatchFound: "No match found!",
   ok: "OK",
   filters: "Filters",
   filterForFacility: "Filter for facility",
   noCoordinates: "No coordinates",
-  noCoordinatesTooltip: "Facilities with no Coordinates - viewed in list view only",
+  noCoordinatesTooltip:
+    "Facilities with no Coordinates - viewed in list view only",
   wrongLocation: "Outside boundary",
   wrongLocationTooltip: "Facilities outside their assigned district/province",
   tooCloseToEachOther: "Close proximity <2 km",
   tooCloseToEachOtherTooltip: "Facilities close to each other (<2 km)",
   multipleGroups: "Multiple orgunit group",
-  multipleGroupsTooltip: "Facilities belong to multiple Orgunit groups in a orgunit group set",
+  multipleGroupsTooltip:
+    "Facilities belong to multiple Orgunit groups in a orgunit group set",
   notInGroup: "Not in any {{group}}",
-  notInGroupTooltip: "Facilities not in any group belong to group set {{group}}",
+  notInGroupTooltip:
+    "Facilities not in any group belong to group set {{group}}",
   approve: "Approve",
   reject: "Reject",
   pendingApprovalValues: "Pending approval values",
@@ -77,9 +81,11 @@ export default {
   waitingForApprovalTooltip: "Facilities which are waiting for approval",
   set: "Set",
   startChoosingPoint: "Click on the map to start choosing the location",
-  dragTheMarker: "Click on the map or drag the marker to change the location, the location must be inside facility parent",
+  dragTheMarker:
+    "Click on the map or drag the marker to change the location, the location must be inside facility parent",
   apply: "Apply",
-  outsideBoundaryHelper: "Warning: you are moving the facility to be outside the boundary",
+  outsideBoundaryHelper:
+    "Warning: you are moving the facility to be outside the boundary",
   newFacility: "New facility",
   value: "Value",
   selectPathFirst: "Please select facility parent before choosing the location",
@@ -87,11 +93,16 @@ export default {
   close: "Close",
   parentNotAssignedToFcaProgram: "Parent is not assigned to FCA program",
   pleaseSelectFacilityParent: "Please select the parent of the facility",
-  facilityCannotHaveTheSameNameAsItsParent: "Facility cannot have the same name as it's parent",
-  facilityNameInSameParentHasBeenTaken: "This facility name has been taken in the same parent",
-  facilityCannotHaveTheSameShortNameAsItsParent: "Facility cannot have the same short name as it's parent",
-  facilityShortNameInSameParentHasBeenTaken: "This facility short name has been taken in the same parent",
-  thisCodeHasBeenTaken: "This facility code has been taken, code must be unique",
+  facilityCannotHaveTheSameNameAsItsParent:
+    "Facility cannot have the same name as it's parent",
+  facilityNameInSameParentHasBeenTaken:
+    "This facility name has been taken in the same parent",
+  facilityCannotHaveTheSameShortNameAsItsParent:
+    "Facility cannot have the same short name as it's parent",
+  facilityShortNameInSameParentHasBeenTaken:
+    "This facility short name has been taken in the same parent",
+  thisCodeHasBeenTaken:
+    "This facility code has been taken, code must be unique",
   facilityHaveBeenSaved: "Facility data bave been saved",
   mustBeInsideParentBoundaries: "Facility location must be inside it's parent",
   version: "Version",
@@ -108,50 +119,65 @@ export default {
   welcome: "Welcome",
   selectGroupSets: "Select group sets",
   welcomeToFacilityChecker: "Welcome to Facility Checker App",
-  welcomeParagraph1: "Hi {{fullName}} 👋 , it looks like this is your first time running the application — welcome aboard!",
-  welcomeParagraph2: "Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
+  welcomeParagraph1:
+    "Hi {{fullName}} 👋 , it looks like this is your first time running the application — welcome aboard!",
+  welcomeParagraph2:
+    "Before you get started, we need to set up a few prerequisites to ensure everything runs smoothly.",
   "welcomeParagraph2.1":
     "This installation wizard will guide you through each step of the installation process. It won't take long, and we'll be with you the whole way. During the installation if you need  to refresh the metadata, click Refresh button.",
-  welcomeParagraph3: "Before we start, your user will need certain privileges as follow:",
+  welcomeParagraph3:
+    "Before we start, your user will need certain privileges as follow:",
   refreshMetadata: "Refresh metadata",
   superuserRole: "Superuser role",
   accessToRootOrgUnit: "Access to root organisation unit (level 1)",
-  validWelcome: "Your user has all the needed privileges 👏 , click Next to proceed.",
-  invalidWelcome: "Unfortunately, your user does not have all the needed privileges 😞 , please contact your administrator.",
+  validWelcome:
+    "Your user has all the needed privileges 👏 , click Next to proceed.",
+  invalidWelcome:
+    "Unfortunately, your user does not have all the needed privileges 😞 , please contact your administrator.",
   selectGroupSets: "Select facility org unit group sets",
   selectGroupSetsParagraph1:
     "In this step, you need to select the orgunit groupset(s) which contain all the facilities in your instance. You must select at least one groupset to proceed.",
-  skippedOrgUnits: "These following orgunits will be skipped for FCA module, because it's geometry is not a Point",
-  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "Found an orgunit which geometry type is not a Point and will be ignored: ",
+  skippedOrgUnits:
+    "These following orgunits will be skipped for FCA module, because it's geometry is not a Point",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint:
+    "Found an orgunit which geometry type is not a Point and will be ignored: ",
   summary: "Summary",
   totalOrgUnits: "Total orgunits",
   willBeImported: "Will be imported",
   willBeSkipped: "Will be skipped",
-  validSelectGroupSets: "You have selected the groupset(s) 👏 , click Next to proceed.",
-  invalidSelectGroupSets: "There are no available org units to be imported to FCA Module as facilities 😞 , cannot proceed.",
+  validSelectGroupSets:
+    "You have selected the groupset(s) 👏 , click Next to proceed.",
+  invalidSelectGroupSets:
+    "There are no available org units to be imported to FCA Module as facilities 😞 , cannot proceed.",
   setupAuthorities: "Setup authorities",
-  setupAuthoritiesParagraph1: "In this step, you will setup the authorities which are needed for the app as follow",
+  setupAuthoritiesParagraph1:
+    "In this step, you will setup the authorities which are needed for the app as follow",
   captureRole: "FCA - Capture",
   captureRoleDescription: "Users can add new or edit facility information.",
   approvalRole: "FCA - Approval",
   approvalRoleDescription: "Users can approve facility information.",
   synchronizationRole: "FCA - Synchronization",
-  synchronizationRoleDescription: "Users can push approved data to DHIS2 orgunit module.",
+  synchronizationRoleDescription:
+    "Users can push approved data to DHIS2 orgunit module.",
   adminRole: "FCA - Admin",
   adminRoleDescription: "Users can add or update FCA users.",
   setupAuthoritiesParagraph2: "Please select the users for each role below",
   selectUsersFor: "Select users for",
   selectUsersUserGroupsFor: "Select users/userGroups for",
-  validSetupAuthorities: "You have setup the authorities 👏 , click Next to proceed.",
-  summaryParagraph1: "In this step, we will review all the data and metadata which will be imported to the system as in the table below:",
+  validSetupAuthorities:
+    "You have setup the authorities 👏 , click Next to proceed.",
+  summaryParagraph1:
+    "In this step, we will review all the data and metadata which will be imported to the system as in the table below:",
   dataMetadata: "Data / Metadata",
   description: "Description",
   show: "Show",
   facility: "Facility",
   validSummary: "If you are ok will all these 👍 , click Next to proceed.",
   install: "Install",
-  installParagraph1: "This is the final step 🏁, click Install button to start the installation process.",
-  installParagraph2: "Installation process has been started, please do not close the app until it's completed.",
+  installParagraph1:
+    "This is the final step 🏁, click Install button to start the installation process.",
+  installParagraph2:
+    "Installation process has been started, please do not close the app until it's completed.",
   installParagraph3:
     "Congratulations! 🎉🎉🎉, installation process has been done successfully. In order for the authorities to work properly, you will be logged out, we will redirect you to login page, please login again and you can start using the app. Click OK to conclude the installation.",
   importMetadata: "Importing metadata",
@@ -171,8 +197,16 @@ export default {
   exportAsJsonFile: "Export as JSON",
   exportAsExcelFile: "Export as Excel",
   importantNotice: "Important notice !!",
-  noAuthoritiesNotice: "It seems your user does not have any authorities to use the app, please contact the administrator.",
+  noAuthoritiesNotice:
+    "It seems your user does not have any authorities to use the app, please contact the administrator.",
   selectOption: "Select option...",
   projectHomepage: "Project homepage",
-  done: "Done"
+  done: "Done",
+  syncNotEmpty:
+    "There are {{total}} facilities need to be synchronized to the hierarchy.",
+  syncEmpty:
+    "Currently there are no facilities need to be synchronized to the hierarchy.",
+  syncSuccessfully: "Sync facilities successfully",
+  metadataProcessFailed: "Metadata sync process failed",
+  trackerProcessFailed: "Tracker sync process failed",
 };

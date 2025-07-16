@@ -36,22 +36,27 @@ export default {
   currentValue: "Valor actual",
   previousValue: "Valor anterior",
   applyForApproval: "Aplicar para aprovação",
-  isPendingWarning: "Esta instalação está a aguardar aprovação, todos os valores não podem ser modificados",
+  isPendingWarning:
+    "Esta instalação está a aguardar aprovação, todos os valores não podem ser modificados",
   awaitingApprovalValue: "Novo valor (aguardando aprovação)",
   noMatchFound: "Não foi encontrada nenhuma correspondência!",
   ok: "OK",
   filters: "Filtros",
   filterForFacility: "Filtro para instalação",
   noCoordinates: "Sem coordenadas",
-  noCoordinatesTooltip: "Instalações sem coordenadas - visualizadas apenas na lista de visulização",
+  noCoordinatesTooltip:
+    "Instalações sem coordenadas - visualizadas apenas na lista de visulização",
   wrongLocation: "Fora dos limites",
-  wrongLocationTooltip: "Instalações fora do distrito/província que lhes foi atribuído",
+  wrongLocationTooltip:
+    "Instalações fora do distrito/província que lhes foi atribuído",
   tooCloseToEachOther: "Proximidade próxima",
   tooCloseToEachOtherTooltip: "Instalações próximas uma da outra (",
   multipleGroups: "Grupo de orgunit múltiplos",
-  multipleGroupsTooltip: "As instalações pertencem a vários grupos Orgunit num conjunto de grupos Orgunit",
+  multipleGroupsTooltip:
+    "As instalações pertencem a vários grupos Orgunit num conjunto de grupos Orgunit",
   notInGroup: "Não está em nenhum {{group}}",
-  notInGroupTooltip: "As instalações que não pertencem a nenhum grupo pertencem ao conjunto de grupos {{group}}",
+  notInGroupTooltip:
+    "As instalações que não pertencem a nenhum grupo pertencem ao conjunto de grupos {{group}}",
   approve: "Aprovar",
   reject: "Rejeitar",
   pendingApprovalValues: "Valores pendentes para aprovação",
@@ -72,27 +77,37 @@ export default {
   nonSpatialFilters: "Filtros não espaciais para instalação",
   notSentForApproval: "Não enviado para aprovação ",
   waitingForApproval: "Aguardando por aprovação",
-  notSentForApprovalTooltip: "Instalações que ainda não foram enviadas para aprovação",
+  notSentForApprovalTooltip:
+    "Instalações que ainda não foram enviadas para aprovação",
   waitingForApprovalTooltip: "Instalações que aguardam aprovação",
   set: "Configurar",
   startChoosingPoint: "Clique no mapa para começar escolhendo a localização",
-  dragTheMarker: "Clica no mapa ou arraste o marcador para mudar a localização, a localização deve estar dentro da instalação ",
+  dragTheMarker:
+    "Clica no mapa ou arraste o marcador para mudar a localização, a localização deve estar dentro da instalação ",
   apply: "Aplicar",
-  outsideBoundaryHelper: "Atenção: você está a se mover da instalação para fora do limite",
+  outsideBoundaryHelper:
+    "Atenção: você está a se mover da instalação para fora do limite",
   newFacility: "Nova instalação",
   value: "Valor",
-  selectPathFirst: "Selecionar o parent da instalação antes de escolher o local",
+  selectPathFirst:
+    "Selecionar o parent da instalação antes de escolher o local",
   newFacilityName: "",
   close: "Fechar",
   parentNotAssignedToFcaProgram: "Parent não estão alocado ao programa  FCA",
   pleaseSelectFacilityParent: "Por favor selecione o parent da instalação",
-  facilityCannotHaveTheSameNameAsItsParent: "Instalação não pode ter o mesmo nome que o parent ",
-  facilityNameInSameParentHasBeenTaken: "O nome desta instalação foi adotado no mesmo parent",
-  facilityCannotHaveTheSameShortNameAsItsParent: "Instalação não pode ter o mesmo nome abreviado que o parent",
-  facilityShortNameInSameParentHasBeenTaken: "O nome abreviado desta instalação foi adotado no mesmo parent",
-  thisCodeHasBeenTaken: "Este código de instalação foi retirado, o código deve ser único",
+  facilityCannotHaveTheSameNameAsItsParent:
+    "Instalação não pode ter o mesmo nome que o parent ",
+  facilityNameInSameParentHasBeenTaken:
+    "O nome desta instalação foi adotado no mesmo parent",
+  facilityCannotHaveTheSameShortNameAsItsParent:
+    "Instalação não pode ter o mesmo nome abreviado que o parent",
+  facilityShortNameInSameParentHasBeenTaken:
+    "O nome abreviado desta instalação foi adotado no mesmo parent",
+  thisCodeHasBeenTaken:
+    "Este código de instalação foi retirado, o código deve ser único",
   facilityHaveBeenSaved: "Dados da instalação foram gravados",
-  mustBeInsideParentBoundaries: "A localização da instalação deve estar dentro do seu parent",
+  mustBeInsideParentBoundaries:
+    "A localização da instalação deve estar dentro do seu parent",
   version: "Versão",
   buildDate: "Data de construção",
   buildRevision: "Revisão de construção",
@@ -105,52 +120,69 @@ export default {
   back: "Voltar",
   next: "Novo valor",
   welcome: "Bem-vindo",
-  selectGroupSets: "Selecionar conjuntos de grupos de unidades de organização de instalações",
+  selectGroupSets:
+    "Selecionar conjuntos de grupos de unidades de organização de instalações",
   welcomeToFacilityChecker: "Bem-vindo à aplicação Facility Checker",
-  welcomeParagraph1: "Olá {{fullName}}, parece que esta é a primeira vez que está a executar a aplicação - bem-vindo a bordo!",
-  welcomeParagraph2: "Antes de começar, é necessário definir alguns pré-requisitos para garantir que tudo corra tranquilamente.",
+  welcomeParagraph1:
+    "Olá {{fullName}}, parece que esta é a primeira vez que está a executar a aplicação - bem-vindo a bordo!",
+  welcomeParagraph2:
+    "Antes de começar, é necessário definir alguns pré-requisitos para garantir que tudo corra tranquilamente.",
   "welcomeParagraph2.1":
     "Este assistente de instalação guiá-lo-á através de cada passo do processo de instalação. Não demorará muito tempo e acompanhá-lo-emos durante todo o processo. Durante a instalação, se precisar de atualizar os metadados, clique no botão Actualizar.",
-  welcomeParagraph3: "Antes de começarmos, o seu utilizador necessitará de determinados privilégios, como se segue:",
+  welcomeParagraph3:
+    "Antes de começarmos, o seu utilizador necessitará de determinados privilégios, como se segue:",
   refreshMetadata: "Actualizar metadado",
   superuserRole: "Função de superutilizador",
   accessToRootOrgUnit: "Acesso a unidade organizacional principal (nível 1)",
-  validWelcome: "O seu utilizador tem todos os privilégios necessários, clique em Seguinte para continuar.",
-  invalidWelcome: "Infelizmente, o seu utilizador não tem todos os privilégios necessários ˜ž , contacte o seu administrador.",
+  validWelcome:
+    "O seu utilizador tem todos os privilégios necessários, clique em Seguinte para continuar.",
+  invalidWelcome:
+    "Infelizmente, o seu utilizador não tem todos os privilégios necessários ˜ž , contacte o seu administrador.",
   selectGroupSetsParagraph1:
     "Nesta etapa, é necessário selecionar o(s) conjunto(s) de grupos orgunit que contêm todas as instalações da sua instância. É necessário selecionar pelo menos um conjunto de grupos para prosseguir.",
-  skippedOrgUnits: "Os seguintes orgunits serão ignorados para o módulo FCA, porque a sua geometria não é um Ponto",
-  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "Encontrou um orgunit cujo tipo de geometria não é um Ponto e será ignorado",
+  skippedOrgUnits:
+    "Os seguintes orgunits serão ignorados para o módulo FCA, porque a sua geometria não é um Ponto",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint:
+    "Encontrou um orgunit cujo tipo de geometria não é um Ponto e será ignorado",
   summary: "Sumário",
   totalOrgUnits: "Total de orgunits",
   willBeImported: "Será importado",
   willBeSkipped: "Será saltado",
-  validSelectGroupSets: "Selecionou o(s) conjunto(s) de grupos, clique em Seguinte para continuar.",
+  validSelectGroupSets:
+    "Selecionou o(s) conjunto(s) de grupos, clique em Seguinte para continuar.",
   invalidSelectGroupSets:
     "Não existem unidades orgânicas disponíveis para serem importadas para o módulo FCA como instalações ˜ž , não pode prosseguir.",
   setupAuthorities: "Configurar autoridades",
-  setupAuthoritiesParagraph1: "Nesta etapa, irá configurar as autoridades necessárias para a aplicação da seguinte forma",
+  setupAuthoritiesParagraph1:
+    "Nesta etapa, irá configurar as autoridades necessárias para a aplicação da seguinte forma",
   captureRole: "FCA - Captura",
   captureRoleDescription: "Users can add new or edit facility information.",
   approvalRole: "FCA - Aprovação",
   approvalRoleDescription: "Users can approve facility information.",
   synchronizationRole: "Sincronização - FCA",
-  synchronizationRoleDescription: "Users can push approved data to DHIS2 orgunit module.",
+  synchronizationRoleDescription:
+    "Users can push approved data to DHIS2 orgunit module.",
   adminRole: "Função do Administrador",
   adminRoleDescription: "Users can add or update FCA users.",
-  setupAuthoritiesParagraph2: "Por favor selecione os usuários para cada papel abaixo",
+  setupAuthoritiesParagraph2:
+    "Por favor selecione os usuários para cada papel abaixo",
   selectUsersFor: "Selecionar usuários para",
   selectUsersUserGroupsFor: "",
-  validSetupAuthorities: "Selecionou o(s) conjunto(s) de grupos, clique em Seguinte para continuar.",
-  summaryParagraph1: "Nesta etapa, iremos rever todos os dados e metadados que serão importados para o sistema, tal como indicado na tabela abaixo:",
+  validSetupAuthorities:
+    "Selecionou o(s) conjunto(s) de grupos, clique em Seguinte para continuar.",
+  summaryParagraph1:
+    "Nesta etapa, iremos rever todos os dados e metadados que serão importados para o sistema, tal como indicado na tabela abaixo:",
   dataMetadata: "Dados/Metadados",
   description: "Descrição",
   show: "Mostrar",
   facility: "Instalação",
-  validSummary: "Se estiver de acordo com tudo isto' , clique em Seguinte para continuar.",
+  validSummary:
+    "Se estiver de acordo com tudo isto' , clique em Seguinte para continuar.",
   install: "Instalar ",
-  installParagraph1: "Este é o passo final , clique no botão Instalar para iniciar o processo de instalação.",
-  installParagraph2: "O processo de instalação foi iniciado, não feche a aplicação até estar concluído.",
+  installParagraph1:
+    "Este é o passo final , clique no botão Instalar para iniciar o processo de instalação.",
+  installParagraph2:
+    "O processo de instalação foi iniciado, não feche a aplicação até estar concluído.",
   installParagraph3:
     "Parabéns!, o processo de instalação foi feito com sucesso. Para que as autoridades funcionem corretamente, você será desconectado, nós o redirecionaremos para a página de login, faça o login novamente e você poderá começar a usar o aplicativo. Clique em OK para concluir a instalação.",
   importMetadata: "Importar metadado",
@@ -169,8 +201,16 @@ export default {
   exportAsJsonFile: "Exportar em JSON",
   exportAsExcelFile: "Exportar em Excel",
   importantNotice: "Aviso importante ",
-  noAuthoritiesNotice: "Parece que o utilizador não tem autorização para utilizar a aplicação. Contacte o administrador.",
+  noAuthoritiesNotice:
+    "Parece que o utilizador não tem autorização para utilizar a aplicação. Contacte o administrador.",
   selectOption: "",
   projectHomepage: "",
-  done: "Done"
+  done: "Done",
+  syncNotEmpty:
+    "There are {{total}} facilities need to be synchronized to the hierarchy.",
+  syncEmpty:
+    "Currently there are no facilities need to be synchronized to the hierarchy.",
+  syncSuccessfully: "Sync facilities successfully",
+  metadataProcessFailed: "Metadata sync process failed",
+  trackerProcessFailed: "Tracker sync process failed",
 };
