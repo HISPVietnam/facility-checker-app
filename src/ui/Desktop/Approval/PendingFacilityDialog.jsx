@@ -1,8 +1,21 @@
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
 import CustomizedButton from "@/ui/common/Button";
-import { Approved, New, NotYetSynced, Pending, Rejected } from "@/ui/common/Labels";
-import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox, ButtonStrip } from "@dhis2/ui";
+import {
+  Approved,
+  New,
+  NotYetSynced,
+  Pending,
+  Rejected,
+} from "@/ui/common/Labels";
+import {
+  Modal,
+  ModalTitle,
+  ModalContent,
+  ModalActions,
+  NoticeBox,
+  ButtonStrip,
+} from "@dhis2/ui";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
@@ -11,7 +24,12 @@ import GeoJsonViewer from "@/ui/common/GeoJsonViewer";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
-import { getLatestValues, generateUid, convertToDhis2Event, findCustomAttributeValue } from "@/utils";
+import {
+  getLatestValues,
+  generateUid,
+  convertToDhis2Event,
+  findCustomAttributeValue,
+} from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS } from "@/const";
 import { postEvent } from "@/api/data";
@@ -29,19 +47,25 @@ const {
   NAME,
   PATH,
   IS_NEW_FACILITY,
-  SYNCED,
+  SYNC_NUMBER,
   ATTRIBUTE_VALUES,
   REJECTED_BY,
   REJECTED_AT,
-  REASON_FOR_REJECT
+  REASON_FOR_REJECT,
 } = DATA_ELEMENTS;
 
 const OldValue = ({ children }) => {
-  return <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>;
+  return (
+    <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>
+  );
 };
 
 const NewValue = ({ children }) => {
-  return <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">{children}</span>;
+  return (
+    <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">
+      {children}
+    </span>
+  );
 };
 
 const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
@@ -54,23 +78,38 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     useShallow((state) => ({
       program: state.program,
       me: state.me,
-      customAttributes: state.customAttributes
+      customAttributes: state.customAttributes,
     }))
   );
   const actions = useDataStore((state) => state.actions);
   const { approve, reject } = actions;
-  const { approvalModuleActions, selectedFacility, selectedEventId, isReadOnly } = useApprovalModuleStore(
+  const {
+    approvalModuleActions,
+    selectedFacility,
+    selectedEventId,
+    isReadOnly,
+  } = useApprovalModuleStore(
     useShallow((state) => ({
       approvalModuleActions: state.actions,
       selectedFacility: state.selectedFacility,
       selectedEventId: state.selectedEventId,
-      isReadOnly: state.isReadOnly
+      isReadOnly: state.isReadOnly,
     }))
   );
   const { selectFacility } = approvalModuleActions;
-  const foundPendingEvent = selectedFacility ? selectedFacility.events.find((event) => event[APPROVAL_STATUS] === "pending") : null;
-  const foundApprovedEvent = selectedFacility ? selectedFacility.events.find((event) => event[APPROVAL_STATUS] === "approved") : null;
-  const finalEvent = selectedFacility ? selectedFacility.events.find((event) => event.event === selectedEventId) : null;
+  const foundPendingEvent = selectedFacility
+    ? selectedFacility.events.find(
+        (event) => event[APPROVAL_STATUS] === "pending"
+      )
+    : null;
+  const foundApprovedEvent = selectedFacility
+    ? selectedFacility.events.find(
+        (event) => event[APPROVAL_STATUS] === "approved"
+      )
+    : null;
+  const finalEvent = selectedFacility
+    ? selectedFacility.events.find((event) => event.event === selectedEventId)
+    : null;
   const { dataElements } = program;
   const handleApprove = async () => {
     setLoading(true);
@@ -78,7 +117,9 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     const now = format(new Date(), "yyyy-MM-dd");
     approve(selectedFacility);
     const cloned = _.cloneDeep(selectedFacility);
-    const foundPendingEventIndex = cloned.events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
+    const foundPendingEventIndex = cloned.events.findIndex(
+      (event) => event[APPROVAL_STATUS] === "pending"
+    );
     cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "approved";
     cloned.events[foundPendingEventIndex][APPROVED_BY] = username;
     cloned.events[foundPendingEventIndex][APPROVED_AT] = now;
@@ -86,7 +127,10 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     cloned[APPROVED_BY] = username;
     cloned[APPROVED_AT] = now;
     selectFacility(cloned, selectedEventId);
-    const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
+    const convertedEvent = convertToDhis2Event(
+      cloned.events[foundPendingEventIndex],
+      program
+    );
     convertedEvent.orgUnit = selectedFacility.orgUnit;
     convertedEvent.trackedEntity = selectedFacility.tei;
     convertedEvent.enrollment = selectedFacility.enr;
@@ -100,7 +144,9 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     const now = format(new Date(), "yyyy-MM-dd");
     reject(selectedFacility, reasonForReject);
     const cloned = _.cloneDeep(selectedFacility);
-    const foundPendingEventIndex = cloned.events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
+    const foundPendingEventIndex = cloned.events.findIndex(
+      (event) => event[APPROVAL_STATUS] === "pending"
+    );
     cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
     cloned.events[foundPendingEventIndex][REJECTED_BY] = username;
     cloned.events[foundPendingEventIndex][REJECTED_AT] = now;
@@ -110,7 +156,10 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     cloned[REJECTED_AT] = now;
     cloned[REASON_FOR_REJECT] = reasonForReject;
     selectFacility(cloned, selectedEventId);
-    const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
+    const convertedEvent = convertToDhis2Event(
+      cloned.events[foundPendingEventIndex],
+      program
+    );
     convertedEvent.orgUnit = selectedFacility.orgUnit;
     convertedEvent.trackedEntity = selectedFacility.tei;
     convertedEvent.enrollment = selectedFacility.enr;
@@ -125,41 +174,69 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         <ModalContent>
           <div className="w-[1000px] h-[550px]">
             <div className="text-[15px]">
-              <DataValueLabel dataElement={NAME} />: <DataValueText dataElement={NAME} value={selectedFacility[NAME]} />
+              <DataValueLabel dataElement={NAME} />:{" "}
+              <DataValueText
+                dataElement={NAME}
+                value={selectedFacility[NAME]}
+              />
             </div>
             <div className="text-[15px]">
-              <DataValueLabel dataElement={PATH} />: <DataValueText dataElement={PATH} value={selectedFacility[PATH]} />
+              <DataValueLabel dataElement={PATH} />:{" "}
+              <DataValueText
+                dataElement={PATH}
+                value={selectedFacility[PATH]}
+              />
             </div>
             <div className="text-[15px]">
-              {t("dateOfRequest")}: {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
+              {t("dateOfRequest")}:{" "}
+              {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
             </div>
             <div className="text-[15px]">
               {t("requestedBy")}: {finalEvent.updatedBy.username}
             </div>
             {finalEvent[APPROVAL_STATUS] == "approved" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_BY} />: <DataValueText dataElement={APPROVED_BY} value={finalEvent[APPROVED_BY]} />
+                <DataValueLabel dataElement={APPROVED_BY} />:{" "}
+                <DataValueText
+                  dataElement={APPROVED_BY}
+                  value={finalEvent[APPROVED_BY]}
+                />
               </div>
             )}
             {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={REJECTED_BY} />: <DataValueText dataElement={REJECTED_BY} value={finalEvent[REJECTED_BY]} />
+                <DataValueLabel dataElement={REJECTED_BY} />:{" "}
+                <DataValueText
+                  dataElement={REJECTED_BY}
+                  value={finalEvent[REJECTED_BY]}
+                />
               </div>
             )}
             {finalEvent[APPROVAL_STATUS] == "approved" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_AT} />: <DataValueText dataElement={APPROVED_AT} value={finalEvent[APPROVED_AT]} />
+                <DataValueLabel dataElement={APPROVED_AT} />:{" "}
+                <DataValueText
+                  dataElement={APPROVED_AT}
+                  value={finalEvent[APPROVED_AT]}
+                />
               </div>
             )}
             {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={REJECTED_AT} />: <DataValueText dataElement={REJECTED_AT} value={finalEvent[REJECTED_AT]} />
+                <DataValueLabel dataElement={REJECTED_AT} />:{" "}
+                <DataValueText
+                  dataElement={REJECTED_AT}
+                  value={finalEvent[REJECTED_AT]}
+                />
               </div>
             )}
             {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
                 <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
-                <DataValueText dataElement={REASON_FOR_REJECT} value={finalEvent[REASON_FOR_REJECT]} />
+                <DataValueText
+                  dataElement={REASON_FOR_REJECT}
+                  value={finalEvent[REASON_FOR_REJECT]}
+                />
               </div>
             )}
 
@@ -184,28 +261,37 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                   <New>{t("newFacility")}</New>&nbsp;
                 </span>
               )}
-              {!finalEvent[SYNCED] && finalEvent[APPROVAL_STATUS] == "approved" && (
-                <span>
-                  <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
-                </span>
-              )}
+              {!finalEvent[SYNC_NUMBER] &&
+                finalEvent[APPROVAL_STATUS] == "approved" && (
+                  <span>
+                    <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
+                  </span>
+                )}
             </div>
             <br />
-            <div className="mb-1 font-bold w-full border-b-slate-300 border-b">{t("changedValues")}:</div>
+            <div className="mb-1 font-bold w-full border-b-slate-300 border-b">
+              {t("changedValues")}:
+            </div>
             {["latitude", "longitude", ...dataElements]
               .map((de) => {
                 const foundValue = finalEvent[de.id] || finalEvent[de];
                 return {
                   dataElement: de.id ? de.id : de,
-                  value: foundValue ? foundValue : ""
+                  value: foundValue ? foundValue : "",
                 };
               })
               .filter(
                 (dataValue) =>
                   dataValue.value &&
-                  ![APPROVAL_STATUS, APPROVED_BY, APPROVED_AT, REJECTED_BY, REJECTED_AT, REASON_FOR_REJECT, ATTRIBUTE_VALUES].includes(
-                    dataValue.dataElement
-                  )
+                  ![
+                    APPROVAL_STATUS,
+                    APPROVED_BY,
+                    APPROVED_AT,
+                    REJECTED_BY,
+                    REJECTED_AT,
+                    REASON_FOR_REJECT,
+                    ATTRIBUTE_VALUES,
+                  ].includes(dataValue.dataElement)
               )
               .map((dataValue) => {
                 return (
@@ -215,8 +301,17 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     </div>
                     <div className="flex items-center">
                       <OldValue>
-                        {selectedFacility.previousValues[dataValue.dataElement] ? (
-                          <DataValueText dataElement={dataValue.dataElement} value={selectedFacility.previousValues[dataValue.dataElement]} />
+                        {selectedFacility.previousValues[
+                          dataValue.dataElement
+                        ] ? (
+                          <DataValueText
+                            dataElement={dataValue.dataElement}
+                            value={
+                              selectedFacility.previousValues[
+                                dataValue.dataElement
+                              ]
+                            }
+                          />
                         ) : (
                           <i>{t("noValue")}</i>
                         )}
@@ -225,7 +320,10 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                       <FontAwesomeIcon fontSize={14} icon={faArrowRight} />
                       &nbsp;&nbsp;
                       <NewValue>
-                        <DataValueText dataElement={dataValue.dataElement} value={dataValue.value} />
+                        <DataValueText
+                          dataElement={dataValue.dataElement}
+                          value={dataValue.value}
+                        />
                       </NewValue>
                     </div>
                   </div>
@@ -233,9 +331,15 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
               })}
             {customAttributes.map((customAttribute) => {
               const { id, valueType } = customAttribute;
-              const value = findCustomAttributeValue(finalEvent[ATTRIBUTE_VALUES], id);
+              const value = findCustomAttributeValue(
+                finalEvent[ATTRIBUTE_VALUES],
+                id
+              );
               const oldValue = selectedFacility.previousValues[ATTRIBUTE_VALUES]
-                ? findCustomAttributeValue(selectedFacility.previousValues[ATTRIBUTE_VALUES], id)
+                ? findCustomAttributeValue(
+                    selectedFacility.previousValues[ATTRIBUTE_VALUES],
+                    id
+                  )
                 : "";
               if (oldValue && !value) {
                 return null;
@@ -271,8 +375,14 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                     <GeoJsonViewer
                                       data={JSON.parse(oldValue)}
                                       point={[
-                                        selectedFacility.latitude ? selectedFacility.latitude : selectedFacility.previousValues.latitude,
-                                        selectedFacility.longitude ? selectedFacility.longitude : selectedFacility.previousValues.longitude
+                                        selectedFacility.latitude
+                                          ? selectedFacility.latitude
+                                          : selectedFacility.previousValues
+                                              .latitude,
+                                        selectedFacility.longitude
+                                          ? selectedFacility.longitude
+                                          : selectedFacility.previousValues
+                                              .longitude,
                                       ]}
                                     />
                                   </div>
@@ -319,8 +429,14 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 <GeoJsonViewer
                                   data={JSON.parse(value)}
                                   point={[
-                                    currentFacility.latitude ? currentFacility.latitude : selectedFacility.previousValues.latitude,
-                                    currentFacility.longitude ? currentFacility.longitude : selectedFacility.previousValues.longitude
+                                    currentFacility.latitude
+                                      ? currentFacility.latitude
+                                      : selectedFacility.previousValues
+                                          .latitude,
+                                    currentFacility.longitude
+                                      ? currentFacility.longitude
+                                      : selectedFacility.previousValues
+                                          .longitude,
                                   ]}
                                 />
                               </div>
@@ -349,7 +465,12 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         <ModalActions>
           {finalEvent[APPROVAL_STATUS] === "pending" && (
             <div className="flex items-center">
-              <CustomizedButton loading={loading} disabled={isReadOnly} primary={true} onClick={handleApprove}>
+              <CustomizedButton
+                loading={loading}
+                disabled={isReadOnly}
+                primary={true}
+                onClick={handleApprove}
+              >
                 {t("approve")}
               </CustomizedButton>
               &nbsp;

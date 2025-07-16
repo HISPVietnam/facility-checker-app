@@ -24,7 +24,7 @@ import useDataStore from "@/states/data";
 import useApprovalModuleStore from "@/states/approvalModule";
 import PendingFacilityDialog from "./PendingFacilityDialog";
 import useMetadataStore from "@/states/metadata";
-const { UID, NAME, APPROVAL_STATUS, SYNCED, IS_NEW_FACILITY, PATH } =
+const { UID, NAME, APPROVAL_STATUS, IS_NEW_FACILITY, PATH, SYNC_NUMBER } =
   DATA_ELEMENTS;
 const columns = [
   UID,
@@ -32,7 +32,7 @@ const columns = [
   "latitude",
   "longitude",
   APPROVAL_STATUS,
-  SYNCED,
+  SYNC_NUMBER,
   "dateOfRequest",
 ];
 
@@ -53,27 +53,17 @@ const Approval = () => {
   const [pendingFacilityDialog, setPendingFacilityDialog] = useState(false);
   const filterApprovalFacilityEvents = (facilityEvents) => {
     const filterByIsNewFacility = (event) => {
-      if (currentFilters.length === 0) {
-        return (
-          event[APPROVAL_STATUS] === "pending" ||
-          event[APPROVAL_STATUS] === "approved" ||
-          event[APPROVAL_STATUS] === "rejected"
-        );
-      }
       const isNewFacility =
         event[IS_NEW_FACILITY] === "true" ? "isNewFacility" : "";
       return currentFilters.includes(isNewFacility);
     };
     const filterByApprovalStatus = (event) => {
-      if (currentFilters.length === 0) {
-        return (
-          event[APPROVAL_STATUS] === "pending" ||
-          event[APPROVAL_STATUS] === "approved" ||
-          event[APPROVAL_STATUS] === "rejected"
-        );
-      }
       const approvalStatus = event[APPROVAL_STATUS];
       return currentFilters.includes(approvalStatus);
+    };
+    const filterBySyncStatus = (event) => {
+      const syncStatus = event[SYNC_NUMBER] ? "synced" : "";
+      return currentFilters.includes(syncStatus);
     };
     const filterByOrgUnit = (event) => {
       if (!selectedOrgUnit) {
@@ -84,8 +74,19 @@ const Approval = () => {
       return facilityPath.includes(selectedOrgUnit.id);
     };
     return facilityEvents.filter((event) => {
+      if (currentFilters.length === 0) {
+        return (
+          (event[APPROVAL_STATUS] === "pending" ||
+            event[APPROVAL_STATUS] === "approved" ||
+            event[APPROVAL_STATUS] === "rejected") &&
+          !event[SYNC_NUMBER]
+        );
+      }
+
       return (
-        (filterByApprovalStatus(event) || filterByIsNewFacility(event)) &&
+        (filterByApprovalStatus(event) ||
+          filterByIsNewFacility(event) ||
+          filterBySyncStatus(event)) &&
         filterByOrgUnit(event)
       );
     });
@@ -118,10 +119,6 @@ const Approval = () => {
         </DataTableHead>
         <DataTableBody>
           {facilities.map((facility) => {
-            // const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
-            // const foundApprovedEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "approved");
-            // const finalEvent = foundPendingEvent ? foundPendingEvent : foundApprovedEvent;
-
             return filterApprovalFacilityEvents(facility.events).map((row) => {
               return (
                 <DataTableRow
@@ -160,12 +157,19 @@ const Approval = () => {
                             ...[<>&nbsp;</>, <New>{t("newFacility")}</New>]
                           );
                         }
-                      } else if (column === SYNCED) {
+                      } else if (column === SYNC_NUMBER) {
                         if (row[APPROVAL_STATUS] === "rejected") {
                           children = null;
-                        } else if (!row[SYNCED]) {
+                        } else if (!row[SYNC_NUMBER]) {
                           children = (
                             <NotYetSynced>{t("notYetSynced")}</NotYetSynced>
+                          );
+                        } else {
+                          children = (
+                            <DataValueText
+                              dataElement={column}
+                              value={facility[column]}
+                            />
                           );
                         }
                       } else {

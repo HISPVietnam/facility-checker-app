@@ -10,7 +10,11 @@ import { useShallow } from "zustand/react/shallow";
 import { pull, push } from "@/api/fetch";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { buildPayload, extractDataValues } from "./utils";
+import {
+  buildPayload,
+  extractDataValues,
+  getOrgUnitGroupUpdates,
+} from "./utils";
 import { getFacilityTeis } from "@/api/data";
 
 const { APPROVAL_STATUS, SYNC_NUMBER, IS_NEW_FACILITY, UID, PATH } =
@@ -25,6 +29,7 @@ const SynchronizationToolbar = () => {
       me: state.me,
     }))
   );
+
   const { dataElements } = program;
 
   const { facilities, actions } = useDataStore(
@@ -62,12 +67,9 @@ const SynchronizationToolbar = () => {
             },
           }
         : await pull(`/api/organisationUnits/${foundFacility.orgUnit}`);
-
       const payload = buildPayload(
         foundOrgUnit,
-        extractDataValues(f, dataElements),
-        isNew,
-        foundFacility
+        extractDataValues(f, dataElements)
       );
 
       results.push(payload);
@@ -98,6 +100,11 @@ const SynchronizationToolbar = () => {
         generatePayloads(newFacilities, true),
       ]);
 
+      const {
+        addList: addOrgUnitToOrgUnitGroupList,
+        deleteList: deleteOrgUnitToOrgUnitGroupList,
+      } = getOrgUnitGroupUpdates([...payloadExisted, ...payloadNew]);
+
       const metadataResult = await push(`/api/metadata?async=false`, {
         organisationUnits: [...payloadExisted, ...payloadNew],
         programs: [
@@ -110,7 +117,23 @@ const SynchronizationToolbar = () => {
           },
         ],
       });
-      if (!metadataResult.ok) {
+
+      const [addResults, deleteResults] = await Promise.all([
+        Promise.all(
+          addOrgUnitToOrgUnitGroupList.map((item) => push(item, null, "POST"))
+        ),
+        Promise.all(
+          deleteOrgUnitToOrgUnitGroupList.map((item) =>
+            push(item, null, "DELETE")
+          )
+        ),
+      ]);
+
+      if (
+        !metadataResult.ok ||
+        addResults.some((result) => !result.ok) ||
+        deleteResults.some((result) => !result.ok)
+      ) {
         throw new Error(t("metadataProcessFailed"));
       }
       const latestTeis = await getFacilityTeis(me.organisationUnits[0].id);
@@ -220,7 +243,7 @@ const SynchronizationToolbar = () => {
       });
       actions.setFacilities(updatedFacilities);
 
-      toast.success("syncSuccessfully");
+      toast.success(t("syncSuccessfully"));
     } catch (error) {
       console.error(error);
       toast.error(error);
