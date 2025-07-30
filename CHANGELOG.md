@@ -1,3 +1,9 @@
+## [1.11.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.0...v1.11.1) (2025-07-30)
+
+### Bug Fixes
+
+* fix dhis2 version and app version not be shown on the header bar ([e26dc1f](https://github.com/HISPVietnam/facility-checker-app/commit/e26dc1fdd75109b2704065d6017bde9fb502a2e6))
+
 ## [1.11.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.10.0...v1.11.0) (2025-07-16)
 
 ### Features
