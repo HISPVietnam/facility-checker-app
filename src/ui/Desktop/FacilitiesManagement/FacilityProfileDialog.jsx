@@ -524,7 +524,7 @@ const FacilityProfileDialog = () => {
               toggleDialog("facilityProfileDialog");
             }}
           >
-            {t("cancel")}
+            {t("close")}
           </CustomizedButton>
         </div>
       </ModalActions>

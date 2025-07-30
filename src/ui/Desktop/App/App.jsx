@@ -22,7 +22,9 @@ import useInit from "@/hooks/useInit";
 import { useEffect, useState } from "react";
 import useMetadataStore from "@/states/metadata";
 import { getSystemInfo } from "@/api/metadata";
-
+import { Provider } from "@dhis2/app-runtime";
+import version from "@/assets/version.json";
+const { VITE_BASE_URL } = import.meta.env;
 const App = () => {
   const { systemInfo, metadataStoreActions } = useMetadataStore(
     useShallow((state) => ({
@@ -65,7 +67,23 @@ const App = () => {
 
   return (
     <div className="w-full h-full text-slate-700">
-      {withHeaderBar && <HeaderBar />}
+      {withHeaderBar && (
+        <Provider
+          config={{
+            appName: "Facility Checker App",
+            appVersion: {
+              full: version.version
+            },
+            apiVersion: "",
+            baseUrl: VITE_BASE_URL,
+            systemInfo: {
+              version: systemInfo.version
+            }
+          }}
+        >
+          <HeaderBar />
+        </Provider>
+      )}
       <div className={`w-full ${appHeightClassName} flex items-center justify-center`}>
         {!ready && <CircularLoader />}
         {ready && !firstRun && (
