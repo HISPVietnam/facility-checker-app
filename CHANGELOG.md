@@ -1,3 +1,9 @@
+## [1.11.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.2...v1.11.3) (2025-07-31)
+
+### Bug Fixes
+
+* the issue that could not get the version ([877479a](https://github.com/HISPVietnam/facility-checker-app/commit/877479a628316be2ac4f0444a7ca275051d6d831))
+
 ## [1.11.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.1...v1.11.2) (2025-07-31)
 
 ### Bug Fixes
