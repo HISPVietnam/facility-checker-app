@@ -75,7 +75,7 @@ const App = () => {
         apiVersion: "",
         baseUrl: VITE_BASE_URL,
         systemInfo: {
-          version: systemInfo.version
+          version: systemInfo ? systemInfo.version : ""
         }
       }}
     >
