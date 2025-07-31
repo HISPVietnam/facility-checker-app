@@ -1,3 +1,9 @@
+## [1.11.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.1...v1.11.2) (2025-07-31)
+
+### Bug Fixes
+
+* move DHIS2 provider to top level in App.jsx ([02e3827](https://github.com/HISPVietnam/facility-checker-app/commit/02e3827c7ff550acda9476e823beebe869bdf912))
+
 ## [1.11.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.0...v1.11.1) (2025-07-30)
 
 ### Bug Fixes
