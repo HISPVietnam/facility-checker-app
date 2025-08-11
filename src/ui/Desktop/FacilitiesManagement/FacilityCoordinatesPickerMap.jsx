@@ -10,6 +10,7 @@ import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import { useShallow } from "zustand/react/shallow";
 import { BASE_LAYER_TYPES, DATA_ELEMENTS } from "@/const";
 import _ from "lodash";
+import { generateParentFeatures } from "@/utils";
 const { PATH, UID } = DATA_ELEMENTS;
 
 const BoundaryLayer = ({ mapOpen, path }) => {
@@ -25,32 +26,13 @@ const BoundaryLayer = ({ mapOpen, path }) => {
     }))
   );
   useEffect(() => {
-    // const path = selectedFacility[PATH];
-    if (!path) return;
-    const currentOrgUnits = _.compact(path.split("/"));
-    const self = currentOrgUnits.pop();
-    const parent = currentOrgUnits.pop();
-    const foundSelfFeature = orgUnitGeoJson.features.find((f) => f.id === self);
-    const foundParentFeature = orgUnitGeoJson.features.find((f) => f.id === parent);
-    const foundChildrenFeatures1 = orgUnitGeoJson.features.filter((f) => f.properties.parent === parent);
-    const foundChildrenFeatures2 = orgUnitGeoJson.features.filter((f) => f.properties.parent === self);
-    let finalFeatures;
-    if (foundParentFeature) {
-      finalFeatures = [foundParentFeature];
-    } else if (foundSelfFeature) {
-      finalFeatures = [foundSelfFeature];
-    } else if (foundChildrenFeatures1.length > 0) {
-      finalFeatures = foundChildrenFeatures1;
-    } else if (foundChildrenFeatures2.length > 0) {
-      finalFeatures = foundChildrenFeatures2;
-    } else {
-      finalFeatures = [];
-    }
+    if (!path || !orgUnitGeoJson) return;
+    const finalFeatures = generateParentFeatures(path);
     setData({
       lastUpdated: new Date().toISOString(),
       features: finalFeatures
     });
-  }, [selectedFacility[UID], path]);
+  }, [path]);
 
   useEffect(() => {
     if (mapOpen) {

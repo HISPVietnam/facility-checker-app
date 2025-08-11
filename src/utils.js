@@ -41,6 +41,30 @@ const isInsideParent = (path, lat, long) => {
   return isInside;
 };
 
+const generateParentFeatures = (path) => {
+  const { orgUnitGeoJson } = useMetadataStore.getState();
+  const currentOrgUnits = _.compact(path.split("/"));
+  const self = currentOrgUnits.pop();
+  const parent = currentOrgUnits.pop();
+  const foundSelfFeature = orgUnitGeoJson.features.find((f) => f.id === self);
+  const foundParentFeature = orgUnitGeoJson.features.find((f) => f.id === parent);
+  const foundChildrenFeatures1 = orgUnitGeoJson.features.filter((f) => f.properties.parent === parent);
+  const foundChildrenFeatures2 = orgUnitGeoJson.features.filter((f) => f.properties.parent === self);
+  let finalFeatures;
+  if (foundParentFeature) {
+    finalFeatures = [foundParentFeature];
+  } else if (foundChildrenFeatures1.length > 0) {
+    finalFeatures = foundChildrenFeatures1;
+  } else if (foundChildrenFeatures2.length > 0) {
+    finalFeatures = foundChildrenFeatures2;
+  } else if (foundSelfFeature) {
+    finalFeatures = [foundSelfFeature];
+  } else {
+    finalFeatures = [];
+  }
+  return finalFeatures;
+};
+
 const convertEvent = (event, dataElements) => {
   const convertedEvent = {
     occurredAt: event.occurredAt,
@@ -426,6 +450,7 @@ export {
   pickTranslation,
   isValidPoint,
   isInsideParent,
+  generateParentFeatures,
   convertTeis,
   findAttributeValue,
   findDataValue,

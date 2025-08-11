@@ -30,8 +30,14 @@ const Row = ({ children, className }) => {
   return (
     <div className={`flex  py-1 border-b border-b-slate-200 ${className ? className : ""}`}>
       <div className="self-center w-[250px] text-[15px]">{children[0]}</div>
-      <div className="self-start w-[450px]">{children[1]}</div>
-      <div className="self-start flex items-center w-[450px] h-[40px] ml-2 mr-2 p-2 rounded-md bg-slate-100 text-[14px]">{children[2]}</div>
+      <div className="self-start w-[450px]">
+        {children[1]}
+        {children[2]}
+      </div>
+      <div className="self-start flex flex-col w-[450px] ml-2 justify-between">
+        <div className="h-[40px] bg-slate-100 rounded-md flex items-center p-2 text-[14px]">{children[3]}</div>
+        {children[4]}
+      </div>
     </div>
   );
 };
@@ -342,7 +348,9 @@ const FacilityProfileDialog = () => {
                     />
                     {currentValue && currentValue !== value && value !== "" && <Helper type="WARNING" value={t("outsideBoundaryHelper")} />}
                   </div>
+                  <div></div>
                   {value ? <DataValueText dataElement={de} value={value} /> : <span>&nbsp;</span>}
+                  <div></div>
                 </Row>
               );
             })()}
@@ -367,19 +375,25 @@ const FacilityProfileDialog = () => {
                         setFacilityCoordinatesPicker(true);
                       }}
                     >
-                      {t("map")}
+                      {t("chooseOnMap")}
                     </CustomizedButton>
                   </div>
                 </div>
+              </div>
+              <div>
+                <div>MAP</div>
                 {foundCoordinatesError && <Helper type="ERROR" value={foundCoordinatesError.value} />}
               </div>
-              <span>
-                {selectedFacility.previousValues.longitude && selectedFacility.previousValues.latitude ? (
-                  `[ ${selectedFacility.previousValues.latitude} , ${selectedFacility.previousValues.longitude} ]`
-                ) : (
-                  <div>&nbsp;</div>
-                )}
-              </span>
+              <div>
+                <div>
+                  {selectedFacility.previousValues.longitude && selectedFacility.previousValues.latitude ? (
+                    `[ ${selectedFacility.previousValues.latitude} , ${selectedFacility.previousValues.longitude} ]`
+                  ) : (
+                    <div>&nbsp;</div>
+                  )}
+                </div>
+              </div>
+              <div>MAP</div>
             </Row>
             {program.programStages[0].programStageDataElements
               .filter((psde) => {
@@ -395,6 +409,7 @@ const FacilityProfileDialog = () => {
                 return (
                   <Row>
                     <DataValueLabel dataElement={de.id} />
+                    <div></div>
                     <DataValueField
                       dataElement={de.id}
                       disabled={isPending || loading || isReadOnly}
@@ -404,6 +419,7 @@ const FacilityProfileDialog = () => {
                       }}
                     />
                     {value ? <DataValueText dataElement={de.id} value={value} /> : <span>&nbsp;</span>}
+                    <div></div>
                   </Row>
                 );
               })}
