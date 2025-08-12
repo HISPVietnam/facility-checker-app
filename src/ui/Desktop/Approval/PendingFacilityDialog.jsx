@@ -15,6 +15,7 @@ import {
   ModalActions,
   NoticeBox,
   ButtonStrip,
+  InputField,
 } from "@dhis2/ui";
 import CustomizedInputField from "@/ui/common/InputField";
 import DataValueField from "@/ui/common/DataValueField";
@@ -29,9 +30,13 @@ import {
   generateUid,
   convertToDhis2Event,
   findCustomAttributeValue,
+  convertDisplayValueForPath,
+  pickTranslation,
+  convertDisplayValue,
+  convertDisplayValueForAllField,
 } from "@/utils";
 import useDataStore from "@/states/data";
-import { DATA_ELEMENTS } from "@/const";
+import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS } from "@/const";
 import { postEvent } from "@/api/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -54,17 +59,15 @@ const {
   REASON_FOR_REJECT,
 } = DATA_ELEMENTS;
 
-const OldValue = ({ children }) => {
+const CustomValue = ({ isOld = false, isNew = false, children }) => {
   return (
-    <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>
-  );
-};
-
-const NewValue = ({ children }) => {
-  return (
-    <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">
+    <div
+      className={`bg-slate-100 ${isOld && "!bg-red-200"} ${
+        isNew && "!bg-emerald-100"
+      } text-[14px] p-2 min-h-[40px] rounded-md`}
+    >
       {children}
-    </span>
+    </div>
   );
 };
 
@@ -74,14 +77,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
   const [geoJsonViewer, setGeoJsonViewer] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const { program, me, customAttributes } = useMetadataStore(
+  const {
+    program,
+    me,
+    customAttributes,
+    orgUnitGroupSets,
+    orgUnitGroups,
+    locale,
+  } = useMetadataStore(
     useShallow((state) => ({
       program: state.program,
       me: state.me,
       customAttributes: state.customAttributes,
+      orgUnitGroupSets: state.orgUnitGroupSets,
+      orgUnitGroups: state.orgUnitGroups,
+      locale: state.locale,
     }))
   );
-  const actions = useDataStore((state) => state.actions);
+  const { actions, facilities } = useDataStore(
+    useShallow((state) => ({
+      facilities: state.facilities,
+      actions: state.actions,
+    }))
+  );
   const { approve, reject } = actions;
   const {
     approvalModuleActions,
@@ -172,191 +190,243 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       <Modal fluid hide={!open}>
         <ModalTitle>{t("pendingApprovalValues")}</ModalTitle>
         <ModalContent>
-          <div className="w-[1000px] h-[550px]">
-            <div className="text-[15px]">
-              <DataValueLabel dataElement={NAME} />:{" "}
-              <DataValueText
-                dataElement={NAME}
-                value={selectedFacility[NAME]}
-              />
-            </div>
-            <div className="text-[15px]">
-              <DataValueLabel dataElement={PATH} />:{" "}
-              <DataValueText
-                dataElement={PATH}
-                value={selectedFacility[PATH]}
-              />
-            </div>
-            <div className="text-[15px]">
-              {t("dateOfRequest")}:{" "}
-              {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
-            </div>
-            <div className="text-[15px]">
-              {t("requestedBy")}: {finalEvent.updatedBy.username}
-            </div>
-            {finalEvent[APPROVAL_STATUS] == "approved" && (
+          <div className="h-[65vh] w-[85vw] flex flex-col">
+            {/* Change log */}
+            <div>
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_BY} />:{" "}
+                <DataValueLabel dataElement={NAME} />:{" "}
                 <DataValueText
-                  dataElement={APPROVED_BY}
-                  value={finalEvent[APPROVED_BY]}
+                  dataElement={NAME}
+                  value={selectedFacility[NAME]}
                 />
               </div>
-            )}
-            {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={REJECTED_BY} />:{" "}
+                <DataValueLabel dataElement={PATH} />:{" "}
                 <DataValueText
-                  dataElement={REJECTED_BY}
-                  value={finalEvent[REJECTED_BY]}
+                  dataElement={PATH}
+                  value={selectedFacility[PATH]}
                 />
               </div>
-            )}
-            {finalEvent[APPROVAL_STATUS] == "approved" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={APPROVED_AT} />:{" "}
-                <DataValueText
-                  dataElement={APPROVED_AT}
-                  value={finalEvent[APPROVED_AT]}
-                />
+                {t("dateOfRequest")}:{" "}
+                {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
               </div>
-            )}
-            {finalEvent[APPROVAL_STATUS] == "rejected" && (
               <div className="text-[15px]">
-                <DataValueLabel dataElement={REJECTED_AT} />:{" "}
-                <DataValueText
-                  dataElement={REJECTED_AT}
-                  value={finalEvent[REJECTED_AT]}
-                />
+                {t("requestedBy")}: {finalEvent.updatedBy.username}
               </div>
-            )}
-            {finalEvent[APPROVAL_STATUS] == "rejected" && (
-              <div className="text-[15px]">
-                <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
-                <DataValueText
-                  dataElement={REASON_FOR_REJECT}
-                  value={finalEvent[REASON_FOR_REJECT]}
-                />
-              </div>
-            )}
-
-            <div className="text-[15px]">
-              {finalEvent[APPROVAL_STATUS] == "pending" && (
-                <span>
-                  <Pending>{t("pending")}</Pending>&nbsp;
-                </span>
-              )}
               {finalEvent[APPROVAL_STATUS] == "approved" && (
-                <span>
-                  <Approved>{t("approved")}</Approved>&nbsp;
-                </span>
+                <div className="text-[15px]">
+                  <DataValueLabel dataElement={APPROVED_BY} />:{" "}
+                  <DataValueText
+                    dataElement={APPROVED_BY}
+                    value={finalEvent[APPROVED_BY]}
+                  />
+                </div>
               )}
               {finalEvent[APPROVAL_STATUS] == "rejected" && (
-                <span>
-                  <Rejected>{t("rejected")}</Rejected>&nbsp;
-                </span>
+                <div className="text-[15px]">
+                  <DataValueLabel dataElement={REJECTED_BY} />:{" "}
+                  <DataValueText
+                    dataElement={REJECTED_BY}
+                    value={finalEvent[REJECTED_BY]}
+                  />
+                </div>
               )}
-              {finalEvent[IS_NEW_FACILITY] == "true" && (
-                <span>
-                  <New>{t("newFacility")}</New>&nbsp;
-                </span>
+              {finalEvent[APPROVAL_STATUS] == "approved" && (
+                <div className="text-[15px]">
+                  <DataValueLabel dataElement={APPROVED_AT} />:{" "}
+                  <DataValueText
+                    dataElement={APPROVED_AT}
+                    value={finalEvent[APPROVED_AT]}
+                  />
+                </div>
               )}
-              {!finalEvent[SYNC_NUMBER] &&
-                finalEvent[APPROVAL_STATUS] == "approved" && (
+              {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                <div className="text-[15px]">
+                  <DataValueLabel dataElement={REJECTED_AT} />:{" "}
+                  <DataValueText
+                    dataElement={REJECTED_AT}
+                    value={finalEvent[REJECTED_AT]}
+                  />
+                </div>
+              )}
+              {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                <div className="text-[15px]">
+                  <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
+                  <DataValueText
+                    dataElement={REASON_FOR_REJECT}
+                    value={finalEvent[REASON_FOR_REJECT]}
+                  />
+                </div>
+              )}
+
+              <div className="text-[15px]">
+                {finalEvent[APPROVAL_STATUS] == "pending" && (
                   <span>
-                    <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
+                    <Pending>{t("pending")}</Pending>&nbsp;
                   </span>
                 )}
+                {finalEvent[APPROVAL_STATUS] == "approved" && (
+                  <span>
+                    <Approved>{t("approved")}</Approved>&nbsp;
+                  </span>
+                )}
+                {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                  <span>
+                    <Rejected>{t("rejected")}</Rejected>&nbsp;
+                  </span>
+                )}
+                {finalEvent[IS_NEW_FACILITY] == "true" && (
+                  <span>
+                    <New>{t("newFacility")}</New>&nbsp;
+                  </span>
+                )}
+                {!finalEvent[SYNC_NUMBER] &&
+                  finalEvent[APPROVAL_STATUS] == "approved" && (
+                    <span>
+                      <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
+                    </span>
+                  )}
+              </div>
+              <br />
             </div>
-            <br />
-            <div className="mb-1 font-bold w-full border-b-slate-300 border-b">
-              {t("changedValues")}:
-            </div>
-            {["latitude", "longitude", ...dataElements]
-              .map((de) => {
-                const foundValue = finalEvent[de.id] || finalEvent[de];
-                return {
-                  dataElement: de.id ? de.id : de,
-                  value: foundValue ? foundValue : "",
-                };
-              })
-              .filter(
-                (dataValue) =>
-                  dataValue.value &&
-                  ![
-                    APPROVAL_STATUS,
-                    APPROVED_BY,
-                    APPROVED_AT,
-                    REJECTED_BY,
-                    REJECTED_AT,
-                    REASON_FOR_REJECT,
-                    ATTRIBUTE_VALUES,
-                  ].includes(dataValue.dataElement)
-              )
-              .map((dataValue) => {
-                return (
-                  <div className="flex mb-1 items-center">
-                    <div className="w-[250px]">
-                      <DataValueLabel dataElement={dataValue.dataElement} />
-                    </div>
-                    <div className="flex items-center">
-                      <OldValue>
-                        {selectedFacility.previousValues[
-                          dataValue.dataElement
-                        ] ? (
-                          <DataValueText
-                            dataElement={dataValue.dataElement}
-                            value={
+            {/* Table value */}
+            <div className="flex-1 overflow-auto">
+              {/* <div className="mb-1 font-bold w-full">{t("changedValues")}:</div> */}
+              <div className="flex items-center mb-2 border-b-2 border-b-slate-400 font-bold text-[15px] h-[35px] gap-2">
+                <div className="w-[20%]">{t("field")}</div>
+                <div className="w-[40%]">{t("currentValue")}</div>
+                <div className="w-[40%] ml-2">{t("newValue")}</div>
+              </div>
+              {[
+                PATH,
+                "latitude",
+                "longitude",
+                ...program.programStages[0].programStageDataElements.filter(
+                  (psde) => {
+                    return (
+                      !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) &&
+                      psde.dataElement.id !== PATH
+                    );
+                  }
+                ),
+              ]
+                .map((psde) => {
+                  const foundValue =
+                    finalEvent[psde.dataElement?.id] || finalEvent[psde];
+                  return {
+                    dataElement: psde.dataElement?.id
+                      ? psde.dataElement.id
+                      : psde,
+                    value: foundValue ? foundValue : "",
+                  };
+                })
+                .map((dataValue) => {
+                  return (
+                    <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                      <div className="w-[20%]">
+                        <DataValueLabel dataElement={dataValue.dataElement} />
+                      </div>
+                      <div className="w-[40%]">
+                        <CustomValue
+                          isOld={Boolean(
+                            dataValue.value &&
                               selectedFacility.previousValues[
                                 dataValue.dataElement
+                              ] !== dataValue.value
+                          )}
+                        >
+                          {dataValue.dataElement === PATH
+                            ? convertDisplayValueForPath(
+                                selectedFacility.previousValues[
+                                  dataValue.dataElement
+                                ]
+                              )
+                            : ["latitude", "longitude"].includes(
+                                dataValue.dataElement
+                              )
+                            ? selectedFacility.previousValues[
+                                dataValue.dataElement
                               ]
-                            }
-                          />
-                        ) : (
-                          <i>{t("noValue")}</i>
-                        )}
-                      </OldValue>
-                      &nbsp;&nbsp;
-                      <FontAwesomeIcon fontSize={14} icon={faArrowRight} />
-                      &nbsp;&nbsp;
-                      <NewValue>
-                        <DataValueText
-                          dataElement={dataValue.dataElement}
-                          value={dataValue.value}
-                        />
-                      </NewValue>
+                            : convertDisplayValueForAllField(
+                                dataValue.dataElement,
+                                selectedFacility.previousValues[
+                                  dataValue.dataElement
+                                ]
+                              )}
+                        </CustomValue>
+                      </div>
+                      <div className="w-[40%]">
+                        <CustomValue isNew={!!dataValue.value}>
+                          {dataValue.value}
+                        </CustomValue>
+                      </div>
                     </div>
-                  </div>
+                  );
+                })}
+              {customAttributes.map((customAttribute) => {
+                const { id, valueType } = customAttribute;
+                const value = findCustomAttributeValue(
+                  finalEvent[ATTRIBUTE_VALUES],
+                  id
                 );
-              })}
-            {customAttributes.map((customAttribute) => {
-              const { id, valueType } = customAttribute;
-              const value = findCustomAttributeValue(
-                finalEvent[ATTRIBUTE_VALUES],
-                id
-              );
-              const oldValue = selectedFacility.previousValues[ATTRIBUTE_VALUES]
-                ? findCustomAttributeValue(
-                    selectedFacility.previousValues[ATTRIBUTE_VALUES],
-                    id
-                  )
-                : "";
-              if (oldValue && !value) {
-                return null;
-              }
-              if (value === oldValue) {
-                return null;
-              }
-              return (
-                <div className="flex mb-1 items-center">
-                  <div className="w-[250px]">
-                    <CustomAttributeLabel attribute={id} />
-                  </div>
-                  <div className="flex items-center">
-                    <OldValue>
-                      {oldValue ? (
-                        valueType === "GEOJSON" ? (
-                          <>
+                const oldValue = selectedFacility.previousValues[
+                  ATTRIBUTE_VALUES
+                ]
+                  ? findCustomAttributeValue(
+                      selectedFacility.previousValues[ATTRIBUTE_VALUES],
+                      id
+                    )
+                  : "";
+
+                return (
+                  <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                    <div className="w-[20%]">
+                      <CustomAttributeLabel attribute={id} />
+                    </div>
+                    <div className="w-[40%]">
+                      {valueType === "GEOJSON" ? (
+                        <CustomValue isOld={!!value}>
+                          <span
+                            className="underline cursor-pointer"
+                            onClick={() => {
+                              setGeoJsonViewer(true);
+                            }}
+                          >
+                            {t("clickToView")}
+                          </span>
+                          {geoJsonViewer && (
+                            <Modal fluid>
+                              <ModalTitle>
+                                <CustomAttributeLabel attribute={id} />
+                              </ModalTitle>
+                              <ModalContent>
+                                <div className="w-[1000px] h-[600px]">
+                                  <GeoJsonViewer data={JSON.parse(oldValue)} />
+                                </div>
+                              </ModalContent>
+                              <ModalActions>
+                                <CustomizedButton
+                                  onClick={() => {
+                                    setGeoJsonViewer(false);
+                                  }}
+                                >
+                                  {t("close")}
+                                </CustomizedButton>
+                              </ModalActions>
+                            </Modal>
+                          )}
+                        </CustomValue>
+                      ) : (
+                        <CustomValue isOld={!!(value && oldValue !== value)}>
+                          {oldValue}
+                        </CustomValue>
+                      )}
+                    </div>
+                    <div className="w-[40%]">
+                      {valueType === "GEOJSON" ? (
+                        value && (
+                          <CustomValue isNew={!!(value && oldValue !== value)}>
                             <span
                               className="underline cursor-pointer"
                               onClick={() => {
@@ -372,19 +442,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 </ModalTitle>
                                 <ModalContent>
                                   <div className="w-[1000px] h-[600px]">
-                                    <GeoJsonViewer
-                                      data={JSON.parse(oldValue)}
-                                      point={[
-                                        selectedFacility.latitude
-                                          ? selectedFacility.latitude
-                                          : selectedFacility.previousValues
-                                              .latitude,
-                                        selectedFacility.longitude
-                                          ? selectedFacility.longitude
-                                          : selectedFacility.previousValues
-                                              .longitude,
-                                      ]}
-                                    />
+                                    <GeoJsonViewer data={JSON.parse(value)} />
                                   </div>
                                 </ModalContent>
                                 <ModalActions>
@@ -398,68 +456,18 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 </ModalActions>
                               </Modal>
                             )}
-                          </>
-                        ) : (
-                          oldValue
+                          </CustomValue>
                         )
                       ) : (
-                        <i>{t("noValue")}</i>
+                        <CustomValue isNew={!!(value && oldValue !== value)}>
+                          {value}
+                        </CustomValue>
                       )}
-                    </OldValue>
-                    &nbsp;&nbsp;
-                    <FontAwesomeIcon fontSize={14} icon={faArrowRight} />
-                    &nbsp;&nbsp;
-                    {value === "GEOJSON" ? (
-                      <NewValue>
-                        <span
-                          className="underline cursor-pointer"
-                          onClick={() => {
-                            setGeoJsonViewer(true);
-                          }}
-                        >
-                          {t("clickToView")}
-                        </span>
-                        {geoJsonViewer && (
-                          <Modal fluid>
-                            <ModalTitle>
-                              <CustomAttributeLabel attribute={id} />
-                            </ModalTitle>
-                            <ModalContent>
-                              <div className="w-[1000px] h-[600px]">
-                                <GeoJsonViewer
-                                  data={JSON.parse(value)}
-                                  point={[
-                                    currentFacility.latitude
-                                      ? currentFacility.latitude
-                                      : selectedFacility.previousValues
-                                          .latitude,
-                                    currentFacility.longitude
-                                      ? currentFacility.longitude
-                                      : selectedFacility.previousValues
-                                          .longitude,
-                                  ]}
-                                />
-                              </div>
-                            </ModalContent>
-                            <ModalActions>
-                              <CustomizedButton
-                                onClick={() => {
-                                  setGeoJsonViewer(false);
-                                }}
-                              >
-                                {t("close")}
-                              </CustomizedButton>
-                            </ModalActions>
-                          </Modal>
-                        )}
-                      </NewValue>
-                    ) : (
-                      <NewValue>{value}</NewValue>
-                    )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </ModalContent>
         <ModalActions>

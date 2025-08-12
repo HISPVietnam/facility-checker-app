@@ -1,23 +1,50 @@
-import { PROFILE_LOGS_PROGRAM_STAGE_ID, PROGRAM_ID, DATA_ELEMENTS, TRACKED_ENTITY_ATTRIBUTES } from "./const";
+import {
+  PROFILE_LOGS_PROGRAM_STAGE_ID,
+  PROGRAM_ID,
+  DATA_ELEMENTS,
+  TRACKED_ENTITY_ATTRIBUTES,
+} from "./const";
 import useMetadataStore from "./states/metadata";
 import useDataStore from "./states/data";
-import { point, polygon, multiPolygon, booleanPointInPolygon, featureCollection, nearestPoint } from "@turf/turf";
+import {
+  point,
+  polygon,
+  multiPolygon,
+  booleanPointInPolygon,
+  featureCollection,
+  nearestPoint,
+} from "@turf/turf";
 import _ from "lodash";
 import { el } from "date-fns/locale";
+import { t } from "i18next";
 const { APPROVAL_STATUS, PATH, UID, NAME } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 
 const pickTranslation = (object, language, field) => {
   const fieldMapping = {
     formName: "FORM_NAME",
-    name: "NAME"
+    name: "NAME",
   };
-  const foundTranslation = object.translations.find((t) => t.property === fieldMapping[field] && t.locale === language);
-  return foundTranslation ? foundTranslation.value : object[field] || object["displayFormName"] || object["displayName"] || object["name"];
+  const foundTranslation = object.translations.find(
+    (t) => t.property === fieldMapping[field] && t.locale === language
+  );
+  return foundTranslation
+    ? foundTranslation.value
+    : object[field] ||
+        object["displayFormName"] ||
+        object["displayName"] ||
+        object["name"];
 };
 
 const isValidPoint = (lat, lng) => {
-  return typeof lat === "number" && typeof lng === "number" && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  return (
+    typeof lat === "number" &&
+    typeof lng === "number" &&
+    lat >= -90 &&
+    lat <= 90 &&
+    lng >= -180 &&
+    lng <= 180
+  );
 };
 
 const isInsideParent = (path, lat, long) => {
@@ -26,9 +53,19 @@ const isInsideParent = (path, lat, long) => {
   const currentOrgUnits = _.compact(path.split("/"));
   while (true) {
     const currentParent = currentOrgUnits.pop();
-    const foundParent = orgUnitGeoJson.features.find((f) => f.id === currentParent);
-    if (foundParent && foundParent.geometry && (foundParent.geometry.type === "Polygon" || foundParent.geometry.type === "MultiPolygon")) {
-      const withinPolygon = booleanPointInPolygon(point([long, lat]), foundParent.geometry);
+    const foundParent = orgUnitGeoJson.features.find(
+      (f) => f.id === currentParent
+    );
+    if (
+      foundParent &&
+      foundParent.geometry &&
+      (foundParent.geometry.type === "Polygon" ||
+        foundParent.geometry.type === "MultiPolygon")
+    ) {
+      const withinPolygon = booleanPointInPolygon(
+        point([long, lat]),
+        foundParent.geometry
+      );
       if (!withinPolygon) {
         isInside = false;
       }
@@ -47,9 +84,15 @@ const generateParentFeatures = (path) => {
   const self = currentOrgUnits.pop();
   const parent = currentOrgUnits.pop();
   const foundSelfFeature = orgUnitGeoJson.features.find((f) => f.id === self);
-  const foundParentFeature = orgUnitGeoJson.features.find((f) => f.id === parent);
-  const foundChildrenFeatures1 = orgUnitGeoJson.features.filter((f) => f.properties.parent === parent);
-  const foundChildrenFeatures2 = orgUnitGeoJson.features.filter((f) => f.properties.parent === self);
+  const foundParentFeature = orgUnitGeoJson.features.find(
+    (f) => f.id === parent
+  );
+  const foundChildrenFeatures1 = orgUnitGeoJson.features.filter(
+    (f) => f.properties.parent === parent
+  );
+  const foundChildrenFeatures2 = orgUnitGeoJson.features.filter(
+    (f) => f.properties.parent === self
+  );
   let finalFeatures;
   if (foundParentFeature) {
     finalFeatures = [foundParentFeature];
@@ -74,7 +117,7 @@ const convertEvent = (event, dataElements) => {
     isNew: false,
     event: event.event,
     completedAt: event.completedAt,
-    updatedBy: event.updatedBy
+    updatedBy: event.updatedBy,
   };
   if (event.geometry) {
     convertedEvent.latitude = event.geometry.coordinates[1];
@@ -91,11 +134,17 @@ const convertEvent = (event, dataElements) => {
 
 const getLatestValues = (events, program, includeActiveEvents = true) => {
   const latestValues = {};
-  let tempEvents = events.filter((event) => event[APPROVAL_STATUS] !== "rejected");
+  let tempEvents = events.filter(
+    (event) => event[APPROVAL_STATUS] !== "rejected"
+  );
   if (!includeActiveEvents) {
     tempEvents = events
       .filter((event) => event.status !== "ACTIVE")
-      .filter((event) => event[APPROVAL_STATUS] !== "pending" && event[APPROVAL_STATUS] !== "approved");
+      .filter(
+        (event) =>
+          event[APPROVAL_STATUS] !== "pending" &&
+          event[APPROVAL_STATUS] !== "approved"
+      );
   }
   program.dataElements.forEach((de) => {
     const foundEvent = tempEvents.find((event) => {
@@ -111,7 +160,9 @@ const getLatestValues = (events, program, includeActiveEvents = true) => {
       latestValues[de.id] = "";
     }
   });
-  const foundEvent = tempEvents.find((event) => event.latitude && event.longitude);
+  const foundEvent = tempEvents.find(
+    (event) => event.latitude && event.longitude
+  );
   if (foundEvent) {
     latestValues.latitude = foundEvent.latitude;
     latestValues.longitude = foundEvent.longitude;
@@ -131,20 +182,20 @@ const convertToDhis2Event = (event, program) => {
     occurredAt: event.occurredAt,
     scheduledAt: event.occurredAt,
     dataValues: [],
-    status: event.status
+    status: event.status,
   };
 
   if (event.latitude && event.longitude) {
     convertedEvent.geometry = {
       type: "Point",
-      coordinates: [event.longitude, event.latitude]
+      coordinates: [event.longitude, event.latitude],
     };
   }
 
   program.dataElements.forEach((de) => {
     convertedEvent.dataValues.push({
       dataElement: de.id,
-      value: event[de.id] ? event[de.id] : ""
+      value: event[de.id] ? event[de.id] : "",
     });
   });
   return convertedEvent;
@@ -160,16 +211,18 @@ const convertTeis = (teis, program) => {
       code: findAttributeValue(tei, ATTRIBUTE_CODE),
       events: tei.enrollments[0].events.map((event) => {
         return convertEvent(event, program.dataElements);
-      })
+      }),
     };
-    const foundPendingEvent = facility.events.find((event) => event[APPROVAL_STATUS] === "pending");
+    const foundPendingEvent = facility.events.find(
+      (event) => event[APPROVAL_STATUS] === "pending"
+    );
     facility.isPending = foundPendingEvent ? true : false;
     const latestValues = getLatestValues(facility.events, program);
     const previousValues = getLatestValues(facility.events, program, false);
     const newFacility = {
       ...latestValues,
       ...facility,
-      previousValues: previousValues
+      previousValues: previousValues,
     };
     return newFacility;
   });
@@ -177,12 +230,16 @@ const convertTeis = (teis, program) => {
 };
 
 const findAttributeValue = (tei, attribute) => {
-  const foundAttributeValue = tei.attributes.find((attr) => attr.attribute.id === attribute);
+  const foundAttributeValue = tei.attributes.find(
+    (attr) => attr.attribute.id === attribute
+  );
   return foundAttributeValue ? foundAttributeValue.value : "";
 };
 
 const findDataValue = (event, dataElement) => {
-  const foundDataValue = event.dataValues.find((dv) => dv.dataElement === dataElement);
+  const foundDataValue = event.dataValues.find(
+    (dv) => dv.dataElement === dataElement
+  );
   return foundDataValue ? foundDataValue.value : "";
 };
 
@@ -201,14 +258,18 @@ const findCustomAttributeValue = (attributeValues, attribute) => {
 const convertDisplayValue = (program, field, value) => {
   let foundField = null;
   let optionSet = null;
-  const foundAttribute = program.trackedEntityAttributes.find((tea) => tea.id === field);
+  const foundAttribute = program.trackedEntityAttributes.find(
+    (tea) => tea.id === field
+  );
   const foundDataElement = program.dataElements.find((de) => de.id === field);
   foundField = foundAttribute ? foundAttribute : foundDataElement;
   if (!foundField) {
     return "INVALID FIELD";
   }
   if (foundField.optionSet) {
-    optionSet = program.optionSets.find((os) => os.id === foundField.optionSet.id);
+    optionSet = program.optionSets.find(
+      (os) => os.id === foundField.optionSet.id
+    );
   }
 
   switch (foundField.valueType) {
@@ -294,7 +355,10 @@ const sample = (d = [], fn = Math.random) => {
 };
 
 const generateUid = (limit = 11, fn = Math.random) => {
-  const allowedLetters = ["abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"].join("");
+  const allowedLetters = [
+    "abcdefghijklmnopqrstuvwxyz",
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  ].join("");
   const allowedChars = ["0123456789", allowedLetters].join("");
   const arr = [sample(allowedLetters, fn)];
   for (let i = 0; i < limit - 1; i++) {
@@ -322,7 +386,9 @@ const isWrongLocation = (facility) => {
   let isOutside = false;
   const currentPoint = point([facility.longitude, facility.latitude]);
   for (let i = 1; i < ancestors.length; i++) {
-    const foundParent = orgUnitGeoJson.features.find((f) => f.id === ancestors[i]);
+    const foundParent = orgUnitGeoJson.features.find(
+      (f) => f.id === ancestors[i]
+    );
     if (foundParent) {
       const type = foundParent.geometry.type;
       let currentPolygon;
@@ -361,7 +427,9 @@ const isTooCloseToEachOther = (facility) => {
 const belongToMultipleGroups = (facility) => {
   let passed = false;
   const program = useMetadataStore.getState().program;
-  const dataElements = program.dataElements.filter((de) => de.description && de.description.includes("FCGS"));
+  const dataElements = program.dataElements.filter(
+    (de) => de.description && de.description.includes("FCGS")
+  );
   dataElements.forEach((de) => {
     const value = facility[de.id];
     if (value) {
@@ -384,7 +452,9 @@ const isNotInGroup = (facility, de) => {
 
 const isNotSentForApproval = (facility) => {
   let passed = false;
-  const foundActiveEvent = facility.events.find((event) => event.status === "ACTIVE");
+  const foundActiveEvent = facility.events.find(
+    (event) => event.status === "ACTIVE"
+  );
   if (foundActiveEvent) {
     passed = true;
   }
@@ -393,7 +463,10 @@ const isNotSentForApproval = (facility) => {
 
 const isWaitingForApproval = (facility) => {
   let passed = false;
-  const foundPendingEvent = facility.events.find((event) => event.status === "COMPLETED" && event[APPROVAL_STATUS] === "pending");
+  const foundPendingEvent = facility.events.find(
+    (event) =>
+      event.status === "COMPLETED" && event[APPROVAL_STATUS] === "pending"
+  );
   if (foundPendingEvent) {
     passed = true;
   }
@@ -428,7 +501,7 @@ const cloneAndClearValues = (obj) => {
 
 const convertLanguageCode = (languageCode) => {
   const mapping = {
-    nb: "no"
+    nb: "no",
   };
   if (mapping[languageCode]) {
     return mapping[languageCode];
@@ -440,10 +513,62 @@ const convertLanguageCode = (languageCode) => {
 const removeAccents = (str) => {
   return str
     .normalize("NFD")
-    .replace(/[\u0300-\u036f\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/g, "")
+    .replace(
+      /[\u0300-\u036f\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/g,
+      ""
+    )
     .replace(/đ/g, "d")
     .replace(/Đ/g, "D")
     .toLowerCase();
+};
+
+const convertDisplayValueForAllField = (dataElement, value) => {
+  const { locale, program, orgUnitGroups, orgUnitGroupSets } =
+    useMetadataStore.getState();
+  const foundDataElement = program.dataElements.find(
+    (de) => de.id === dataElement
+  );
+  if (!foundDataElement) {
+    return value;
+  }
+  const { description } = foundDataElement;
+  if (description && description.includes("FCGS")) {
+    if (value) {
+      const orgUnitGroupSetId = description.replace("FCGS:", "");
+      const foundOrgUnitGroupSet = orgUnitGroupSets.find(
+        (ougs) => ougs.id === orgUnitGroupSetId
+      );
+      const foundOrgUnitGroups = foundOrgUnitGroupSet.items.map((item) => {
+        const foundOrgUnitGroup = orgUnitGroups.find(
+          (oug) => oug.id === item.id
+        );
+        return foundOrgUnitGroup;
+      });
+      const mapping = {};
+      foundOrgUnitGroups.forEach((oug) => {
+        mapping[oug.id] = pickTranslation(oug, locale, "name");
+      });
+      const groups = JSON.parse(value);
+      return groups
+        .map((group) => {
+          return mapping[group];
+        })
+        .join(", ");
+    } else {
+      return "";
+    }
+  } else if (foundDataElement.optionSet) {
+    const foundOptions = program.options.filter(
+      (o) => o.optionSet.id === foundDataElement.optionSet.id
+    );
+    const foundOption = foundOptions.find((o) => o.code === value);
+    return foundOption ? pickTranslation(foundOption, locale, "name") : "";
+  } else if (foundDataElement.id === PATH) {
+    return convertDisplayValueForPath(value, "");
+  } else if (foundDataElement.valueType === "TRUE_ONLY") {
+    return value === "true" ? t("yes") : t("no");
+  }
+  return value;
 };
 
 export {
@@ -470,5 +595,6 @@ export {
   removeVietnameseTones,
   cloneAndClearValues,
   convertLanguageCode,
-  removeAccents
+  removeAccents,
+  convertDisplayValueForAllField,
 };
