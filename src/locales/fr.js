@@ -217,4 +217,5 @@ export default {
   syncSuccessfully: "Sync facilities successfully",
   metadataProcessFailed: "Metadata sync process failed",
   trackerProcessFailed: "Tracker sync process failed",
+  chooseOnMap: "Choose on map",
 };
