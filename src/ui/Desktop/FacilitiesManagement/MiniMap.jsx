@@ -1,5 +1,11 @@
 import { useRef, useEffect } from "react";
-import { MapContainer, TileLayer, useMap, GeoJSON, Marker } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  GeoJSON,
+  Marker,
+} from "react-leaflet";
 
 const BoundaryLayer = ({ data, point }) => {
   const ref = useRef();
@@ -27,13 +33,14 @@ const BoundaryLayer = ({ data, point }) => {
         layer.bindTooltip(feature?.properties?.name, {
           permanent: true,
           direction: "center",
-          className: "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label"
+          className:
+            "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label",
         });
         layer.setStyle({
           weight: 3,
           opacity: 1,
           fillOpacity: 0.1,
-          color: "#ea580c"
+          color: "#ea580c",
         });
       }}
     ></GeoJSON>
@@ -42,15 +49,16 @@ const BoundaryLayer = ({ data, point }) => {
 
 const FacilitiesLayer = ({ point }) => {
   const facilityIcon = new L.divIcon({
-    className: "rounded-full bg-cyan-700 w-[14px] h-[14px] border-[3px] border-white",
+    className:
+      "rounded-full bg-cyan-700 w-[14px] h-[14px] border-[3px] border-white",
     iconSize: [18, 18],
-    html: `<div></div>`
+    html: `<div></div>`,
   });
 
   return <Marker position={point} icon={facilityIcon} />;
 };
 
-const MiniMap = ({ data, point }) => {
+const MiniMap = ({ data, point, showPoint = true }) => {
   return (
     <MapContainer
       key={point ? JSON.stringify(point) : Math.random().toString()}
@@ -68,7 +76,7 @@ const MiniMap = ({ data, point }) => {
         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png"
       />
       <BoundaryLayer data={data} point={point} />
-      {point && <FacilitiesLayer point={point} />}
+      {point && showPoint && <FacilitiesLayer point={point} />}
     </MapContainer>
   );
 };

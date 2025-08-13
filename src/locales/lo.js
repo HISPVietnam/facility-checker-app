@@ -193,12 +193,15 @@ export default {
   selectOption: "",
   projectHomepage: "",
   done: "Done",
-  syncNotEmpty:
-    "There are {{total}} facilities need to be synchronized to the hierarchy.",
-  syncEmpty:
-    "Currently there are no facilities need to be synchronized to the hierarchy.",
   syncSuccessfully: "Sync facilities successfully",
   metadataProcessFailed: "Metadata sync process failed",
   trackerProcessFailed: "Tracker sync process failed",
   chooseOnMap: "Choose on map",
+  categories: "Categories",
+  ouGroups: "OrgUnit Groups",
+  info: "Information",
+  facilityCountApprovalTotal: "Total facilities sent for review: {{total}}",
+  facilityCountApprovalSeparate:
+    "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
+  facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
 };

@@ -6,7 +6,7 @@ const useApprovalModuleStore = create((set) => ({
   selectedOrgUnit: null,
   selectedEventId: null,
   isReadOnly: false,
-  filters: [],
+  filters: ["pending", "approved", "rejected"],
   actions: {
     selectFacility: (facility, eventId) =>
       set(
@@ -40,11 +40,11 @@ const useApprovalModuleStore = create((set) => ({
     resetFilters: () =>
       set(
         produce((state) => {
-          state.filters = [];
+          state.filters = ["pending", "approved", "rejected"];
           state.selectedOrgUnit = null;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export default useApprovalModuleStore;

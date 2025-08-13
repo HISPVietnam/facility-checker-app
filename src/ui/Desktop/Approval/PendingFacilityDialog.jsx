@@ -1,4 +1,3 @@
-import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
 import CustomizedButton from "@/ui/common/Button";
 import {
@@ -8,44 +7,30 @@ import {
   Pending,
   Rejected,
 } from "@/ui/common/Labels";
-import {
-  Modal,
-  ModalTitle,
-  ModalContent,
-  ModalActions,
-  NoticeBox,
-  ButtonStrip,
-  InputField,
-} from "@dhis2/ui";
-import CustomizedInputField from "@/ui/common/InputField";
+import { Modal, ModalTitle, ModalContent, ModalActions } from "@dhis2/ui";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
 import DataValueLabel from "@/ui/common/DataValueLabel";
 import GeoJsonViewer from "@/ui/common/GeoJsonViewer";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  getLatestValues,
-  generateUid,
   convertToDhis2Event,
   findCustomAttributeValue,
   convertDisplayValueForPath,
-  pickTranslation,
-  convertDisplayValue,
   convertDisplayValueForAllField,
+  generateParentFeatures,
 } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS } from "@/const";
 import { postEvent } from "@/api/data";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
-import _, { reject } from "lodash";
+import _ from "lodash";
 import useApprovalModuleStore from "@/states/approvalModule";
 import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
+import MiniMap from "../FacilitiesManagement/MiniMap";
 const {
-  UID,
   APPROVAL_STATUS,
   APPROVED_BY,
   APPROVED_AT,
@@ -64,7 +49,7 @@ const CustomValue = ({ isOld = false, isNew = false, children }) => {
     <div
       className={`bg-slate-100 ${isOld && "!bg-red-200"} ${
         isNew && "!bg-emerald-100"
-      } text-[14px] p-2 min-h-[40px] rounded-md`}
+      } text-[14px] p-2 min-h-[40px] rounded-md flex-1`}
     >
       {children}
     </div>
@@ -77,26 +62,15 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
   const [geoJsonViewer, setGeoJsonViewer] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const {
-    program,
-    me,
-    customAttributes,
-    orgUnitGroupSets,
-    orgUnitGroups,
-    locale,
-  } = useMetadataStore(
+  const { program, me, customAttributes } = useMetadataStore(
     useShallow((state) => ({
       program: state.program,
       me: state.me,
       customAttributes: state.customAttributes,
-      orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups,
-      locale: state.locale,
     }))
   );
-  const { actions, facilities } = useDataStore(
+  const { actions } = useDataStore(
     useShallow((state) => ({
-      facilities: state.facilities,
       actions: state.actions,
     }))
   );
@@ -115,20 +89,38 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     }))
   );
   const { selectFacility } = approvalModuleActions;
-  const foundPendingEvent = selectedFacility
-    ? selectedFacility.events.find(
-        (event) => event[APPROVAL_STATUS] === "pending"
-      )
-    : null;
-  const foundApprovedEvent = selectedFacility
-    ? selectedFacility.events.find(
-        (event) => event[APPROVAL_STATUS] === "approved"
-      )
-    : null;
   const finalEvent = selectedFacility
     ? selectedFacility.events.find((event) => event.event === selectedEventId)
     : null;
-  const { dataElements } = program;
+
+  const listDataElementDataValue = selectedFacility
+    ? [
+        PATH,
+        "latitude",
+        "longitude",
+        ...program.programStages[0].programStageDataElements.filter((psde) => {
+          return (
+            !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) &&
+            psde.dataElement.id !== PATH
+          );
+        }),
+      ]
+        .map((psde) => {
+          const foundValue =
+            finalEvent[psde.dataElement?.id] || finalEvent[psde];
+          const previousValue =
+            selectedFacility.previousValues[psde.dataElement?.id] ||
+            selectedFacility.previousValues[psde];
+          return {
+            dataElement: psde.dataElement?.id ? psde.dataElement.id : psde,
+            value: foundValue ? foundValue : "",
+            isChangedValue: foundValue && previousValue !== foundValue,
+          };
+        })
+        .sort((a, b) => {
+          return (b.isChangedValue === true) - (a.isChangedValue === true);
+        })
+    : [];
   const handleApprove = async () => {
     setLoading(true);
     const { username } = me;
@@ -288,82 +280,135 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     </span>
                   )}
               </div>
-              <br />
             </div>
             {/* Table value */}
+            <div className="flex items-center mb-1 border-b-2 border-b-slate-400 font-bold text-[15px] h-[35px] gap-2">
+              <div className="w-[20%]">{t("field")}</div>
+              <div className="w-[40%]">{t("currentValue")}</div>
+              <div className="w-[40%] ml-2">{t("newValue")}</div>
+            </div>
             <div className="flex-1 overflow-auto">
               {/* <div className="mb-1 font-bold w-full">{t("changedValues")}:</div> */}
-              <div className="flex items-center mb-2 border-b-2 border-b-slate-400 font-bold text-[15px] h-[35px] gap-2">
-                <div className="w-[20%]">{t("field")}</div>
-                <div className="w-[40%]">{t("currentValue")}</div>
-                <div className="w-[40%] ml-2">{t("newValue")}</div>
-              </div>
-              {[
-                PATH,
-                "latitude",
-                "longitude",
-                ...program.programStages[0].programStageDataElements.filter(
-                  (psde) => {
-                    return (
-                      !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) &&
-                      psde.dataElement.id !== PATH
-                    );
-                  }
-                ),
-              ]
-                .map((psde) => {
-                  const foundValue =
-                    finalEvent[psde.dataElement?.id] || finalEvent[psde];
-                  return {
-                    dataElement: psde.dataElement?.id
-                      ? psde.dataElement.id
-                      : psde,
-                    value: foundValue ? foundValue : "",
-                  };
-                })
-                .map((dataValue) => {
+
+              {listDataElementDataValue.map((dataValue) => {
+                if (dataValue.dataElement === "longitude") return;
+                if (dataValue.dataElement === "latitude") {
+                  const longitudeDataValue = listDataElementDataValue.find(
+                    (item) => item.dataElement === "longitude"
+                  );
+                  const pathDataValue = listDataElementDataValue.find(
+                    (item) => item.dataElement === PATH
+                  );
                   return (
                     <div className="flex mb-1 gap-2 border-b pb-1 items-center">
                       <div className="w-[20%]">
-                        <DataValueLabel dataElement={dataValue.dataElement} />
+                        <DataValueLabel dataElement={"coordinates"} />
                       </div>
                       <div className="w-[40%]">
-                        <CustomValue
-                          isOld={Boolean(
-                            dataValue.value &&
-                              selectedFacility.previousValues[
-                                dataValue.dataElement
-                              ] !== dataValue.value
-                          )}
-                        >
-                          {dataValue.dataElement === PATH
-                            ? convertDisplayValueForPath(
-                                selectedFacility.previousValues[
-                                  dataValue.dataElement
-                                ]
-                              )
-                            : ["latitude", "longitude"].includes(
-                                dataValue.dataElement
-                              )
-                            ? selectedFacility.previousValues[
-                                dataValue.dataElement
-                              ]
-                            : convertDisplayValueForAllField(
-                                dataValue.dataElement,
-                                selectedFacility.previousValues[
-                                  dataValue.dataElement
-                                ]
-                              )}
-                        </CustomValue>
+                        <div className=" flex gap-1">
+                          <CustomValue
+                            isOld={longitudeDataValue.isChangedValue}
+                          >
+                            {selectedFacility.previousValues["longitude"]}
+                          </CustomValue>
+                          <CustomValue isOld={dataValue.isChangedValue}>
+                            {selectedFacility.previousValues["latitude"]}
+                          </CustomValue>
+                        </div>
+                        <div className="w-full h-[300px] mt-2">
+                          <MiniMap
+                            data={generateParentFeatures(
+                              selectedFacility.previousValues[PATH]
+                            )}
+                            point={
+                              selectedFacility.previousValues.longitude &&
+                              selectedFacility.previousValues.latitude
+                                ? [
+                                    selectedFacility.previousValues.latitude,
+                                    selectedFacility.previousValues.longitude,
+                                  ]
+                                : [0, 0]
+                            }
+                            showPoint={
+                              !selectedFacility.previousValues.longitude ||
+                              !selectedFacility.previousValues.latitude
+                                ? false
+                                : true
+                            }
+                          />
+                        </div>
                       </div>
                       <div className="w-[40%]">
-                        <CustomValue isNew={!!dataValue.value}>
-                          {dataValue.value}
-                        </CustomValue>
+                        <div className=" flex gap-1">
+                          <CustomValue
+                            isNew={longitudeDataValue.isChangedValue}
+                          >
+                            {longitudeDataValue.value}
+                          </CustomValue>
+                          <CustomValue isNew={dataValue.isChangedValue}>
+                            {dataValue.value}
+                          </CustomValue>
+                        </div>
+                        <div className="w-full h-[300px] mt-2">
+                          <MiniMap
+                            data={generateParentFeatures(
+                              pathDataValue.value ||
+                                selectedFacility.previousValues[PATH]
+                            )}
+                            point={
+                              longitudeDataValue.value && dataValue.value
+                                ? [dataValue.value, longitudeDataValue.value]
+                                : [0, 0]
+                            }
+                            showPoint={
+                              !longitudeDataValue.value || !dataValue.value
+                                ? false
+                                : true
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   );
-                })}
+                }
+                return (
+                  <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                    <div className="w-[20%]">
+                      <DataValueLabel dataElement={dataValue.dataElement} />
+                    </div>
+                    <div className="w-[40%]">
+                      <CustomValue isOld={dataValue.isChangedValue}>
+                        {dataValue.dataElement === PATH
+                          ? convertDisplayValueForPath(
+                              selectedFacility.previousValues[
+                                dataValue.dataElement
+                              ]
+                            )
+                          : ["latitude", "longitude"].includes(
+                              dataValue.dataElement
+                            )
+                          ? selectedFacility.previousValues[
+                              dataValue.dataElement
+                            ]
+                          : convertDisplayValueForAllField(
+                              dataValue.dataElement,
+                              selectedFacility.previousValues[
+                                dataValue.dataElement
+                              ]
+                            )}
+                      </CustomValue>
+                    </div>
+                    <div className="w-[40%]">
+                      <CustomValue isNew={dataValue.isChangedValue}>
+                        {convertDisplayValueForAllField(
+                          dataValue.dataElement,
+                          dataValue.value
+                        )}
+                      </CustomValue>
+                    </div>
+                  </div>
+                );
+              })}
               {customAttributes.map((customAttribute) => {
                 const { id, valueType } = customAttribute;
                 const value = findCustomAttributeValue(

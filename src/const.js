@@ -95,12 +95,6 @@ const APPROVAL_FILTERS = [
   { id: "approved" },
   { id: "rejected" },
   { id: "pending" },
-  {
-    id: "isNewFacility",
-  },
-  {
-    id: "synced",
-  },
 ];
 
 const SYNCHRONIZATION_FILTERS = [
