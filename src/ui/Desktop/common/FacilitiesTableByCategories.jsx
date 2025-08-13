@@ -78,7 +78,8 @@ const FacilitiesTableByCategories = ({
       facilities: state.facilities,
     }))
   );
-  const checkChangDataValue = (fields, currentValues, previousValues) => {
+  const checkChangDataValue = (fields, currentValues) => {
+    const { previousValues } = currentValues;
     return fields.some(
       (field) =>
         currentValues[field] && previousValues[field] !== currentValues[field]
@@ -94,27 +95,20 @@ const FacilitiesTableByCategories = ({
     })
     .filter((item) => item.events.length > 0)
     .map((facility) => {
-      const { previousValues } = facility;
       const row = facility.events[0];
 
       const isChangeCoordinates = checkChangDataValue(
         ["longitude", "latitude"],
-        row,
-        previousValues
+        row
       );
       const isChangeOuGroups = checkChangDataValue(
         program.dataElements
           .filter((de) => de.description && de.description.includes("FCGS"))
           .map((de) => de.id),
-        row,
-        previousValues
+        row
       );
 
-      const isChangeHierarchy = checkChangDataValue(
-        [PATH],
-        row,
-        previousValues
-      );
+      const isChangeHierarchy = checkChangDataValue([PATH], row);
       const isChangeInfo =
         !isChangeCoordinates &&
         !isChangeOuGroups &&
@@ -134,8 +128,7 @@ const FacilitiesTableByCategories = ({
             SHORT_NAME,
             URL,
           ],
-          row,
-          previousValues
+          row
         );
       const isNewFacility = row[IS_NEW_FACILITY];
 

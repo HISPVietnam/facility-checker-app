@@ -17,7 +17,7 @@ import {
 import _ from "lodash";
 import { el } from "date-fns/locale";
 import { t } from "i18next";
-const { APPROVAL_STATUS, PATH, UID, NAME } = DATA_ELEMENTS;
+const { APPROVAL_STATUS, PATH, UID, NAME, SYNC_NUMBER } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 
 const pickTranslation = (object, language, field) => {
@@ -132,20 +132,20 @@ const convertEvent = (event, dataElements) => {
   return convertedEvent;
 };
 
-const getLatestValues = (events, program, includeActiveEvents = true) => {
+const getLatestValues = (events, program, targetEvent) => {
   const latestValues = {};
-  let tempEvents = events.filter(
-    (event) => event[APPROVAL_STATUS] !== "rejected"
-  );
-  if (!includeActiveEvents) {
-    tempEvents = events
-      .filter((event) => event.status !== "ACTIVE")
-      .filter(
-        (event) =>
-          event[APPROVAL_STATUS] !== "pending" &&
-          event[APPROVAL_STATUS] !== "approved"
-      );
-  }
+  let tempEvents = events
+    .filter((event) => event[SYNC_NUMBER])
+    .sort((a, b) => Number(a[SYNC_NUMBER]) - Number(b[SYNC_NUMBER]));
+  const eventIndex =
+    targetEvent &&
+    tempEvents.findIndex(
+      (event) => new Date(event.occurredAt) >= new Date(targetEvent.occurredAt)
+    );
+  tempEvents =
+    targetEvent && eventIndex !== -1
+      ? tempEvents.slice(0, eventIndex)
+      : tempEvents;
   program.dataElements.forEach((de) => {
     const foundEvent = tempEvents.find((event) => {
       const foundDataValue = event[de.id];
@@ -218,12 +218,21 @@ const convertTeis = (teis, program) => {
     );
     facility.isPending = foundPendingEvent ? true : false;
     const latestValues = getLatestValues(facility.events, program);
-    const previousValues = getLatestValues(facility.events, program, false);
+
+    const newEvents = facility.events.map((event) => {
+      const previousValues = getLatestValues(facility.events, program, event);
+      return {
+        ...event,
+        previousValues: previousValues,
+      };
+    });
     const newFacility = {
-      ...latestValues,
       ...facility,
-      previousValues: previousValues,
+      ...latestValues,
+      events: newEvents,
+      previousValues: latestValues,
     };
+
     return newFacility;
   });
   return convertedTeis;
