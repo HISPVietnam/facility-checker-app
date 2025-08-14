@@ -135,17 +135,19 @@ const convertEvent = (event, dataElements) => {
 const getLatestValues = (events, program, targetEvent) => {
   const latestValues = {};
   let tempEvents = events
-    .filter((event) => event[SYNC_NUMBER])
-    .sort((a, b) => Number(a[SYNC_NUMBER]) - Number(b[SYNC_NUMBER]));
-  const eventIndex =
-    targetEvent &&
-    tempEvents.findIndex(
-      (event) => new Date(event.occurredAt) >= new Date(targetEvent.occurredAt)
+    .filter(
+      (event) =>
+        event[SYNC_NUMBER] ||
+        (!targetEvent && event[APPROVAL_STATUS] !== "rejected")
+    )
+    .sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt));
+  if (targetEvent?.event) {
+    const eventIndex = tempEvents.findIndex(
+      (event) => new Date(event.occurredAt) < new Date(targetEvent.occurredAt)
     );
-  tempEvents =
-    targetEvent && eventIndex !== -1
-      ? tempEvents.slice(0, eventIndex)
-      : tempEvents;
+    tempEvents = eventIndex !== -1 ? tempEvents.slice(eventIndex) : [];
+  }
+
   program.dataElements.forEach((de) => {
     const foundEvent = tempEvents.find((event) => {
       const foundDataValue = event[de.id];
@@ -218,6 +220,7 @@ const convertTeis = (teis, program) => {
     );
     facility.isPending = foundPendingEvent ? true : false;
     const latestValues = getLatestValues(facility.events, program);
+    const previousValues = getLatestValues(facility.events, program, {});
 
     const newEvents = facility.events.map((event) => {
       const previousValues = getLatestValues(facility.events, program, event);
@@ -230,7 +233,7 @@ const convertTeis = (teis, program) => {
       ...facility,
       ...latestValues,
       events: newEvents,
-      previousValues: latestValues,
+      previousValues: previousValues,
     };
 
     return newFacility;

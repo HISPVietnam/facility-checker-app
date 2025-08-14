@@ -1,10 +1,23 @@
 import CustomizedInputField from "@/ui/common/InputField";
-import { SingleSelectField, SingleSelectOption, CheckboxField, Popover, NoticeBox } from "@dhis2/ui";
+import {
+  SingleSelectField,
+  SingleSelectOption,
+  CheckboxField,
+  Popover,
+  NoticeBox,
+} from "@dhis2/ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap } from "@fortawesome/free-solid-svg-icons";
 import useMetadataStore from "@/states/metadata";
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, GeoJSON, Marker, Tooltip, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  GeoJSON,
+  Marker,
+  Tooltip,
+  Popup,
+} from "react-leaflet";
 import { useMap } from "react-leaflet";
 import { useShallow } from "zustand/react/shallow";
 import L from "leaflet";
@@ -12,7 +25,12 @@ import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import { useTranslation } from "react-i18next";
 import CustomizedButton from "@/ui/common/Button";
 import useLayoutStore from "@/states/layout";
-import { isValidPoint, isInsideParent, convertToDhis2Event, generateUid } from "@/utils";
+import {
+  isValidPoint,
+  isInsideParent,
+  convertToDhis2Event,
+  generateUid,
+} from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, BASE_LAYER_TYPES } from "@/const";
 import DataValueLabel from "@/ui/common/DataValueLabel";
@@ -22,33 +40,40 @@ import { format } from "date-fns";
 import DataValueText from "@/ui/common/DataValueText";
 import { booleanPointInPolygon, point } from "@turf/turf";
 import _ from "lodash";
-const { UID, NAME, PATH } = DATA_ELEMENTS;
+const { UID, NAME, PATH, IS_NEW_FACILITY, APPROVAL_STATUS } = DATA_ELEMENTS;
 
 const TooltipContent = (props) => {
   const [loading, setLoading] = useState(false);
   const { program, orgUnitGeoJson } = useMetadataStore(
     useShallow((state) => ({
       program: state.program,
-      orgUnitGeoJson: state.orgUnitGeoJson
+      orgUnitGeoJson: state.orgUnitGeoJson,
     }))
   );
-  const { selectedFacility, editing, actions, draggingMode, isReadOnly } = useFacilityCheckModuleStore(
-    useShallow((state) => ({
-      selectedFacility: state.selectedFacility,
-      draggingMode: state.draggingMode,
-      editing: state.editing,
-      actions: state.actions,
-      isReadOnly: state.isReadOnly
-    }))
-  );
+  const { selectedFacility, editing, actions, draggingMode, isReadOnly } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        selectedFacility: state.selectedFacility,
+        draggingMode: state.draggingMode,
+        editing: state.editing,
+        actions: state.actions,
+        isReadOnly: state.isReadOnly,
+      }))
+    );
   const { facilities, dataStoreActions } = useDataStore(
     useShallow((state) => ({
       facilities: state.facilities,
-      dataStoreActions: state.actions
+      dataStoreActions: state.actions,
     }))
   );
   const { save } = dataStoreActions;
-  const { toggleEditing, toggleDraggingMode, selectFacility, editSelectedFacility, toggleDialog } = actions;
+  const {
+    toggleEditing,
+    toggleDraggingMode,
+    selectFacility,
+    editSelectedFacility,
+    toggleDialog,
+  } = actions;
   const { t } = useTranslation();
   const facility = selectedFacility;
   const [lat, setLat] = useState(facility.latitude);
@@ -78,7 +103,9 @@ const TooltipContent = (props) => {
 
   const saveChanges = async () => {
     setLoading(true);
-    const foundActiveEvent = facility.events.find((event) => event.status === "ACTIVE");
+    const foundActiveEvent = facility.events.find(
+      (event) => event.status === "ACTIVE"
+    );
     let tempFacility = null;
     if (foundActiveEvent) {
       tempFacility = {
@@ -88,7 +115,7 @@ const TooltipContent = (props) => {
         tei: facility.tei,
         enr: facility.enr,
         latitude: lat,
-        longitude: long
+        longitude: long,
       };
     } else {
       tempFacility = {
@@ -100,7 +127,7 @@ const TooltipContent = (props) => {
         status: "ACTIVE",
         occurredAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS"),
         latitude: lat,
-        longitude: long
+        longitude: long,
       };
     }
     save(tempFacility);
@@ -185,7 +212,14 @@ const TooltipContent = (props) => {
         >
           {t("editLocation")}
         </CustomizedButton>
-        <CustomizedButton loading={loading} small={true} hidden={!editing} disabled={!valid || !isWithinParent} primary onClick={saveChanges}>
+        <CustomizedButton
+          loading={loading}
+          small={true}
+          hidden={!editing}
+          disabled={!valid || !isWithinParent}
+          primary
+          onClick={saveChanges}
+        >
           {t("save")}
         </CustomizedButton>
         &nbsp;
@@ -198,7 +232,9 @@ const TooltipContent = (props) => {
             if (draggingMode) {
               toggleDraggingMode();
             }
-            const foundSelectedFacility = facilities.find((f) => f[UID] === facility[UID]);
+            const foundSelectedFacility = facilities.find(
+              (f) => f[UID] === facility[UID]
+            );
             selectFacility(foundSelectedFacility);
             setLat(foundSelectedFacility.latitude);
             setLong(foundSelectedFacility.longitude);
@@ -208,11 +244,21 @@ const TooltipContent = (props) => {
           {t("cancel")}
         </CustomizedButton>
         &nbsp;
-        <CustomizedButton loading={loading} small={true} hidden={!editing || draggingMode} onClick={toggleDraggingMode}>
+        <CustomizedButton
+          loading={loading}
+          small={true}
+          hidden={!editing || draggingMode}
+          onClick={toggleDraggingMode}
+        >
           {t("move")}
         </CustomizedButton>
         &nbsp;
-        <CustomizedButton loading={loading} small={true} hidden={!draggingMode || !editing} disabled>
+        <CustomizedButton
+          loading={loading}
+          small={true}
+          hidden={!draggingMode || !editing}
+          disabled
+        >
           {t("moving")}
         </CustomizedButton>
       </div>
@@ -239,27 +285,40 @@ const BoundaryLayer = () => {
   const map = useMap();
   const layout = useLayoutStore((state) => state.layout);
   const [transformedData, setTransformedData] = useState(null);
-  const { mapControl, selectedOrgUnit, draggingMode, editing, selectedFacility } = useFacilityCheckModuleStore(
+  const {
+    mapControl,
+    selectedOrgUnit,
+    draggingMode,
+    editing,
+    selectedFacility,
+  } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       mapControl: state.mapControl,
       selectedOrgUnit: state.selectedOrgUnit,
       draggingMode: state.draggingMode,
       selectedFacility: state.selectedFacility,
-      editing: state.editing
+      editing: state.editing,
     }))
   );
   const facilities = useDataStore((state) => state.facilities);
   const { orgUnitGeoJson } = useMetadataStore(
     useShallow((state) => ({
-      orgUnitGeoJson: state.orgUnitGeoJson
+      orgUnitGeoJson: state.orgUnitGeoJson,
     }))
   );
 
   useEffect(() => {
     if (selectedOrgUnit) {
-      const foundSelf = orgUnitGeoJson.features.find((feature) => feature.id === selectedOrgUnit.id);
-      const foundChildren = orgUnitGeoJson.features.filter((feature) => feature.properties.parent === selectedOrgUnit.id);
-      const foundParent = orgUnitGeoJson.features.find((feature) => selectedOrgUnit.parent && feature.id === selectedOrgUnit.parent.id);
+      const foundSelf = orgUnitGeoJson.features.find(
+        (feature) => feature.id === selectedOrgUnit.id
+      );
+      const foundChildren = orgUnitGeoJson.features.filter(
+        (feature) => feature.properties.parent === selectedOrgUnit.id
+      );
+      const foundParent = orgUnitGeoJson.features.find(
+        (feature) =>
+          selectedOrgUnit.parent && feature.id === selectedOrgUnit.parent.id
+      );
       const foundFacility = facilities.find((f) => {
         return f[UID] === selectedOrgUnit.id;
       });
@@ -269,7 +328,11 @@ const BoundaryLayer = () => {
       } else if (foundSelf && foundSelf.geometry.type !== "Point") {
         finalFeatures = [foundSelf];
         if (foundChildren) {
-          const foundChildrenPolygon = foundChildren.filter((child) => child.geometry.type === "Polygon" || child.geometry.type === "MultiPolygon");
+          const foundChildrenPolygon = foundChildren.filter(
+            (child) =>
+              child.geometry.type === "Polygon" ||
+              child.geometry.type === "MultiPolygon"
+          );
           finalFeatures.push(...foundChildrenPolygon);
         }
       } else if (foundChildren && foundChildren.length > 0) {
@@ -282,18 +345,29 @@ const BoundaryLayer = () => {
         const currentOrgUnits = _.compact(path.split("/"));
         currentOrgUnits.pop();
         const parent = currentOrgUnits.pop();
-        const foundIndexInFinalFeature = finalFeatures.findIndex((f) => f.id === parent);
-        const foundInFeatures = orgUnitGeoJson.features.find((feature) => feature.id === parent);
+        const foundIndexInFinalFeature = finalFeatures.findIndex(
+          (f) => f.id === parent
+        );
+        const foundInFeatures = orgUnitGeoJson.features.find(
+          (feature) => feature.id === parent
+        );
         if (foundIndexInFinalFeature !== -1) {
-          finalFeatures[foundIndexInFinalFeature] = { ...finalFeatures[foundIndexInFinalFeature], highlight: true };
-        } else if (foundInFeatures && (foundInFeatures.geometry.type === "Polygon" || foundInFeatures.geometry.type === "MultiPolygon")) {
+          finalFeatures[foundIndexInFinalFeature] = {
+            ...finalFeatures[foundIndexInFinalFeature],
+            highlight: true,
+          };
+        } else if (
+          foundInFeatures &&
+          (foundInFeatures.geometry.type === "Polygon" ||
+            foundInFeatures.geometry.type === "MultiPolygon")
+        ) {
           const newFeature = { ...foundInFeatures, highlight: true };
           finalFeatures.push(newFeature);
         }
       }
       const transformedData = {
         ...orgUnitGeoJson,
-        features: finalFeatures
+        features: finalFeatures,
       };
       transformedData.lastUpdated = new Date().toISOString();
       setTransformedData({ ...transformedData });
@@ -339,7 +413,8 @@ const BoundaryLayer = () => {
           layer.bindTooltip(feature.properties.name, {
             permanent: true,
             direction: "center",
-            className: "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label"
+            className:
+              "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label",
           });
         }
 
@@ -348,14 +423,15 @@ const BoundaryLayer = () => {
             weight: 3,
             opacity: mapControl.boundaryLayer ? 1 : 0,
             fillOpacity: mapControl.boundaryLayer ? 0.1 : 0,
-            color: "#ea580c"
+            color: "#ea580c",
           });
         } else {
           layer.setStyle({
             weight: 1,
             opacity: mapControl.boundaryLayer ? 1 : 0,
             fillOpacity: mapControl.boundaryLayer ? 0.01 : 0,
-            color: mapControl.baseLayerType === "satellite" ? "#ffffff" : "#000000"
+            color:
+              mapControl.baseLayerType === "satellite" ? "#ffffff" : "#000000",
           });
         }
       }}
@@ -365,29 +441,37 @@ const BoundaryLayer = () => {
 
 const FacilitiesLayer = () => {
   const facilityIcon = new L.divIcon({
-    className: "rounded-full bg-cyan-700 w-[14px] h-[14px] border-[3px] border-white",
+    className:
+      "rounded-full bg-cyan-700 w-[14px] h-[14px] border-[3px] border-white",
     // iconAnchor: [7, 7],
     iconSize: [18, 18],
-    html: `<div></div>`
+    html: `<div></div>`,
   });
   const draggedFacilityIcon = new L.divIcon({
-    className: "rounded-full bg-orange-600 w-[14px] h-[14px] border-[3px] border-white",
+    className:
+      "rounded-full bg-orange-600 w-[14px] h-[14px] border-[3px] border-white",
     // iconAnchor: [7, 7],
     iconSize: [18, 18],
-    html: `<div></div>`
+    html: `<div></div>`,
   });
   const map = useMap();
   const markerRef = useRef();
-  const { selectedFacility, draggingMode, actions, editing } = useFacilityCheckModuleStore(
-    useShallow((state) => ({
-      editing: state.editing,
-      selectedFacility: state.selectedFacility,
-      actions: state.actions,
-      draggingMode: state.draggingMode
-    }))
-  );
+  const { selectedFacility, draggingMode, actions, editing } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        editing: state.editing,
+        selectedFacility: state.selectedFacility,
+        actions: state.actions,
+        draggingMode: state.draggingMode,
+      }))
+    );
 
-  const { selectFacility, editSelectedFacility, toggleEditing, toggleDraggingMode } = actions;
+  const {
+    selectFacility,
+    editSelectedFacility,
+    toggleEditing,
+    toggleDraggingMode,
+  } = actions;
   const facilities = useDataStore((state) => state.facilities);
   useEffect(() => {
     if (editing) {
@@ -410,18 +494,32 @@ const FacilitiesLayer = () => {
         }
       }
     },
-    selectedFacility ? [selectedFacility[UID], selectedFacility.latitude, selectedFacility.longitude] : ["", "", ""]
+    selectedFacility
+      ? [
+          selectedFacility[UID],
+          selectedFacility.latitude,
+          selectedFacility.longitude,
+        ]
+      : ["", "", ""]
   );
   return (
     facilities &&
     facilities.length > 0 &&
     facilities
+      .filter(
+        (facility) =>
+          !(
+            facility[IS_NEW_FACILITY] &&
+            facility[APPROVAL_STATUS] === "rejected"
+          )
+      )
       .filter((facility) => !facility.hidden)
       .map((facility) => {
         let currentFacility = facility;
         const id = currentFacility[UID];
         const name = currentFacility[NAME];
-        const isSelectedFacility = selectedFacility && selectedFacility[UID] === id;
+        const isSelectedFacility =
+          selectedFacility && selectedFacility[UID] === id;
         if (isSelectedFacility) {
           currentFacility = selectedFacility;
         }
@@ -450,12 +548,16 @@ const FacilitiesLayer = () => {
                   if (!editing && !draggingMode) {
                     selectFacility(null);
                   }
-                }
+                },
               }}
               draggable={draggingMode}
               ref={isSelectedFacility ? markerRef : null}
               position={position}
-              icon={draggingMode && isSelectedFacility ? draggedFacilityIcon : facilityIcon}
+              icon={
+                draggingMode && isSelectedFacility
+                  ? draggedFacilityIcon
+                  : facilityIcon
+              }
               key={id}
             >
               <Tooltip offset={[10, 0]}>{name}</Tooltip>
@@ -480,7 +582,7 @@ const MapControl = () => {
   const { mapControl, selectedOrgUnit, actions } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       mapControl: state.mapControl,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
   const { setMapControl, selectOrgUnit } = actions;
@@ -565,7 +667,7 @@ const MapControl = () => {
           </div>
         </div>
       </Popover>
-    )
+    ),
   ];
 };
 
@@ -573,10 +675,11 @@ const FacilityMap = () => {
   const { mapControl, selectedFacility } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       mapControl: state.mapControl,
-      selectedFacility: state.selectedFacility
+      selectedFacility: state.selectedFacility,
     }))
   );
-  const { boundaryLayer, facilityLayer, baseLayer, labelLayer, baseLayerType } = mapControl;
+  const { boundaryLayer, facilityLayer, baseLayer, labelLayer, baseLayerType } =
+    mapControl;
 
   return (
     <div className="p-2 w-full h-full">
@@ -591,7 +694,7 @@ const FacilityMap = () => {
             // boundaryLayer,
             // facilityLayer,
             // baseLayer,
-            baseLayerType
+            baseLayerType,
             //  selectedFacility ? selectedFacility.id : ""
           ].join(";")}
         >

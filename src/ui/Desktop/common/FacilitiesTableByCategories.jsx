@@ -182,7 +182,7 @@ const FacilitiesTableByCategories = ({
       </DataTableHead>
       <DataTableBody>
         {filteredFacility.map((facility) => {
-          return filter(facility.events).map((row) => {
+          return facility.events.map((row) => {
             return (
               <DataTableRow
                 key={row.event}
@@ -196,10 +196,16 @@ const FacilitiesTableByCategories = ({
                   />
                 </DataTableCell>
                 <DataTableCell>
-                  <DataValueText dataElement={NAME} value={facility[NAME]} />
+                  <DataValueText
+                    dataElement={NAME}
+                    value={facility[NAME] || row[NAME]}
+                  />
                 </DataTableCell>
                 <DataTableCell>
-                  <DataValueText dataElement={PATH} value={facility[PATH]} />
+                  <DataValueText
+                    dataElement={PATH}
+                    value={facility[PATH] || row[PATH]}
+                  />
                 </DataTableCell>
                 <DataTableCell align="center">
                   {facility.categories.isChangeCoordinates && (
