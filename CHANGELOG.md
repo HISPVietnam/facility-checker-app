@@ -1,3 +1,18 @@
+## [1.12.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.3...v1.12.0) (2025-08-14)
+
+### Features
+
+* add map visualization to facility profile ([d1a4c6a](https://github.com/HISPVietnam/facility-checker-app/commit/d1a4c6a4259523f04618ce3787e22d0b909ce2fc))
+* show all current and new values in approval dialog ([5728fed](https://github.com/HISPVietnam/facility-checker-app/commit/5728fed222fe6bdd7e71ef24b95277f2e650fcdc))
+
+### Bug Fixes
+
+* additional fixes for previousValues ([459263d](https://github.com/HISPVietnam/facility-checker-app/commit/459263dd23a01b4b3321bb99fc27b4bf9cd3a844))
+* major fixes for facility profile, approval and synchronization module ([4d2c6e1](https://github.com/HISPVietnam/facility-checker-app/commit/4d2c6e1861d64502ed568f8d206cbcb13a3b427d))
+* make parent boundary feature generator ([689e7fc](https://github.com/HISPVietnam/facility-checker-app/commit/689e7fc8aac470267178a7e88cc79278be8beac6))
+* minor fixes for MiniMap ([dfa1b9c](https://github.com/HISPVietnam/facility-checker-app/commit/dfa1b9c52615bea263258e78c9d6f7eab725fc73))
+* previous values displayed inccorectly ([69e201f](https://github.com/HISPVietnam/facility-checker-app/commit/69e201f6f1bbe2960b18442b077ce2fca6985870))
+
 ## [1.11.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.2...v1.11.3) (2025-07-31)
 
 ### Bug Fixes
