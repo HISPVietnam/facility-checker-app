@@ -16,10 +16,10 @@ const BoundaryLayer = ({ data, point }) => {
     const [lat, long] = point || [];
     try {
       const bounds = ref.current.getBounds();
-      if (long && lat) {
+      if (long && lat && bounds) {
         bounds.extend([lat, long]);
       }
-      map.fitBounds(bounds);
+      bounds && bounds.isValid() && map && map.fitBounds(bounds);
     } catch (err) {
       console.log(err);
     }

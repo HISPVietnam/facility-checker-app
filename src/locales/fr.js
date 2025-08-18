@@ -214,11 +214,12 @@ export default {
   metadataProcessFailed: "Metadata sync process failed",
   trackerProcessFailed: "Tracker sync process failed",
   chooseOnMap: "Choose on map",
-  categories: "Categories",
+  categories: "Changes made to facility:",
   ouGroups: "OrgUnit Groups",
-  info: "Information",
+  info: "Profile",
   facilityCountApprovalTotal: "Total facilities sent for review: {{total}}",
   facilityCountApprovalSeparate:
     "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
+  notChangedValues: "Not changed values",
 };

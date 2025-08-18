@@ -30,6 +30,7 @@ import _ from "lodash";
 import useApprovalModuleStore from "@/states/approvalModule";
 import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
 import MiniMap from "../FacilitiesManagement/MiniMap";
+import Accordion from "@/ui/common/Accordion";
 const {
   APPROVAL_STATUS,
   APPROVED_BY,
@@ -104,22 +105,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
             psde.dataElement.id !== PATH
           );
         }),
-      ]
-        .map((psde) => {
-          const foundValue =
-            finalEvent[psde.dataElement?.id] || finalEvent[psde];
-          const previousValue =
-            finalEvent.previousValues[psde.dataElement?.id] ||
-            finalEvent.previousValues[psde];
-          return {
-            dataElement: psde.dataElement?.id ? psde.dataElement.id : psde,
-            value: foundValue ? foundValue : "",
-            isChangedValue: foundValue && previousValue !== foundValue,
-          };
-        })
-        .sort((a, b) => {
-          return (b.isChangedValue === true) - (a.isChangedValue === true);
-        })
+        ...customAttributes,
+      ].map((item) => {
+        const foundValue =
+          findCustomAttributeValue(finalEvent[ATTRIBUTE_VALUES], item.id) ||
+          finalEvent[item.dataElement?.id] ||
+          finalEvent[item];
+        const previousValue = item.id
+          ? finalEvent.previousValues[ATTRIBUTE_VALUES]
+            ? findCustomAttributeValue(
+                finalEvent.previousValues[ATTRIBUTE_VALUES],
+                item.id
+              )
+            : ""
+          : finalEvent.previousValues[item.dataElement?.id] ||
+            finalEvent.previousValues[item];
+        return {
+          id: item.dataElement?.id || item.id || item,
+          value: foundValue ? foundValue : "",
+          isChangedValue: foundValue && previousValue !== foundValue,
+          valueType: item.id && item.valueType,
+          oldValue: previousValue,
+        };
+      })
     : [];
   const handleApprove = async () => {
     setLoading(true);
@@ -177,81 +185,46 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     setLoading(false);
     setRejectDialog(false);
   };
+
   return (
     selectedFacility && (
-      <Modal fluid hide={!open}>
+      <Modal key={selectedFacility?.tei} fluid hide={!open}>
         <ModalTitle>{t("pendingApprovalValues")}</ModalTitle>
         <ModalContent>
-          <div className="h-[65vh] w-[85vw] flex flex-col">
+          <div className="h-[65vh] w-[85vw] flex flex-col gap-2">
             {/* Change log */}
             <div>
-              <div className="text-[15px]">
-                <DataValueLabel dataElement={NAME} />:{" "}
-                <DataValueText
-                  dataElement={NAME}
-                  value={selectedFacility[NAME]}
-                />
+              <div className="flex gap-10">
+                <div>
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={NAME} />:{" "}
+                    <DataValueText
+                      dataElement={NAME}
+                      value={
+                        finalEvent[NAME] || finalEvent.previousValues[NAME]
+                      }
+                    />
+                  </div>
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={PATH} />:{" "}
+                    <DataValueText
+                      dataElement={PATH}
+                      value={
+                        finalEvent[PATH] || finalEvent.previousValues[PATH]
+                      }
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[15px]">
+                    {t("dateOfRequest")}:{" "}
+                    {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
+                  </div>
+                  <div className="text-[15px]">
+                    {t("requestedBy")}: {finalEvent.updatedBy.username}
+                  </div>
+                </div>
               </div>
-              <div className="text-[15px]">
-                <DataValueLabel dataElement={PATH} />:{" "}
-                <DataValueText
-                  dataElement={PATH}
-                  value={selectedFacility[PATH]}
-                />
-              </div>
-              <div className="text-[15px]">
-                {t("dateOfRequest")}:{" "}
-                {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
-              </div>
-              <div className="text-[15px]">
-                {t("requestedBy")}: {finalEvent.updatedBy.username}
-              </div>
-              {finalEvent[APPROVAL_STATUS] == "approved" && (
-                <div className="text-[15px]">
-                  <DataValueLabel dataElement={APPROVED_BY} />:{" "}
-                  <DataValueText
-                    dataElement={APPROVED_BY}
-                    value={finalEvent[APPROVED_BY]}
-                  />
-                </div>
-              )}
-              {finalEvent[APPROVAL_STATUS] == "rejected" && (
-                <div className="text-[15px]">
-                  <DataValueLabel dataElement={REJECTED_BY} />:{" "}
-                  <DataValueText
-                    dataElement={REJECTED_BY}
-                    value={finalEvent[REJECTED_BY]}
-                  />
-                </div>
-              )}
-              {finalEvent[APPROVAL_STATUS] == "approved" && (
-                <div className="text-[15px]">
-                  <DataValueLabel dataElement={APPROVED_AT} />:{" "}
-                  <DataValueText
-                    dataElement={APPROVED_AT}
-                    value={finalEvent[APPROVED_AT]}
-                  />
-                </div>
-              )}
-              {finalEvent[APPROVAL_STATUS] == "rejected" && (
-                <div className="text-[15px]">
-                  <DataValueLabel dataElement={REJECTED_AT} />:{" "}
-                  <DataValueText
-                    dataElement={REJECTED_AT}
-                    value={finalEvent[REJECTED_AT]}
-                  />
-                </div>
-              )}
-              {finalEvent[APPROVAL_STATUS] == "rejected" && (
-                <div className="text-[15px]">
-                  <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
-                  <DataValueText
-                    dataElement={REASON_FOR_REJECT}
-                    value={finalEvent[REASON_FOR_REJECT]}
-                  />
-                </div>
-              )}
-
               <div className="text-[15px]">
                 {finalEvent[APPROVAL_STATUS] == "pending" && (
                   <span>
@@ -280,6 +253,53 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     </span>
                   )}
               </div>
+              <div className="flex gap-5">
+                {finalEvent[APPROVAL_STATUS] == "approved" && (
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={APPROVED_BY} />:{" "}
+                    <DataValueText
+                      dataElement={APPROVED_BY}
+                      value={finalEvent[APPROVED_BY]}
+                    />
+                  </div>
+                )}
+                {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={REJECTED_BY} />:{" "}
+                    <DataValueText
+                      dataElement={REJECTED_BY}
+                      value={finalEvent[REJECTED_BY]}
+                    />
+                  </div>
+                )}
+                {finalEvent[APPROVAL_STATUS] == "approved" && (
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={APPROVED_AT} />:{" "}
+                    <DataValueText
+                      dataElement={APPROVED_AT}
+                      value={finalEvent[APPROVED_AT]}
+                    />
+                  </div>
+                )}
+                {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={REJECTED_AT} />:{" "}
+                    <DataValueText
+                      dataElement={REJECTED_AT}
+                      value={finalEvent[REJECTED_AT]}
+                    />
+                  </div>
+                )}
+                {finalEvent[APPROVAL_STATUS] == "rejected" && (
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
+                    <DataValueText
+                      dataElement={REASON_FOR_REJECT}
+                      value={finalEvent[REASON_FOR_REJECT]}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             {/* Table value */}
             <div className="flex items-center mb-1 border-b-2 border-b-slate-400 font-bold text-[15px] h-[35px] gap-2">
@@ -287,223 +307,367 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
               <div className="w-[40%]">{t("currentValue")}</div>
               <div className="w-[40%] ml-2">{t("newValue")}</div>
             </div>
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-auto flex flex-col gap-2">
               {/* <div className="mb-1 font-bold w-full">{t("changedValues")}:</div> */}
+              <Accordion
+                key={`${selectFacility.tei}-changed`}
+                title={t("changedValues")}
+                defaultOpen={true}
+              >
+                {listDataElementDataValue
+                  .filter((dataValue) => dataValue.isChangedValue)
+                  .map((dataValue) => {
+                    if (dataValue.valueType) {
+                      const { id, valueType, value, oldValue } = dataValue;
 
-              {listDataElementDataValue.map((dataValue) => {
-                if (dataValue.dataElement === "longitude") return;
-                if (dataValue.dataElement === "latitude") {
-                  const longitudeDataValue = listDataElementDataValue.find(
-                    (item) => item.dataElement === "longitude"
-                  );
-                  const pathDataValue = listDataElementDataValue.find(
-                    (item) => item.dataElement === PATH
-                  );
-                  return (
-                    <div className="flex mb-1 gap-2 border-b pb-1 items-center">
-                      <div className="w-[20%]">
-                        <DataValueLabel dataElement={"coordinates"} />
-                      </div>
-                      <div className="w-[40%]">
-                        <div className=" flex gap-1">
-                          <CustomValue
-                            isOld={longitudeDataValue.isChangedValue}
-                          >
-                            {finalEvent.previousValues["longitude"]}
-                          </CustomValue>
-                          <CustomValue isOld={dataValue.isChangedValue}>
-                            {finalEvent.previousValues["latitude"]}
-                          </CustomValue>
-                        </div>
-                        <div className="w-full h-[300px] mt-2">
-                          <MiniMap
-                            data={generateParentFeatures(
-                              finalEvent.previousValues[PATH]
-                            )}
-                            point={
-                              finalEvent.previousValues.longitude &&
-                              finalEvent.previousValues.latitude
-                                ? [
-                                    finalEvent.previousValues.latitude,
-                                    finalEvent.previousValues.longitude,
-                                  ]
-                                : [0, 0]
-                            }
-                            showPoint={
-                              !finalEvent.previousValues.longitude ||
-                              !finalEvent.previousValues.latitude
-                                ? false
-                                : true
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="w-[40%]">
-                        <div className=" flex gap-1">
-                          <CustomValue
-                            isNew={longitudeDataValue.isChangedValue}
-                          >
-                            {longitudeDataValue.value}
-                          </CustomValue>
-                          <CustomValue isNew={dataValue.isChangedValue}>
-                            {dataValue.value}
-                          </CustomValue>
-                        </div>
-                        <div className="w-full h-[300px] mt-2">
-                          <MiniMap
-                            data={generateParentFeatures(
-                              pathDataValue.value ||
-                                finalEvent.previousValues[PATH]
-                            )}
-                            point={
-                              longitudeDataValue.value && dataValue.value
-                                ? [dataValue.value, longitudeDataValue.value]
-                                : [0, 0]
-                            }
-                            showPoint={
-                              !longitudeDataValue.value || !dataValue.value
-                                ? false
-                                : true
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                return (
-                  <div className="flex mb-1 gap-2 border-b pb-1 items-center">
-                    <div className="w-[20%]">
-                      <DataValueLabel dataElement={dataValue.dataElement} />
-                    </div>
-                    <div className="w-[40%]">
-                      <CustomValue isOld={dataValue.isChangedValue}>
-                        {dataValue.dataElement === PATH
-                          ? convertDisplayValueForPath(
-                              finalEvent.previousValues[dataValue.dataElement]
-                            )
-                          : ["latitude", "longitude"].includes(
-                              dataValue.dataElement
-                            )
-                          ? finalEvent.previousValues[dataValue.dataElement]
-                          : convertDisplayValueForAllField(
-                              dataValue.dataElement,
-                              finalEvent.previousValues[dataValue.dataElement]
-                            )}
-                      </CustomValue>
-                    </div>
-                    <div className="w-[40%]">
-                      <CustomValue isNew={dataValue.isChangedValue}>
-                        {convertDisplayValueForAllField(
-                          dataValue.dataElement,
-                          dataValue.value
-                        )}
-                      </CustomValue>
-                    </div>
-                  </div>
-                );
-              })}
-              {customAttributes.map((customAttribute) => {
-                const { id, valueType } = customAttribute;
-                const value = findCustomAttributeValue(
-                  finalEvent[ATTRIBUTE_VALUES],
-                  id
-                );
-                const oldValue = finalEvent.previousValues[ATTRIBUTE_VALUES]
-                  ? findCustomAttributeValue(
-                      finalEvent.previousValues[ATTRIBUTE_VALUES],
-                      id
-                    )
-                  : "";
-
-                return (
-                  <div className="flex mb-1 gap-2 border-b pb-1 items-center">
-                    <div className="w-[20%]">
-                      <CustomAttributeLabel attribute={id} />
-                    </div>
-                    <div className="w-[40%]">
-                      {valueType === "GEOJSON" ? (
-                        <CustomValue isOld={!!value}>
-                          <span
-                            className="underline cursor-pointer"
-                            onClick={() => {
-                              setGeoJsonViewer(true);
-                            }}
-                          >
-                            {t("clickToView")}
-                          </span>
-                          {geoJsonViewer && (
-                            <Modal fluid>
-                              <ModalTitle>
-                                <CustomAttributeLabel attribute={id} />
-                              </ModalTitle>
-                              <ModalContent>
-                                <div className="w-[1000px] h-[600px]">
-                                  <GeoJsonViewer data={JSON.parse(oldValue)} />
-                                </div>
-                              </ModalContent>
-                              <ModalActions>
-                                <CustomizedButton
+                      return (
+                        <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                          <div className="w-[20%]">
+                            <CustomAttributeLabel attribute={id} />
+                          </div>
+                          <div className="w-[40%]">
+                            {valueType === "GEOJSON" ? (
+                              <CustomValue isOld={!!value}>
+                                <span
+                                  className="underline cursor-pointer"
                                   onClick={() => {
-                                    setGeoJsonViewer(false);
+                                    setGeoJsonViewer(true);
                                   }}
                                 >
-                                  {t("close")}
-                                </CustomizedButton>
-                              </ModalActions>
-                            </Modal>
-                          )}
-                        </CustomValue>
-                      ) : (
-                        <CustomValue isOld={!!(value && oldValue !== value)}>
-                          {oldValue}
-                        </CustomValue>
-                      )}
-                    </div>
-                    <div className="w-[40%]">
-                      {valueType === "GEOJSON" ? (
-                        value && (
-                          <CustomValue isNew={!!(value && oldValue !== value)}>
-                            <span
-                              className="underline cursor-pointer"
-                              onClick={() => {
-                                setGeoJsonViewer(true);
-                              }}
-                            >
-                              {t("clickToView")}
-                            </span>
-                            {geoJsonViewer && (
-                              <Modal fluid>
-                                <ModalTitle>
-                                  <CustomAttributeLabel attribute={id} />
-                                </ModalTitle>
-                                <ModalContent>
-                                  <div className="w-[1000px] h-[600px]">
-                                    <GeoJsonViewer data={JSON.parse(value)} />
-                                  </div>
-                                </ModalContent>
-                                <ModalActions>
-                                  <CustomizedButton
+                                  {t("clickToView")}
+                                </span>
+                                {geoJsonViewer && (
+                                  <Modal fluid>
+                                    <ModalTitle>
+                                      <CustomAttributeLabel attribute={id} />
+                                    </ModalTitle>
+                                    <ModalContent>
+                                      <div className="w-[1000px] h-[600px]">
+                                        <GeoJsonViewer
+                                          data={JSON.parse(oldValue)}
+                                        />
+                                      </div>
+                                    </ModalContent>
+                                    <ModalActions>
+                                      <CustomizedButton
+                                        onClick={() => {
+                                          setGeoJsonViewer(false);
+                                        }}
+                                      >
+                                        {t("close")}
+                                      </CustomizedButton>
+                                    </ModalActions>
+                                  </Modal>
+                                )}
+                              </CustomValue>
+                            ) : (
+                              <CustomValue
+                                isOld={!!(value && oldValue !== value)}
+                              >
+                                {oldValue}
+                              </CustomValue>
+                            )}
+                          </div>
+                          <div className="w-[40%]">
+                            {valueType === "GEOJSON" ? (
+                              value && (
+                                <CustomValue
+                                  isNew={!!(value && oldValue !== value)}
+                                >
+                                  <span
+                                    className="underline cursor-pointer"
                                     onClick={() => {
-                                      setGeoJsonViewer(false);
+                                      setGeoJsonViewer(true);
                                     }}
                                   >
-                                    {t("close")}
-                                  </CustomizedButton>
-                                </ModalActions>
-                              </Modal>
+                                    {t("clickToView")}
+                                  </span>
+                                  {geoJsonViewer && (
+                                    <Modal fluid>
+                                      <ModalTitle>
+                                        <CustomAttributeLabel attribute={id} />
+                                      </ModalTitle>
+                                      <ModalContent>
+                                        <div className="w-[1000px] h-[600px]">
+                                          <GeoJsonViewer
+                                            data={JSON.parse(value)}
+                                          />
+                                        </div>
+                                      </ModalContent>
+                                      <ModalActions>
+                                        <CustomizedButton
+                                          onClick={() => {
+                                            setGeoJsonViewer(false);
+                                          }}
+                                        >
+                                          {t("close")}
+                                        </CustomizedButton>
+                                      </ModalActions>
+                                    </Modal>
+                                  )}
+                                </CustomValue>
+                              )
+                            ) : (
+                              <CustomValue
+                                isNew={!!(value && oldValue !== value)}
+                              >
+                                {value}
+                              </CustomValue>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    }
+                    if (dataValue.id === "longitude") return;
+                    if (dataValue.id === "latitude") {
+                      const longitudeDataValue = listDataElementDataValue.find(
+                        (item) => item.id === "longitude"
+                      );
+                      const pathDataValue = listDataElementDataValue.find(
+                        (item) => item.id === PATH
+                      );
+                      return (
+                        <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                          <div className="w-[20%]">
+                            <DataValueLabel dataElement={"coordinates"} />
+                          </div>
+                          <div className="w-[40%]">
+                            <div className=" flex gap-1">
+                              <CustomValue
+                                isOld={longitudeDataValue.isChangedValue}
+                              >
+                                {finalEvent.previousValues["longitude"]}
+                              </CustomValue>
+                              <CustomValue isOld={dataValue.isChangedValue}>
+                                {finalEvent.previousValues["latitude"]}
+                              </CustomValue>
+                            </div>
+                            <div className="w-full h-[300px] mt-2">
+                              <MiniMap
+                                data={generateParentFeatures(
+                                  finalEvent.previousValues[PATH]
+                                )}
+                                point={
+                                  finalEvent.previousValues.longitude &&
+                                  finalEvent.previousValues.latitude
+                                    ? [
+                                        finalEvent.previousValues.latitude,
+                                        finalEvent.previousValues.longitude,
+                                      ]
+                                    : [0, 0]
+                                }
+                                showPoint={
+                                  !finalEvent.previousValues.longitude ||
+                                  !finalEvent.previousValues.latitude
+                                    ? false
+                                    : true
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="w-[40%]">
+                            <div className=" flex gap-1">
+                              <CustomValue
+                                isNew={longitudeDataValue.isChangedValue}
+                              >
+                                {longitudeDataValue.value}
+                              </CustomValue>
+                              <CustomValue isNew={dataValue.isChangedValue}>
+                                {dataValue.value}
+                              </CustomValue>
+                            </div>
+                            <div className="w-full h-[300px] mt-2">
+                              <MiniMap
+                                data={generateParentFeatures(
+                                  pathDataValue.value ||
+                                    finalEvent.previousValues[PATH]
+                                )}
+                                point={
+                                  longitudeDataValue.value && dataValue.value
+                                    ? [
+                                        dataValue.value,
+                                        longitudeDataValue.value,
+                                      ]
+                                    : [0, 0]
+                                }
+                                showPoint={
+                                  !longitudeDataValue.value || !dataValue.value
+                                    ? false
+                                    : true
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                        <div className="w-[20%]">
+                          <DataValueLabel dataElement={dataValue.id} />
+                        </div>
+                        <div className="w-[40%]">
+                          <CustomValue isOld={dataValue.isChangedValue}>
+                            {dataValue.id === PATH
+                              ? convertDisplayValueForPath(
+                                  finalEvent.previousValues[dataValue.id]
+                                )
+                              : ["latitude", "longitude"].includes(dataValue.id)
+                              ? finalEvent.previousValues[dataValue.id]
+                              : convertDisplayValueForAllField(
+                                  dataValue.id,
+                                  finalEvent.previousValues[dataValue.id]
+                                )}
+                          </CustomValue>
+                        </div>
+                        <div className="w-[40%]">
+                          <CustomValue isNew={dataValue.isChangedValue}>
+                            {convertDisplayValueForAllField(
+                              dataValue.id,
+                              dataValue.value
                             )}
                           </CustomValue>
-                        )
-                      ) : (
-                        <CustomValue isNew={!!(value && oldValue !== value)}>
-                          {value}
-                        </CustomValue>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </Accordion>
+              <Accordion
+                key={`${selectFacility.tei}-not-changed`}
+                title={t("notChangedValues")}
+              >
+                {listDataElementDataValue
+                  .filter((dataValue) => !dataValue.isChangedValue)
+                  .map((dataValue) => {
+                    if (dataValue.valueType) {
+                      const { id, valueType, value, oldValue } = dataValue;
+
+                      return (
+                        <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                          <div className="w-[20%]">
+                            <CustomAttributeLabel attribute={id} />
+                          </div>
+                          <div className="w-[40%]">
+                            {valueType === "GEOJSON" ? (
+                              <CustomValue isOld={!!value}>
+                                <span
+                                  className="underline cursor-pointer"
+                                  onClick={() => {
+                                    setGeoJsonViewer(true);
+                                  }}
+                                >
+                                  {t("clickToView")}
+                                </span>
+                                {geoJsonViewer && (
+                                  <Modal fluid>
+                                    <ModalTitle>
+                                      <CustomAttributeLabel attribute={id} />
+                                    </ModalTitle>
+                                    <ModalContent>
+                                      <div className="w-[1000px] h-[600px]">
+                                        <GeoJsonViewer
+                                          data={JSON.parse(oldValue)}
+                                        />
+                                      </div>
+                                    </ModalContent>
+                                    <ModalActions>
+                                      <CustomizedButton
+                                        onClick={() => {
+                                          setGeoJsonViewer(false);
+                                        }}
+                                      >
+                                        {t("close")}
+                                      </CustomizedButton>
+                                    </ModalActions>
+                                  </Modal>
+                                )}
+                              </CustomValue>
+                            ) : (
+                              <CustomValue
+                                isOld={!!(value && oldValue !== value)}
+                              >
+                                {oldValue}
+                              </CustomValue>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    }
+                    if (dataValue.id === "longitude") return;
+                    if (dataValue.id === "latitude") {
+                      const longitudeDataValue = listDataElementDataValue.find(
+                        (item) => item.id === "longitude"
+                      );
+                      const pathDataValue = listDataElementDataValue.find(
+                        (item) => item.id === PATH
+                      );
+                      return (
+                        <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                          <div className="w-[20%]">
+                            <DataValueLabel dataElement={"coordinates"} />
+                          </div>
+                          <div className="w-[40%]">
+                            <div className=" flex gap-1">
+                              <CustomValue
+                                isOld={longitudeDataValue.isChangedValue}
+                              >
+                                {finalEvent.previousValues["longitude"]}
+                              </CustomValue>
+                              <CustomValue isOld={dataValue.isChangedValue}>
+                                {finalEvent.previousValues["latitude"]}
+                              </CustomValue>
+                            </div>
+                            <div className="w-full h-[300px] mt-2">
+                              <MiniMap
+                                data={generateParentFeatures(
+                                  finalEvent.previousValues[PATH]
+                                )}
+                                point={
+                                  finalEvent.previousValues.longitude &&
+                                  finalEvent.previousValues.latitude
+                                    ? [
+                                        finalEvent.previousValues.latitude,
+                                        finalEvent.previousValues.longitude,
+                                      ]
+                                    : [0, 0]
+                                }
+                                showPoint={
+                                  !finalEvent.previousValues.longitude ||
+                                  !finalEvent.previousValues.latitude
+                                    ? false
+                                    : true
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className="flex mb-1 gap-2 border-b pb-1 items-center">
+                        <div className="w-[20%]">
+                          <DataValueLabel dataElement={dataValue.id} />
+                        </div>
+                        <div className="w-[40%]">
+                          <CustomValue isOld={dataValue.isChangedValue}>
+                            {dataValue.id === PATH
+                              ? convertDisplayValueForPath(
+                                  finalEvent.previousValues[dataValue.id]
+                                )
+                              : ["latitude", "longitude"].includes(dataValue.id)
+                              ? finalEvent.previousValues[dataValue.id]
+                              : convertDisplayValueForAllField(
+                                  dataValue.id,
+                                  finalEvent.previousValues[dataValue.id]
+                                )}
+                          </CustomValue>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </Accordion>
             </div>
           </div>
         </ModalContent>

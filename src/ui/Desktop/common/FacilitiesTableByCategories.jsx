@@ -55,8 +55,12 @@ const columns = [
       { value: "ouGroups" },
       { value: "hierarchy" },
       { value: "info" },
-      { value: IS_NEW_FACILITY },
     ],
+  },
+  {
+    value: IS_NEW_FACILITY,
+    rowSpan: 2,
+    className: "text-center",
   },
   {
     value: APPROVAL_STATUS,
@@ -158,7 +162,7 @@ const FacilitiesTableByCategories = ({
               <TableCellHead
                 className={`!h-fit ${
                   (header.children || level > 0) && "text-center"
-                }  text-left  bg-[#d1d5dc]`}
+                }  text-left  bg-[#d1d5dc] ${header?.className}`}
                 colSpan={header.children?.length || 1}
                 rowSpan={header.rowSpan || 1}
               >
@@ -198,13 +202,13 @@ const FacilitiesTableByCategories = ({
                 <DataTableCell>
                   <DataValueText
                     dataElement={NAME}
-                    value={facility[NAME] || row[NAME]}
+                    value={row[NAME] || row.previousValues[NAME]}
                   />
                 </DataTableCell>
                 <DataTableCell>
                   <DataValueText
                     dataElement={PATH}
-                    value={facility[PATH] || row[PATH]}
+                    value={row[PATH] || row.previousValues[PATH]}
                   />
                 </DataTableCell>
                 <DataTableCell align="center">

@@ -27,6 +27,7 @@ const Approval = () => {
   const [pendingFacilityDialog, setPendingFacilityDialog] = useState(false);
   const filterApprovalFacilityEvents = (facilityEvents) => {
     const filterByApprovalStatus = (event) => {
+      if (currentFilters.length === 0) return true;
       const approvalStatus = event[APPROVAL_STATUS];
       return currentFilters.includes(approvalStatus);
     };
@@ -34,19 +35,11 @@ const Approval = () => {
       if (!selectedOrgUnit) {
         return true;
       }
-      const facilityPath = event[PATH];
+      const facilityPath = event[PATH] || event.previousValues[PATH];
       if (!facilityPath) return false;
       return facilityPath.includes(selectedOrgUnit.id);
     };
     return facilityEvents.filter((event) => {
-      if (currentFilters.length === 0) {
-        return (
-          event[APPROVAL_STATUS] === "pending" ||
-          event[APPROVAL_STATUS] === "approved" ||
-          event[APPROVAL_STATUS] === "rejected"
-        );
-      }
-
       return filterByApprovalStatus(event) && filterByOrgUnit(event);
     });
   };
