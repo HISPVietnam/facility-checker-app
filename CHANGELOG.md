@@ -1,3 +1,9 @@
+## [1.12.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.0...v1.12.1) (2025-08-18)
+
+### Bug Fixes
+
+* major issues in approval and sync module ([b48624f](https://github.com/HISPVietnam/facility-checker-app/commit/b48624fc6005231efc1f20cef168f1c8842674cb))
+
 ## [1.12.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.11.3...v1.12.0) (2025-08-14)
 
 ### Features
