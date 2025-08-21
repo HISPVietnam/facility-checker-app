@@ -50,7 +50,7 @@ const CustomValue = ({ isOld = false, isNew = false, children }) => {
     <div
       className={`bg-slate-100 ${isOld && "!bg-red-200"} ${
         isNew && "!bg-emerald-100"
-      } text-[14px] p-2 min-h-[40px] rounded-md flex-1`}
+      } text-[14px] p-2 min-h-[40px] rounded-md flex-1 flex items-center`}
     >
       {children}
     </div>

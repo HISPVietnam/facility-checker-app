@@ -217,5 +217,5 @@ export default {
   facilityCountApprovalSeparate:
     "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
-  notChangedValues: "Not changed values",
+  notChangedValues: "Profile",
 };

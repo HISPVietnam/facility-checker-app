@@ -62,7 +62,7 @@ export default {
   pendingApprovalValues: "Pending approval values",
   dateOfRequest: "Date of request",
   requestedBy: "Requested by",
-  changedValues: "Changed values",
+  changedValues: "Changes made",
   noValue: "none",
   sync: "Sync",
   yes: "Yes",
@@ -213,5 +213,5 @@ export default {
   facilityCountApprovalSeparate:
     "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
-  notChangedValues: "Not changed values",
+  notChangedValues: "Profile",
 };
