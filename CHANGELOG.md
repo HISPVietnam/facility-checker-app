@@ -1,3 +1,9 @@
+## [1.12.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.1...v1.12.2) (2025-08-22)
+
+### Bug Fixes
+
+* minor fixes for Approval mopduule [#10060](https://projects.hispvietnam.org/work_packages/10060) ([23a78ef](https://github.com/HISPVietnam/facility-checker-app/commit/23a78ef8d6e4d7158ed7e6905ea414f842b8b576))
+
 ## [1.12.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.0...v1.12.1) (2025-08-18)
 
 ### Bug Fixes
