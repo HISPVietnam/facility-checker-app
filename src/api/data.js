@@ -4,8 +4,8 @@ import useMetadataStore from "@/states/metadata";
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 
 const getFacilityTeis = async (orgUnit) => {
-  const result = await pull(`/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=ACCESSIBLE&fields=*&skipPaging=true`);
-  return result.instances;
+  const result = await pull(`/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&fields=*&skipPaging=true`);
+  return result.instances ?? [];
 };
 
 const getTeiById = async (teiId) => {
