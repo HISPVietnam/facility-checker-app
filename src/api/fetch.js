@@ -16,6 +16,7 @@ const push = async (endPoint, payload, method, contentType) => {
   const result = await fetch(baseUrl + endPoint, {
     method: method ? method : "POST",
     body: JSON.stringify(payload),
+    credentials: "include",
     headers: {
       "Content-Type": contentType ? contentType : "application/json",
       Authorization: !username ? "" : "Basic " + btoa(`${username}:${password}`)

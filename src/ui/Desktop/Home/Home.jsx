@@ -9,18 +9,18 @@ const Home = () => {
   const me = useMetadataStore((state) => state.me);
 
   const noAuthorities = me.authorities.length === 0;
+  console.log(me);
   return (
     <div className="p-5 w-full h-full">
       <Card className="p-5 w-full h-full !flex flex-col">
         <div className="font-bold text-2xl">Welcome to Facility Checker App</div>
-        <NoticeBox title={t("importantNotice")} warning>
+        <NoticeBox title={t("importantNotice")} warning className="my-4">
           This app is still in an experimental phase. Please DO NOT use it in any production DHIS2. Users may encounter bugs and other issues. If you
           come across any, please report them to our project homepage:{" "}
           <a className="underline text-sky-800" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
             https://projects.hispvietnam.org/projects/facility-checker-app-public
           </a>
         </NoticeBox>
-        <br />
         <p>
           The Facility Checker App (FCA) is a user-friendly map interface DHIS2 App which allow facility / district users to check the coordinates of
           the facilities which are often incomplete, outdated, or incorrect or located outside their district / province / country boundary. It also

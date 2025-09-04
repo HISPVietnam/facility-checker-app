@@ -68,7 +68,7 @@ const App = () => {
   return (
     <Provider
       config={{
-        appName: "Facility Checker App",
+        appName: "Facility Checker",
         appVersion: {
           full: version.version
         },
