@@ -1,5 +1,4 @@
 import { Card, NoticeBox } from "@dhis2/ui";
-import appIcon from "@/assets/icon.png";
 import hispvnLogo from "@/assets/hispvn.png";
 import version from "@/assets/version.json";
 import { useTranslation } from "react-i18next";

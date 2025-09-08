@@ -8,5 +8,6 @@
   "description": "Facility Checker",
   "developer": { "name": "HISPVN Team" },
   "key": "fca",
-  "short_name": "fca"
+  "short_name": "fca",
+  "icons": { "16": "dhis2-app-icon.png", "48": "dhis2-app-icon.png", "128": "dhis2-app-icon.png" }
 }
