@@ -1,3 +1,11 @@
+## [1.12.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.2...v1.12.3) (2025-09-08)
+
+### Bug Fixes
+
+* ensure program's metadata (not data) is viewable ([ce5ec66](https://github.com/HISPVietnam/facility-checker-app/commit/ce5ec66f3efd54483fa3fe3442c10b663cc13f55))
+* major fixes to be ready for app hub ([7447537](https://github.com/HISPVietnam/facility-checker-app/commit/74475371d481d34784ca9cb06dc78d550adfb79d))
+* remove icon from Home.jsx ([58804be](https://github.com/HISPVietnam/facility-checker-app/commit/58804be049bd6399c60e19814206577427bb2aad))
+
 ## [1.12.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.1...v1.12.2) (2025-08-22)
 
 ### Bug Fixes
