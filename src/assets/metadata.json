@@ -51,7 +51,7 @@
           "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-rw----", "id": "shYXBFb3lpw" },
           "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-rw----", "id": "xd865kZFSRw" }
         },
-        "public": "--------"
+        "public": "r-------"
       },
       "shortName": "FC:Facility checker",
       "version": 14,
