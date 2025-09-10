@@ -31,6 +31,7 @@ import useApprovalModuleStore from "@/states/approvalModule";
 import CustomAttributeLabel from "@/ui/common/CustomAttributeLabel";
 import MiniMap from "../FacilitiesManagement/MiniMap";
 import Accordion from "@/ui/common/Accordion";
+import { toast } from "react-toastify";
 const {
   APPROVAL_STATUS,
   APPROVED_BY,
@@ -130,60 +131,75 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       })
     : [];
   const handleApprove = async () => {
-    setLoading(true);
-    const { username } = me;
-    const now = format(new Date(), "yyyy-MM-dd");
-    approve(selectedFacility);
-    const cloned = _.cloneDeep(selectedFacility);
-    const foundPendingEventIndex = cloned.events.findIndex(
-      (event) => event[APPROVAL_STATUS] === "pending"
-    );
-    cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "approved";
-    cloned.events[foundPendingEventIndex][APPROVED_BY] = username;
-    cloned.events[foundPendingEventIndex][APPROVED_AT] = now;
-    cloned[APPROVAL_STATUS] = "approved";
-    cloned[APPROVED_BY] = username;
-    cloned[APPROVED_AT] = now;
-    selectFacility(cloned, selectedEventId);
-    const convertedEvent = convertToDhis2Event(
-      cloned.events[foundPendingEventIndex],
-      program
-    );
-    convertedEvent.orgUnit = selectedFacility.orgUnit;
-    convertedEvent.trackedEntity = selectedFacility.tei;
-    convertedEvent.enrollment = selectedFacility.enr;
-    const result = await postEvent(convertedEvent);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const { username } = me;
+      const now = format(new Date(), "yyyy-MM-dd");
+      approve(selectedFacility);
+      const cloned = _.cloneDeep(selectedFacility);
+      const foundPendingEventIndex = cloned.events.findIndex(
+        (event) => event[APPROVAL_STATUS] === "pending"
+      );
+      cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "approved";
+      cloned.events[foundPendingEventIndex][APPROVED_BY] = username;
+      cloned.events[foundPendingEventIndex][APPROVED_AT] = now;
+      cloned[APPROVAL_STATUS] = "approved";
+      cloned[APPROVED_BY] = username;
+      cloned[APPROVED_AT] = now;
+      selectFacility(cloned, selectedEventId);
+      const convertedEvent = convertToDhis2Event(
+        cloned.events[foundPendingEventIndex],
+        program
+      );
+      convertedEvent.orgUnit = selectedFacility.orgUnit;
+      convertedEvent.trackedEntity = selectedFacility.tei;
+      convertedEvent.enrollment = selectedFacility.enr;
+      await postEvent(convertedEvent);
+      toast.error(t("approvedFacilityChangesSuccessfully"));
+    } catch (error) {
+      console.error(error);
+      toast.error(t("approvedFacilityChangesFailed"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleReject = async () => {
-    setLoading(true);
-    const { username } = me;
-    const now = format(new Date(), "yyyy-MM-dd");
-    reject(selectedFacility, reasonForReject);
-    const cloned = _.cloneDeep(selectedFacility);
-    const foundPendingEventIndex = cloned.events.findIndex(
-      (event) => event[APPROVAL_STATUS] === "pending"
-    );
-    cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
-    cloned.events[foundPendingEventIndex][REJECTED_BY] = username;
-    cloned.events[foundPendingEventIndex][REJECTED_AT] = now;
-    cloned.events[foundPendingEventIndex][REASON_FOR_REJECT] = reasonForReject;
-    cloned[APPROVAL_STATUS] = "rejected";
-    cloned[REJECTED_BY] = username;
-    cloned[REJECTED_AT] = now;
-    cloned[REASON_FOR_REJECT] = reasonForReject;
-    selectFacility(cloned, selectedEventId);
-    const convertedEvent = convertToDhis2Event(
-      cloned.events[foundPendingEventIndex],
-      program
-    );
-    convertedEvent.orgUnit = selectedFacility.orgUnit;
-    convertedEvent.trackedEntity = selectedFacility.tei;
-    convertedEvent.enrollment = selectedFacility.enr;
-    const result = await postEvent(convertedEvent);
-    setLoading(false);
-    setRejectDialog(false);
+    try {
+      setLoading(true);
+      const { username } = me;
+      const now = format(new Date(), "yyyy-MM-dd");
+      reject(selectedFacility, reasonForReject);
+      const cloned = _.cloneDeep(selectedFacility);
+      const foundPendingEventIndex = cloned.events.findIndex(
+        (event) => event[APPROVAL_STATUS] === "pending"
+      );
+      cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
+      cloned.events[foundPendingEventIndex][REJECTED_BY] = username;
+      cloned.events[foundPendingEventIndex][REJECTED_AT] = now;
+      cloned.events[foundPendingEventIndex][REASON_FOR_REJECT] =
+        reasonForReject;
+      cloned[APPROVAL_STATUS] = "rejected";
+      cloned[REJECTED_BY] = username;
+      cloned[REJECTED_AT] = now;
+      cloned[REASON_FOR_REJECT] = reasonForReject;
+      selectFacility(cloned, selectedEventId);
+      const convertedEvent = convertToDhis2Event(
+        cloned.events[foundPendingEventIndex],
+        program
+      );
+      convertedEvent.orgUnit = selectedFacility.orgUnit;
+      convertedEvent.trackedEntity = selectedFacility.tei;
+      convertedEvent.enrollment = selectedFacility.enr;
+      await postEvent(convertedEvent);
+      toast.error("rejectedFacilityChangesSuccessfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("rejectedFacilityChangesFailed");
+    } finally {
+      setLoading(false);
+      setRejectDialog(false);
+    }
   };
 
   return (
@@ -551,14 +567,16 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                           <div className="w-[40%]">
                             {valueType === "GEOJSON" ? (
                               <CustomValue isOld={!!value}>
-                                <span
-                                  className="underline cursor-pointer"
-                                  onClick={() => {
-                                    setGeoJsonViewer(true);
-                                  }}
-                                >
-                                  {t("clickToView")}
-                                </span>
+                                {finalEvent[IS_NEW_FACILITY] !== "true" && (
+                                  <span
+                                    className="underline cursor-pointer"
+                                    onClick={() => {
+                                      setGeoJsonViewer(true);
+                                    }}
+                                  >
+                                    {t("clickToView")}
+                                  </span>
+                                )}
                                 {geoJsonViewer && (
                                   <Modal fluid>
                                     <ModalTitle>

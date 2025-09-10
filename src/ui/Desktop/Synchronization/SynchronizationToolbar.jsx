@@ -246,7 +246,7 @@ const SynchronizationToolbar = () => {
       toast.success(t("syncSuccessfully"));
     } catch (error) {
       console.error(error);
-      toast.error(error);
+      toast.error(t("syncFailed"));
     } finally {
       setLoading(false);
     }

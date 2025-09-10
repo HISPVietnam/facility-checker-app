@@ -205,4 +205,12 @@ export default {
     "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
   notChangedValues: "Profile",
+  savedFacilityProfileSuccessfully: "Saved facility profile successfully",
+  savedFacilityProfileFailed: "Saved facility profile failed",
+  duplicateFacility: "Duplicate facility",
+  appliedForApprovalSuccessfully: "Applied for approval successfully",
+  appliedForApprovalFailed: "Applied for approval failed",
+  approvedFacilityChangesSuccessfully: "Approved facility changes successfully",
+  approvedFacilityChangesFailed: "Approved facility changes failed",
+  syncFailed: "Sync facilities failed",
 };

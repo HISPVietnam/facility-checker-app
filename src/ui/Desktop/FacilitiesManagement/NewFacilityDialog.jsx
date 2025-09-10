@@ -2,7 +2,13 @@ import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
 import CustomizedButton from "@/ui/common/Button";
 import DataValueLabel from "@/ui/common/DataValueLabel";
-import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox } from "@dhis2/ui";
+import {
+  Modal,
+  ModalTitle,
+  ModalContent,
+  ModalActions,
+  NoticeBox,
+} from "@dhis2/ui";
 import Helper from "@/ui/common/Helper";
 import InputField from "@/ui/common/InputField";
 import { Tooltip } from "@mui/material";
@@ -23,20 +29,41 @@ import {
   convertTeis,
   pickTranslation,
   isInsideParent,
-  findCustomAttributeValue
+  findCustomAttributeValue,
 } from "@/utils";
 import useDataStore from "@/states/data";
-import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, MANDATORY_FIELDS, TRACKED_ENTITY_TYPE, PROGRAM_ID, TRACKED_ENTITY_ATTRIBUTES } from "@/const";
+import {
+  DATA_ELEMENTS,
+  HIDDEN_DATA_ELEMENTS,
+  MANDATORY_FIELDS,
+  TRACKED_ENTITY_TYPE,
+  PROGRAM_ID,
+  TRACKED_ENTITY_ATTRIBUTES,
+} from "@/const";
 import { postEvent, postTei, getTeiById, findFacilityByCode } from "@/api/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faMap } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import _ from "lodash";
-const { UID, APPROVAL_STATUS, PATH, NAME, ACTIVE_STATUS, SHORT_NAME, CODE, ATTRIBUTE_VALUES } = DATA_ELEMENTS;
+import { toast } from "react-toastify";
+const {
+  UID,
+  APPROVAL_STATUS,
+  PATH,
+  NAME,
+  ACTIVE_STATUS,
+  SHORT_NAME,
+  CODE,
+  ATTRIBUTE_VALUES,
+} = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 const Row = ({ children, className }) => {
   return (
-    <div className={`flex items-center py-1 border-b border-b-slate-200 ${className ? className : ""}`}>
+    <div
+      className={`flex items-center py-1 border-b border-b-slate-200 ${
+        className ? className : ""
+      }`}
+    >
       <div className="w-[250px] text-[15px]">{children[0]}</div>
       <div className="w-[450px] mr-3">{children[1]}</div>
     </div>
@@ -44,11 +71,17 @@ const Row = ({ children, className }) => {
 };
 
 const Closed = ({ children }) => {
-  return <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>;
+  return (
+    <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>
+  );
 };
 
 const Open = ({ children }) => {
-  return <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">{children}</span>;
+  return (
+    <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">
+      {children}
+    </span>
+  );
 };
 
 const NewFacilityDialog = () => {
@@ -63,10 +96,11 @@ const NewFacilityDialog = () => {
   const { facilities, actions } = useDataStore(
     useShallow((state) => ({
       facilities: state.facilities,
-      actions: state.actions
+      actions: state.actions,
     }))
   );
-  const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] = useState(false);
+  const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] =
+    useState(false);
 
   const { program, orgUnits, locale, me, customAttributes } = useMetadataStore(
     useShallow((state) => ({
@@ -74,18 +108,20 @@ const NewFacilityDialog = () => {
       orgUnits: state.orgUnits,
       locale: state.locale,
       me: state.me,
-      customAttributes: state.customAttributes
+      customAttributes: state.customAttributes,
     }))
   );
-  const { selectedFacility, facilityCheckModuleActions } = useFacilityCheckModuleStore(
-    useShallow((state) => ({
-      facilityCheckModuleActions: state.actions,
-      selectedFacility: state.selectedFacility
-    }))
-  );
+  const { selectedFacility, facilityCheckModuleActions } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        facilityCheckModuleActions: state.actions,
+        selectedFacility: state.selectedFacility,
+      }))
+    );
 
   const { addNewFacilityToList, addNewTeiToList, save } = actions;
-  const { editSelectedFacility, toggleDialog, selectFacility } = facilityCheckModuleActions;
+  const { editSelectedFacility, toggleDialog, selectFacility } =
+    facilityCheckModuleActions;
 
   const changeValue = (field, value) => {
     editSelectedFacility(field, value);
@@ -98,19 +134,21 @@ const NewFacilityDialog = () => {
     if (!currentAttributeValues && value) {
       finalValue.push({
         attribute: {
-          id: attribute
+          id: attribute,
         },
-        value: value
+        value: value,
       });
     } else {
       finalValue = JSON.parse(currentAttributeValues);
-      const foundIndex = finalValue.findIndex((v) => v.attribute.id === attribute);
+      const foundIndex = finalValue.findIndex(
+        (v) => v.attribute.id === attribute
+      );
       if (foundIndex === -1) {
         finalValue.push({
           attribute: {
-            id: attribute
+            id: attribute,
           },
-          value: value
+          value: value,
         });
       } else {
         finalValue[foundIndex].value = value;
@@ -125,93 +163,122 @@ const NewFacilityDialog = () => {
   };
 
   const saveChanges = async () => {
-    let foundDuplicated = false;
-    if (selectedFacility[CODE]) {
-      foundDuplicated = await findFacilityByCode(selectedFacility.tei, selectedFacility[CODE]);
+    try {
+      setLoading(true);
+      let foundDuplicated = false;
+      if (selectedFacility[CODE]) {
+        foundDuplicated = await findFacilityByCode(
+          selectedFacility.tei,
+          selectedFacility[CODE]
+        );
+      }
+      if (foundDuplicated) {
+        toast.error(t("duplicateFacility"));
+        setIsDuplicated(true);
+        setLoading(false);
+        return;
+      } else {
+        setIsDuplicated(false);
+      }
+      const event = { ...selectedFacility };
+      const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
+      event.occurredAt = today;
+      event.scheduledAt = today;
+      event.orgUnit = orgUnit;
+      editSelectedFacility("occurredAt", today);
+      editSelectedFacility("scheduledAt", today);
+      editSelectedFacility("orgUnit", orgUnit);
+      const tei = {
+        trackedEntity: event.tei,
+        trackedEntityType: TRACKED_ENTITY_TYPE,
+        orgUnit: orgUnit,
+        attributes: [
+          {
+            attribute: TRACKED_ENTITY_ATTRIBUTES.UID,
+            value: event[UID],
+          },
+          {
+            attribute: TRACKED_ENTITY_ATTRIBUTES.ACTIVE_STATUS,
+            value: event[ACTIVE_STATUS],
+          },
+        ],
+        enrollments: [
+          {
+            enrollment: event.enr,
+            trackedEntity: event.tei,
+            program: PROGRAM_ID,
+            status: "ACTIVE",
+            orgUnit: orgUnit,
+            enrolledAt: today,
+            occurredAt: today,
+            events: [convertToDhis2Event(event, program)],
+          },
+        ],
+      };
+      if (event[CODE]) {
+        tei.attributes.push({ attribute: ATTRIBUTE_CODE, value: event[CODE] });
+      }
+      if (event.latitude && event.longitude) {
+        tei.geometry = {
+          coordinates: [event.longitude, event.latitude],
+          type: "Point",
+        };
+        tei.enrollments[0].geometry = {
+          coordinates: [event.longitude, event.latitude],
+          type: "Point",
+        };
+      }
+      await postTei(tei);
+      const newTei = await getTeiById(tei.trackedEntity);
+      const convertedNewTei = convertTeis([newTei], program)[0];
+      addNewFacilityToList(convertedNewTei);
+      addNewTeiToList(newTei);
+      selectFacility(convertedNewTei);
+      toast.success(t("savedFacilityProfileSuccessfully"));
+      toggleDialog("newFacilityDialog");
+      toggleDialog("facilityProfileDialog");
+    } catch (error) {
+      console.error(error);
+      toast.error(t("savedFacilityProfileFailed"));
+      setLoading(false);
     }
-    if (foundDuplicated) {
-      setIsDuplicated(true);
-      return;
-    } else {
-      setIsDuplicated(false);
-    }
-    const event = { ...selectedFacility };
-    const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
-    event.occurredAt = today;
-    event.scheduledAt = today;
-    event.orgUnit = orgUnit;
-    editSelectedFacility("occurredAt", today);
-    editSelectedFacility("scheduledAt", today);
-    editSelectedFacility("orgUnit", orgUnit);
-    const tei = {
-      trackedEntity: event.tei,
-      trackedEntityType: TRACKED_ENTITY_TYPE,
-      orgUnit: orgUnit,
-      attributes: [
-        {
-          attribute: TRACKED_ENTITY_ATTRIBUTES.UID,
-          value: event[UID]
-        },
-        {
-          attribute: TRACKED_ENTITY_ATTRIBUTES.ACTIVE_STATUS,
-          value: event[ACTIVE_STATUS]
-        }
-      ],
-      enrollments: [
-        {
-          enrollment: event.enr,
-          trackedEntity: event.tei,
-          program: PROGRAM_ID,
-          status: "ACTIVE",
-          orgUnit: orgUnit,
-          enrolledAt: today,
-          occurredAt: today,
-          events: [convertToDhis2Event(event, program)]
-        }
-      ]
-    };
-    if (event[CODE]) {
-      tei.attributes.push({ attribute: ATTRIBUTE_CODE, value: event[CODE] });
-    }
-    if (event.latitude && event.longitude) {
-      tei.geometry = { coordinates: [event.longitude, event.latitude], type: "Point" };
-      tei.enrollments[0].geometry = { coordinates: [event.longitude, event.latitude], type: "Point" };
-    }
-    await postTei(tei);
-    const newTei = await getTeiById(tei.trackedEntity);
-    const convertedNewTei = convertTeis([newTei], program)[0];
-    addNewFacilityToList(convertedNewTei);
-    addNewTeiToList(newTei);
-    selectFacility(convertedNewTei);
-    toggleDialog("newFacilityDialog");
-    toggleDialog("facilityProfileDialog");
   };
 
   const complete = async () => {
-    await saveChanges();
-    let newFacility = { ...selectedFacility };
-    const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
-    newFacility.occurredAt = today;
-    newFacility.scheduledAt = today;
-    newFacility.orgUnit = orgUnit;
-    changeValue(APPROVAL_STATUS, "pending");
-    changeValue("status", "COMPLETED");
-    changeValue("isPending", true);
-    changeValue("completedAt", format(new Date(), "yyyy-MM-dd"));
-    editSelectedFacility("isPending", true);
-    newFacility.id = newFacility[UID];
-    newFacility[APPROVAL_STATUS] = "pending";
-    newFacility.status = "COMPLETED";
-    newFacility.isPending = true;
-    newFacility.completedAt = format(new Date(), "yyyy-MM-dd");
-    newFacility.updatedBy = {
-      firstName: me.firstName,
-      surname: me.surname,
-      username: me.username
-    };
-    save(newFacility);
-    const convertedEvent = convertToDhis2Event(newFacility, program);
-    const result = await postEvent(convertedEvent);
+    try {
+      await saveChanges();
+      setLoading(true);
+
+      let newFacility = { ...selectedFacility };
+      const today = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
+      newFacility.occurredAt = today;
+      newFacility.scheduledAt = today;
+      newFacility.orgUnit = orgUnit;
+      changeValue(APPROVAL_STATUS, "pending");
+      changeValue("status", "COMPLETED");
+      changeValue("isPending", true);
+      changeValue("completedAt", format(new Date(), "yyyy-MM-dd"));
+      editSelectedFacility("isPending", true);
+      newFacility.id = newFacility[UID];
+      newFacility[APPROVAL_STATUS] = "pending";
+      newFacility.status = "COMPLETED";
+      newFacility.isPending = true;
+      newFacility.completedAt = format(new Date(), "yyyy-MM-dd");
+      newFacility.updatedBy = {
+        firstName: me.firstName,
+        surname: me.surname,
+        username: me.username,
+      };
+      save(newFacility);
+      const convertedEvent = convertToDhis2Event(newFacility, program);
+      await postEvent(convertedEvent);
+      toast.success(t("appliedForApprovalSuccessfully"));
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(t("appliedForApprovalFailed"));
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -220,30 +287,37 @@ const NewFacilityDialog = () => {
       {
         type: "HELPER",
         target: PATH,
-        value: t("pleaseSelectFacilityParent")
-      }
+        value: t("pleaseSelectFacilityParent"),
+      },
     ];
     MANDATORY_FIELDS.forEach((field) => {
       if (!selectedFacility || !selectedFacility[field]) {
         currentHelpers.push({
           target: "",
           type: "ERROR",
-          value: t("missingMandatoryFields")
+          value: t("missingMandatoryFields"),
         });
         valid = false;
       }
     });
     let orgUnit = "";
     if (selectedFacility) {
-      const pathOrgUnits = _.compact(selectedFacility[PATH].split("/").reverse());
+      const pathOrgUnits = _.compact(
+        selectedFacility[PATH].split("/").reverse()
+      );
       pathOrgUnits.forEach((pathOrgUnit, index) => {
-        const foundInAssignedOrgUnits = program.programs[0].organisationUnits.find((ou) => ou.id === pathOrgUnit);
+        const foundInAssignedOrgUnits =
+          program.programs[0].organisationUnits.find(
+            (ou) => ou.id === pathOrgUnit
+          );
         if (foundInAssignedOrgUnits && !orgUnit) {
           orgUnit = foundInAssignedOrgUnits.id;
         }
         if (index === 1) {
           const foundOu = orgUnits.find((ou) => ou.id === pathOrgUnit);
-          const foundChildrenFacilities = facilities.filter((f) => f[PATH].includes(pathOrgUnit));
+          const foundChildrenFacilities = facilities.filter((f) =>
+            f[PATH].includes(pathOrgUnit)
+          );
           const ouName = foundOu.name;
           const ouShortName = foundOu.shortName;
           if (ouName && selectedFacility[NAME]) {
@@ -251,43 +325,51 @@ const NewFacilityDialog = () => {
               currentHelpers.push({
                 target: NAME,
                 type: "ERROR",
-                value: t("facilityCannotHaveTheSameNameAsItsParent")
+                value: t("facilityCannotHaveTheSameNameAsItsParent"),
               });
               valid = false;
             }
           }
           if (selectedFacility[NAME]) {
             const foundSameName = foundChildrenFacilities.find((fcf) => {
-              return fcf[NAME].toLowerCase() === selectedFacility[NAME].toLowerCase();
+              return (
+                fcf[NAME].toLowerCase() === selectedFacility[NAME].toLowerCase()
+              );
             });
             if (foundSameName) {
               currentHelpers.push({
                 target: NAME,
                 type: "ERROR",
-                value: t("facilityNameInSameParentHasBeenTaken")
+                value: t("facilityNameInSameParentHasBeenTaken"),
               });
               valid = false;
             }
           }
           if (ouShortName && selectedFacility[SHORT_NAME]) {
-            if (selectedFacility[SHORT_NAME].toLowerCase() === ouShortName.toLowerCase()) {
+            if (
+              selectedFacility[SHORT_NAME].toLowerCase() ===
+              ouShortName.toLowerCase()
+            ) {
               currentHelpers.push({
                 target: SHORT_NAME,
                 type: "ERROR",
-                value: t("facilityCannotHaveTheSameShortNameAsItsParent")
+                value: t("facilityCannotHaveTheSameShortNameAsItsParent"),
               });
               valid = false;
             }
           }
           if (selectedFacility[SHORT_NAME]) {
             const foundSameName = foundChildrenFacilities.find((fcf) => {
-              return fcf[SHORT_NAME].toLowerCase() === selectedFacility[SHORT_NAME].toLowerCase();
+              return (
+                fcf[SHORT_NAME].toLowerCase() ===
+                selectedFacility[SHORT_NAME].toLowerCase()
+              );
             });
             if (foundSameName) {
               currentHelpers.push({
                 target: SHORT_NAME,
                 type: "ERROR",
-                value: t("facilityShortNameInSameParentHasBeenTaken")
+                value: t("facilityShortNameInSameParentHasBeenTaken"),
               });
               valid = false;
             }
@@ -298,19 +380,23 @@ const NewFacilityDialog = () => {
         currentHelpers.push({
           target: PATH,
           type: "ERROR",
-          value: t("parentNotAssignedToFcaProgram")
+          value: t("parentNotAssignedToFcaProgram"),
         });
         valid = false;
       }
 
       const path = selectedFacility[PATH];
       if (path && (selectedFacility.latitude || selectedFacility.longitude)) {
-        const isInside = isInsideParent(path, selectedFacility.latitude, selectedFacility.longitude);
+        const isInside = isInsideParent(
+          path,
+          selectedFacility.latitude,
+          selectedFacility.longitude
+        );
         if (!isInside) {
           currentHelpers.push({
             target: "coordinates",
             type: "ERROR",
-            value: t("mustBeInsideParentBoundaries")
+            value: t("mustBeInsideParentBoundaries"),
           });
           valid = false;
         }
@@ -327,7 +413,9 @@ const NewFacilityDialog = () => {
     setFilterForPathSelector(filter);
   }, []);
 
-  const foundCoordinatesError = helpers.find((h) => h.target === "coordinates" && h.type === "ERROR");
+  const foundCoordinatesError = helpers.find(
+    (h) => h.target === "coordinates" && h.type === "ERROR"
+  );
   return (
     selectedFacility && (
       <Modal fluid>
@@ -365,20 +453,30 @@ const NewFacilityDialog = () => {
             <div className="h-[calc(100%-115px)] overflow-auto">
               {(() => {
                 const value = selectedFacility[PATH];
-                const tempValue = selectedFacility[NAME] ? selectedFacility[NAME] : t("newFacilityName");
+                const tempValue = selectedFacility[NAME]
+                  ? selectedFacility[NAME]
+                  : t("newFacilityName");
 
                 return (
                   <Row>
                     <DataValueLabel dataElement={PATH} mandatory={true} />
                     <div>
                       <InputField
-                        roots={orgUnits.filter((orgUnit) => orgUnit.level === 1).map((orgUnit) => orgUnit.id)}
+                        roots={orgUnits
+                          .filter((orgUnit) => orgUnit.level === 1)
+                          .map((orgUnit) => orgUnit.id)}
                         filter={filterForPathSelector}
-                        displayValue={convertDisplayValueForPath(value, tempValue)}
+                        displayValue={convertDisplayValueForPath(
+                          value,
+                          tempValue
+                        )}
                         valueType="ORGANISATION_UNIT"
                         value={value}
                         onChange={(orgUnit) => {
-                          changeValue(PATH, orgUnit.path + "/" + selectedFacility[UID]);
+                          changeValue(
+                            PATH,
+                            orgUnit.path + "/" + selectedFacility[UID]
+                          );
                         }}
                       />
                       {helpers
@@ -401,7 +499,10 @@ const NewFacilityDialog = () => {
                     <CustomizedInputField
                       valueType="COORDINATES"
                       disabled={loading}
-                      value={[selectedFacility.longitude, selectedFacility.latitude]}
+                      value={[
+                        selectedFacility.longitude,
+                        selectedFacility.latitude,
+                      ]}
                       onChange={(value) => {
                         changeCoordinates(value);
                       }}
@@ -420,18 +521,26 @@ const NewFacilityDialog = () => {
                       </CustomizedButton>
                     </div>
                   </div>
-                  {foundCoordinatesError && <Helper type="ERROR" value={foundCoordinatesError.value} />}
+                  {foundCoordinatesError && (
+                    <Helper type="ERROR" value={foundCoordinatesError.value} />
+                  )}
                 </div>
               </Row>
               {program.programStages[0].programStageDataElements
                 .filter((psde) => {
-                  return !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) && psde.dataElement.id !== PATH;
+                  return (
+                    !HIDDEN_DATA_ELEMENTS.includes(psde.dataElement.id) &&
+                    psde.dataElement.id !== PATH
+                  );
                 })
                 .map((psde) => {
                   const de = psde.dataElement;
                   return (
                     <Row>
-                      <DataValueLabel dataElement={de.id} mandatory={MANDATORY_FIELDS.includes(de.id)} />
+                      <DataValueLabel
+                        dataElement={de.id}
+                        mandatory={MANDATORY_FIELDS.includes(de.id)}
+                      />
                       <div>
                         <DataValueField
                           dataElement={de.id}
@@ -463,7 +572,10 @@ const NewFacilityDialog = () => {
                       <div>
                         <CustomAttributeField
                           attribute={id}
-                          value={findCustomAttributeValue(selectedFacility[ATTRIBUTE_VALUES], id)}
+                          value={findCustomAttributeValue(
+                            selectedFacility[ATTRIBUTE_VALUES],
+                            id
+                          )}
                           onChange={(value) => {
                             changeAttributeValue(id, value);
                           }}
@@ -500,7 +612,11 @@ const NewFacilityDialog = () => {
               {t("save")}
             </CustomizedButton>
             &nbsp;
-            <CustomizedButton loading={loading} disabled={loading || !valid} onClick={complete}>
+            <CustomizedButton
+              loading={loading}
+              disabled={loading || !valid}
+              onClick={complete}
+            >
               {t("applyForApproval")}
             </CustomizedButton>
             &nbsp;

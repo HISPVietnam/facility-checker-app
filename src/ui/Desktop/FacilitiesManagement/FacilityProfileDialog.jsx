@@ -42,6 +42,7 @@ import { format } from "date-fns";
 import _ from "lodash";
 import GeoJsonViewer from "@/ui/common/GeoJsonViewer";
 import MiniMap from "./MiniMap";
+import { toast } from "react-toastify";
 const {
   UID,
   APPROVAL_STATUS,
@@ -180,49 +181,66 @@ const FacilityProfileDialog = () => {
   };
 
   const saveChanges = async () => {
-    setSaved(false);
-    setLoading(true);
-    const foundDuplicated = await checkDuplicatedCode();
-    if (foundDuplicated) {
+    try {
+      setSaved(false);
+      setLoading(true);
+      const foundDuplicated = await checkDuplicatedCode();
+      if (foundDuplicated) {
+        toast.error(t("duplicateFacility"));
+        setLoading(false);
+        return;
+      }
+      await updateTei();
+      save(currentFacility);
+      const convertedEvent = convertToDhis2Event(currentFacility, program);
+      await postEvent(convertedEvent);
+      toast.success(t("savedFacilityProfileSuccessfully"));
+
       setLoading(false);
-      return;
+      setSaved(true);
+    } catch (error) {
+      console.error(error);
+      toast.error(t("savedFacilityProfileFailed"));
+      setLoading(false);
     }
-    await updateTei();
-    save(currentFacility);
-    const convertedEvent = convertToDhis2Event(currentFacility, program);
-    await postEvent(convertedEvent);
-    setLoading(false);
-    setSaved(true);
   };
 
   const complete = async () => {
-    setSaved(false);
-    setLoading(true);
-    const foundDuplicated = await checkDuplicatedCode();
-    if (foundDuplicated) {
+    try {
+      setSaved(false);
+      setLoading(true);
+      const foundDuplicated = await checkDuplicatedCode();
+      if (foundDuplicated) {
+        toast.error(t("duplicateFacility"));
+        setLoading(false);
+        return;
+      }
+      await updateTei();
+      changeValue(APPROVAL_STATUS, "pending");
+      changeValue("status", "COMPLETED");
+      changeValue("isPending", true);
+      changeValue("completedAt", format(new Date(), "yyyy-MM-dd"));
+      editSelectedFacility("isPending", true);
+      currentFacility[APPROVAL_STATUS] = "pending";
+      currentFacility.status = "COMPLETED";
+      currentFacility.isPending = true;
+      currentFacility.completedAt = format(new Date(), "yyyy-MM-dd");
+      currentFacility.updatedBy = {
+        firstName: me.firstName,
+        surname: me.surname,
+        username: me.username,
+      };
+      save(currentFacility);
+      const convertedEvent = convertToDhis2Event(currentFacility, program);
+      await postEvent(convertedEvent);
+      toast.success(t("appliedForApprovalSuccessfully"));
       setLoading(false);
-      return;
+      setSaved(true);
+    } catch (error) {
+      console.error(error);
+      toast.error(t("appliedForApprovalFailed"));
+      setLoading(false);
     }
-    await updateTei();
-    changeValue(APPROVAL_STATUS, "pending");
-    changeValue("status", "COMPLETED");
-    changeValue("isPending", true);
-    changeValue("completedAt", format(new Date(), "yyyy-MM-dd"));
-    editSelectedFacility("isPending", true);
-    currentFacility[APPROVAL_STATUS] = "pending";
-    currentFacility.status = "COMPLETED";
-    currentFacility.isPending = true;
-    currentFacility.completedAt = format(new Date(), "yyyy-MM-dd");
-    currentFacility.updatedBy = {
-      firstName: me.firstName,
-      surname: me.surname,
-      username: me.username,
-    };
-    save(currentFacility);
-    const convertedEvent = convertToDhis2Event(currentFacility, program);
-    await postEvent(convertedEvent);
-    setLoading(false);
-    setSaved(true);
   };
 
   const updateTei = async () => {
@@ -558,7 +576,13 @@ const FacilityProfileDialog = () => {
                     <div></div>
                     <DataValueField
                       dataElement={de.id}
-                      disabled={isPending || loading || isReadOnly}
+                      disabled={
+                        isPending ||
+                        loading ||
+                        isReadOnly ||
+                        (selectedFacility[IS_NEW_FACILITY] === "true" &&
+                          de.id === ACTIVE_STATUS)
+                      }
                       value={currentFacility[de.id]}
                       onChange={(value) => {
                         changeValue(de.id, value);
