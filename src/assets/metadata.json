@@ -48,7 +48,7 @@
         "userGroups": {
           "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rwr-----", "id": "MJK6n5PLXM6" },
           "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-rw----", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-rw----", "id": "shYXBFb3lpw" },
+          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "rwrw----", "id": "shYXBFb3lpw" },
           "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-rw----", "id": "xd865kZFSRw" }
         },
         "public": "r-------"
@@ -2049,6 +2049,24 @@
       "restrictions": [],
       "users": [],
       "id": "WdelLCFTyqe"
+    },
+    {
+      "name": "FCA - Sync",
+      "translations": [],
+      "externalAccess": false,
+      "publicAccess": "r-------",
+      "description": "Use FCA Sync module",
+      "authorities": [
+        "F_ORGANISATIONUNIT_ADD",
+        "F_ORGANISATIONUNIT_MOVE",
+        "F_ORGANISATION_UNIT_SPLIT",
+        "F_PROGRAM_PUBLIC_ADD",
+        "F_ORGANISATION_UNIT_MERGE",
+        "F_ORGUNITGROUP_PUBLIC_ADD"
+      ],
+      "restrictions": [],
+      "users": [],
+      "id": "AnxX6HxeD2R"
     }
   ]
 }
