@@ -1,3 +1,9 @@
+## [1.12.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.3...v1.12.4) (2025-09-11)
+
+### Bug Fixes
+
+* majors issues on capture and approval features ([7c3c7ee](https://github.com/HISPVietnam/facility-checker-app/commit/7c3c7ee2a160571b5a0e74bdc0899260eb866bc7))
+
 ## [1.12.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.2...v1.12.3) (2025-09-08)
 
 ### Bug Fixes
