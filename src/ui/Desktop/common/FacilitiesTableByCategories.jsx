@@ -4,6 +4,7 @@ import useMetadataStore from "@/states/metadata";
 import DataValueLabel from "@/ui/common/DataValueLabel";
 import DataValueText from "@/ui/common/DataValueText";
 import { Approved, Pending, Rejected } from "@/ui/common/Labels";
+import { getLatestValues } from "@/utils";
 import {
   DataTable,
   DataTableBody,
@@ -82,8 +83,14 @@ const FacilitiesTableByCategories = ({
       facilities: state.facilities,
     }))
   );
-  const checkChangDataValue = (fields, currentValues) => {
-    const { previousValues } = currentValues;
+  const checkChangeDataValue = (fields, currentValues, facility) => {
+    const previousValues =
+      currentValues.previousValues ||
+      getLatestValues(
+        facilities.find((f) => f.tei === facility.tei).events,
+        program,
+        currentValues
+      );
     return fields.some(
       (field) =>
         currentValues[field] && previousValues[field] !== currentValues[field]
@@ -100,24 +107,25 @@ const FacilitiesTableByCategories = ({
     .filter((item) => item.events.length > 0)
     .map((facility) => {
       const row = facility.events[0];
-
-      const isChangeCoordinates = checkChangDataValue(
+      const isChangeCoordinates = checkChangeDataValue(
         ["longitude", "latitude"],
-        row
+        row,
+        facility
       );
-      const isChangeOuGroups = checkChangDataValue(
+      const isChangeOuGroups = checkChangeDataValue(
         program.dataElements
           .filter((de) => de.description && de.description.includes("FCGS"))
           .map((de) => de.id),
-        row
+        row,
+        facility
       );
 
-      const isChangeHierarchy = checkChangDataValue([PATH], row);
+      const isChangeHierarchy = checkChangeDataValue([PATH], row, facility);
       const isChangeInfo =
         !isChangeCoordinates &&
         !isChangeOuGroups &&
         !isChangeHierarchy &&
-        checkChangDataValue(
+        checkChangeDataValue(
           [
             ACTIVE_STATUS,
             ADDRESS,
@@ -132,7 +140,8 @@ const FacilitiesTableByCategories = ({
             SHORT_NAME,
             URL,
           ],
-          row
+          row,
+          facility
         );
       const isNewFacility = row[IS_NEW_FACILITY];
 
@@ -187,6 +196,13 @@ const FacilitiesTableByCategories = ({
       <DataTableBody>
         {filteredFacility.map((facility) => {
           return facility.events.map((row) => {
+            const previousValues =
+              row.previousValues ||
+              getLatestValues(
+                facilities.find((f) => f.tei === facility.tei).events,
+                program,
+                row
+              );
             return (
               <DataTableRow
                 key={row.event}
@@ -202,13 +218,13 @@ const FacilitiesTableByCategories = ({
                 <DataTableCell>
                   <DataValueText
                     dataElement={NAME}
-                    value={row[NAME] || row.previousValues[NAME]}
+                    value={row[NAME] || previousValues[NAME]}
                   />
                 </DataTableCell>
                 <DataTableCell>
                   <DataValueText
                     dataElement={PATH}
-                    value={row[PATH] || row.previousValues[PATH]}
+                    value={row[PATH] || previousValues[PATH]}
                   />
                 </DataTableCell>
                 <DataTableCell align="center">

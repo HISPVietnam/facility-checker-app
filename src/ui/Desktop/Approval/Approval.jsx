@@ -8,13 +8,19 @@ import useApprovalModuleStore from "@/states/approvalModule";
 import PendingFacilityDialog from "./PendingFacilityDialog";
 import useMetadataStore from "@/states/metadata";
 import FacilitiesTableByCategories from "../common/FacilitiesTableByCategories";
+import { getLatestValues } from "@/utils";
 const { APPROVAL_STATUS, PATH } = DATA_ELEMENTS;
 
 const Approval = () => {
   const { t } = useTranslation();
   //store
   const facilities = useDataStore((state) => state.facilities);
-  const me = useMetadataStore((state) => state.me);
+  const { me, program } = useMetadataStore(
+    useShallow((state) => ({
+      program: state.program,
+      me: state.me,
+    }))
+  );
   const { selectedOrgUnit, currentFilters, actions } = useApprovalModuleStore(
     useShallow((state) => ({
       selectedOrgUnit: state.selectedOrgUnit,
@@ -35,7 +41,9 @@ const Approval = () => {
       if (!selectedOrgUnit) {
         return true;
       }
-      const facilityPath = event[PATH] || event.previousValues[PATH];
+      const previousValues =
+        event.previousValues || getLatestValues(facilityEvents, program, event);
+      const facilityPath = event[PATH] || previousValues[PATH];
       if (!facilityPath) return false;
       return facilityPath.includes(selectedOrgUnit.id);
     };

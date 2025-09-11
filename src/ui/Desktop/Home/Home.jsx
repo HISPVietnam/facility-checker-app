@@ -8,31 +8,45 @@ const Home = () => {
   const me = useMetadataStore((state) => state.me);
 
   const noAuthorities = me.authorities.length === 0;
-  console.log(me);
   return (
     <div className="p-5 w-full h-full">
       <Card className="p-5 w-full h-full !flex flex-col">
-        <div className="font-bold text-2xl">Welcome to Facility Checker App</div>
+        <div className="font-bold text-2xl">
+          Welcome to Facility Checker App
+        </div>
         <NoticeBox title={t("importantNotice")} warning className="my-4">
-          This app is still in an experimental phase. Please DO NOT use it in any production DHIS2. Users may encounter bugs and other issues. If you
-          come across any, please report them to our project homepage:{" "}
-          <a className="underline text-sky-800" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
+          This app is still in an experimental phase. Please DO NOT use it in
+          any production DHIS2. Users may encounter bugs and other issues. If
+          you come across any, please report them to our project homepage:{" "}
+          <a
+            className="underline text-sky-800"
+            href="https://projects.hispvietnam.org/projects/facility-checker-app-public"
+            target="_blank"
+          >
             https://projects.hispvietnam.org/projects/facility-checker-app-public
           </a>
         </NoticeBox>
         <p>
-          The Facility Checker App (FCA) is a user-friendly map interface DHIS2 App which allow facility / district users to check the coordinates of
-          the facilities which are often incomplete, outdated, or incorrect or located outside their district / province / country boundary. It also
-          allows user to do integrity check on various orgunit groups and its group set. FCA app allow user to create new facility or edit facility
-          information and its coordinates details either manually enter the facility coordinate or selecting point on the map with its district
+          The Facility Checker App (FCA) is a user-friendly map interface DHIS2
+          App which allow facility / district users to check the coordinates of
+          the facilities which are often incomplete, outdated, or incorrect or
+          located outside their district / province / country boundary. It also
+          allows user to do integrity check on various orgunit groups and its
+          group set. FCA app allow user to create new facility or edit facility
+          information and its coordinates details either manually enter the
+          facility coordinate or selecting point on the map with its district
           boundary.
         </p>
         <br />
         <p>
-          Manager can review all the facility changes before synchronizing to DHIS2 organisation unit. FCA module has guide installation which allows
-          DHIS2 administrator to install and import all the health facility from DHIS2 Organisation units to FCA module. FCA app contain custom filter
-          which allow users to filter facility which has no coordinates or facilities coordinate outside district boundary. FCA has inbuilt
-          translation module which allow user to switch language within app with out changing user setting or re-login to dhis2.
+          Manager can review all the facility changes before synchronizing to
+          DHIS2 organisation unit. FCA module has guide installation which
+          allows DHIS2 administrator to install and import all the health
+          facility from DHIS2 Organisation units to FCA module. FCA app contain
+          custom filter which allow users to filter facility which has no
+          coordinates or facilities coordinate outside district boundary. FCA
+          has inbuilt translation module which allow user to switch language
+          within app with out changing user setting or re-login to dhis2.
         </p>
         {noAuthorities && (
           <div className="w-full">
@@ -54,7 +68,11 @@ const Home = () => {
           </div>
           <div>
             {t("projectHomepage")}:{" "}
-            <a className="underline" href="https://projects.hispvietnam.org/projects/facility-checker-app-public" target="_blank">
+            <a
+              className="underline"
+              href="https://projects.hispvietnam.org/projects/facility-checker-app-public"
+              target="_blank"
+            >
               https://projects.hispvietnam.org/projects/facility-checker-app-public
             </a>
           </div>

@@ -21,6 +21,7 @@ import {
   convertDisplayValueForPath,
   convertDisplayValueForAllField,
   generateParentFeatures,
+  getLatestValues,
 } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS } from "@/const";
@@ -71,9 +72,10 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       customAttributes: state.customAttributes,
     }))
   );
-  const { actions } = useDataStore(
+  const { actions, facilities } = useDataStore(
     useShallow((state) => ({
       actions: state.actions,
+      facilities: state.facilities,
     }))
   );
   const { approve, reject } = actions;
@@ -95,6 +97,16 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     ? selectedFacility.events.find((event) => event.event === selectedEventId)
     : null;
 
+  const previousValues = selectedFacility
+    ? finalEvent.previousValues ||
+      getLatestValues(
+        facilities.find((facility) => facility.tei === selectedFacility.tei)
+          .events,
+        program,
+        finalEvent
+      )
+    : null;
+
   const listDataElementDataValue = selectedFacility
     ? [
         PATH,
@@ -113,14 +125,13 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
           finalEvent[item.dataElement?.id] ||
           finalEvent[item];
         const previousValue = item.id
-          ? finalEvent.previousValues[ATTRIBUTE_VALUES]
+          ? previousValues[ATTRIBUTE_VALUES]
             ? findCustomAttributeValue(
-                finalEvent.previousValues[ATTRIBUTE_VALUES],
+                previousValues[ATTRIBUTE_VALUES],
                 item.id
               )
             : ""
-          : finalEvent.previousValues[item.dataElement?.id] ||
-            finalEvent.previousValues[item];
+          : previousValues[item.dataElement?.id] || previousValues[item];
         return {
           id: item.dataElement?.id || item.id || item,
           value: foundValue ? foundValue : "",
@@ -130,6 +141,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         };
       })
     : [];
+
   const handleApprove = async () => {
     try {
       setLoading(true);
@@ -216,18 +228,14 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     <DataValueLabel dataElement={NAME} />:{" "}
                     <DataValueText
                       dataElement={NAME}
-                      value={
-                        finalEvent[NAME] || finalEvent.previousValues[NAME]
-                      }
+                      value={finalEvent[NAME] || previousValues[NAME]}
                     />
                   </div>
                   <div className="text-[15px]">
                     <DataValueLabel dataElement={PATH} />:{" "}
                     <DataValueText
                       dataElement={PATH}
-                      value={
-                        finalEvent[PATH] || finalEvent.previousValues[PATH]
-                      }
+                      value={finalEvent[PATH] || previousValues[PATH]}
                     />
                   </div>
                 </div>
@@ -452,29 +460,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                               <CustomValue
                                 isOld={longitudeDataValue.isChangedValue}
                               >
-                                {finalEvent.previousValues["longitude"]}
+                                {previousValues["longitude"]}
                               </CustomValue>
                               <CustomValue isOld={dataValue.isChangedValue}>
-                                {finalEvent.previousValues["latitude"]}
+                                {previousValues["latitude"]}
                               </CustomValue>
                             </div>
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
                                 data={generateParentFeatures(
-                                  finalEvent.previousValues[PATH]
+                                  previousValues[PATH]
                                 )}
                                 point={
-                                  finalEvent.previousValues.longitude &&
-                                  finalEvent.previousValues.latitude
+                                  previousValues.longitude &&
+                                  previousValues.latitude
                                     ? [
-                                        finalEvent.previousValues.latitude,
-                                        finalEvent.previousValues.longitude,
+                                        previousValues.latitude,
+                                        previousValues.longitude,
                                       ]
                                     : [0, 0]
                                 }
                                 showPoint={
-                                  !finalEvent.previousValues.longitude ||
-                                  !finalEvent.previousValues.latitude
+                                  !previousValues.longitude ||
+                                  !previousValues.latitude
                                     ? false
                                     : true
                                 }
@@ -495,8 +503,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
                                 data={generateParentFeatures(
-                                  pathDataValue.value ||
-                                    finalEvent.previousValues[PATH]
+                                  pathDataValue.value || previousValues[PATH]
                                 )}
                                 point={
                                   longitudeDataValue.value && dataValue.value
@@ -527,13 +534,13 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                           <CustomValue isOld={dataValue.isChangedValue}>
                             {dataValue.id === PATH
                               ? convertDisplayValueForPath(
-                                  finalEvent.previousValues[dataValue.id]
+                                  previousValues[dataValue.id]
                                 )
                               : ["latitude", "longitude"].includes(dataValue.id)
-                              ? finalEvent.previousValues[dataValue.id]
+                              ? previousValues[dataValue.id]
                               : convertDisplayValueForAllField(
                                   dataValue.id,
-                                  finalEvent.previousValues[dataValue.id]
+                                  previousValues[dataValue.id]
                                 )}
                           </CustomValue>
                         </div>
@@ -630,29 +637,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                               <CustomValue
                                 isOld={longitudeDataValue.isChangedValue}
                               >
-                                {finalEvent.previousValues["longitude"]}
+                                {previousValues["longitude"]}
                               </CustomValue>
                               <CustomValue isOld={dataValue.isChangedValue}>
-                                {finalEvent.previousValues["latitude"]}
+                                {previousValues["latitude"]}
                               </CustomValue>
                             </div>
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
                                 data={generateParentFeatures(
-                                  finalEvent.previousValues[PATH]
+                                  previousValues[PATH]
                                 )}
                                 point={
-                                  finalEvent.previousValues.longitude &&
-                                  finalEvent.previousValues.latitude
+                                  previousValues.longitude &&
+                                  previousValues.latitude
                                     ? [
-                                        finalEvent.previousValues.latitude,
-                                        finalEvent.previousValues.longitude,
+                                        previousValues.latitude,
+                                        previousValues.longitude,
                                       ]
                                     : [0, 0]
                                 }
                                 showPoint={
-                                  !finalEvent.previousValues.longitude ||
-                                  !finalEvent.previousValues.latitude
+                                  !previousValues.longitude ||
+                                  !previousValues.latitude
                                     ? false
                                     : true
                                 }
@@ -672,13 +679,13 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                           <CustomValue isOld={dataValue.isChangedValue}>
                             {dataValue.id === PATH
                               ? convertDisplayValueForPath(
-                                  finalEvent.previousValues[dataValue.id]
+                                  previousValues[dataValue.id]
                                 )
                               : ["latitude", "longitude"].includes(dataValue.id)
-                              ? finalEvent.previousValues[dataValue.id]
+                              ? previousValues[dataValue.id]
                               : convertDisplayValueForAllField(
                                   dataValue.id,
-                                  finalEvent.previousValues[dataValue.id]
+                                  previousValues[dataValue.id]
                                 )}
                           </CustomValue>
                         </div>
