@@ -1,3 +1,10 @@
+## [1.12.5](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.4...v1.12.5) (2025-09-11)
+
+### Bug Fixes
+
+* add more authorities for Sync role in metadata package ([1618ec2](https://github.com/HISPVietnam/facility-checker-app/commit/1618ec29ad2b8679ca099f6fc34f02e669a71434))
+* finalize authorities for sync module ([6e7d3e1](https://github.com/HISPVietnam/facility-checker-app/commit/6e7d3e131e04ef45423abb223887e2efced138cf))
+
 ## [1.12.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.3...v1.12.4) (2025-09-11)
 
 ### Bug Fixes
