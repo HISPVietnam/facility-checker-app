@@ -167,7 +167,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       convertedEvent.trackedEntity = selectedFacility.tei;
       convertedEvent.enrollment = selectedFacility.enr;
       await postEvent(convertedEvent);
-      toast.error(t("approvedFacilityChangesSuccessfully"));
+      toast.success(t("approvedFacilityChangesSuccessfully"));
     } catch (error) {
       console.error(error);
       toast.error(t("approvedFacilityChangesFailed"));
@@ -204,7 +204,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       convertedEvent.trackedEntity = selectedFacility.tei;
       convertedEvent.enrollment = selectedFacility.enr;
       await postEvent(convertedEvent);
-      toast.error("rejectedFacilityChangesSuccessfully");
+      toast.success("rejectedFacilityChangesSuccessfully");
     } catch (error) {
       console.error(error);
       toast.error("rejectedFacilityChangesFailed");

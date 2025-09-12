@@ -213,4 +213,8 @@ export default {
   approvedFacilityChangesSuccessfully: "Approved facility changes successfully",
   approvedFacilityChangesFailed: "Approved facility changes failed",
   syncFailed: "Sync facilities failed",
+  savedAuthoritiesSuccessfully: "Saved authorities successfully",
+  savedAuthoritiesFailed: "Saved authorities failed",
+  addedNewLanguageSuccessfully: "Added new language successfully",
+  addedNewLanguageFailed: "Added new language failed",
 };

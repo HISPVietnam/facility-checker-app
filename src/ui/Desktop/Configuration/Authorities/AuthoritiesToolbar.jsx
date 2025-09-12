@@ -12,6 +12,7 @@ import useConfigurationModuleStore from "@/states/configurationModule";
 import useMetadataStore from "@/states/metadata";
 
 import metadata from "@/assets/metadata.json";
+import { toast } from "react-toastify";
 
 const AuthoritiesToolbar = () => {
   const { t } = useTranslation();
@@ -53,8 +54,11 @@ const AuthoritiesToolbar = () => {
       };
       await pushMetadata(userGroupsPayload);
       const newUsers = await getUsers();
+      toast.success(t("savedAuthoritiesSuccessfully"));
       setMetadata("users", newUsers);
     } catch (error) {
+      console.error(error);
+      toast.error(t("savedAuthoritiesFailed"));
     } finally {
       setLoading(false);
     }

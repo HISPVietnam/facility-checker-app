@@ -121,28 +121,24 @@ const FacilitiesTableByCategories = ({
       );
 
       const isChangeHierarchy = checkChangeDataValue([PATH], row, facility);
-      const isChangeInfo =
-        !isChangeCoordinates &&
-        !isChangeOuGroups &&
-        !isChangeHierarchy &&
-        checkChangeDataValue(
-          [
-            ACTIVE_STATUS,
-            ADDRESS,
-            CLOSED_DATE,
-            CODE,
-            CONTACT_PERSON,
-            DESCRIPTION,
-            EMAIL,
-            NAME,
-            OPENING_DATE,
-            PHONE_NUMBER,
-            SHORT_NAME,
-            URL,
-          ],
-          row,
-          facility
-        );
+      const isChangeInfo = checkChangeDataValue(
+        [
+          ACTIVE_STATUS,
+          ADDRESS,
+          CLOSED_DATE,
+          CODE,
+          CONTACT_PERSON,
+          DESCRIPTION,
+          EMAIL,
+          NAME,
+          OPENING_DATE,
+          PHONE_NUMBER,
+          SHORT_NAME,
+          URL,
+        ],
+        row,
+        facility
+      );
       const isNewFacility = row[IS_NEW_FACILITY];
 
       return {

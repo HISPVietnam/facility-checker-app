@@ -29,6 +29,7 @@ import {
   findCustomAttributeValue,
   generateParentFeatures,
   getLatestValues,
+  pickTranslation,
 } from "@/utils";
 import useDataStore from "@/states/data";
 import {
@@ -44,6 +45,7 @@ import _ from "lodash";
 import GeoJsonViewer from "@/ui/common/GeoJsonViewer";
 import MiniMap from "./MiniMap";
 import { toast } from "react-toastify";
+import { hasChanged } from "./utils";
 const {
   UID,
   APPROVAL_STATUS,
@@ -99,6 +101,16 @@ const New = ({ children }) => {
   );
 };
 
+const IGNORE_KEYS = [
+  "event",
+  "id",
+  "orgUnit",
+  "tei",
+  "enr",
+  "status",
+  "occurredAt",
+];
+
 const FacilityProfileDialog = () => {
   const [geoJsonViewer, setGeoJsonViewer] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -114,12 +126,23 @@ const FacilityProfileDialog = () => {
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] =
     useState(false);
-  const { program, me, orgUnits, customAttributes } = useMetadataStore(
+  const {
+    program,
+    me,
+    orgUnits,
+    customAttributes,
+    orgUnitGroups,
+    orgUnitGroupSets,
+    locale,
+  } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       program: state.program,
       orgUnits: state.orgUnits,
       customAttributes: state.customAttributes,
+      orgUnitGroups: state.orgUnitGroups,
+      orgUnitGroupSets: state.orgUnitGroupSets,
+      locale: state.locale,
     }))
   );
   const [currentFacility, setCurrentFacility] = useState({});
@@ -137,6 +160,12 @@ const FacilityProfileDialog = () => {
   const { save } = actions;
   const { editSelectedFacility, toggleDialog } = facilityCheckModuleActions;
   const isPending = selectedFacility.isPending;
+  const isDirty = hasChanged(
+    currentFacility,
+    selectedFacility.previousValues,
+    IGNORE_KEYS
+  );
+
   const foundCoordinatesError = helpers.find(
     (h) => h.type === "error" && h.target === "coordinates"
   );
@@ -571,24 +600,74 @@ const FacilityProfileDialog = () => {
                 ) {
                   value = "";
                 }
+                const foundDe = program.dataElements.find(
+                  (dataElement) => dataElement.id === de.id
+                );
+                const isOuGroups =
+                  foundDe.description && foundDe.description.includes("FCGS");
                 return (
                   <Row>
                     <DataValueLabel dataElement={de.id} />
                     <div></div>
-                    <DataValueField
-                      dataElement={de.id}
-                      disabled={
-                        isPending ||
-                        loading ||
-                        isReadOnly ||
-                        (selectedFacility[IS_NEW_FACILITY] === "true" &&
-                          de.id === ACTIVE_STATUS)
-                      }
-                      value={currentFacility[de.id]}
-                      onChange={(value) => {
-                        changeValue(de.id, value);
-                      }}
-                    />
+                    {isOuGroups ? (
+                      <CustomizedInputField
+                        valueType="TEXT"
+                        onChange={(value) => changeValue(de.id, value)}
+                        disabled={
+                          isPending ||
+                          loading ||
+                          isReadOnly ||
+                          (selectedFacility[IS_NEW_FACILITY] === "true" &&
+                            de.id === ACTIVE_STATUS)
+                        }
+                        value={currentFacility[de.id]}
+                        options={(() => {
+                          const orgUnitGroupSetId = foundDe.description.replace(
+                            "FCGS:",
+                            ""
+                          );
+                          const foundOrgUnitGroupSet = orgUnitGroupSets.find(
+                            (ougs) => ougs.id === orgUnitGroupSetId
+                          );
+                          const foundOrgUnitGroups =
+                            foundOrgUnitGroupSet.items.map((item) => {
+                              const foundOrgUnitGroup = orgUnitGroups.find(
+                                (oug) => oug.id === item.id
+                              );
+                              return foundOrgUnitGroup;
+                            });
+                          const options = foundOrgUnitGroups
+                            .filter(
+                              (oug) => !JSON.parse(value).includes(oug.id)
+                            )
+                            .map((oug) => {
+                              return {
+                                label: pickTranslation(oug, locale, "name"),
+                                value: oug.id,
+                              };
+                            });
+                          return options;
+                        })()}
+                        multiSelection={true}
+                        multiSelectionRestriction={true}
+                      />
+                    ) : (
+                      <DataValueField
+                        dataElement={de.id}
+                        disabled={
+                          isPending ||
+                          loading ||
+                          isReadOnly ||
+                          (selectedFacility[IS_NEW_FACILITY] === "true" &&
+                            de.id === ACTIVE_STATUS)
+                        }
+                        value={currentFacility[de.id]}
+                        onChange={(value) => {
+                          changeValue(de.id, value);
+                        }}
+                      />
+                    )}
+
                     {value ? (
                       <DataValueText dataElement={de.id} value={value} />
                     ) : (
@@ -674,9 +753,7 @@ const FacilityProfileDialog = () => {
                     ) : (
                       <span>{value}</span>
                     )
-                  ) : (
-                    <span>&nbsp;</span>
-                  )}
+                  ) : null}
                 </Row>
               );
             })}
@@ -717,7 +794,8 @@ const FacilityProfileDialog = () => {
               loading ||
               isPending ||
               helpers.find((h) => h.type === "error") ||
-              isReadOnly
+              isReadOnly ||
+              !isDirty
             }
             primary={true}
             onClick={saveChanges}
@@ -731,7 +809,8 @@ const FacilityProfileDialog = () => {
               loading ||
               isPending ||
               helpers.find((h) => h.type === "error") ||
-              isReadOnly
+              isReadOnly ||
+              !isDirty
             }
             onClick={complete}
           >

@@ -142,6 +142,8 @@ const TooltipContent = (props) => {
     }
   };
 
+  const isDirty = facility.latitude !== lat || facility.longitude !== long;
+
   return (
     <div className="w-[500px]">
       <div className="flex items-center">
@@ -216,7 +218,7 @@ const TooltipContent = (props) => {
           loading={loading}
           small={true}
           hidden={!editing}
-          disabled={!valid || !isWithinParent}
+          disabled={!valid || !isWithinParent || !isDirty}
           primary
           onClick={saveChanges}
         >
