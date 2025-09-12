@@ -1,3 +1,10 @@
+## [1.12.6](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.5...v1.12.6) (2025-09-12)
+
+### Bug Fixes
+
+* add authorities requirements for admin role during installation ([bce139a](https://github.com/HISPVietnam/facility-checker-app/commit/bce139a4fa6cdfdf9c9d3a36a2547b6fb97db872))
+* major issues on facility profile form and approval [#10181](https://projects.hispvietnam.org/work_packages/10181) ([47b9720](https://github.com/HISPVietnam/facility-checker-app/commit/47b97202c152ae10f756a885f9865069e123ba84))
+
 ## [1.12.5](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.4...v1.12.5) (2025-09-11)
 
 ### Bug Fixes
