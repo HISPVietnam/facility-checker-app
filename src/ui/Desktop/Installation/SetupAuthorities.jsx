@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NoticeBox } from "@dhis2/ui";
 import { faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useShallow } from "zustand/react/shallow";
-
 import useInstallationModuleStore from "@/states/installationModule";
 import useMetadataStore from "@/states/metadata";
 import { pickTranslation } from "@/utils";
 import { APP_ROLES } from "@/const";
-
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 import { AppRole, AppRoleSelectable } from "./AppRole";
 
@@ -58,8 +57,16 @@ const SetupAuthorities = () => {
   });
 
   const userOptions = users.map((user) => {
+    let isSuperuser = false;
+    user.userRoles.forEach((ur) => {
+      const foundAllAuthorities = ur.authorities.find((a) => a === "ALL");
+      if (foundAllAuthorities) {
+        isSuperuser = true;
+      }
+    });
     return {
       value: user.id,
+      isSuperuser,
       prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
       label: `${user.username} (${user.firstName} ${user.surname})`
     };
@@ -96,6 +103,13 @@ const SetupAuthorities = () => {
       <div className="flex flex-wrap gap-1 justify-between">
         {APP_ROLES.map((role, index) => {
           const { color, name } = role;
+          const isAdminRole = role.name === "adminRole";
+          let options;
+          if (isAdminRole) {
+            options = userOptions.filter((user) => user.isSuperuser);
+          } else {
+            options = [...userOptions, ...userGroupOptions];
+          }
           if (selectedRole === index) {
             return (
               <div className="w-full">
@@ -111,10 +125,15 @@ const SetupAuthorities = () => {
                     onChange={(value) => {
                       setStepData("setupAuthorities", name + "Users", JSON.stringify(value));
                     }}
-                    options={[...userOptions, ...userGroupOptions]}
+                    options={options}
                     filterable
                     placeholder={t("selectOption")}
                   />
+                  {isAdminRole && (
+                    <NoticeBox title={t("importantNotice")} warning className="my-4">
+                      {t("adminRoleRequirement")}
+                    </NoticeBox>
+                  )}
                 </div>
               </div>
             );
