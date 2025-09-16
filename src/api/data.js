@@ -4,7 +4,9 @@ import useMetadataStore from "@/states/metadata";
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
 
 const getFacilityTeis = async (orgUnit) => {
-  const result = await pull(`/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=*&skipPaging=true`);
+  const result = await pull(
+    `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=*&paging=false&skipPaging=true`
+  );
   if (result.instances) {
     return result.instances;
   }
@@ -14,7 +16,9 @@ const getFacilityTeis = async (orgUnit) => {
 };
 
 const getTeiById = async (teiId) => {
-  const result = await pull(`/api/tracker/trackedEntities/${teiId}?program=dJELklAE1ZZ&fields=*`);
+  const result = await pull(
+    `/api/tracker/trackedEntities/${teiId}?program=dJELklAE1ZZ&fields=*`
+  );
   return result;
 };
 
@@ -22,7 +26,7 @@ const postEvent = async (event) => {
   const result = await push(
     "/api/tracker?async=false",
     {
-      events: [event]
+      events: [event],
     },
     "POST"
   );
@@ -33,7 +37,7 @@ const postTei = async (tei) => {
   const result = await push(
     "/api/tracker?async=false",
     {
-      trackedEntities: [tei]
+      trackedEntities: [tei],
     },
     "POST"
   );
@@ -44,7 +48,7 @@ const postTeis = async (teis) => {
   const result = await push(
     "/api/tracker?async=false&skipSideEffects=true&skipRuleEngine=true",
     {
-      trackedEntities: teis
+      trackedEntities: teis,
     },
     "POST"
   );
@@ -52,7 +56,9 @@ const postTeis = async (teis) => {
 };
 
 const findEventByDataElement = async (dataElement, value) => {
-  const result = await pull(`/api/tracker/events?program=dJELklAE1ZZ&ouMode=ACCESSIBLE&fields=*&skipPaging=true`);
+  const result = await pull(
+    `/api/tracker/events?program=dJELklAE1ZZ&ouMode=ACCESSIBLE&fields=*&skipPaging=true`
+  );
   return result.instances;
 };
 
@@ -73,4 +79,11 @@ const findFacilityByCode = async (trackedEntity, code) => {
   }
 };
 
-export { getFacilityTeis, postEvent, postTei, getTeiById, findFacilityByCode, postTeis };
+export {
+  getFacilityTeis,
+  postEvent,
+  postTei,
+  getTeiById,
+  findFacilityByCode,
+  postTeis,
+};

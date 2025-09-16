@@ -1578,6 +1578,7 @@
   "trackedEntityTypes": [
     {
       "name": "FCA:Facility",
+      "shortName": "FCA:Facility",
       "translations": [],
       "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "r-rw----" },
       "description": "Facility checker: Facility",
