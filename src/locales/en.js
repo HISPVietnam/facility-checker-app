@@ -198,5 +198,8 @@ export default {
   savedAuthoritiesFailed: "Saved authorities failed",
   addedNewLanguageSuccessfully: "Added new language successfully",
   addedNewLanguageFailed: "Added new language failed",
-  adminRoleRequirement: "The admin role require the user to have Superuser role (ALL authorities)."
+  adminRoleRequirement: "The admin role require the user to have Superuser role (ALL authorities).",
+  somethingWentWrong: "Something went wrong",
+  thereAreErrorsDuringInstallation:
+    "There are errors during installation listed as below, the process cannot proceed further. Please note these errors down and contact your system administrator or app developers for support."
 };

@@ -22,7 +22,8 @@ const push = async (endPoint, payload, method, contentType) => {
       Authorization: !username ? "" : "Basic " + btoa(`${username}:${password}`)
     }
   });
-  return result;
+  const json = await result.json();
+  return json;
 };
 
 export { pull, push };

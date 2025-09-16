@@ -18,7 +18,9 @@ const useInstallationModuleStore = create((set) => ({
     metadataPackage: null,
     data: null
   },
-  install: {},
+  install: {
+    metadataResult: null
+  },
   status: "pending",
   refreshingMetadata: false,
   step: 0,

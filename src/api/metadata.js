@@ -1,11 +1,13 @@
 import { pull, push } from "./fetch";
 import { DATA_STORE_NAMESPACE } from "@/const";
+
 const getOrgUnits = async () => {
   const result = await pull(
     "/api/organisationUnits?paging=false&fields=id,name,code,openingDate,closedDate,contactPerson,attributeValues,url,address,email,active,phoneNumber,shortName,path,parent,ancestors[id,level],translations,level,organisationUnitGroups"
   );
   return result.organisationUnits;
 };
+
 const getOrgUnitGeoJson = async () => {
   const orgUnitLevelResult = await pull("/api/organisationUnitLevels?paging=false");
   let orgUnitGeoJsonUrl = "/api/organisationUnits.geojson";
@@ -20,14 +22,17 @@ const getOrgUnitGeoJson = async () => {
   const result = await pull(orgUnitGeoJsonUrl);
   return result;
 };
+
 const getOrgUnitLevels = async () => {
   const result = await pull("/api/organisationUnitLevels?paging=false&fields=*");
   return result.organisationUnitLevels;
 };
+
 const getOrgUnitGroups = async () => {
   const result = await pull("/api/organisationUnitGroups?paging=false&fields=*,!organisationUnits");
   return result.organisationUnitGroups;
 };
+
 const getOrgUnitGroupSets = async () => {
   const result = await pull("/api/organisationUnitGroupSets?fields=id,name,items,translations&paging=false");
   return result.organisationUnitGroupSets;
@@ -82,8 +87,11 @@ const addUserRole = async (userId, userRoles) => {
   );
 };
 
-const pushMetadata = async (metadata) => {
-  const result = await push("/api/metadata?async=false", metadata, "POST");
+const pushMetadata = async (metadata, dryRun = false) => {
+  let url = "/api/metadata?async=false";
+  if (dryRun) url += "&importMode=VALIDATE";
+  const result = await push(url, metadata, "POST");
+  return result;
 };
 const getDataStore = async () => {
   const result = await pull(`/api/dataStore/${DATA_STORE_NAMESPACE}?fields=.&pageSize=1000`);

@@ -21,17 +21,25 @@ import { useTranslation } from "react-i18next";
 import { convertTeis, convertLanguageCode } from "@/utils";
 import _ from "lodash";
 import { USER_GROUPS, DATA_ELEMENTS } from "@/const";
+import { useShallow } from "zustand/react/shallow";
 const { PATH } = DATA_ELEMENTS;
 const { VITE_FCA_MODE } = import.meta.env;
 const useInit = () => {
   const { i18n } = useTranslation();
   const [ready, setReady] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
-  const { setMetadata } = useMetadataStore((state) => state.actions);
+  const { actions, systemInfo } = useMetadataStore(
+    useShallow((state) => ({
+      actions: state.actions,
+      systemInfo: state.systemInfo
+    }))
+  );
+  const { setMetadata } = actions;
   const { setFacilities, setTeis } = useDataStore((state) => state.actions);
 
   useEffect(() => {
     (async () => {
+      if (!systemInfo) return;
       const program = await getProgram();
       const me = await getMe();
       const orgUnits = await getOrgUnits();
@@ -120,7 +128,7 @@ const useInit = () => {
         setReady(true);
       }
     })();
-  }, []);
+  }, [systemInfo]);
 
   return { ready, firstRun };
 };

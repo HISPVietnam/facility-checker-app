@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import { generateUid } from "@/utils";
 import _ from "lodash";
 import CustomizedButton from "@/ui/common/Button";
+import ErrorDialog from "@/ui/Desktop/Installation/ErrorDialog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
 import { postTeis } from "@/api/data";
 import { saveDataStore } from "@/api/metadata";
-
 import resources from "@/locales";
 import { pull } from "@/api/fetch";
 const Install = () => {
   const { t, i18n } = useTranslation();
+  const [errorDialog, setErrorDialog] = useState(false);
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
   const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
   const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
@@ -25,25 +26,18 @@ const Install = () => {
       me: state.me,
       schemas: state.schemas,
       orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups,
+      orgUnitGroups: state.orgUnitGroups
     }))
   );
 
-  const {
-    actions,
-    valid,
-    selectGroupSets,
-    summary,
-    status,
-    refreshingMetadata,
-  } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, summary, status, refreshingMetadata } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       summary: state.summary,
       status: state.status,
-      refreshingMetadata: state.refreshingMetadata,
+      refreshingMetadata: state.refreshingMetadata
     }))
   );
   const { setStatus, setStepData } = actions;
@@ -99,12 +93,16 @@ const Install = () => {
           onClick={async () => {
             setStatus("importing");
             await importDataStore();
-            await pushMetadata(metadataPackage);
-            setImportMetadataLoading(false);
-            await settingUserRole();
-            setSettingUserRoleLoading(false);
-            await importFacilities();
-            setImportFacilitiesLoading(false);
+            const metadataDryRunResult = await pushMetadata(metadataPackage, true);
+            if (metadataDryRunResult.httpStatus === "Conflict") {
+              setErrorDialog(true);
+              setStepData("install", "metadataResult", metadataDryRunResult);
+            }
+            // setImportMetadataLoading(false);
+            // await settingUserRole();
+            // setSettingUserRoleLoading(false);
+            // await importFacilities();
+            // setImportFacilitiesLoading(false);
             setStatus("done");
           }}
         >
@@ -116,10 +114,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importMetadataLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -130,10 +125,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !settingUserRoleLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -144,10 +136,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importFacilitiesLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -160,14 +149,14 @@ const Install = () => {
       {status === "done" && (
         <CustomizedButton
           onClick={async () => {
-            window.location =
-              "../../../dhis-web-commons-security/logout.action";
+            window.location = "../../../dhis-web-commons-security/logout.action";
           }}
           success
         >
           {t("ok")}
         </CustomizedButton>
       )}
+      {errorDialog && <ErrorDialog />}
     </div>
   );
 };

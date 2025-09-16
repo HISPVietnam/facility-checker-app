@@ -820,33 +820,6 @@
   ],
   "dataElements": [
     {
-      "code": "FCA_Aprby",
-      "name": "FCA_Approved by",
-      "translations": [],
-      "sharing": {
-        "owner": "Syfgez4v6hZ",
-        "external": false,
-        "users": {},
-        "userGroups": {
-          "MJK6n5PLXM6": { "displayName": "FCA - Admin", "access": "rw------", "id": "MJK6n5PLXM6" },
-          "m6GidmfEK48": { "displayName": "FCA - Capture", "access": "r-------", "id": "m6GidmfEK48" },
-          "shYXBFb3lpw": { "displayName": "FCA - Synchronization", "access": "r-------", "id": "shYXBFb3lpw" },
-          "xd865kZFSRw": { "displayName": "FCA - Approval", "access": "r-------", "id": "xd865kZFSRw" }
-        },
-        "public": "--------"
-      },
-      "shortName": "FCA_FCA_Approved by",
-      "formName": "Approved by",
-      "legendSets": [],
-      "aggregationType": "NONE",
-      "valueType": "TEXT",
-      "domainType": "TRACKER",
-      "aggregationLevels": [],
-      "zeroIsSignificant": false,
-      "id": "jmUQ1B95ZP9",
-      "attributeValues": []
-    },
-    {
       "code": "FCA_015",
       "name": "FCA_Email",
       "translations": [
@@ -872,7 +845,6 @@
       "formName": "Facility contact email",
       "legendSets": [],
       "aggregationType": "NONE",
-      "valueType": "TEXT",
       "domainType": "TRACKER",
       "aggregationLevels": [],
       "zeroIsSignificant": false,
@@ -1578,7 +1550,6 @@
   "trackedEntityTypes": [
     {
       "name": "FCA:Facility",
-      "shortName": "FCA:Facility",
       "translations": [],
       "sharing": { "owner": "Syfgez4v6hZ", "external": false, "users": {}, "userGroups": {}, "public": "r-rw----" },
       "description": "Facility checker: Facility",
