@@ -48,9 +48,13 @@ const postTei = async (tei) => {
   return result;
 };
 
-const postTeis = async (teis) => {
+const postTeis = async (teis, dryRun = false) => {
+  let url = `/api/tracker?async=false&skipSideEffects=true&skipRuleEngine=true`;
+  if (dryRun) {
+    url += `&importMode=VALIDATE`;
+  }
   const result = await push(
-    "/api/tracker?async=false&skipSideEffects=true&skipRuleEngine=true",
+    url,
     {
       trackedEntities: teis
     },

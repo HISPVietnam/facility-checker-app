@@ -65,15 +65,31 @@ const Install = () => {
     }
   };
 
-  const importFacilities = async () => {
+  const importFacilities = async (dryRun) => {
     const facilityChunks = _.chunk(data, 500);
+    let conclusion = {
+      failed: false,
+      result: null
+    };
     for (let i = 0; i < facilityChunks.length; i++) {
       const parallelChunks = _.chunk(facilityChunks[i], 50);
       const promises = parallelChunks.map((chunk) => {
-        return postTeis(chunk);
+        return postTeis(chunk, dryRun);
       });
-      await Promise.all(promises);
+      const results = await Promise.all(promises);
+      let failed = false;
+      results.forEach((result) => {
+        if (result.status && result.status === "ERROR") {
+          failed = true;
+        }
+      });
+      if (failed) {
+        conclusion.failed = true;
+        conclusion.result = results;
+        break;
+      }
     }
+    return conclusion;
   };
 
   const importDataStore = async () => {
@@ -97,13 +113,21 @@ const Install = () => {
             if (metadataDryRunResult.httpStatus === "Conflict") {
               setErrorDialog(true);
               setStepData("install", "metadataResult", metadataDryRunResult);
+            } else {
+              const metadataResult = await pushMetadata(metadataPackage, false);
+              setImportMetadataLoading(false);
+              await settingUserRole();
+              setSettingUserRoleLoading(false);
+              const facilitiesDryRunResult = await importFacilities(true);
+              if (facilitiesDryRunResult.failed) {
+                setErrorDialog(true);
+                setStepData("install", "facilitiesResult", facilitiesDryRunResult.result);
+              } else {
+                const facilitiesResult = await importFacilities();
+                setImportFacilitiesLoading(false);
+                setStatus("done");
+              }
             }
-            // setImportMetadataLoading(false);
-            // await settingUserRole();
-            // setSettingUserRoleLoading(false);
-            // await importFacilities();
-            // setImportFacilitiesLoading(false);
-            setStatus("done");
           }}
         >
           {t("install")}
