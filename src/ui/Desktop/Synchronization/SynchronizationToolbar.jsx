@@ -130,9 +130,9 @@ const SynchronizationToolbar = () => {
       ]);
 
       if (
-        !metadataResult.ok ||
-        addResults.some((result) => !result.ok) ||
-        deleteResults.some((result) => !result.ok)
+        metadataResult.status !== "OK" ||
+        addResults.some((result) => result.status !== "OK") ||
+        deleteResults.some((result) => result.status !== "OK")
       ) {
         throw new Error(t("metadataProcessFailed"));
       }
@@ -206,7 +206,9 @@ const SynchronizationToolbar = () => {
         trackedEntities: newTeis,
         events: existedEvents,
       });
-      if (!trackerResult.ok) throw new Error(t("trackerProcessFailed"));
+
+      if (trackerResult.status !== "OK")
+        throw new Error(t("trackerProcessFailed"));
       const updatedFacilities = facilities.map((f) => {
         const isNewFacility = f.events.some((event) =>
           newFacilities.some((fe) => fe.event === event.event)
