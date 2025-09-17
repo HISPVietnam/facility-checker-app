@@ -1,3 +1,9 @@
+## [1.12.8](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.7...v1.12.8) (2025-09-17)
+
+### Bug Fixes
+
+* api result check in sync module ([0625799](https://github.com/HISPVietnam/facility-checker-app/commit/0625799deb36d7459b982388dab619828367dbc3))
+
 ## [1.12.7](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.6...v1.12.7) (2025-09-17)
 
 ### Bug Fixes
