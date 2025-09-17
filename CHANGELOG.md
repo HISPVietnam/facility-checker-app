@@ -1,3 +1,10 @@
+## [1.12.7](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.6...v1.12.7) (2025-09-17)
+
+### Bug Fixes
+
+* blockers during installation for version 2.42: missing tet shortName, paging for tei getter ([70c240f](https://github.com/HISPVietnam/facility-checker-app/commit/70c240ff2d866a72259057039466a311ab4490c4))
+* errors during installation not be shown properly ([399641a](https://github.com/HISPVietnam/facility-checker-app/commit/399641adedda56233b4ae64724a162e5c9fc5635))
+
 ## [1.12.6](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.5...v1.12.6) (2025-09-12)
 
 ### Bug Fixes
