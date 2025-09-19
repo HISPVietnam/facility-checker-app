@@ -26,18 +26,25 @@ const Install = () => {
       me: state.me,
       schemas: state.schemas,
       orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups
+      orgUnitGroups: state.orgUnitGroups,
     }))
   );
 
-  const { actions, valid, selectGroupSets, summary, status, refreshingMetadata } = useInstallationModuleStore(
+  const {
+    actions,
+    valid,
+    selectGroupSets,
+    summary,
+    status,
+    refreshingMetadata,
+  } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       summary: state.summary,
       status: state.status,
-      refreshingMetadata: state.refreshingMetadata
+      refreshingMetadata: state.refreshingMetadata,
     }))
   );
   const { setStatus, setStepData } = actions;
@@ -51,17 +58,32 @@ const Install = () => {
   };
 
   const settingUserRole = async () => {
-    for (let userRole of metadataPackage.userRoles) {
-      const userChunks = _.chunk(userRole.users, 10);
-      for (let i = 0; i < userChunks.length; i++) {
-        const users = await getUserByIds(userChunks[i].map((user) => user.id));
-        const promises = [];
-        users.forEach((user) => {
-          user.userRoles.push({ id: userRole.id });
-          promises.push(addUserRole(user.id, user.userRoles));
+    const updatedUserRolesForUsers = metadataPackage.userRoles.reduce(
+      (prev, curr) => {
+        curr.users.forEach((user) => {
+          if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
+          else {
+            prev[user.id] = [curr.id];
+          }
         });
-        await Promise.all(promises);
-      }
+        return prev;
+      },
+      {}
+    );
+    const userKeyChunks = _.chunk(Object.keys(updatedUserRolesForUsers), 10);
+    const userValueChunks = _.chunk(
+      Object.values(updatedUserRolesForUsers),
+      10
+    );
+
+    for (let i = 0; i < userKeyChunks.length; i++) {
+      const promises = userKeyChunks[i].map((user, index) =>
+        addUserRole(
+          user,
+          userValueChunks[i][index].map((item) => ({ id: item }))
+        )
+      );
+      await Promise.all(promises);
     }
   };
 
@@ -69,7 +91,7 @@ const Install = () => {
     const facilityChunks = _.chunk(data, 500);
     let conclusion = {
       failed: false,
-      result: null
+      result: null,
     };
     for (let i = 0; i < facilityChunks.length; i++) {
       const parallelChunks = _.chunk(facilityChunks[i], 50);
@@ -109,7 +131,10 @@ const Install = () => {
           onClick={async () => {
             setStatus("importing");
             await importDataStore();
-            const metadataDryRunResult = await pushMetadata(metadataPackage, true);
+            const metadataDryRunResult = await pushMetadata(
+              metadataPackage,
+              true
+            );
             if (metadataDryRunResult.httpStatus === "Conflict") {
               setErrorDialog(true);
               setStepData("install", "metadataResult", metadataDryRunResult);
@@ -121,7 +146,11 @@ const Install = () => {
               const facilitiesDryRunResult = await importFacilities(true);
               if (facilitiesDryRunResult.failed) {
                 setErrorDialog(true);
-                setStepData("install", "facilitiesResult", facilitiesDryRunResult.result);
+                setStepData(
+                  "install",
+                  "facilitiesResult",
+                  facilitiesDryRunResult.result
+                );
               } else {
                 const facilitiesResult = await importFacilities();
                 setImportFacilitiesLoading(false);
@@ -138,7 +167,10 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importMetadataLoading ? (
-            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+            <FontAwesomeIcon
+              className="text-green-700 text-lg"
+              icon={faCheck}
+            />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -149,7 +181,10 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !settingUserRoleLoading ? (
-            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+            <FontAwesomeIcon
+              className="text-green-700 text-lg"
+              icon={faCheck}
+            />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -160,7 +195,10 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importFacilitiesLoading ? (
-            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
+            <FontAwesomeIcon
+              className="text-green-700 text-lg"
+              icon={faCheck}
+            />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -173,7 +211,8 @@ const Install = () => {
       {status === "done" && (
         <CustomizedButton
           onClick={async () => {
-            window.location = "../../../dhis-web-commons-security/logout.action";
+            window.location =
+              "../../../dhis-web-commons-security/logout.action";
           }}
           success
         >
