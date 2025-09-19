@@ -165,7 +165,6 @@ const FacilityProfileDialog = () => {
     selectedFacility.previousValues,
     IGNORE_KEYS
   );
-
   const foundCoordinatesError = helpers.find(
     (h) => h.type === "error" && h.target === "coordinates"
   );
@@ -609,7 +608,7 @@ const FacilityProfileDialog = () => {
                   <Row>
                     <DataValueLabel dataElement={de.id} />
                     <div></div>
-                    {isOuGroups ? (
+                    {/* {isOuGroups ? (
                       <CustomizedInputField
                         valueType="TEXT"
                         onChange={(value) => changeValue(de.id, value)}
@@ -638,7 +637,8 @@ const FacilityProfileDialog = () => {
                             });
                           const options = foundOrgUnitGroups
                             .filter(
-                              (oug) => !JSON.parse(value).includes(oug.id)
+                              (oug) =>
+                                !JSON.parse(value || "[]").includes(oug.id)
                             )
                             .map((oug) => {
                               return {
@@ -666,8 +666,21 @@ const FacilityProfileDialog = () => {
                           changeValue(de.id, value);
                         }}
                       />
-                    )}
-
+                    )} */}
+                    <DataValueField
+                      dataElement={de.id}
+                      disabled={
+                        isPending ||
+                        loading ||
+                        isReadOnly ||
+                        (selectedFacility[IS_NEW_FACILITY] === "true" &&
+                          de.id === ACTIVE_STATUS)
+                      }
+                      value={currentFacility[de.id]}
+                      onChange={(value) => {
+                        changeValue(de.id, value);
+                      }}
+                    />
                     {value ? (
                       <DataValueText dataElement={de.id} value={value} />
                     ) : (

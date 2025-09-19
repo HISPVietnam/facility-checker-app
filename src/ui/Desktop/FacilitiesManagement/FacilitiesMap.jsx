@@ -142,7 +142,10 @@ const TooltipContent = (props) => {
     }
   };
 
-  const isDirty = facility.latitude !== lat || facility.longitude !== long;
+  const foundFacility = facilities.find((f) => f[UID] === facility[UID]);
+
+  const isDirty =
+    foundFacility.latitude !== lat || foundFacility.longitude !== long;
 
   return (
     <div className="w-[500px]">

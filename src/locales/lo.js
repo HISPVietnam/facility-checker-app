@@ -49,7 +49,8 @@ export default {
   tooCloseToEachOther: "ໃກ້ກັບ <2 ກິໂລແມັດ",
   tooCloseToEachOtherTooltip: "ສະຖານບໍລິການທີ່ຢູ່ໃກ້ກັນ (<2 ກິໂລແມັດ)",
   multipleGroups: "ຫຼາຍ​ກຸ່ມ​ຫົວໜ່ວຍການຈັດຕັ້ງ",
-  multipleGroupsTooltip: "ສະຖານບໍລິການແມ່ນຂຶ້ນກັບຫຼາຍພາກສ່ວນຂອງຫົວໜ່ວຍອົງການຈັດຕັ້ງ ເຊິ່ງຢູ່ໃນຊຸດກຸ່ມຂອງຫົວໜ່ວຍອົງການຈັດຕັ້ງນັ້ນໆ",
+  multipleGroupsTooltip:
+    "ສະຖານບໍລິການແມ່ນຂຶ້ນກັບຫຼາຍພາກສ່ວນຂອງຫົວໜ່ວຍອົງການຈັດຕັ້ງ ເຊິ່ງຢູ່ໃນຊຸດກຸ່ມຂອງຫົວໜ່ວຍອົງການຈັດຕັ້ງນັ້ນໆ",
   notInGroup: "ບໍ່ໄດ້ຢູ່ໃນກຸ່ມໃດ {{group}}",
   notInGroupTooltip: "ສະຖານບໍລິການແມ່ນບໍ່ຂົ້ນກັບກຸ່ມທີ່ຢູ່ໃນກຸ່ມນີ້ {{group}}",
   approve: "ອະນຸມັດ",
@@ -76,7 +77,8 @@ export default {
   waitingForApprovalTooltip: "ສະຖານບໍລິການທີ່ຖ້າການອະນຸມັດ",
   set: "ກຸ່ມ",
   startChoosingPoint: "ຄລິກໃສ່ແຜນທີ່ເພື່ອເລືອກສະຖານທີ່",
-  dragTheMarker: "ຄລິກໃສ່ແຜນທີ່ ຫຼື ລາກເຄື່ອງໝາຍເພື່ອປ່ຽນສະຖານທີ່, ສະຖານທີ່ຈະຕ້ອງຢູ່ພາຍໃຕ້ສະຖານບໍລິການ",
+  dragTheMarker:
+    "ຄລິກໃສ່ແຜນທີ່ ຫຼື ລາກເຄື່ອງໝາຍເພື່ອປ່ຽນສະຖານທີ່, ສະຖານທີ່ຈະຕ້ອງຢູ່ພາຍໃຕ້ສະຖານບໍລິການ",
   apply: "ສະໝັກ",
   outsideBoundaryHelper: "ຄຳເຕືອນ: ທ່ານກຳລັງຍ້າຍສະຖານບໍລິການອອກໄປນອກຂອບ",
   newFacility: "ສະຖານບໍລິການໃໝ່",
@@ -86,11 +88,15 @@ export default {
   close: "ປິດ",
   parentNotAssignedToFcaProgram: "ຂໍ້ມູນຫຼັກແມ່ນບໍ່ໄດ້ຖືກມອບໝາຍໃນໂປແກລມ FCA",
   pleaseSelectFacilityParent: "ກະລຸນາເລືອກຂໍ້ມູນຫຼັກຂອງສະຖານບໍລິການ",
-  facilityCannotHaveTheSameNameAsItsParent: "ສະຖານບໍລິການບໍ່ສາມາດມີຊື່ຊ້ຳກັນກັບຕົວຫຼັກໄດ້",
+  facilityCannotHaveTheSameNameAsItsParent:
+    "ສະຖານບໍລິການບໍ່ສາມາດມີຊື່ຊ້ຳກັນກັບຕົວຫຼັກໄດ້",
   facilityNameInSameParentHasBeenTaken: "ສະຖານບໍລິການແມ່ນມີຊື່ຊ້ຳກັນກັບຕົວຫຼັກ",
-  facilityCannotHaveTheSameShortNameAsItsParent: "ສະຖານບໍລິການບໍ່ສາມາດມີຊື່ຫຍໍ້ຊ້ຳກັນກັບຕົວຫຼັກໄດ້",
-  facilityShortNameInSameParentHasBeenTaken: "ສະຖານບໍລິການແມ່ນມີຊື່ຫຍໍ້ຊ້ຳກັນກັບຕົວຫຼັກ",
-  thisCodeHasBeenTaken: "ລະຫັດສະຖານບໍລິການແມ່ນໄດ້ຖືກນຳໃຊ້ແລ້ວ, ລະຫັດຕ້ອງແຕກຕ່າງ",
+  facilityCannotHaveTheSameShortNameAsItsParent:
+    "ສະຖານບໍລິການບໍ່ສາມາດມີຊື່ຫຍໍ້ຊ້ຳກັນກັບຕົວຫຼັກໄດ້",
+  facilityShortNameInSameParentHasBeenTaken:
+    "ສະຖານບໍລິການແມ່ນມີຊື່ຫຍໍ້ຊ້ຳກັນກັບຕົວຫຼັກ",
+  thisCodeHasBeenTaken:
+    "ລະຫັດສະຖານບໍລິການແມ່ນໄດ້ຖືກນຳໃຊ້ແລ້ວ, ລະຫັດຕ້ອງແຕກຕ່າງ",
   facilityHaveBeenSaved: "ຂໍ້ມູນຂອງສະຖານບໍລິການແມ່ນໄດ້ຖືກບັນທຶກແລ້ວ",
   mustBeInsideParentBoundaries: "ສະຖານທີ່ຂອງສະຖານບໍລິການຄວນຢູ່ໃນຂໍ້ມູນຫຼັກ",
   version: "ລຸ້ນ",
@@ -107,49 +113,63 @@ export default {
   welcome: "ຍິນດີຕ້ອນຮັບ",
   selectGroupSets: "ເລືອກກຸ່ມຫົວໜ່ວຍອົງການຈັດຕັ້ງຂອງສະຖານບໍລິການ",
   welcomeToFacilityChecker: "ຍິນດີຕ້ອນຮັບສູ່ແອັບກວດສະຖານບໍລີການ",
-  welcomeParagraph1: "ສະບາຍດີ {{fullName}} 👋 , ເບິ່ງຄືວ່ານີ້ເປັນຄັ້ງທຳອິດຂອງທ່ານທີ່ໃຊ້ແອັບພລິເຄຊັ່ນ — ຍິນດີຕ້ອນຮັບ!",
-  welcomeParagraph2: "ກ່ອນທີ່ຈະເລີ່ມຕົ້ນ, ພວກເຮົາຈໍາເປັນຕ້ອງໄດ້ກໍານົດເງື່ອນໄຂເບື້ອງຕົ້ນເພື່ອຮັບປະກັນວ່າທຸກສິ່ງທຸກຢ່າງເຮັດວຽກໄດ້ຢ່າງລຽບງ່າຍ.",
+  welcomeParagraph1:
+    "ສະບາຍດີ {{fullName}} 👋 , ເບິ່ງຄືວ່ານີ້ເປັນຄັ້ງທຳອິດຂອງທ່ານທີ່ໃຊ້ແອັບພລິເຄຊັ່ນ — ຍິນດີຕ້ອນຮັບ!",
+  welcomeParagraph2:
+    "ກ່ອນທີ່ຈະເລີ່ມຕົ້ນ, ພວກເຮົາຈໍາເປັນຕ້ອງໄດ້ກໍານົດເງື່ອນໄຂເບື້ອງຕົ້ນເພື່ອຮັບປະກັນວ່າທຸກສິ່ງທຸກຢ່າງເຮັດວຽກໄດ້ຢ່າງລຽບງ່າຍ.",
   "welcomeParagraph2.1":
     "ຕົວຊ່ວຍສ້າງການຕິດຕັ້ງນີ້ຈະນໍາພາທ່ານຜ່ານແຕ່ລະຂັ້ນຕອນຂອງຂະບວນການຕິດຕັ້ງ. ມັນຈະໃຊ້ເວລາບໍ່ດົນ, ແລະພວກເຮົາຈະຢູ່ກັບທ່ານຕະຫຼອດທາງ. ໃນ​ລະ​ຫວ່າງ​ການ​ຕິດ​ຕັ້ງ​ຖ້າ​ຫາກ​ວ່າ​ທ່ານ​ຕ້ອງ​ການ​ໂຫຼດ​ຫນ້າ​ metadata ຄືນ​, ໃຫ້​ຄລິກ​ໃສ່​ປຸ່ມ Refresh​.",
-  welcomeParagraph3: "ກ່ອນທີ່ພວກເຮົາຈະເລີ່ມຕົ້ນ, ບັນຊີຜູ້ໃຊ້ຂອງທ່ານຈະຕ້ອງມີສິດທິດັ່ງຕໍ່ໄປນີ້:",
+  welcomeParagraph3:
+    "ກ່ອນທີ່ພວກເຮົາຈະເລີ່ມຕົ້ນ, ບັນຊີຜູ້ໃຊ້ຂອງທ່ານຈະຕ້ອງມີສິດທິດັ່ງຕໍ່ໄປນີ້:",
   refreshMetadata: "ໂຫຼດຂໍ້ມູນ metadata ຄືນໃໝ່",
   superuserRole: "ບົດບາດ superuser",
   accessToRootOrgUnit: "ສາມາດເຂົ້າເຖິງຮາກຖານຫົວໜ່ວຍການຈັດຕັ້ງ(ລະດັບ1)",
-  validWelcome: "ບັນຊີຜູ້ໃຊ້ຂອງທ່ານມີສິດທິທັງໝົດ 👏 , ກົດຕໍ່ໄປເພື່ອດຳເນີນການຕໍ່.",
-  invalidWelcome: "ຂໍອະໄພ, ບັນຊີຂອງທ່ານບໍ່ມີສິດທິໃນການເຂົ້າເຖິງ 😞, ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບຂອງທ່ານ.",
+  validWelcome:
+    "ບັນຊີຜູ້ໃຊ້ຂອງທ່ານມີສິດທິທັງໝົດ 👏 , ກົດຕໍ່ໄປເພື່ອດຳເນີນການຕໍ່.",
+  invalidWelcome:
+    "ຂໍອະໄພ, ບັນຊີຂອງທ່ານບໍ່ມີສິດທິໃນການເຂົ້າເຖິງ 😞, ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບຂອງທ່ານ.",
   selectGroupSetsParagraph1:
     "ໃນຂັ້ນຕອນນີ້, ທ່ານຈຳເປັນຕ້ອງເລືອກຊຸດຂໍ້ມູນຂອງຫົວໜ່ວຍອົງການຈັດຕັ້ງທີ່ປະກອບມີສະຖານບໍລິການທັງໝົດໃນຕົວຢ່າງ. ທ່ານຕ້ອງເລືອກຢ່າງໜ້ອຍ ໜຶ່ງກຸ່ມເພື່ອດຳເນີນການຕໍ່.",
-  skippedOrgUnits: "ຫົວໜ່ວຍອົງການຈັດຕັ້ງຕໍ່ໄປນີ້ຈະຖືກຂ້າມໄປສໍາລັບຮູບແບບ FCA, ເນື່ອງຈາກພື້ນທີ່ມັນບໍ່ຖືກຈຸດ.",
-  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "ຄົ້ນພົບຫົວໜ່ວຍການຈັດຕັ້ງທີ່ປະເພດຂອງພື້ນທີ່ບໍ່ຖືກຈຸດ ແລະ ຈະຖືກລະເລີຍ",
+  skippedOrgUnits:
+    "ຫົວໜ່ວຍອົງການຈັດຕັ້ງຕໍ່ໄປນີ້ຈະຖືກຂ້າມໄປສໍາລັບຮູບແບບ FCA, ເນື່ອງຈາກພື້ນທີ່ມັນບໍ່ຖືກຈຸດ.",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint:
+    "ຄົ້ນພົບຫົວໜ່ວຍການຈັດຕັ້ງທີ່ປະເພດຂອງພື້ນທີ່ບໍ່ຖືກຈຸດ ແລະ ຈະຖືກລະເລີຍ",
   summary: "ສະຫຼູບ",
   totalOrgUnits: "ໜ່ວຍ​ງານ​ທັງ​ໝົດ",
   willBeImported: "ຈະຖືກນໍາເຂົ້າ",
   willBeSkipped: "ຈະຖືກຂ້າມ",
   validSelectGroupSets: "ທ່ານໄດ້ເລືອກກຸ່ມ 👏 , ກົດຕໍ່ໄປເພື່ອດໍາເນີນການ.",
-  invalidSelectGroupSets: "ບໍ່ມີຫົວໜ່ວຍການຈັດຕັ້ງທີ່ສາມາດນໍາເຂົ້າໄປໃຊ້ຮູບແບບຂອງ FCA ທີ່ເປັນສະຖານບໍລິການໄດ້😞 , ບໍ່ສາມາດດໍາເນີນການໄດ້.",
+  invalidSelectGroupSets:
+    "ບໍ່ມີຫົວໜ່ວຍການຈັດຕັ້ງທີ່ສາມາດນໍາເຂົ້າໄປໃຊ້ຮູບແບບຂອງ FCA ທີ່ເປັນສະຖານບໍລິການໄດ້😞 , ບໍ່ສາມາດດໍາເນີນການໄດ້.",
   setupAuthorities: "ການຕັ້ງຄ່າສິດເຂົ້າເຖິງຂອງຜູ້ໃຊ້",
-  setupAuthoritiesParagraph1: "ໃນຂັ້ນຕອນນີ້, ທ່ານຈະໄດ້ຕັ້ງຄ່າສິດໃນການເຂົ້າເຖິງສຳລັບແອັບຕໍ່ໄປນີ້",
+  setupAuthoritiesParagraph1:
+    "ໃນຂັ້ນຕອນນີ້, ທ່ານຈະໄດ້ຕັ້ງຄ່າສິດໃນການເຂົ້າເຖິງສຳລັບແອັບຕໍ່ໄປນີ້",
   captureRole: "FCA - Capture",
   captureRoleDescription: "Users can add new or edit facility information.",
   approvalRole: "FCA - ອະນຸມັດ",
   approvalRoleDescription: "Users can approve facility information.",
   synchronizationRole: "FCA - ການຊິ້ງຂໍ້ມູນ",
-  synchronizationRoleDescription: "Users can push approved data to DHIS2 orgunit module.",
+  synchronizationRoleDescription:
+    "Users can push approved data to DHIS2 orgunit module.",
   adminRole: "FCA - ຜູ້ດູແລ",
   adminRoleDescription: "Users can add or update FCA users.",
   setupAuthoritiesParagraph2: "ກະລຸນາເລືອກຜູ້ໃຊ້ສໍາລັບແຕ່ລະບົດບາດຂ້າງລຸ່ມນີ້",
   selectUsersFor: "ເລືອກຜູ້ໃຊ້ເພື່ອ",
   selectUsersUserGroupsFor: "",
-  validSetupAuthorities: "ທ່ານໄດ້ຕັ້ງຄ່າສິດຜູ້ເຂົ້າໃຊ້👏 , ກົດຕໍ່ໄປເພື່ອດໍາເນີນການ.",
-  summaryParagraph1: "ໃນຂັ້ນຕອນນີ້, ພວກເຮົາຈະທົບທວນຄືນຂໍ້ມູນແລະ metadata ທັງຫມົດທີ່ຈະນໍາເຂົ້າໃນລະບົບດັ່ງຕາຕະລາງຂ້າງລຸ່ມນີ້:",
+  validSetupAuthorities:
+    "ທ່ານໄດ້ຕັ້ງຄ່າສິດຜູ້ເຂົ້າໃຊ້👏 , ກົດຕໍ່ໄປເພື່ອດໍາເນີນການ.",
+  summaryParagraph1:
+    "ໃນຂັ້ນຕອນນີ້, ພວກເຮົາຈະທົບທວນຄືນຂໍ້ມູນແລະ metadata ທັງຫມົດທີ່ຈະນໍາເຂົ້າໃນລະບົບດັ່ງຕາຕະລາງຂ້າງລຸ່ມນີ້:",
   dataMetadata: "ຂໍ້ມູນ / metadata",
   description: "ລາຍລະອຽດ",
   show: "ສະແດງ",
   facility: "ສະຖານບໍລິການ",
   validSummary: "ຖ້າທ່ານເຫັນດີທັງໝົດ👍, ກົດຕໍ່ໄປເພື່ອດໍາເນີນການ.",
   install: "ຕິດຕັ້ງ",
-  installParagraph1: "ນີ້ແມ່ນຂັ້ນຕອນສຸດທ້າຍ 🏁, ກົດປຸ່ມເພື່ອເລີ່ມຕົ້ນຂະບວນການຕິດຕັ້ງ.",
-  installParagraph2: "ຂະ​ບວນ​ການ​ຕິດ​ຕັ້ງ​ໄດ້​ເລີ່ມ​ຕົ້ນ​, ກະ​ລຸ​ນາ​ຢ່າ​ປິດ app ຈົນ​ກ​່​ວາ​ຈະສໍາ​ເລັດ​.",
+  installParagraph1:
+    "ນີ້ແມ່ນຂັ້ນຕອນສຸດທ້າຍ 🏁, ກົດປຸ່ມເພື່ອເລີ່ມຕົ້ນຂະບວນການຕິດຕັ້ງ.",
+  installParagraph2:
+    "ຂະ​ບວນ​ການ​ຕິດ​ຕັ້ງ​ໄດ້​ເລີ່ມ​ຕົ້ນ​, ກະ​ລຸ​ນາ​ຢ່າ​ປິດ app ຈົນ​ກ​່​ວາ​ຈະສໍາ​ເລັດ​.",
   installParagraph3:
     "ຍິນດີ! 🎉🎉🎉, ຂະບວນການຕິດຕັ້ງສຳເລັດແລ້ວ. ເພື່ອໃຫ້ທ່ານໄດ້ນຳໃຊ້ຢ່າງຖືກຕ້ອງ, ທ່ານຈະຖືກອອກຈາກລະບົບ ແລະ ພວກເຮົາຈະໂອນທ່ານໄປຫນ້າເຂົ້າສູ່ລະບົບ. ກະລຸນາເຂົ້າສູ່ລະບົບອີກເທື່ອຫນຶ່ງແລະທ່ານສາມາດເລີ່ມຕົ້ນການນໍາໃຊ້ app ໄດ້. ກົດ OK ເພື່ອສະຫຼຸບການຕິດຕັ້ງ.",
   importMetadata: "ນຳເຂົ້າ metadata",
@@ -168,7 +188,8 @@ export default {
   exportAsJsonFile: "ບັນທຶກເປັນ JSON",
   exportAsExcelFile: "ບັນທຶກເປັນ Excel",
   importantNotice: "ແຈ້ງເຕືອນສຳຄັນ!!",
-  noAuthoritiesNotice: "ເບິ່ງຄືວ່າບັນຊີຜູ້ໃຊ້ຂອງທ່ານບໍ່ມີສິດທີ່ຈະໃຊ້ແອັບດັ່ງກ່າວ, ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບ.",
+  noAuthoritiesNotice:
+    "ເບິ່ງຄືວ່າບັນຊີຜູ້ໃຊ້ຂອງທ່ານບໍ່ມີສິດທີ່ຈະໃຊ້ແອັບດັ່ງກ່າວ, ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບ.",
   selectOption: "",
   projectHomepage: "",
   done: "Done",
@@ -180,7 +201,8 @@ export default {
   ouGroups: "OrgUnit Groups",
   info: "Profile",
   facilityCountApprovalTotal: "Total facilities sent for review: {{total}}",
-  facilityCountApprovalSeparate: "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
+  facilityCountApprovalSeparate:
+    "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
   notChangedValues: "Profile",
   savedFacilityProfileSuccessfully: "Saved facility profile successfully",
@@ -195,5 +217,13 @@ export default {
   savedAuthoritiesFailed: "Saved authorities failed",
   addedNewLanguageSuccessfully: "Added new language successfully",
   addedNewLanguageFailed: "Added new language failed",
-  adminRoleRequirement: "The admin role require the user to have Superuser role (ALL authorities)."
+  adminRoleRequirement:
+    "The admin role require the user to have Superuser role (ALL authorities).",
+  somethingWentWrong: "Something went wrong",
+  thereAreErrorsDuringInstallation:
+    "There are errors during installation listed as below, the process cannot proceed further. Please note these errors down and contact your system administrator or app developers for support.",
+  rejectedFacilityChangesSuccessfully:
+    "The facility changes have been rejected successfully",
+  rejectedFacilityChangesFailed:
+    "The facility changes have been rejected failed",
 };

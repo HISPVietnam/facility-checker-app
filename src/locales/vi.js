@@ -36,7 +36,8 @@ export default {
   currentValue: "Giá trị hiện tại",
   previousValue: "Giá trị trước",
   applyForApproval: "Nộp xin phê duyệt",
-  isPendingWarning: "Cơ sở này đang đợi phê duyệt, không thể thay đổi dữ liệu hiện tại.",
+  isPendingWarning:
+    "Cơ sở này đang đợi phê duyệt, không thể thay đổi dữ liệu hiện tại.",
   awaitingApprovalValue: "Giá trị mới (đang đợi phê duyệt)",
   noMatchFound: "Không tìm thấy!",
   ok: "Đồng ý",
@@ -49,7 +50,8 @@ export default {
   tooCloseToEachOther: "Gần kề",
   tooCloseToEachOtherTooltip: "Các cơ sở gần nhau (",
   multipleGroups: "Nhiều nhóm đơn vị",
-  multipleGroupsTooltip: "Cơ sở thuộc về nhiều Nhóm đơn vị trong cùng một Tập nhóm đơn vị",
+  multipleGroupsTooltip:
+    "Cơ sở thuộc về nhiều Nhóm đơn vị trong cùng một Tập nhóm đơn vị",
   notInGroup: "Không nằm trong {{group}}",
   notInGroupTooltip: "Cơ sở không nằm trong nhóm nào trong tập nhóm {{group}}",
   approve: "Phê duyệt",
@@ -76,7 +78,8 @@ export default {
   waitingForApprovalTooltip: "Cơ sở đang đợi phê duyệt",
   set: "Cài",
   startChoosingPoint: "Bấm trên bản đồ để chọn vị trí",
-  dragTheMarker: "Nhấp vào bản đồ hoặc kéo điểm đánh dấu để thay đổi vị trí, vị trí phải nằm trong phạm vi đơn vị cha của cơ sở",
+  dragTheMarker:
+    "Nhấp vào bản đồ hoặc kéo điểm đánh dấu để thay đổi vị trí, vị trí phải nằm trong phạm vi đơn vị cha của cơ sở",
   apply: "Nộp",
   outsideBoundaryHelper: "Cảnh báo: bạn đang chuyển cơ sở ra khỏi ranh giới",
   newFacility: "Cơ sở mới",
@@ -84,12 +87,17 @@ export default {
   selectPathFirst: "Hãy chọn đơn vị cha cho cơ sở trước khi chọn vị trí",
   newFacilityName: "",
   close: "Đóng",
-  parentNotAssignedToFcaProgram: "Đơn vị cha không được gán cho chương trình FCA",
+  parentNotAssignedToFcaProgram:
+    "Đơn vị cha không được gán cho chương trình FCA",
   pleaseSelectFacilityParent: "Hãy chọn đơn vị cha cho Cơ sở",
-  facilityCannotHaveTheSameNameAsItsParent: "Tên cơ sở không được trùng với tên của đơn vị cấp cha",
-  facilityNameInSameParentHasBeenTaken: "Tên cơ sở này đã trùng với tên của đơn vị cấp cha",
-  facilityCannotHaveTheSameShortNameAsItsParent: "Tên cơ sở rút gọn không được trùng với tên rút gọn của đơn vị cấp cha",
-  facilityShortNameInSameParentHasBeenTaken: "Tên rút gọn cơ sở này đã trùng với tên rút gọn của đơn vị cấp cha",
+  facilityCannotHaveTheSameNameAsItsParent:
+    "Tên cơ sở không được trùng với tên của đơn vị cấp cha",
+  facilityNameInSameParentHasBeenTaken:
+    "Tên cơ sở này đã trùng với tên của đơn vị cấp cha",
+  facilityCannotHaveTheSameShortNameAsItsParent:
+    "Tên cơ sở rút gọn không được trùng với tên rút gọn của đơn vị cấp cha",
+  facilityShortNameInSameParentHasBeenTaken:
+    "Tên rút gọn cơ sở này đã trùng với tên rút gọn của đơn vị cấp cha",
   thisCodeHasBeenTaken: "Mã cơ sở này đã tồn tại, mã là duy nhất",
   facilityHaveBeenSaved: "Dữ liệu cơ sở đã được lưu",
   mustBeInsideParentBoundaries: "Vị trí Cơ sở phải nằm trong đơn vị cha",
@@ -107,49 +115,61 @@ export default {
   welcome: "Chào mừng",
   selectGroupSets: "Chọn tập nhóm đơn vị cơ sở",
   welcomeToFacilityChecker: "Chào mừng đến với ứng dụng Kiểm Tra Cơ Sở",
-  welcomeParagraph1: "Xin chào {{fullName}} 👋 , hình như đây là lần đầu tiên bạn sử dụng ứng dụng này — Chào mừng bạn!",
-  welcomeParagraph2: "Trước khi bắt đầu, chúng ta cần thiết lập một số điều kiện tiên quyết để đảm bảo mọi thứ diễn ra suôn sẻ.",
+  welcomeParagraph1:
+    "Xin chào {{fullName}} 👋 , hình như đây là lần đầu tiên bạn sử dụng ứng dụng này — Chào mừng bạn!",
+  welcomeParagraph2:
+    "Trước khi bắt đầu, chúng ta cần thiết lập một số điều kiện tiên quyết để đảm bảo mọi thứ diễn ra suôn sẻ.",
   "welcomeParagraph2.1":
     "Trình hướng dẫn cài đặt này sẽ hướng dẫn bạn qua từng bước của quá trình cài đặt. Sẽ không mất nhiều thời gian và chúng tôi sẽ đồng hành cùng bạn trong suốt quá trình. Trong quá trình cài đặt, nếu bạn cần làm mới siêu dữ liệu, hãy nhấp vào nút Làm mới.",
-  welcomeParagraph3: "Trước khi bắt đầu, người dùng của bạn sẽ cần một số quyền sau:",
+  welcomeParagraph3:
+    "Trước khi bắt đầu, người dùng của bạn sẽ cần một số quyền sau:",
   refreshMetadata: "Làm mới siêu dữ liệu",
   superuserRole: "Vai trò Quản trị cấp cao",
   accessToRootOrgUnit: "Truy cập vào đơn vị tổ chức gốc (cấp 1)",
   validWelcome: "Tài khoản của bạn có đủ điều kiện 👏 , bấm Tiếp để bắt đầu.",
-  invalidWelcome: "Không may, bạn không có đủ quyền để thao tác 😞, hãy liên hệ với người quản trị hệ thống.",
+  invalidWelcome:
+    "Không may, bạn không có đủ quyền để thao tác 😞, hãy liên hệ với người quản trị hệ thống.",
   selectGroupSetsParagraph1:
     "Ở bước này, bạn cần chọn tập nhóm đơn vị chưa tất cả cơ sở trong hệ thống. Bạn phải chọn ít nhất một tập nhóm đẻ bắt đầu.",
-  skippedOrgUnits: "Các đơn vị sau sẽ được bỏ qua trong Mô đun FCA bởi vì tọa độ của nó không phải là Điểm",
-  foundAnOrgUnitWhichGeometryTypeIsNotPoint: "Tìm thấy đơn vị có loại tọa độ không là Điểm và sẽ bị bỏ qua:",
+  skippedOrgUnits:
+    "Các đơn vị sau sẽ được bỏ qua trong Mô đun FCA bởi vì tọa độ của nó không phải là Điểm",
+  foundAnOrgUnitWhichGeometryTypeIsNotPoint:
+    "Tìm thấy đơn vị có loại tọa độ không là Điểm và sẽ bị bỏ qua:",
   summary: "Tóm tắt",
   totalOrgUnits: "Tổng đơn vị",
   willBeImported: "Sẽ được tích hợp",
   willBeSkipped: "Sẽ bị bỏ qua",
   validSelectGroupSets: "Bạn đã chọn tập nhóm 👏 , bấm Tiếp để bắt đầu",
-  invalidSelectGroupSets: "Không có đơn vị nào được tích hợp vào Mô-đun FCA thành Cơ sở 😞, không thể bắt đầu.",
+  invalidSelectGroupSets:
+    "Không có đơn vị nào được tích hợp vào Mô-đun FCA thành Cơ sở 😞, không thể bắt đầu.",
   setupAuthorities: "Cài đặt phân quyền",
-  setupAuthoritiesParagraph1: "Ở bước này, bạn sẽ cài đặt phân quyền cần thiết cho ứng dụng",
+  setupAuthoritiesParagraph1:
+    "Ở bước này, bạn sẽ cài đặt phân quyền cần thiết cho ứng dụng",
   captureRole: "FCA - Nhập liệu",
   captureRoleDescription: "Users can add new or edit facility information.",
   approvalRole: "FCA - Phê duyệt",
   approvalRoleDescription: "Users can approve facility information.",
   synchronizationRole: "FCA - Đồng bộ",
-  synchronizationRoleDescription: "Users can push approved data to DHIS2 orgunit module.",
+  synchronizationRoleDescription:
+    "Users can push approved data to DHIS2 orgunit module.",
   adminRole: "FCA - Quản trị viên",
   adminRoleDescription: "Users can add or update FCA users.",
   setupAuthoritiesParagraph2: "Hãy chọn người dùng cho từng vai trò sau",
   selectUsersFor: "Chọn người dùng để",
   selectUsersUserGroupsFor: "",
   validSetupAuthorities: "Bạn đã cài đặt phân quyền 👏 , bấm Tiếp để bắt đầu.",
-  summaryParagraph1: "Ở bước này, chúng ta sẽ xem lại tất cả dữ liệu và siêu dữ liệu sẽ được tích hợp vào hệ thống theo bảng thông tin sau:",
+  summaryParagraph1:
+    "Ở bước này, chúng ta sẽ xem lại tất cả dữ liệu và siêu dữ liệu sẽ được tích hợp vào hệ thống theo bảng thông tin sau:",
   dataMetadata: "Dữ liệu / Siêu dữ liệu",
   description: "Mô tả",
   show: "Hiện",
   facility: "Cơ sở",
   validSummary: "Nếu bạn đồng ý👍 , bấm Tiếp để bắt đầu.",
   install: "Cài đặt",
-  installParagraph1: "Đây là bước cuối cùng 🏁, bấm nút Cài đặt để bắt đầu tiến trình cài đặt.",
-  installParagraph2: "Quá trình cài đặt đã được bắt đầu, vui lòng không đóng ứng dụng cho đén khi hoàn tất.",
+  installParagraph1:
+    "Đây là bước cuối cùng 🏁, bấm nút Cài đặt để bắt đầu tiến trình cài đặt.",
+  installParagraph2:
+    "Quá trình cài đặt đã được bắt đầu, vui lòng không đóng ứng dụng cho đén khi hoàn tất.",
   installParagraph3:
     "Chúc mừng! 🎉🎉🎉, tiến trình cài đặt đã thành công. Để cho các phân quyền hoạt động bình thường, bạn sẽ bị đăng xuất và chuyển đến màn hình đăng nhập, hãy đăng nhập lại bà bạn có thể sử dụng. Bấm Đồng ý để kết thúc quá trình cài đặt.",
   importMetadata: "Đang tích hợp Siêu dữ liệu",
@@ -168,7 +188,8 @@ export default {
   exportAsJsonFile: "Xuất dạng JSON",
   exportAsExcelFile: "Xuất dạng Excel",
   importantNotice: "Chú ý quan trọng !!",
-  noAuthoritiesNotice: "Bạn không có quyền truy cập vào ứng dụng này, hãy liên hệ quản trị viên.",
+  noAuthoritiesNotice:
+    "Bạn không có quyền truy cập vào ứng dụng này, hãy liên hệ quản trị viên.",
   selectOption: "",
   projectHomepage: "",
   done: "Done",
@@ -180,7 +201,8 @@ export default {
   ouGroups: "OrgUnit Groups",
   info: "Profile",
   facilityCountApprovalTotal: "Total facilities sent for review: {{total}}",
-  facilityCountApprovalSeparate: "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
+  facilityCountApprovalSeparate:
+    "Approved: {{approved}} | Rejected: {{rejected}} | Pending: {{pending}}",
   facilityCountSyncTotal: "Total facility to be synchronized: {{total}}",
   notChangedValues: "Profile",
   savedFacilityProfileSuccessfully: "Saved facility profile successfully",
@@ -195,5 +217,13 @@ export default {
   savedAuthoritiesFailed: "Saved authorities failed",
   addedNewLanguageSuccessfully: "Added new language successfully",
   addedNewLanguageFailed: "Added new language failed",
-  adminRoleRequirement: "The admin role require the user to have Superuser role (ALL authorities)."
+  adminRoleRequirement:
+    "The admin role require the user to have Superuser role (ALL authorities).",
+  somethingWentWrong: "Something went wrong",
+  thereAreErrorsDuringInstallation:
+    "There are errors during installation listed as below, the process cannot proceed further. Please note these errors down and contact your system administrator or app developers for support.",
+  rejectedFacilityChangesSuccessfully:
+    "The facility changes have been rejected successfully",
+  rejectedFacilityChangesFailed:
+    "The facility changes have been rejected failed",
 };
