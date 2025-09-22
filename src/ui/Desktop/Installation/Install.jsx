@@ -21,27 +21,21 @@ const Install = () => {
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
   const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
   const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
-  const { users } = useMetadataStore(
+  const { users, me } = useMetadataStore(
     useShallow((state) => ({
       users: state.users,
+      me: state.me
     }))
   );
 
-  const {
-    actions,
-    valid,
-    selectGroupSets,
-    summary,
-    status,
-    refreshingMetadata,
-  } = useInstallationModuleStore(
+  const { actions, valid, selectGroupSets, summary, status, refreshingMetadata } = useInstallationModuleStore(
     useShallow((state) => ({
       valid: state.valid,
       actions: state.actions,
       selectGroupSets: state.selectGroupSets,
       summary: state.summary,
       status: state.status,
-      refreshingMetadata: state.refreshingMetadata,
+      refreshingMetadata: state.refreshingMetadata
     }))
   );
   const { setStatus, setStepData } = actions;
@@ -55,28 +49,22 @@ const Install = () => {
   };
 
   const settingUserRole = async () => {
-    const updatedUserRolesForUsers = metadataPackage.userRoles.reduce(
-      (prev, curr) => {
-        curr.users.forEach((user) => {
-          if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
-          else {
-            const foundUser = users.find((item) => item.id === user.id);
-            prev[user.id] = [
-              ...foundUser.userRoles.map((ur) => ur.id),
-              curr.id,
-            ];
-          }
-        });
-        return prev;
-      },
-      {}
-    );
+    const updatedUserRolesForUsers = metadataPackage.userRoles.reduce((prev, curr) => {
+      curr.users.forEach((user) => {
+        if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
+        else {
+          const foundUser = users.find((item) => item.id === user.id);
+          prev[user.id] = [...foundUser.userRoles.map((ur) => ur.id), curr.id];
+        }
+      });
+      return prev;
+    }, {});
+    const selfUser = updatedUserRolesForUsers[me.id];
+    if (selfUser) {
+      delete updatedUserRolesForUsers[me.id];
+    }
     const userKeyChunks = _.chunk(Object.keys(updatedUserRolesForUsers), 10);
-    const userValueChunks = _.chunk(
-      Object.values(updatedUserRolesForUsers),
-      10
-    );
-
+    const userValueChunks = _.chunk(Object.values(updatedUserRolesForUsers), 10);
     for (let i = 0; i < userKeyChunks.length; i++) {
       const promises = userKeyChunks[i].map((user, index) =>
         addUserRole(
@@ -86,13 +74,17 @@ const Install = () => {
       );
       await Promise.all(promises);
     }
+    await addUserRole(
+      me.id,
+      selfUser.map((item) => ({ id: item }))
+    );
   };
 
   const importFacilities = async (dryRun) => {
     const facilityChunks = _.chunk(data, 500);
     let conclusion = {
       failed: false,
-      result: null,
+      result: null
     };
     for (let i = 0; i < facilityChunks.length; i++) {
       const parallelChunks = _.chunk(facilityChunks[i], 50);
@@ -132,29 +124,23 @@ const Install = () => {
           onClick={async () => {
             setStatus("importing");
             await importDataStore();
-            const metadataDryRunResult = await pushMetadata(
-              metadataPackage,
-              true
-            );
+            const metadataDryRunResult = await pushMetadata(metadataPackage, true);
             if (metadataDryRunResult.httpStatus === "Conflict") {
               setErrorDialog(true);
               setStepData("install", "metadataResult", metadataDryRunResult);
             } else {
               const metadataResult = await pushMetadata(metadataPackage, false);
               setImportMetadataLoading(false);
-              await settingUserRole();
-              setSettingUserRoleLoading(false);
+
               const facilitiesDryRunResult = await importFacilities(true);
               if (facilitiesDryRunResult.failed) {
                 setErrorDialog(true);
-                setStepData(
-                  "install",
-                  "facilitiesResult",
-                  facilitiesDryRunResult.result
-                );
+                setStepData("install", "facilitiesResult", facilitiesDryRunResult.result);
               } else {
                 const facilitiesResult = await importFacilities();
                 setImportFacilitiesLoading(false);
+                await settingUserRole();
+                setSettingUserRoleLoading(false);
                 setStatus("done");
               }
             }
@@ -168,10 +154,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importMetadataLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -182,10 +165,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !settingUserRoleLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -196,10 +176,7 @@ const Install = () => {
       {(status === "importing" || status === "done") && (
         <div className="flex items-center">
           {status === "done" || !importFacilitiesLoading ? (
-            <FontAwesomeIcon
-              className="text-green-700 text-lg"
-              icon={faCheck}
-            />
+            <FontAwesomeIcon className="text-green-700 text-lg" icon={faCheck} />
           ) : (
             <CircularLoader extrasmall />
           )}
@@ -212,8 +189,7 @@ const Install = () => {
       {status === "done" && (
         <CustomizedButton
           onClick={async () => {
-            window.location =
-              "../../../dhis-web-commons-security/logout.action";
+            window.location = "../../../dhis-web-commons-security/logout.action";
           }}
           success
         >

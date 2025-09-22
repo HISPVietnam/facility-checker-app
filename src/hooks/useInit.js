@@ -74,7 +74,10 @@ const useInit = () => {
         const orgUnitLevels = await getOrgUnitLevels();
         const customAttributes = await getCustomAttributes();
         const dataStore = await getDataStore();
-        const teis = await getFacilityTeis(me.organisationUnits[0].id);
+        let teis = await getFacilityTeis(me.organisationUnits[0].id);
+        if (teis && teis.httpStatusCode && teis.httpStatusCode !== 200) {
+          teis = [];
+        }
         teis.forEach((tei) => {
           tei.hidden = false;
           const events = tei.enrollments[0].events;

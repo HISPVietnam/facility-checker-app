@@ -7,7 +7,7 @@ const getFacilityTeis = async (orgUnit) => {
   const { systemInfo } = useMetadataStore.getState();
   let url = "";
   if (systemInfo.version >= "2.42") {
-    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=*&paging=false`;
+    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnits=${orgUnit}&orgUnitMode=DESCENDANTS&fields=*&paging=false`;
   } else {
     url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=*&skipPaging=true`;
   }
@@ -19,6 +19,7 @@ const getFacilityTeis = async (orgUnit) => {
   if (result.trackedEntities) {
     return result.trackedEntities;
   }
+  return result;
 };
 
 const getTeiById = async (teiId) => {
@@ -69,11 +70,16 @@ const findEventByDataElement = async (dataElement, value) => {
 };
 
 const findFacilityByCode = async (trackedEntity, code) => {
-  const { orgUnits } = useMetadataStore.getState();
+  const { orgUnits, systemInfo } = useMetadataStore.getState();
   const root = orgUnits.find((ou) => ou.level === 1);
-  const result = await pull(
-    `/api/tracker/trackedEntities?orgUnit=${root.id}&ouMode=DESCENDANTS&program=dJELklAE1ZZ&filter=${ATTRIBUTE_CODE}:eq:${code}`
-  );
+  let url = "";
+  if (systemInfo.version >= "2.42") {
+    url = `/api/tracker/trackedEntities?orgUnits=${root.id}&orgUnitMode=DESCENDANTS&program=dJELklAE1ZZ&filter=${ATTRIBUTE_CODE}:eq:${code}`;
+  } else {
+    url = `/api/tracker/trackedEntities?orgUnit=${root.id}&ouMode=DESCENDANTS&program=dJELklAE1ZZ&filter=${ATTRIBUTE_CODE}:eq:${code}`;
+  }
+
+  const result = await pull(url);
   let teis = null;
   if (result.instances) {
     teis = result.instances;
