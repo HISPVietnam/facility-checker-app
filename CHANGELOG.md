@@ -1,3 +1,11 @@
+## [1.12.9](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.8...v1.12.9) (2025-09-22)
+
+### Bug Fixes
+
+* major issues in change language button and configuration module [#10405](https://projects.hispvietnam.org/work_packages/10405) ([da2a45f](https://github.com/HISPVietnam/facility-checker-app/commit/da2a45fd3d31b75c9c2b652e7604f7834983fd31))
+* major issues on mapview, profile form ([62b78f3](https://github.com/HISPVietnam/facility-checker-app/commit/62b78f33bb037f6b92de04506b1dcc00879e1f73))
+* the issue of unexpected requests during setting up authorities step in installation ([d67eaa4](https://github.com/HISPVietnam/facility-checker-app/commit/d67eaa4106ba0598fee17509a0247f421764b479))
+
 ## [1.12.8](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.7...v1.12.8) (2025-09-17)
 
 ### Bug Fixes
