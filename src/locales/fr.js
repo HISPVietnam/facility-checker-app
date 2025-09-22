@@ -243,4 +243,6 @@ export default {
     "The facility changes have been rejected successfully",
   rejectedFacilityChangesFailed:
     "The facility changes have been rejected failed",
+  updatedRolesForSelfUser:
+    "Updating your own roles will redirect to login page. You’ll need to log in again after saving.",
 };

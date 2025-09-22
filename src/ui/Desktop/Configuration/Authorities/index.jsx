@@ -94,7 +94,7 @@ const Authorities = () => {
             </div>
             <div>
               <CustomizedMultipleSelector
-                limitTags={6}
+                limitTags={3}
                 selected={
                   selectedUsersByUserGroup[userGroupId] ||
                   userInUserGroup.map((user) => user.id)
@@ -112,7 +112,10 @@ const Authorities = () => {
                   warning
                   className="my-4"
                 >
-                  {t("adminRoleRequirement")}
+                  <div className="flex flex-col gap-2">
+                    <p>{t("adminRoleRequirement")}</p>
+                    <p> {t("updatedRolesForSelfUser")}</p>
+                  </div>
                 </NoticeBox>
               )}
             </div>

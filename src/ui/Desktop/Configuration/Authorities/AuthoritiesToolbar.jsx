@@ -20,11 +20,13 @@ const AuthoritiesToolbar = () => {
   const { t } = useTranslation();
   const {
     users,
+    me,
     actions: { setMetadata },
   } = useMetadataStore(
     useShallow((state) => ({
       users: state.users,
       actions: state.actions,
+      me: state.me,
     }))
   );
   const {
@@ -38,10 +40,11 @@ const AuthoritiesToolbar = () => {
   );
   const [loading, setLoading] = useState(false);
   const removeUserRole = async () => {
-    const usersInRole = users.filter((user) =>
-      user.userRoles.some((ur) =>
-        [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
-      )
+    const usersInRole = users.filter(
+      (user) =>
+        user.userRoles.some((ur) =>
+          [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
+        ) && user.id !== me.id
     );
     const deletedUserRolesForUsers = usersInRole.map((user) => ({
       ...user,
@@ -52,7 +55,10 @@ const AuthoritiesToolbar = () => {
     const deletedUserChunks = _.chunk(deletedUserRolesForUsers, 10);
     for (let i = 0; i < deletedUserChunks.length; i++) {
       const promises = deletedUserChunks[i].map((user) =>
-        addUserRole(user.id, user.userRoles)
+        addUserRole(
+          user.id,
+          user.userRoles.map((item) => ({ id: item.id }))
+        )
       );
       await Promise.all(promises);
     }
@@ -101,6 +107,10 @@ const AuthoritiesToolbar = () => {
       },
       {}
     );
+    const selfUser = updatedUserRolesForUsers[me.id];
+    if (selfUser) {
+      delete updatedUserRolesForUsers[me.id];
+    }
     const userKeyChunks = _.chunk(Object.keys(updatedUserRolesForUsers), 10);
     const userValueChunks = _.chunk(
       Object.values(updatedUserRolesForUsers),
@@ -116,6 +126,25 @@ const AuthoritiesToolbar = () => {
       );
       await Promise.all(promises);
     }
+
+    const selfUserInRole = users.find(
+      (user) =>
+        user.userRoles.some((ur) =>
+          [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
+        ) && user.id === me.id
+    );
+
+    selfUser
+      ? await addUserRole(
+          me.id,
+          selfUser.map((item) => ({ id: item }))
+        )
+      : selfUserInRole &&
+        (await addUserRole(
+          me.id,
+          selfUserInRole.userRoles.map((ur) => ({ id: ur.id }))
+        ));
+    if (selfUser || selfUserInRole) return true;
   };
   const handleSave = async () => {
     try {
@@ -139,7 +168,11 @@ const AuthoritiesToolbar = () => {
       await pushMetadata(userGroupsPayload);
       await removeUserRole();
 
-      await settingUserRole(userGroupsPayload.userGroups);
+      const isUpdatedSelf = await settingUserRole(userGroupsPayload.userGroups);
+      if (isUpdatedSelf) {
+        toast.success(t("savedAuthoritiesSuccessfully"));
+        window.location = "../../../dhis-web-commons-security/logout.action";
+      }
       const newUsers = await getUsers();
       const newMe = await getMe();
       newMe.authorities = [];
