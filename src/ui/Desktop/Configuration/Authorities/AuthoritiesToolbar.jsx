@@ -135,16 +135,36 @@ const AuthoritiesToolbar = () => {
     );
 
     selfUser
-      ? await addUserRole(
+      ? !selfUser.every(
+          (item) =>
+            selfUserInRole &&
+            selfUserInRole.userRoles.some((ur) => ur.id === item)
+        ) &&
+        (await addUserRole(
           me.id,
           selfUser.map((item) => ({ id: item }))
-        )
+        ))
       : selfUserInRole &&
         (await addUserRole(
           me.id,
-          selfUserInRole.userRoles.map((ur) => ({ id: ur.id }))
+          selfUserInRole.userRoles
+            .filter(
+              (ur) => ![CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
+            )
+            .map((ur) => ({ id: ur.id }))
         ));
-    if (selfUser || selfUserInRole) return true;
+
+    if (
+      (selfUser &&
+        !selfUser.every(
+          (item) =>
+            selfUserInRole &&
+            selfUserInRole.userRoles.some((ur) => ur.id === item)
+        )) ||
+      (!selfUser && selfUserInRole)
+    )
+      return true;
+    return false;
   };
   const handleSave = async () => {
     try {
@@ -169,6 +189,7 @@ const AuthoritiesToolbar = () => {
       await removeUserRole();
 
       const isUpdatedSelf = await settingUserRole(userGroupsPayload.userGroups);
+
       if (isUpdatedSelf) {
         toast.success(t("savedAuthoritiesSuccessfully"));
         window.location = "../../../dhis-web-commons-security/logout.action";

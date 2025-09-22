@@ -236,5 +236,7 @@ export default {
   rejectedFacilityChangesFailed:
     "The facility changes have been rejected failed",
   updatedRolesForSelfUser:
-    "Updating your own roles will redirect to login page. You’ll need to log in again after saving.",
+    "Updating your own authorities may require you to log out and log in again for the changes to take effect. You will be logged out after saving.",
+  savedTranslationChangeSuccessfully: "Save translation change successfully",
+  savedTranslationChangeFailed: "Save translation change failed",
 };
