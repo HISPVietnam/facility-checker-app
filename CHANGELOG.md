@@ -1,3 +1,10 @@
+## [1.12.10](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.9...v1.12.10) (2025-09-22)
+
+### Bug Fixes
+
+* the issue of unexpected logout action in configuration module ([ce3f32b](https://github.com/HISPVietnam/facility-checker-app/commit/ce3f32b4e43198fa350f1b4238604e5b655bf663))
+* the issue of unexpected logout when assign self user to the app authorities ([dd5d63c](https://github.com/HISPVietnam/facility-checker-app/commit/dd5d63c3c46024b2e3ab3e354e2da49fbe172b7b))
+
 ## [1.12.9](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.8...v1.12.9) (2025-09-22)
 
 ### Bug Fixes
