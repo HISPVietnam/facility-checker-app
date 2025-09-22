@@ -17,19 +17,25 @@ const SetupAuthorities = () => {
   const { users, userGroups } = useMetadataStore(
     useShallow((state) => ({
       users: state.users,
-      userGroups: state.userGroups
+      userGroups: state.userGroups,
     }))
   );
-  const { actions, valid, setupAuthorities, status, refreshingMetadata } = useInstallationModuleStore(
-    useShallow((state) => ({
-      valid: state.valid,
-      actions: state.actions,
-      setupAuthorities: state.setupAuthorities,
-      status: state.status,
-      refreshingMetadata: state.refreshingMetadata
-    }))
-  );
-  const { captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers } = setupAuthorities;
+  const { actions, valid, setupAuthorities, status, refreshingMetadata } =
+    useInstallationModuleStore(
+      useShallow((state) => ({
+        valid: state.valid,
+        actions: state.actions,
+        setupAuthorities: state.setupAuthorities,
+        status: state.status,
+        refreshingMetadata: state.refreshingMetadata,
+      }))
+    );
+  const {
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  } = setupAuthorities;
   const { setValid, setStepData } = actions;
   useEffect(() => {
     if (
@@ -46,29 +52,31 @@ const SetupAuthorities = () => {
     } else {
       setValid(false);
     }
-  }, [captureRoleUsers, approvalRoleUsers, synchronizationRoleUsers, adminRoleUsers]);
+  }, [
+    captureRoleUsers,
+    approvalRoleUsers,
+    synchronizationRoleUsers,
+    adminRoleUsers,
+  ]);
 
   const userGroupOptions = userGroups.map((ug) => {
     return {
       value: `${ug.id}-userGroup`,
       prefix: <FontAwesomeIcon icon={faUsers} className="pr-2" />,
-      label: pickTranslation(ug, i18n.language, "name")
+      label: pickTranslation(ug, i18n.language, "name"),
     };
   });
 
   const userOptions = users.map((user) => {
-    let isSuperuser = false;
-    user.userRoles.forEach((ur) => {
-      const foundAllAuthorities = ur.authorities.find((a) => a === "ALL");
-      if (foundAllAuthorities) {
-        isSuperuser = true;
-      }
-    });
+    const isSuperuser = user.userRoles
+      .map((ur) => ur.authorities)
+      .flat()
+      .includes("ALL");
     return {
       value: user.id,
       isSuperuser,
       prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
-      label: `${user.username} (${user.firstName} ${user.surname})`
+      label: `${user.username} (${user.firstName} ${user.surname})`,
     };
   });
 
@@ -76,7 +84,7 @@ const SetupAuthorities = () => {
     captureRole: captureRoleUsers,
     approvalRole: approvalRoleUsers,
     synchronizationRole: synchronizationRoleUsers,
-    adminRole: adminRoleUsers
+    adminRole: adminRoleUsers,
   };
 
   return (
@@ -123,14 +131,22 @@ const SetupAuthorities = () => {
                     disabled={status !== "pending" || refreshingMetadata}
                     selected={mapping[name] ? JSON.parse(mapping[name]) : []}
                     onChange={(value) => {
-                      setStepData("setupAuthorities", name + "Users", JSON.stringify(value));
+                      setStepData(
+                        "setupAuthorities",
+                        name + "Users",
+                        JSON.stringify(value)
+                      );
                     }}
                     options={options}
                     filterable
                     placeholder={t("selectOption")}
                   />
                   {isAdminRole && (
-                    <NoticeBox title={t("importantNotice")} warning className="my-4">
+                    <NoticeBox
+                      title={t("importantNotice")}
+                      warning
+                      className="my-4"
+                    >
                       {t("adminRoleRequirement")}
                     </NoticeBox>
                   )}

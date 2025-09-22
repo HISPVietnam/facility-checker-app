@@ -21,12 +21,9 @@ const Install = () => {
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
   const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
   const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
-  const { me, schemas, orgUnitGroupSets, orgUnitGroups } = useMetadataStore(
+  const { users } = useMetadataStore(
     useShallow((state) => ({
-      me: state.me,
-      schemas: state.schemas,
-      orgUnitGroupSets: state.orgUnitGroupSets,
-      orgUnitGroups: state.orgUnitGroups,
+      users: state.users,
     }))
   );
 
@@ -63,7 +60,11 @@ const Install = () => {
         curr.users.forEach((user) => {
           if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
           else {
-            prev[user.id] = [curr.id];
+            const foundUser = users.find((item) => item.id === user.id);
+            prev[user.id] = [
+              ...foundUser.userRoles.map((ur) => ur.id),
+              curr.id,
+            ];
           }
         });
         return prev;

@@ -23,6 +23,7 @@ import CustomizedButton from "@/ui/common/Button";
 import CustomizedInputField from "@/ui/common/InputField";
 
 import "./index.css";
+import { toast } from "react-toastify";
 
 const Translations = () => {
   const { t, i18n } = useTranslation();
@@ -49,6 +50,7 @@ const Translations = () => {
       actions: state.actions,
     }))
   );
+
   //local store
   const [editedKeys, setEditedKeys] = useState({});
   const [savingLoading, setSavingLoading] = useState(false);
@@ -75,7 +77,7 @@ const Translations = () => {
         [lang]: { ...locales[lang], [key]: editedKeys[lang][key] },
       };
       const result = await saveDataStore("locales", newLocales, "UPDATED");
-      if (result.ok) {
+      if (result.status === "OK") {
         setMetadata("dataStore", { ...dataStore, locales: newLocales });
         i18n.addResourceBundle(
           lang,
@@ -84,13 +86,14 @@ const Translations = () => {
           false,
           true
         );
-        // will show toast success message
+        toast.success(t("savedTranslationChangeSuccessfully"));
       } else {
-        // will show toast error message
         console.log("Error saving data store", result.error);
+        toast.error(t("savedTranslationChangeFailed"));
       }
     } catch (error) {
       console.log(error);
+      toast.error(t("savedTranslationChangeFailed"));
     } finally {
       setSavingLoading(false);
       setEditedKeys((prevEditedKeys) => ({
@@ -104,7 +107,7 @@ const Translations = () => {
     // Set default languages show in table and reset search key
     setSearchTranslation("");
     selectLanguage("en");
-    locale !== "en" && selectLanguage(locale);
+    locale !== "en" && dataStore.locales[locale] && selectLanguage(locale);
   }, []);
 
   return (

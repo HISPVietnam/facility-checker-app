@@ -53,7 +53,7 @@ const AddNewLanguage = () => {
         [lang]: cloneAndClearValues(locales["en"]),
       };
       const result = await saveDataStore("locales", newLocales, "UPDATED");
-      if (result.ok) {
+      if (result.status === "OK") {
         setMetadata("dataStore", {
           ...dataStore,
           locales: newLocales,

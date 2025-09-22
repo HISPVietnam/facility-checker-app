@@ -6,13 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 
-import { getUsers, pushMetadata } from "@/api/metadata";
+import { addUserRole, getMe, getUsers, pushMetadata } from "@/api/metadata";
 import CustomizedButton from "@/ui/common/Button";
 import useConfigurationModuleStore from "@/states/configurationModule";
 import useMetadataStore from "@/states/metadata";
 
 import metadata from "@/assets/metadata.json";
 import { toast } from "react-toastify";
+import { CAPTURE_USER_ROLE, SYNC_USER_ROLE, USER_GROUPS } from "@/const";
+import _ from "lodash";
 
 const AuthoritiesToolbar = () => {
   const { t } = useTranslation();
@@ -27,16 +29,97 @@ const AuthoritiesToolbar = () => {
   );
   const {
     authorities: { selectedUsersByUserGroup },
+    actions: { selectUsersByUserGroup },
   } = useConfigurationModuleStore(
     useShallow((state) => ({
       authorities: state.authorities,
+      actions: state.actions,
     }))
   );
   const [loading, setLoading] = useState(false);
+  const removeUserRole = async () => {
+    const usersInRole = users.filter((user) =>
+      user.userRoles.some((ur) =>
+        [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
+      )
+    );
+    const deletedUserRolesForUsers = usersInRole.map((user) => ({
+      ...user,
+      userRoles: user.userRoles.filter(
+        (ur) => ![CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
+      ),
+    }));
+    const deletedUserChunks = _.chunk(deletedUserRolesForUsers, 10);
+    for (let i = 0; i < deletedUserChunks.length; i++) {
+      const promises = deletedUserChunks[i].map((user) =>
+        addUserRole(user.id, user.userRoles)
+      );
+      await Promise.all(promises);
+    }
+  };
+  const settingUserRole = async (userGroups) => {
+    const userRoles = userGroups.reduce((prev, curr) => {
+      if (curr.id === USER_GROUPS.SYNCHRONIZATION) {
+        prev[SYNC_USER_ROLE] = prev[SYNC_USER_ROLE] || {
+          id: SYNC_USER_ROLE,
+          users: [],
+        };
+        prev[SYNC_USER_ROLE].users = _.uniqBy(
+          [...prev[SYNC_USER_ROLE].users, ...curr.users],
+          "id"
+        );
+      }
+      if (curr.id !== USER_GROUPS.ADMIN) {
+        prev[CAPTURE_USER_ROLE] = prev[CAPTURE_USER_ROLE] || {
+          id: CAPTURE_USER_ROLE,
+          users: [],
+        };
+        prev[CAPTURE_USER_ROLE].users = _.uniqBy(
+          [...prev[CAPTURE_USER_ROLE].users, ...curr.users],
+          "id"
+        );
+      }
+      return prev;
+    }, {});
+    const updatedUserRolesForUsers = Object.values(userRoles).reduce(
+      (prev, curr) => {
+        curr.users.forEach((user) => {
+          if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
+          else {
+            const foundUser = users.find((item) => item.id === user.id);
+            prev[user.id] = [
+              ...foundUser.userRoles
+                .map((ur) => ur.id)
+                .filter(
+                  (ur) => ![SYNC_USER_ROLE, CAPTURE_USER_ROLE].includes(ur)
+                ),
+              curr.id,
+            ];
+          }
+        });
+        return prev;
+      },
+      {}
+    );
+    const userKeyChunks = _.chunk(Object.keys(updatedUserRolesForUsers), 10);
+    const userValueChunks = _.chunk(
+      Object.values(updatedUserRolesForUsers),
+      10
+    );
+
+    for (let i = 0; i < userKeyChunks.length; i++) {
+      const promises = userKeyChunks[i].map((user, index) =>
+        addUserRole(
+          user,
+          userValueChunks[i][index].map((item) => ({ id: item }))
+        )
+      );
+      await Promise.all(promises);
+    }
+  };
   const handleSave = async () => {
     try {
       setLoading(true);
-
       const userGroupsPayload = {
         userGroups: Object.keys(selectedUsersByUserGroup).map((key) => {
           return {
@@ -52,10 +135,29 @@ const AuthoritiesToolbar = () => {
           };
         }),
       };
+
       await pushMetadata(userGroupsPayload);
+      await removeUserRole();
+
+      await settingUserRole(userGroupsPayload.userGroups);
       const newUsers = await getUsers();
+      const newMe = await getMe();
+      newMe.authorities = [];
+
       toast.success(t("savedAuthoritiesSuccessfully"));
+      Object.keys(USER_GROUPS).forEach((authorityName) => {
+        const foundUg = newMe.userGroups.find(
+          (ug) => ug.id === USER_GROUPS[authorityName]
+        );
+        if (foundUg) {
+          newMe.authorities.push(authorityName);
+        }
+      });
+      setMetadata("me", newMe);
       setMetadata("users", newUsers);
+      Object.values(USER_GROUPS).forEach((userGroup) => {
+        selectUsersByUserGroup(null, userGroup);
+      });
     } catch (error) {
       console.error(error);
       toast.error(t("savedAuthoritiesFailed"));
@@ -63,6 +165,7 @@ const AuthoritiesToolbar = () => {
       setLoading(false);
     }
   };
+
   return (
     <div>
       <CustomizedButton

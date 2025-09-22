@@ -172,7 +172,9 @@ const Summary = () => {
       if (userGroupId === SYNCHRONIZATION) {
         syncUserRole.users.push(...groupMembers);
       }
-      captureUserRole.users.push(...groupMembers);
+      if (userGroupId !== ADMIN) {
+        captureUserRole.users.push(...groupMembers);
+      }
 
       // clonedMetadata.userRoles[0].users.push(...groupMembers);
       // clonedMetadata.userRoles[0].users = _.uniqBy(clonedMetadata.userRoles[0].users, "id");

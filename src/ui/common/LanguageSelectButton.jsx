@@ -39,6 +39,8 @@ const LanguageSelectButton = () => {
     setLocalePopover(false);
   };
 
+  const finalLocale = dataStore?.locales?.[locale] ? locale : "en";
+
   return (
     <>
       <div ref={localeButtonRef} className="inline-block">
@@ -48,7 +50,7 @@ const LanguageSelectButton = () => {
           }}
           icon={<FontAwesomeIcon icon={faGlobe} />}
         >
-          {t(NATIVE_LANGUAGES[locale].name)}
+          {t(NATIVE_LANGUAGES[finalLocale].name)}
         </CustomizedButton>
       </div>
       {localePopover && (
@@ -69,7 +71,9 @@ const LanguageSelectButton = () => {
                 <div
                   key={key}
                   onClick={() => handleSelectLocale(key)}
-                  className="flex items-center gap-2 w-full p-2 hover:bg-slate-200 cursor-pointer ease-in duration-200"
+                  className={`flex items-center gap-2 w-full p-2 hover:bg-slate-200 cursor-pointer ease-in duration-200 ${
+                    finalLocale === key && "bg-slate-200"
+                  }`}
                 >
                   <span className={`fi fi-${NATIVE_LANGUAGES[key].flag}`} />
                   <span>{t(NATIVE_LANGUAGES[key].name)}</span>

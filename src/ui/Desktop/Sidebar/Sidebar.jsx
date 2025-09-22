@@ -1,12 +1,19 @@
 import { Button } from "@dhis2/ui";
 import MenuItem from "./MenuItem";
 import { useTranslation } from "react-i18next";
-import { faHome, faLocationDot, faWrench, faCheck, faBars, faRotate } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faLocationDot,
+  faWrench,
+  faCheck,
+  faBars,
+  faRotate,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useLayoutStore from "@/states/layout";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import useMetadataStore from "@/states/metadata";
 import { useShallow } from "zustand/react/shallow";
 
@@ -32,15 +39,25 @@ const SideBarItem = ({ label, icon }) => {
 };
 
 const Sidebar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const actions = useLayoutStore((state) => state.actions);
   const { toggleSidebar } = actions;
   const [hovered, setHovered] = useState(false);
   const { t } = useTranslation();
   const { me } = useMetadataStore(
     useShallow((state) => ({
-      me: state.me
+      me: state.me,
     }))
   );
+  useEffect(() => {
+    if (
+      !me.authorities.includes(ROUTE_MAPPING[location.pathname.split("/")[1]])
+    ) {
+      navigate("/home");
+    }
+  }, [JSON.stringify(me.authorities)]);
+
   return (
     <div
       className="h-full w-[300px] bg-[#333739] text-white relative"
@@ -57,12 +74,27 @@ const Sidebar = () => {
         </div>
       </div>
       <SideBarItem label="home" icon={faHome} />
-      {me.authorities.includes("CAPTURE") && <SideBarItem label="facility-check" icon={faLocationDot} />}
-      {me.authorities.includes("APPROVAL") && <SideBarItem label="approval" icon={faCheck} />}
-      {me.authorities.includes("SYNCHRONIZATION") && <SideBarItem label="synchronization" icon={faRotate} />}
-      {me.authorities.includes("ADMIN") && <SideBarItem label="configuration" icon={faWrench} />}
+      {me.authorities.includes("CAPTURE") && (
+        <SideBarItem label="facility-check" icon={faLocationDot} />
+      )}
+      {me.authorities.includes("APPROVAL") && (
+        <SideBarItem label="approval" icon={faCheck} />
+      )}
+      {me.authorities.includes("SYNCHRONIZATION") && (
+        <SideBarItem label="synchronization" icon={faRotate} />
+      )}
+      {me.authorities.includes("ADMIN") && (
+        <SideBarItem label="configuration" icon={faWrench} />
+      )}
     </div>
   );
 };
 
 export default Sidebar;
+
+const ROUTE_MAPPING = {
+  configuration: "ADMIN",
+  synchronization: "SYNCHRONIZATION",
+  approval: "APPROVAL",
+  "facility-check": "CAPTURE",
+};

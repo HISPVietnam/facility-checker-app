@@ -9,6 +9,8 @@ import { APP_ROLES, USER_GROUPS } from "@/const";
 import useConfigurationModuleStore from "@/states/configurationModule";
 import useMetadataStore from "@/states/metadata";
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { NoticeBox } from "@dhis2/ui";
 
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
@@ -43,8 +45,14 @@ const Authorities = () => {
   );
 
   const userOptions = users.map((user) => {
+    const isSuperuser = user.userRoles
+      .map((ur) => ur.authorities)
+      .flat()
+      .includes("ALL");
     return {
       value: user.id,
+      isSuperuser,
+      prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
       label: `${user.username} (${user.firstName} ${user.surname})`,
     };
   });
@@ -56,7 +64,7 @@ const Authorities = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col p-2">
+    <div className="w-full h-full flex flex-col p-2 overflow-auto">
       <div className="flex gap-2 mb-4">
         {APP_ROLES.map((role) => {
           return <AppRole role={role} />;
@@ -71,6 +79,13 @@ const Authorities = () => {
             (userGroup) => userGroup.id === userGroupId
           );
         });
+        const isAdminRole = role.name === "adminRole";
+        let options;
+        if (isAdminRole) {
+          options = userOptions.filter((user) => user.isSuperuser);
+        } else {
+          options = userOptions;
+        }
         return (
           <div className="mt-2">
             <div>
@@ -79,6 +94,7 @@ const Authorities = () => {
             </div>
             <div>
               <CustomizedMultipleSelector
+                limitTags={6}
                 selected={
                   selectedUsersByUserGroup[userGroupId] ||
                   userInUserGroup.map((user) => user.id)
@@ -86,9 +102,19 @@ const Authorities = () => {
                 onChange={(value) => {
                   selectUsersByUserGroup(value, userGroupId);
                 }}
-                options={userOptions}
+                options={options}
                 filterable
+                placeholder={t("selectOption")}
               />
+              {isAdminRole && (
+                <NoticeBox
+                  title={t("importantNotice")}
+                  warning
+                  className="my-4"
+                >
+                  {t("adminRoleRequirement")}
+                </NoticeBox>
+              )}
             </div>
           </div>
         );
