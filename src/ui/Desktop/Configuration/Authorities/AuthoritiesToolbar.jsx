@@ -15,6 +15,7 @@ import metadata from "@/assets/metadata.json";
 import { toast } from "react-toastify";
 import { CAPTURE_USER_ROLE, SYNC_USER_ROLE, USER_GROUPS } from "@/const";
 import _ from "lodash";
+import { arraysEqualIgnoreOrder } from "@/utils";
 
 const AuthoritiesToolbar = () => {
   const { t } = useTranslation();
@@ -134,12 +135,12 @@ const AuthoritiesToolbar = () => {
         ) && user.id === me.id
     );
 
+    const isDiff = !arraysEqualIgnoreOrder(
+      selfUser || [],
+      (selfUserInRole?.userRoles || []).map((ur) => ur.id)
+    );
     selfUser
-      ? !selfUser.every(
-          (item) =>
-            selfUserInRole &&
-            selfUserInRole.userRoles.some((ur) => ur.id === item)
-        ) &&
+      ? isDiff &&
         (await addUserRole(
           me.id,
           selfUser.map((item) => ({ id: item }))
@@ -154,16 +155,7 @@ const AuthoritiesToolbar = () => {
             .map((ur) => ({ id: ur.id }))
         ));
 
-    if (
-      (selfUser &&
-        !selfUser.every(
-          (item) =>
-            selfUserInRole &&
-            selfUserInRole.userRoles.some((ur) => ur.id === item)
-        )) ||
-      (!selfUser && selfUserInRole)
-    )
-      return true;
+    if ((selfUser && isDiff) || (!selfUser && selfUserInRole)) return true;
     return false;
   };
   const handleSave = async () => {

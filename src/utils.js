@@ -583,6 +583,14 @@ const convertDisplayValueForAllField = (dataElement, value) => {
   return value;
 };
 
+const arraysEqualIgnoreOrder = (a, b) => {
+  if (a.length !== b.length) return false;
+  return a
+    .slice()
+    .sort()
+    .every((val, i) => val === b.slice().sort()[i]);
+};
+
 export {
   pickTranslation,
   isValidPoint,
@@ -609,4 +617,5 @@ export {
   convertLanguageCode,
   removeAccents,
   convertDisplayValueForAllField,
+  arraysEqualIgnoreOrder,
 };
