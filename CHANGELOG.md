@@ -1,3 +1,9 @@
+## [1.12.11](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.10...v1.12.11) (2025-09-23)
+
+### Bug Fixes
+
+* clear todo file ([7589351](https://github.com/HISPVietnam/facility-checker-app/commit/7589351d4b79cb12596696238ce919c189ac0641))
+
 ## [1.12.10](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.9...v1.12.10) (2025-09-22)
 
 ### Bug Fixes
