@@ -1,3 +1,9 @@
+## [1.12.12](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.11...v1.12.12) (2026-01-13)
+
+### Bug Fixes
+
+* fix crash when select facility check module and add marker cluster for map ([7d3ec15](https://github.com/HISPVietnam/facility-checker-app/commit/7d3ec153bb013c2f28d7808b641b9c0fd3babddb))
+
 ## [1.12.11](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.10...v1.12.11) (2025-09-23)
 
 ### Bug Fixes
