@@ -40,6 +40,9 @@ import { format } from "date-fns";
 import DataValueText from "@/ui/common/DataValueText";
 import { booleanPointInPolygon, point } from "@turf/turf";
 import _ from "lodash";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 const { UID, NAME, PATH, IS_NEW_FACILITY, APPROVAL_STATUS } = DATA_ELEMENTS;
 
 const TooltipContent = (props) => {
@@ -395,6 +398,7 @@ const BoundaryLayer = () => {
   }, [transformedData ? transformedData.lastUpdated : ""]);
 
   useEffect(() => {
+    if (!map) return;
     try {
       setTimeout(() => {
         map.invalidateSize();
@@ -402,11 +406,12 @@ const BoundaryLayer = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [transformedData ? transformedData.lastUpdated : ""]);
+  }, [transformedData ? transformedData.lastUpdated : "", map]);
 
   useEffect(() => {
+    if (!map) return;
     map.invalidateSize();
-  }, [layout.sidebar]);
+  }, [layout.sidebar, map]);
 
   return (
     <GeoJSON
@@ -414,6 +419,7 @@ const BoundaryLayer = () => {
       ref={ref}
       data={transformedData ? transformedData.features : undefined}
       onEachFeature={(feature, layer) => {
+        if (!layer.setStyle) return;
         if (editing) {
           layer.bindTooltip(feature.properties.name, {
             permanent: true,
@@ -441,6 +447,149 @@ const BoundaryLayer = () => {
         }
       }}
     ></GeoJSON>
+  );
+};
+
+const FacilitiesLayerWithCluster = () => {
+  const map = useMap();
+  const markerRef = useRef();
+
+  const facilityIcon = new L.divIcon({
+    className:
+      "rounded-full bg-cyan-700 w-[14px] h-[14px] border-[3px] border-white",
+    iconSize: [18, 18],
+    html: `<div></div>`,
+  });
+
+  const draggedFacilityIcon = new L.divIcon({
+    className:
+      "rounded-full bg-orange-600 w-[14px] h-[14px] border-[3px] border-white",
+    iconSize: [18, 18],
+    html: `<div></div>`,
+  });
+
+  const { selectedFacility, draggingMode, actions, editing } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        editing: state.editing,
+        selectedFacility: state.selectedFacility,
+        actions: state.actions,
+        draggingMode: state.draggingMode,
+      }))
+    );
+
+  const {
+    selectFacility,
+    editSelectedFacility,
+    toggleEditing,
+    toggleDraggingMode,
+  } = actions;
+
+  const facilities = useDataStore((state) => state.facilities);
+
+  /* reset state khi đổi facility */
+  useEffect(() => {
+    if (editing) toggleEditing();
+    if (draggingMode) toggleDraggingMode();
+  }, [selectedFacility?.[UID]]);
+
+  /* pan + open popup */
+  useEffect(() => {
+    if (!selectedFacility) return;
+    const { latitude, longitude } = selectedFacility;
+    if (latitude && longitude) {
+      setTimeout(() => {
+        map.panTo([latitude, longitude]);
+        markerRef.current?.openPopup();
+      }, 100);
+    }
+  }, [
+    selectedFacility?.[UID],
+    selectedFacility?.latitude,
+    selectedFacility?.longitude,
+  ]);
+
+  if (!facilities || facilities.length === 0) return null;
+
+  return (
+    <MarkerClusterGroup
+      chunkedLoading
+      maxClusterRadius={40}
+      disableClusteringAtZoom={16} // zoom sâu thì tách marker
+      showCoverageOnHover={false}
+      spiderfyOnMaxZoom
+      zoomToBoundsOnClick
+    >
+      {facilities
+        .filter(
+          (facility) =>
+            !(
+              facility[IS_NEW_FACILITY] &&
+              facility[APPROVAL_STATUS] === "rejected"
+            )
+        )
+        .filter((facility) => !facility.hidden)
+        .map((facility) => {
+          let currentFacility = facility;
+          const id = facility[UID];
+          const name = facility[NAME];
+          const isSelectedFacility =
+            selectedFacility && selectedFacility[UID] === id;
+
+          if (isSelectedFacility) {
+            currentFacility = selectedFacility;
+          }
+
+          if (!currentFacility.latitude || !currentFacility.longitude) {
+            return null;
+          }
+
+          const position = [
+            currentFacility.latitude,
+            currentFacility.longitude,
+          ];
+
+          return (
+            <Marker
+              key={id}
+              position={position}
+              draggable={draggingMode && isSelectedFacility}
+              ref={isSelectedFacility ? markerRef : null}
+              icon={
+                draggingMode && isSelectedFacility
+                  ? draggedFacilityIcon
+                  : facilityIcon
+              }
+              eventHandlers={{
+                click() {
+                  if (!draggingMode) {
+                    selectFacility(currentFacility);
+                  }
+                },
+                dragend() {
+                  const marker = markerRef.current;
+                  if (!marker) return;
+                  const latLng = marker.getLatLng();
+                  editSelectedFacility("latitude", latLng.lat);
+                  editSelectedFacility("longitude", latLng.lng);
+                },
+                popupclose() {
+                  if (!editing && !draggingMode) {
+                    selectFacility(null);
+                  }
+                },
+              }}
+            >
+              <Tooltip offset={[10, 0]}>{name}</Tooltip>
+              {isSelectedFacility && (
+                <Popup maxWidth={800}>
+                  <TooltipContent />
+                </Popup>
+              )}
+            </Marker>
+          );
+        })}
+    </MarkerClusterGroup>
   );
 };
 
