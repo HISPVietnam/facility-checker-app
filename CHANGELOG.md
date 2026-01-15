@@ -1,3 +1,9 @@
+## [1.12.13](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.12...v1.12.13) (2026-01-15)
+
+### Bug Fixes
+
+* optimize major performance issues ([6b28afe](https://github.com/HISPVietnam/facility-checker-app/commit/6b28afe554d017f84ab8d26f135c9cf56f86a818))
+
 ## [1.12.12](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.11...v1.12.12) (2026-01-13)
 
 ### Bug Fixes
