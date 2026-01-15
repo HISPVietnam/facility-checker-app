@@ -11,6 +11,7 @@ import useMetadataStore from "@/states/metadata";
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { NoticeBox } from "@dhis2/ui";
+import { searchUsers } from "@/api/metadata";
 
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
@@ -28,10 +29,9 @@ const AppRole = ({ role }) => {
 
 const Authorities = () => {
   const { t } = useTranslation();
-  const { users } = useMetadataStore(
-    useShallow((state) => ({
-      users: state.users,
-    }))
+
+  const { usersInFcaGroup } = useMetadataStore(
+    useShallow((state) => ({ usersInFcaGroup: state.usersInFcaGroup }))
   );
 
   const {
@@ -43,19 +43,6 @@ const Authorities = () => {
       authorities: state.authorities,
     }))
   );
-
-  const userOptions = users.map((user) => {
-    const isSuperuser = user.userRoles
-      .map((ur) => ur.authorities)
-      .flat()
-      .includes("ALL");
-    return {
-      value: user.id,
-      isSuperuser,
-      prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
-      label: `${user.username} (${user.firstName} ${user.surname})`,
-    };
-  });
 
   useEffect(() => {
     Object.values(USER_GROUPS).forEach((userGroup) => {
@@ -74,18 +61,13 @@ const Authorities = () => {
         const { color, name } = role;
         const roleName = name.replace("Role", "").toUpperCase();
         const userGroupId = USER_GROUPS[roleName];
-        const userInUserGroup = users.filter((user) => {
+        const userInUserGroup = usersInFcaGroup.filter((user) => {
           return user.userGroups.some(
             (userGroup) => userGroup.id === userGroupId
           );
         });
         const isAdminRole = role.name === "adminRole";
-        let options;
-        if (isAdminRole) {
-          options = userOptions.filter((user) => user.isSuperuser);
-        } else {
-          options = userOptions;
-        }
+
         return (
           <div className="mt-2">
             <div>
@@ -102,7 +84,31 @@ const Authorities = () => {
                 onChange={(value) => {
                   selectUsersByUserGroup(value, userGroupId);
                 }}
-                options={options}
+                isServerSideFilter
+                defaultOptions={usersInFcaGroup.map((user) => ({
+                  value: user.id,
+                  isSuperuser: user.userRoles
+                    .flatMap((ur) => ur.authorities)
+                    .includes("ALL"),
+                  prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
+                  label: `${user.username} (${user.firstName} ${user.surname})`,
+                }))}
+                getOptions={async (searchText) => {
+                  const users = await searchUsers(searchText);
+
+                  const userOptions = users.map((user) => ({
+                    value: user.id,
+                    isSuperuser: user.userRoles
+                      .flatMap((ur) => ur.authorities)
+                      .includes("ALL"),
+                    prefix: <FontAwesomeIcon icon={faUser} className="pr-2" />,
+                    label: `${user.username} (${user.firstName} ${user.surname})`,
+                  }));
+                  if (isAdminRole) {
+                    return userOptions.filter((user) => user.isSuperuser);
+                  }
+                  return userOptions;
+                }}
                 filterable
                 placeholder={t("selectOption")}
               />

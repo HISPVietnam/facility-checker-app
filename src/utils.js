@@ -78,34 +78,63 @@ const isInsideParent = (path, lat, long) => {
   return isInside;
 };
 
+const isPolygonFeature = (feature) =>
+  ["Polygon", "MultiPolygon"].includes(feature?.geometry?.type);
+
 const generateParentFeatures = (path) => {
   const { orgUnitGeoJson } = useMetadataStore.getState();
-  const currentOrgUnits = _.compact(path.split("/"));
-  const self = currentOrgUnits.pop();
-  const parent = currentOrgUnits.pop();
-  const foundSelfFeature = orgUnitGeoJson.features.find((f) => f.id === self);
-  const foundParentFeature = orgUnitGeoJson.features.find(
-    (f) => f.id === parent
-  );
-  const foundChildrenFeatures1 = orgUnitGeoJson.features.filter(
-    (f) => f.properties.parent === parent
-  );
-  const foundChildrenFeatures2 = orgUnitGeoJson.features.filter(
-    (f) => f.properties.parent === self
-  );
-  let finalFeatures;
-  if (foundParentFeature) {
-    finalFeatures = [foundParentFeature];
-  } else if (foundChildrenFeatures1.length > 0) {
-    finalFeatures = foundChildrenFeatures1;
-  } else if (foundChildrenFeatures2.length > 0) {
-    finalFeatures = foundChildrenFeatures2;
-  } else if (foundSelfFeature) {
-    finalFeatures = [foundSelfFeature];
-  } else {
-    finalFeatures = [];
+  const features = orgUnitGeoJson.features;
+
+  const ids = _.compact(path.split("/")); // từ cao → thấp
+  const selfId = ids[ids.length - 1];
+
+  /**
+   * 1️⃣ Tìm parent / ancestor gần nhất có Polygon
+   */
+  for (let i = ids.length - 2; i >= 0; i--) {
+    const parentId = ids[i];
+    const foundParent = features.find(
+      (f) => f.id === parentId && isPolygonFeature(f)
+    );
+    if (foundParent) {
+      return [foundParent];
+    }
   }
-  return finalFeatures;
+
+  /**
+   * 2️⃣ Tìm children của parent / ancestor gần nhất có Polygon
+   */
+  for (let i = ids.length - 2; i >= 0; i--) {
+    const parentId = ids[i];
+    const children = features.filter(
+      (f) => f.properties.parent === parentId && isPolygonFeature(f)
+    );
+    if (children.length > 0) {
+      return children;
+    }
+  }
+
+  /**
+   * 3️⃣ Children của self
+   */
+  const childrenOfSelf = features.filter(
+    (f) => f.properties.parent === selfId && isPolygonFeature(f)
+  );
+  if (childrenOfSelf.length > 0) {
+    return childrenOfSelf;
+  }
+
+  /**
+   * 4️⃣ Self
+   */
+  const selfFeature = features.find(
+    (f) => f.id === selfId && isPolygonFeature(f)
+  );
+  if (selfFeature) {
+    return [selfFeature];
+  }
+
+  return [];
 };
 
 const convertEvent = (event, dataElements) => {

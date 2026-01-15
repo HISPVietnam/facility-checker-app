@@ -10,7 +10,12 @@ import CustomizedButton from "@/ui/common/Button";
 import ErrorDialog from "@/ui/Desktop/Installation/ErrorDialog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { addUserRole, getUserByIds, pushMetadata } from "@/api/metadata";
+import {
+  addUserRole,
+  getUserById,
+  getUserByIds,
+  pushMetadata,
+} from "@/api/metadata";
 import { postTeis } from "@/api/data";
 import { saveDataStore } from "@/api/metadata";
 import resources from "@/locales";
@@ -21,9 +26,8 @@ const Install = () => {
   const [importMetadataLoading, setImportMetadataLoading] = useState(true);
   const [importFacilitiesLoading, setImportFacilitiesLoading] = useState(true);
   const [settingUserRoleLoading, setSettingUserRoleLoading] = useState(true);
-  const { users, me } = useMetadataStore(
+  const { me } = useMetadataStore(
     useShallow((state) => ({
-      users: state.users,
       me: state.me,
     }))
   );
@@ -58,10 +62,10 @@ const Install = () => {
   const settingUserRole = async () => {
     const updatedUserRolesForUsers = metadataPackage.userRoles.reduce(
       (prev, curr) => {
-        curr.users.forEach((user) => {
+        curr.users.forEach(async (user) => {
           if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
           else {
-            const foundUser = users.find((item) => item.id === user.id);
+            const foundUser = await getUserById(user.id);
             prev[user.id] = [
               ...foundUser.userRoles.map((ur) => ur.id),
               curr.id,

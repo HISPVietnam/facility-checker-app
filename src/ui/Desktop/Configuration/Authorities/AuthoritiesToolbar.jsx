@@ -6,7 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 
-import { addUserRole, getMe, getUsers, pushMetadata } from "@/api/metadata";
+import {
+  addUserRole,
+  getMe,
+  getUserById,
+  getUsers,
+  pushMetadata,
+  getUsersByQuery,
+} from "@/api/metadata";
 import CustomizedButton from "@/ui/common/Button";
 import useConfigurationModuleStore from "@/states/configurationModule";
 import useMetadataStore from "@/states/metadata";
@@ -20,14 +27,14 @@ import { arraysEqualIgnoreOrder } from "@/utils";
 const AuthoritiesToolbar = () => {
   const { t } = useTranslation();
   const {
-    users,
+    usersInFcaGroup,
     me,
     actions: { setMetadata },
   } = useMetadataStore(
     useShallow((state) => ({
-      users: state.users,
       actions: state.actions,
       me: state.me,
+      usersInFcaGroup: state.usersInFcaGroup,
     }))
   );
   const {
@@ -41,12 +48,14 @@ const AuthoritiesToolbar = () => {
   );
   const [loading, setLoading] = useState(false);
   const removeUserRole = async () => {
-    const usersInRole = users.filter(
+    const usersInRole = usersInFcaGroup.filter(
       (user) =>
-        user.userRoles.some((ur) =>
-          [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
-        ) && user.id !== me.id
+        user.id !== me.id &&
+        user.userGroups.some((ug) =>
+          [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ug.id)
+        )
     );
+
     const deletedUserRolesForUsers = usersInRole.map((user) => ({
       ...user,
       userRoles: user.userRoles.filter(
@@ -90,10 +99,10 @@ const AuthoritiesToolbar = () => {
     }, {});
     const updatedUserRolesForUsers = Object.values(userRoles).reduce(
       (prev, curr) => {
-        curr.users.forEach((user) => {
+        curr.users.forEach(async (user) => {
           if (prev[user.id]) prev[user.id] = [...prev[user.id], curr.id];
           else {
-            const foundUser = users.find((item) => item.id === user.id);
+            const foundUser = await getUserById(user.id);
             prev[user.id] = [
               ...foundUser.userRoles
                 .map((ur) => ur.id)
@@ -128,7 +137,7 @@ const AuthoritiesToolbar = () => {
       await Promise.all(promises);
     }
 
-    const selfUserInRole = users.find(
+    const selfUserInRole = usersInFcaGroup.find(
       (user) =>
         user.userRoles.some((ur) =>
           [CAPTURE_USER_ROLE, SYNC_USER_ROLE].includes(ur.id)
@@ -158,39 +167,43 @@ const AuthoritiesToolbar = () => {
     if ((selfUser && isDiff) || (!selfUser && selfUserInRole)) return true;
     return false;
   };
+
   const handleSave = async () => {
     try {
       setLoading(true);
       const userGroupsPayload = {
-        userGroups: Object.keys(selectedUsersByUserGroup).map((key) => {
-          return {
-            id: key,
-            name: metadata.userGroups.find((ug) => ug.id === key).name,
-            users: selectedUsersByUserGroup[key]
-              ? selectedUsersByUserGroup[key].map((user) => ({ id: user }))
-              : users
-                  .filter((user) =>
-                    user.userGroups.some((userGroup) => userGroup.id === key)
-                  )
-                  .map((user) => ({ id: user.id })),
-          };
-        }),
+        userGroups: await Promise.all(
+          Object.keys(selectedUsersByUserGroup)
+            .filter((key) => selectedUsersByUserGroup[key])
+            .map(async (key) => {
+              const allUsers = usersInFcaGroup.filter((user) =>
+                user.userGroups.some((ug) => ug.id === key)
+              );
+
+              const groupMeta = metadata.userGroups.find((ug) => ug.id === key);
+
+              return {
+                id: key,
+                name: groupMeta?.name,
+                users: selectedUsersByUserGroup[key]?.length
+                  ? selectedUsersByUserGroup[key].map((user) => ({ id: user }))
+                  : allUsers.map((user) => ({ id: user.id })),
+              };
+            })
+        ),
       };
 
       await pushMetadata(userGroupsPayload);
       await removeUserRole();
 
       const isUpdatedSelf = await settingUserRole(userGroupsPayload.userGroups);
-
       if (isUpdatedSelf) {
         toast.success(t("savedAuthoritiesSuccessfully"));
         window.location = "../../../dhis-web-commons-security/logout.action";
       }
-      const newUsers = await getUsers();
       const newMe = await getMe();
       newMe.authorities = [];
 
-      toast.success(t("savedAuthoritiesSuccessfully"));
       Object.keys(USER_GROUPS).forEach((authorityName) => {
         const foundUg = newMe.userGroups.find(
           (ug) => ug.id === USER_GROUPS[authorityName]
@@ -199,11 +212,27 @@ const AuthoritiesToolbar = () => {
           newMe.authorities.push(authorityName);
         }
       });
+      const listUserInFcaGroup = _.uniq([
+        ...usersInFcaGroup.map((user) => user.id),
+        ...userGroupsPayload.userGroups
+          .map((ug) => ug.users.map((u) => u.id))
+          .flat(),
+      ]);
+      const userIdChunks = _.chunk(listUserInFcaGroup, 25);
+
+      const newUsersInFcaGroup = (
+        await Promise.all(
+          userIdChunks.map((chunk) =>
+            getUsersByQuery(`filter=id:in:[${chunk.join(",")}]`)
+          )
+        )
+      ).flat();
+      setMetadata("usersInFcaGroup", newUsersInFcaGroup);
       setMetadata("me", newMe);
-      setMetadata("users", newUsers);
       Object.values(USER_GROUPS).forEach((userGroup) => {
         selectUsersByUserGroup(null, userGroup);
       });
+      toast.success(t("savedAuthoritiesSuccessfully"));
     } catch (error) {
       console.error(error);
       toast.error(t("savedAuthoritiesFailed"));
@@ -216,9 +245,9 @@ const AuthoritiesToolbar = () => {
     <div>
       <CustomizedButton
         loading={loading}
-        disabled={Object.values(selectedUsersByUserGroup).every(
-          (users) => !users
-        )}
+        // disabled={Object.values(selectedUsersByUserGroup).every(
+        //   (users) => !users
+        // )}
         icon={<FontAwesomeIcon icon={faSave} />}
         primary
         onClick={handleSave}

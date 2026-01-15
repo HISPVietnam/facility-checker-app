@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { Checkbox } from "@dhis2/ui";
+import { Checkbox, CircularLoader } from "@dhis2/ui";
 
 import {
   DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST,
@@ -13,6 +13,7 @@ import { useDropdownPosition } from "@/hooks/useDropDownPosition";
 import VirtualizedList from "./VirtualizedList";
 import { removeAccents } from "@/utils";
 import { debounce } from "lodash";
+import * as _ from "lodash";
 
 const DEFAULT_LIMIT_TAGS = 2;
 const DROP_DOWN_GAP = 10;
@@ -24,6 +25,9 @@ const CustomizedMultipleSelector = ({
   placeholder,
   filterable = false,
   limitTags = DEFAULT_LIMIT_TAGS,
+  isServerSideFilter = false,
+  getOptions,
+  defaultOptions = [],
 }) => {
   const { t } = useTranslation();
   const containerRef = useRef(null);
@@ -35,7 +39,10 @@ const CustomizedMultipleSelector = ({
 
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState(
+    isServerSideFilter ? options : defaultOptions
+  );
+  const [loading, setLoading] = useState(false);
 
   const toggleSelect = (value) => {
     if (selected.includes(value)) {
@@ -70,32 +77,78 @@ const CustomizedMultipleSelector = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const requestIdRef = useRef(0);
+  const debouncedSearchRef = useRef(null);
+
+  /**
+   * 1️⃣ Tạo debounce DUY NHẤT
+   */
   useEffect(() => {
-    const handler = debounce(() => {
+    debouncedSearchRef.current = debounce(async (value, isServerSide) => {
+      const currentRequestId = ++requestIdRef.current;
+
+      if (!value) {
+        setLoading(false);
+        setShowDropdown(false);
+        return;
+      }
+
+      if (isServerSide) {
+        setLoading(true);
+
+        const serverSideOptions = await getOptions(value);
+        if (currentRequestId !== requestIdRef.current) {
+          // outdated request
+          return;
+        }
+
+        setFilteredOptions(serverSideOptions);
+        setLoading(false);
+        return;
+      }
+
+      // client side filter
+      const lowerValue = value.toLowerCase();
+      const accentlessValue = removeAccents(lowerValue);
+
       const toneMatched = options.filter((item) =>
-        item.label.toLowerCase().includes(inputValue.toLowerCase())
+        item.label.toLowerCase().includes(lowerValue)
       );
 
       const accentlessMatched = options.filter(
         (item) =>
           !toneMatched.includes(item) &&
-          removeAccents(item.label).includes(
-            removeAccents(inputValue.toLowerCase())
-          )
+          removeAccents(item.label).includes(accentlessValue)
       );
 
       setFilteredOptions([...toneMatched, ...accentlessMatched]);
     }, 300);
 
-    handler();
-    return () => handler.cancel();
-  }, [inputValue, options]);
+    return () => {
+      debouncedSearchRef.current?.cancel();
+    };
+  }, [options]); // ❗ options phải stable (useMemo nếu cần)
+
+  /**
+   * 2️⃣ Trigger khi inputValue đổi
+   */
+  useEffect(() => {
+    const value = inputValue.trim();
+
+    if (!debouncedSearchRef.current) return;
+
+    debouncedSearchRef.current(value, isServerSideFilter);
+  }, [inputValue, isServerSideFilter]);
 
   return (
     <div ref={containerRef} className="relative">
       <div
         ref={triggerRef}
-        onClick={() => !disabled && setShowDropdown(true)}
+        onClick={() =>
+          !disabled && isServerSideFilter
+            ? inputValue && setShowDropdown(true)
+            : setShowDropdown(true)
+        }
         className={`flex flex-col gap-2 p-2 min-h-[40px] border border-slate-400 rounded-md ${
           disabled ? "bg-gray-100 cursor-not-allowed" : ""
         }`}
@@ -105,7 +158,11 @@ const CustomizedMultipleSelector = ({
             disabled={disabled}
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+
+              e.target.value.trim() && !showDropdown && setShowDropdown(true);
+            }}
             placeholder={placeholder}
             className="flex-1 min-w-[50px] outline-none border-none focus:ring-0 bg-transparent"
           />
@@ -116,7 +173,11 @@ const CustomizedMultipleSelector = ({
             className={`flex items-center gap-2 flex-wrap max-h-[150px] overflow-auto w-[calc(100%-50px)]`}
           >
             {visibleTags.map((value) => {
-              const option = options.find((o) => o.value === value);
+              const option = (
+                isServerSideFilter
+                  ? _.uniqBy([...defaultOptions, ...filteredOptions], "value")
+                  : options
+              ).find((o) => o.value === value);
               return (
                 <div
                   key={value}
@@ -171,16 +232,18 @@ const CustomizedMultipleSelector = ({
               <FontAwesomeIcon icon={faClose} />
             </button>
           )}
-          <FontAwesomeIcon
-            icon={faAngleDown}
-            onClick={(e) => {
-              e.stopPropagation();
-              !disabled && setShowDropdown((prev) => !prev);
-            }}
-            className={`transition-all ${showDropdown ? "rotate-180" : ""} ${
-              disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
-            }`}
-          />
+          {!isServerSideFilter && (
+            <FontAwesomeIcon
+              icon={faAngleDown}
+              onClick={(e) => {
+                e.stopPropagation();
+                !disabled && setShowDropdown((prev) => !prev);
+              }}
+              className={`transition-all ${showDropdown ? "rotate-180" : ""} ${
+                disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
+              }`}
+            />
+          )}
         </div>
       </div>
 
@@ -191,7 +254,18 @@ const CustomizedMultipleSelector = ({
             position === "top" ? "bottom-full mb-1" : "top-full mt-1"
           }`}
         >
-          {filteredOptions.length > 0 ? (
+          {loading ? (
+            <div
+              className="flex items-center justify-center"
+              style={{
+                height:
+                  DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST *
+                  DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST,
+              }}
+            >
+              <CircularLoader />
+            </div>
+          ) : filteredOptions.length > 0 ? (
             <VirtualizedList
               items={filteredOptions}
               selected={selected}

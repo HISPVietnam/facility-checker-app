@@ -136,7 +136,26 @@ const SynchronizationToolbar = () => {
       ) {
         throw new Error(t("metadataProcessFailed"));
       }
-      const latestTeis = await getFacilityTeis(me.organisationUnits[0].id);
+      let latestTeis = [];
+      let page = 0;
+
+      while (true) {
+        const results = await Promise.all(
+          Array.from({ length: 10 }, (_, i) => i + 1).map((i) =>
+            getFacilityTeis(me.organisationUnits[0].id, page + i)
+          )
+        );
+
+        if (results.find((res) => res.length === 0)) {
+          break;
+        }
+
+        results.forEach((res) => {
+          latestTeis = [...latestTeis, ...res];
+        });
+
+        page += 10;
+      }
       const newTeis = newFacilities.map((facility) => {
         const tei = latestTeis.find((tei) =>
           tei.enrollments[0].events.some(

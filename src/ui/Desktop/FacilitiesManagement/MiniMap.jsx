@@ -30,6 +30,7 @@ const BoundaryLayer = ({ data, point }) => {
       ref={ref}
       data={data ? data : undefined}
       onEachFeature={(feature, layer) => {
+        if (!layer.setStyle) return;
         layer.bindTooltip(feature?.properties?.name, {
           permanent: true,
           direction: "center",

@@ -1,9 +1,24 @@
 import { useRef, useEffect, useState } from "react";
-import { Modal, ModalTitle, ModalContent, ModalActions, NoticeBox } from "@dhis2/ui";
+import {
+  Modal,
+  ModalTitle,
+  ModalContent,
+  ModalActions,
+  NoticeBox,
+} from "@dhis2/ui";
 import DataValueLabel from "@/ui/common/DataValueLabel";
 import DataValueText from "@/ui/common/DataValueText";
 import CustomizedButton from "@/ui/common/Button";
-import { useMap, useMapEvents, MapContainer, TileLayer, GeoJSON, Marker, Tooltip, Popup } from "react-leaflet";
+import {
+  useMap,
+  useMapEvents,
+  MapContainer,
+  TileLayer,
+  GeoJSON,
+  Marker,
+  Tooltip,
+  Popup,
+} from "react-leaflet";
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/states/metadata";
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
@@ -17,12 +32,15 @@ const BoundaryLayer = ({ mapOpen, path }) => {
   const ref = useRef();
   const map = useMap();
   const { selectedFacility, isReadOnly } = useFacilityCheckModuleStore(
-    useShallow((state) => ({ selectedFacility: state.selectedFacility, isReadOnly: state.isReadOnly }))
+    useShallow((state) => ({
+      selectedFacility: state.selectedFacility,
+      isReadOnly: state.isReadOnly,
+    }))
   );
   const [data, setData] = useState(null);
   const { orgUnitGeoJson } = useMetadataStore(
     useShallow((state) => ({
-      orgUnitGeoJson: state.orgUnitGeoJson
+      orgUnitGeoJson: state.orgUnitGeoJson,
     }))
   );
   useEffect(() => {
@@ -30,7 +48,7 @@ const BoundaryLayer = ({ mapOpen, path }) => {
     const finalFeatures = generateParentFeatures(path);
     setData({
       lastUpdated: new Date().toISOString(),
-      features: finalFeatures
+      features: finalFeatures,
     });
   }, [path]);
 
@@ -39,7 +57,10 @@ const BoundaryLayer = ({ mapOpen, path }) => {
       try {
         const bounds = ref.current.getBounds();
         if (selectedFacility.longitude && selectedFacility.latitude) {
-          bounds.extend([selectedFacility.latitude, selectedFacility.longitude]);
+          bounds.extend([
+            selectedFacility.latitude,
+            selectedFacility.longitude,
+          ]);
         }
         map.fitBounds(bounds);
       } catch (err) {
@@ -54,16 +75,18 @@ const BoundaryLayer = ({ mapOpen, path }) => {
       ref={ref}
       data={data ? data.features : undefined}
       onEachFeature={(feature, layer) => {
+        if (!layer.setStyle) return;
         layer.bindTooltip(feature.properties.name, {
           permanent: true,
           direction: "center",
-          className: "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label"
+          className:
+            "text-[12px] font-bold text-white bg-transparent border-0 shadow-none boundary-label",
         });
         layer.setStyle({
           weight: 3,
           opacity: 1,
           fillOpacity: 0.1,
-          color: "#ea580c"
+          color: "#ea580c",
         });
       }}
     ></GeoJSON>
@@ -72,16 +95,17 @@ const BoundaryLayer = ({ mapOpen, path }) => {
 
 const FacilitiesLayer = ({ position, setPosition }) => {
   const draggedFacilityIcon = new L.divIcon({
-    className: "rounded-full bg-orange-600 w-[14px] h-[14px] border-[3px] border-white",
+    className:
+      "rounded-full bg-orange-600 w-[14px] h-[14px] border-[3px] border-white",
     // iconAnchor: [7, 7],
     iconSize: [18, 18],
-    html: `<div></div>`
+    html: `<div></div>`,
   });
   const { selectedFacility, actions, isReadOnly } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
       actions: state.actions,
-      isReadOnly: state.isReadOnly
+      isReadOnly: state.isReadOnly,
     }))
   );
   const isPending = selectedFacility ? selectedFacility.isPending : true;
@@ -92,7 +116,7 @@ const FacilitiesLayer = ({ position, setPosition }) => {
       if (!isPending) {
         setPosition([e.latlng.lat, e.latlng.lng]);
       }
-    }
+    },
   });
   const markerRef = useRef();
 
@@ -113,7 +137,7 @@ const FacilitiesLayer = ({ position, setPosition }) => {
             const marker = markerRef.current;
             const latLng = marker.getLatLng();
             setPosition([latLng.lat, latLng.lng]);
-          }
+          },
         }}
         draggable={!isPending && !isReadOnly}
         position={position}
@@ -124,24 +148,36 @@ const FacilitiesLayer = ({ position, setPosition }) => {
   );
 };
 
-const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates, path }) => {
+const FacilityCoordinatesPickerMap = ({
+  open,
+  setOpen,
+  changeCoordinates,
+  path,
+}) => {
   const { t } = useTranslation();
   const [position, setPosition] = useState(null);
 
-  const { coordinatesPickerMapControl, selectedFacility, isReadOnly } = useFacilityCheckModuleStore(
-    useShallow((state) => ({
-      coordinatesPickerMapControl: state.coordinatesPickerMapControl,
-      selectedFacility: state.selectedFacility,
-      isReadOnly: state.isReadOnly
-    }))
-  );
+  const { coordinatesPickerMapControl, selectedFacility, isReadOnly } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        coordinatesPickerMapControl: state.coordinatesPickerMapControl,
+        selectedFacility: state.selectedFacility,
+        isReadOnly: state.isReadOnly,
+      }))
+    );
   const { baseLayerType } = coordinatesPickerMapControl;
   const Closed = ({ children }) => {
-    return <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>;
+    return (
+      <span className="text-[14px] p-1 rounded-md bg-red-200">{children}</span>
+    );
   };
 
   const Open = ({ children }) => {
-    return <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">{children}</span>;
+    return (
+      <span className="text-[14px] p-1 rounded-md bg-emerald-100 ">
+        {children}
+      </span>
+    );
   };
   if (!selectedFacility) return null;
   const isPending = selectedFacility ? selectedFacility.isPending : true;
@@ -195,7 +231,11 @@ const FacilityCoordinatesPickerMap = ({ open, setOpen, changeCoordinates, path }
                 attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`}
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png"
               />
-              <FacilitiesLayer position={position} setPosition={setPosition} changeCoordinates={changeCoordinates} />
+              <FacilitiesLayer
+                position={position}
+                setPosition={setPosition}
+                changeCoordinates={changeCoordinates}
+              />
               <BoundaryLayer mapOpen={open} path={path} />
             </MapContainer>
           </div>

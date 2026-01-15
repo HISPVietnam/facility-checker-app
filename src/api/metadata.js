@@ -66,6 +66,24 @@ const getUsers = async () => {
   );
   return result.users;
 };
+const getUserById = async (userId) => {
+  const result = await pull(
+    `/api/users/${userId}?fields=id,username,firstName,surname,userGroups[id],userRoles[id,authorities]`
+  );
+  return result;
+};
+const searchUsers = async (query) => {
+  const result = await pull(
+    `/api/users?fields=id,username,firstName,surname,userGroups[id],userRoles[id,authorities]&filter=username:like:${query}&paging=false`
+  );
+  return result.users;
+};
+const getUsersByQuery = async (query) => {
+  const result = await pull(
+    `/api/users?fields=id,username,firstName,surname,userGroups[id],userRoles[id,authorities]&${query}&paging=false`
+  );
+  return result.users;
+};
 const getUserGroups = async () => {
   const result = await pull(
     "/api/userGroups?fields=id,translations,displayName,users[id]&paging=false"
@@ -155,4 +173,7 @@ export {
   saveDataStore,
   getSystemInfo,
   getUserGroups,
+  getUserById,
+  searchUsers,
+  getUsersByQuery,
 };

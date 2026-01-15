@@ -409,7 +409,21 @@ const NewFacilityDialog = () => {
   }, [selectedFacility ? Object.values(selectedFacility).join(";") : ""]);
 
   useEffect(() => {
-    const filter = orgUnits.filter((ou) => !ou.isFacility).map((ou) => ou.path);
+    const filter = orgUnits
+      .filter((orgUnit) => {
+        let valid = false;
+        me.organisationUnits.forEach((meOrgUnit) => {
+          if (orgUnit.path.includes(meOrgUnit.id)) {
+            valid = true;
+          }
+        });
+        if (orgUnit.level === 1) {
+          valid = true;
+        }
+        return valid;
+      })
+      .filter((ou) => !ou.isFacility)
+      .map((ou) => ou.path);
     setFilterForPathSelector(filter);
   }, []);
 

@@ -11,7 +11,8 @@ import {
   getSchemas,
   getDataStore,
   saveDataStore,
-  getUserGroups
+  getUserGroups,
+  getUsersByQuery,
 } from "@/api/metadata";
 import { getFacilityTeis } from "@/api/data";
 import { useEffect, useState } from "react";
@@ -31,7 +32,7 @@ const useInit = () => {
   const { actions, systemInfo } = useMetadataStore(
     useShallow((state) => ({
       actions: state.actions,
-      systemInfo: state.systemInfo
+      systemInfo: state.systemInfo,
     }))
   );
   const { setMetadata } = actions;
@@ -47,11 +48,12 @@ const useInit = () => {
       const orgUnitGroupSets = await getOrgUnitGroupSets();
       const orgUnitGeoJson = await getOrgUnitGeoJson();
       const schemas = await getSchemas();
-      const users = await getUsers();
       const userGroups = await getUserGroups();
 
       orgUnits.forEach((ou) => {
-        const foundGeoJson = orgUnitGeoJson.features.find((f) => f.id === ou.id);
+        const foundGeoJson = orgUnitGeoJson.features.find(
+          (f) => f.id === ou.id
+        );
         if (foundGeoJson && foundGeoJson.geometry) {
           ou.geometry = foundGeoJson.geometry;
         }
@@ -65,7 +67,7 @@ const useInit = () => {
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
-        setMetadata("users", users);
+        // setMetadata("users", users);
         setMetadata("userGroups", userGroups);
         setMetadata("schemas", schemas);
         setReady(true);
@@ -74,10 +76,41 @@ const useInit = () => {
         const orgUnitLevels = await getOrgUnitLevels();
         const customAttributes = await getCustomAttributes();
         const dataStore = await getDataStore();
-        let teis = await getFacilityTeis(me.organisationUnits[0].id);
-        if (teis && teis.httpStatusCode && teis.httpStatusCode !== 200) {
-          teis = [];
+        const listUserInFcaGroup = _.uniq(
+          userGroups
+            .filter((ug) => Object.values(USER_GROUPS).includes(ug.id))
+            .map((ug) => ug.users.map((u) => u.id))
+            .flat()
+        );
+        const userIdChunks = _.chunk(listUserInFcaGroup, 25);
+
+        const usersInFcaGroup = (
+          await Promise.all(
+            userIdChunks.map((chunk) =>
+              getUsersByQuery(`filter=id:in:[${chunk.join(",")}]`)
+            )
+          )
+        ).flat();
+        let teis = [];
+        let page = 0;
+        const startAll = Date.now();
+
+        while (true) {
+          const results = await Promise.all(
+            Array.from({ length: 10 }, (_, i) => i + 1).map((i) =>
+              getFacilityTeis(me.organisationUnits[0].id, page + i)
+            )
+          );
+          results.forEach((res) => {
+            teis = [...teis, ...res];
+          });
+          if (results.find((res) => res.length === 0)) {
+            break;
+          }
+
+          page += 10;
         }
+
         teis.forEach((tei) => {
           tei.hidden = false;
           const events = tei.enrollments[0].events;
@@ -91,13 +124,16 @@ const useInit = () => {
         setMetadata("orgUnitGroups", orgUnitGroups);
         setMetadata("orgUnitGroupSets", orgUnitGroupSets);
         setMetadata("orgUnitGeoJson", orgUnitGeoJson);
-        setMetadata("users", users);
+        setMetadata("usersInFcaGroup", usersInFcaGroup);
+        setMetadata("userGroups", userGroups);
         setMetadata("schemas", schemas);
         setTeis(teis);
         setMetadata("orgUnitLevels", orgUnitLevels);
         me.authorities = [];
         Object.keys(USER_GROUPS).forEach((authorityName) => {
-          const foundUg = me.userGroups.find((ug) => ug.id === USER_GROUPS[authorityName]);
+          const foundUg = me.userGroups.find(
+            (ug) => ug.id === USER_GROUPS[authorityName]
+          );
           if (foundUg) {
             me.authorities.push(authorityName);
           }
@@ -108,12 +144,19 @@ const useInit = () => {
         setMetadata("program", program);
         setMetadata("customAttributes", customAttributes);
         Object.keys(convertedDataStore.locales).forEach((locale) => {
-          i18n.addResourceBundle(locale, "translation", convertedDataStore.locales[locale], true, true);
+          i18n.addResourceBundle(
+            locale,
+            "translation",
+            convertedDataStore.locales[locale],
+            true,
+            true
+          );
         });
         const localeDataStore = {};
 
         Object.keys(i18n.options.resources).forEach((language) => {
-          localeDataStore[language] = i18n.options.resources[language].translation;
+          localeDataStore[language] =
+            i18n.options.resources[language].translation;
         });
         convertedDataStore.locales = localeDataStore;
         await saveDataStore("locales", localeDataStore, "UDPATE");
