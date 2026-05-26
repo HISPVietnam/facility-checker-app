@@ -14,13 +14,15 @@ import {
   belongToMultipleGroups,
   isNotInGroup,
   isNotSentForApproval,
-  isWaitingForApproval
+  isWaitingForApproval,
+  isInGroups,
 } from "@/utils";
 import useDataStore from "@/states/data";
 import { DATA_ELEMENTS } from "@/const";
 const { PATH } = DATA_ELEMENTS;
 import "./FacilityManagement.css";
 import { useTranslation } from "react-i18next";
+import ClearNonSpatialFilterButton from "./ClearNonSpatialFilterButton";
 
 const FacilitiesManagement = () => {
   const { t } = useTranslation();
@@ -34,7 +36,7 @@ const FacilitiesManagement = () => {
     view,
     actions,
     newFacilityDialog,
-    facilityProfileDialog
+    facilityProfileDialog,
   } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       allFilters: state.allFilters,
@@ -46,15 +48,16 @@ const FacilitiesManagement = () => {
       hierarchyExpanded: state.hierarchyExpanded,
       view: state.view,
       newFacilityDialog: state.newFacilityDialog,
-      facilityProfileDialog: state.facilityProfileDialog
-    }))
+      facilityProfileDialog: state.facilityProfileDialog,
+    })),
   );
+
   const { selectOrgUnit, setAllFilters, setIsReadOnly } = actions;
   const { facilities, dataStoreActions } = useDataStore(
     useShallow((state) => ({
       facilities: state.facilities,
-      dataStoreActions: state.actions
-    }))
+      dataStoreActions: state.actions,
+    })),
   );
   const { setFacilities } = dataStoreActions;
 
@@ -63,8 +66,8 @@ const FacilitiesManagement = () => {
       me: state.me,
       orgUnits: state.orgUnits,
       program: state.program,
-      locale: state.locale
-    }))
+      locale: state.locale,
+    })),
   );
 
   const foundMeOrgUnits = me.organisationUnits.map((ou) => {
@@ -97,17 +100,15 @@ const FacilitiesManagement = () => {
         if (filters.length > 0) {
           filters.forEach((filter) => {
             let passed = false;
-            let foundFilter = null;
-            allFilters.forEach((f) => {
-              const found = f.filters.find((element) => element.id === filter);
-              if (found) {
-                foundFilter = found;
-              }
-            });
+            const foundFilter = allFilters
+              .map((f) => f.filters)
+              .flat()
+              .find((element) => element.id === (filter.id || filter));
+
             if (!foundFilter) {
               passed = true;
             } else {
-              passed = foundFilter.function(facility);
+              passed = foundFilter.function(facility, filter);
             }
             if (passed) {
               passedFilter = true;
@@ -123,22 +124,38 @@ const FacilitiesManagement = () => {
     } else {
       selectOrgUnit(foundMeOrgUnits[0]);
     }
-  }, [selectedOrgUnit ? selectedOrgUnit.id : "", filters.length, facilities.length]);
+  }, [
+    selectedOrgUnit ? selectedOrgUnit.id : "",
+    JSON.stringify(filters),
+    facilities.length,
+  ]);
 
   useEffect(() => {
     const filters = [
       {
         type: "spatialFilters",
         filters: [
-          { id: "noCoordinates", label: t("noCoordinates"), function: isNoCoordinates },
-          { id: "wrongLocation", label: t("wrongLocation"), function: isWrongLocation },
-          { id: "tooCloseToEachOther", label: t("tooCloseToEachOther"), function: isTooCloseToEachOther }
-        ]
+          {
+            id: "noCoordinates",
+            label: t("noCoordinates"),
+            function: isNoCoordinates,
+          },
+          {
+            id: "wrongLocation",
+            label: t("wrongLocation"),
+            function: isWrongLocation,
+          },
+          {
+            id: "tooCloseToEachOther",
+            label: t("tooCloseToEachOther"),
+            function: isTooCloseToEachOther,
+          },
+        ],
       },
       {
         type: "nonSpatialFilters",
+        controlButtons: [<ClearNonSpatialFilterButton key="clear" />],
         filters: [
-          { id: "multipleGroups", label: t("multipleGroups"), function: belongToMultipleGroups },
           ...program.dataElements
             .filter((de) => {
               return de.description && de.description.includes("FCGS");
@@ -148,15 +165,34 @@ const FacilitiesManagement = () => {
                 id: de.id,
                 label: t("notInGroup", { group: de.formName }),
                 tooltip: t("notInGroupTooltip", { group: de.formName }),
-                function: (facility) => {
-                  return isNotInGroup(facility, de);
-                }
+                function: (facility, filter) => {
+                  if (filter.type === "notInAnyGroup") {
+                    return isNotInGroup(facility, de);
+                  }
+                  if (filter.type === "inMultipleGroups") {
+                    return belongToMultipleGroups(facility);
+                  }
+                  return isInGroups(facility, filter.value);
+                },
               };
             }),
-          { id: "notSentForApproval", label: t("notSentForApproval"), function: isNotSentForApproval },
-          { id: "waitingForApproval", label: t("waitingForApproval"), function: isWaitingForApproval }
-        ]
-      }
+        ],
+      },
+      {
+        type: "editedFacilities",
+        filters: [
+          {
+            id: "notSentForApproval",
+            label: t("notSentForApproval"),
+            function: isNotSentForApproval,
+          },
+          {
+            id: "waitingForApproval",
+            label: t("waitingForApproval"),
+            function: isWaitingForApproval,
+          },
+        ],
+      },
     ];
     setAllFilters(filters);
   }, [locale]);

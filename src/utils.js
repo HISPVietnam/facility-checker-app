@@ -26,7 +26,7 @@ const pickTranslation = (object, language, field) => {
     name: "NAME",
   };
   const foundTranslation = object.translations.find(
-    (t) => t.property === fieldMapping[field] && t.locale === language
+    (t) => t.property === fieldMapping[field] && t.locale === language,
   );
   return foundTranslation
     ? foundTranslation.value
@@ -54,7 +54,7 @@ const isInsideParent = (path, lat, long) => {
   while (true) {
     const currentParent = currentOrgUnits.pop();
     const foundParent = orgUnitGeoJson.features.find(
-      (f) => f.id === currentParent
+      (f) => f.id === currentParent,
     );
     if (
       foundParent &&
@@ -64,7 +64,7 @@ const isInsideParent = (path, lat, long) => {
     ) {
       const withinPolygon = booleanPointInPolygon(
         point([long, lat]),
-        foundParent.geometry
+        foundParent.geometry,
       );
       if (!withinPolygon) {
         isInside = false;
@@ -94,7 +94,7 @@ const generateParentFeatures = (path) => {
   for (let i = ids.length - 2; i >= 0; i--) {
     const parentId = ids[i];
     const foundParent = features.find(
-      (f) => f.id === parentId && isPolygonFeature(f)
+      (f) => f.id === parentId && isPolygonFeature(f),
     );
     if (foundParent) {
       return [foundParent];
@@ -107,7 +107,7 @@ const generateParentFeatures = (path) => {
   for (let i = ids.length - 2; i >= 0; i--) {
     const parentId = ids[i];
     const children = features.filter(
-      (f) => f.properties.parent === parentId && isPolygonFeature(f)
+      (f) => f.properties.parent === parentId && isPolygonFeature(f),
     );
     if (children.length > 0) {
       return children;
@@ -118,7 +118,7 @@ const generateParentFeatures = (path) => {
    * 3️⃣ Children của self
    */
   const childrenOfSelf = features.filter(
-    (f) => f.properties.parent === selfId && isPolygonFeature(f)
+    (f) => f.properties.parent === selfId && isPolygonFeature(f),
   );
   if (childrenOfSelf.length > 0) {
     return childrenOfSelf;
@@ -128,7 +128,7 @@ const generateParentFeatures = (path) => {
    * 4️⃣ Self
    */
   const selfFeature = features.find(
-    (f) => f.id === selfId && isPolygonFeature(f)
+    (f) => f.id === selfId && isPolygonFeature(f),
   );
   if (selfFeature) {
     return [selfFeature];
@@ -167,12 +167,12 @@ const getLatestValues = (events, program, targetEvent) => {
     .filter(
       (event) =>
         event[SYNC_NUMBER] ||
-        (!targetEvent && event[APPROVAL_STATUS] !== "rejected")
+        (!targetEvent && event[APPROVAL_STATUS] !== "rejected"),
     )
     .sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt));
   if (targetEvent?.event) {
     const eventIndex = tempEvents.findIndex(
-      (event) => new Date(event.occurredAt) < new Date(targetEvent.occurredAt)
+      (event) => new Date(event.occurredAt) < new Date(targetEvent.occurredAt),
     );
     tempEvents = eventIndex !== -1 ? tempEvents.slice(eventIndex) : [];
   }
@@ -192,7 +192,7 @@ const getLatestValues = (events, program, targetEvent) => {
     }
   });
   const foundEvent = tempEvents.find(
-    (event) => event.latitude && event.longitude
+    (event) => event.latitude && event.longitude,
   );
   if (foundEvent) {
     latestValues.latitude = foundEvent.latitude;
@@ -245,7 +245,7 @@ const convertTeis = (teis, program) => {
       }),
     };
     const foundPendingEvent = facility.events.find(
-      (event) => event[APPROVAL_STATUS] === "pending"
+      (event) => event[APPROVAL_STATUS] === "pending",
     );
     facility.isPending = foundPendingEvent ? true : false;
     const latestValues = getLatestValues(facility.events, program);
@@ -272,14 +272,14 @@ const convertTeis = (teis, program) => {
 
 const findAttributeValue = (tei, attribute) => {
   const foundAttributeValue = tei.attributes.find(
-    (attr) => attr.attribute.id === attribute
+    (attr) => attr.attribute.id === attribute,
   );
   return foundAttributeValue ? foundAttributeValue.value : "";
 };
 
 const findDataValue = (event, dataElement) => {
   const foundDataValue = event.dataValues.find(
-    (dv) => dv.dataElement === dataElement
+    (dv) => dv.dataElement === dataElement,
   );
   return foundDataValue ? foundDataValue.value : "";
 };
@@ -300,7 +300,7 @@ const convertDisplayValue = (program, field, value) => {
   let foundField = null;
   let optionSet = null;
   const foundAttribute = program.trackedEntityAttributes.find(
-    (tea) => tea.id === field
+    (tea) => tea.id === field,
   );
   const foundDataElement = program.dataElements.find((de) => de.id === field);
   foundField = foundAttribute ? foundAttribute : foundDataElement;
@@ -309,7 +309,7 @@ const convertDisplayValue = (program, field, value) => {
   }
   if (foundField.optionSet) {
     optionSet = program.optionSets.find(
-      (os) => os.id === foundField.optionSet.id
+      (os) => os.id === foundField.optionSet.id,
     );
   }
 
@@ -428,7 +428,7 @@ const isWrongLocation = (facility) => {
   const currentPoint = point([facility.longitude, facility.latitude]);
   for (let i = 1; i < ancestors.length; i++) {
     const foundParent = orgUnitGeoJson.features.find(
-      (f) => f.id === ancestors[i]
+      (f) => f.id === ancestors[i],
     );
     if (foundParent) {
       const type = foundParent.geometry.type;
@@ -458,7 +458,7 @@ const isTooCloseToEachOther = (facility) => {
       .filter((f) => f.latitude && f.longitude && f[UID] !== facility[UID])
       .map((f) => {
         return point([f.longitude, f.latitude]);
-      })
+      }),
   );
   const currentNearestPoint = nearestPoint(currentPoint, points);
   tooCloseToOtherFacility = currentNearestPoint.properties.distanceToPoint < 2;
@@ -469,13 +469,31 @@ const belongToMultipleGroups = (facility) => {
   let passed = false;
   const program = useMetadataStore.getState().program;
   const dataElements = program.dataElements.filter(
-    (de) => de.description && de.description.includes("FCGS")
+    (de) => de.description && de.description.includes("FCGS"),
   );
   dataElements.forEach((de) => {
     const value = facility[de.id];
     if (value) {
       const converted = JSON.parse(value);
       if (converted.length > 1) {
+        passed = true;
+      }
+    }
+  });
+  return passed;
+};
+
+const isInGroups = (facility, groups) => {
+  let passed = false;
+  const program = useMetadataStore.getState().program;
+  const dataElements = program.dataElements.filter(
+    (de) => de.description && de.description.includes("FCGS"),
+  );
+  dataElements.forEach((de) => {
+    const value = facility[de.id];
+    if (value) {
+      const converted = JSON.parse(value);
+      if (groups.every((group) => converted.includes(group))) {
         passed = true;
       }
     }
@@ -494,7 +512,7 @@ const isNotInGroup = (facility, de) => {
 const isNotSentForApproval = (facility) => {
   let passed = false;
   const foundActiveEvent = facility.events.find(
-    (event) => event.status === "ACTIVE"
+    (event) => event.status === "ACTIVE",
   );
   if (foundActiveEvent) {
     passed = true;
@@ -506,7 +524,7 @@ const isWaitingForApproval = (facility) => {
   let passed = false;
   const foundPendingEvent = facility.events.find(
     (event) =>
-      event.status === "COMPLETED" && event[APPROVAL_STATUS] === "pending"
+      event.status === "COMPLETED" && event[APPROVAL_STATUS] === "pending",
   );
   if (foundPendingEvent) {
     passed = true;
@@ -556,7 +574,7 @@ const removeAccents = (str) => {
     .normalize("NFD")
     .replace(
       /[\u0300-\u036f\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/g,
-      ""
+      "",
     )
     .replace(/đ/g, "d")
     .replace(/Đ/g, "D")
@@ -567,7 +585,7 @@ const convertDisplayValueForAllField = (dataElement, value) => {
   const { locale, program, orgUnitGroups, orgUnitGroupSets } =
     useMetadataStore.getState();
   const foundDataElement = program.dataElements.find(
-    (de) => de.id === dataElement
+    (de) => de.id === dataElement,
   );
   if (!foundDataElement) {
     return value;
@@ -577,11 +595,11 @@ const convertDisplayValueForAllField = (dataElement, value) => {
     if (value) {
       const orgUnitGroupSetId = description.replace("FCGS:", "");
       const foundOrgUnitGroupSet = orgUnitGroupSets.find(
-        (ougs) => ougs.id === orgUnitGroupSetId
+        (ougs) => ougs.id === orgUnitGroupSetId,
       );
       const foundOrgUnitGroups = foundOrgUnitGroupSet.items.map((item) => {
         const foundOrgUnitGroup = orgUnitGroups.find(
-          (oug) => oug.id === item.id
+          (oug) => oug.id === item.id,
         );
         return foundOrgUnitGroup;
       });
@@ -600,7 +618,7 @@ const convertDisplayValueForAllField = (dataElement, value) => {
     }
   } else if (foundDataElement.optionSet) {
     const foundOptions = program.options.filter(
-      (o) => o.optionSet.id === foundDataElement.optionSet.id
+      (o) => o.optionSet.id === foundDataElement.optionSet.id,
     );
     const foundOption = foundOptions.find((o) => o.code === value);
     return foundOption ? pickTranslation(foundOption, locale, "name") : "";
@@ -647,4 +665,5 @@ export {
   removeAccents,
   convertDisplayValueForAllField,
   arraysEqualIgnoreOrder,
+  isInGroups,
 };

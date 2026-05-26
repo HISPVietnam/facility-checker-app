@@ -1,0 +1,3 @@
+.non-spatial-filter-multiselect [data-test="dhis2-uicore-radio"] .icon {
+  display: none;
+}

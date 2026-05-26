@@ -1,10 +1,27 @@
 import { useEffect } from "react";
-import { ButtonStrip, CheckboxField, SingleSelectField, SingleSelectOption, TabBar, Tab, Chip, Checkbox, elevations, Tooltip } from "@dhis2/ui";
+import {
+  ButtonStrip,
+  CheckboxField,
+  SingleSelectField,
+  SingleSelectOption,
+  TabBar,
+  Tab,
+  Chip,
+  Checkbox,
+  elevations,
+  Tooltip,
+} from "@dhis2/ui";
 import { Popover } from "@mui/material";
 import CustomizedButton from "@/ui/common/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSitemap, faFilter, faList, faMap, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSitemap,
+  faFilter,
+  faList,
+  faMap,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import useMetadataStore from "@/states/metadata";
@@ -15,12 +32,22 @@ import useDataStore from "@/states/data";
 import FilterSection from "@/ui/common/FilterSection";
 import FilterSubSection from "@/ui/common/FilterSubSection";
 import UserInfo from "@/ui/common/UserInfo";
+import FacilitiesNonSpatialFilterSelection from "./FacilitiesNonSpatialFilterSelection";
 
 const FacilitiesManagementToolbar = () => {
   const { t } = useTranslation();
   const dataActions = useDataStore((state) => state.actions);
   const { initNewFacility } = dataActions;
-  const { selectedFacility, selectedOrgUnit, view, allFilters, currentFilters, editing, isReadOnly, actions } = useFacilityCheckModuleStore(
+  const {
+    selectedFacility,
+    selectedOrgUnit,
+    view,
+    allFilters,
+    currentFilters,
+    editing,
+    isReadOnly,
+    actions,
+  } = useFacilityCheckModuleStore(
     useShallow((state) => ({
       selectedFacility: state.selectedFacility,
       selectedOrgUnit: state.selectedOrgUnit,
@@ -29,17 +56,18 @@ const FacilitiesManagementToolbar = () => {
       actions: state.actions,
       view: state.view,
       editing: state.editing,
-      isReadOnly: state.isReadOnly
-    }))
+      isReadOnly: state.isReadOnly,
+    })),
   );
   const { selectOrgUnit, setView, toggleFilter, toggleDialog } = actions;
 
-  const { me, orgUnits, program } = useMetadataStore(
+  const { me, orgUnits, program, orgUnitGroupSets } = useMetadataStore(
     useShallow((state) => ({
       me: state.me,
       orgUnits: state.orgUnits,
-      program: state.program
-    }))
+      program: state.program,
+      orgUnitGroupSets: state.orgUnitGroupSets,
+    })),
   );
   const [filtersPopover, setFiltersPopover] = useState(false);
   const filterButtonRef = useRef();
@@ -115,22 +143,52 @@ const FacilitiesManagementToolbar = () => {
           }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left"
+            horizontal: "left",
           }}
         >
           <div className="flex p-2">
             <FilterSection title={t("hierarchy")}>
-              <FacilityHierarchy selectedOrgUnit={selectedOrgUnit} selectOrgUnit={selectOrgUnit} />
+              <FacilityHierarchy
+                selectedOrgUnit={selectedOrgUnit}
+                selectOrgUnit={selectOrgUnit}
+              />
             </FilterSection>
             <FilterSection title={t("filterForFacility")}>
               {allFilters.map((filter) => {
-                const { type, filters } = filter;
+                const { type, filters, controlButtons } = filter;
                 return (
-                  <FilterSubSection title={t(type)}>
+                  <FilterSubSection
+                    controlButtons={controlButtons}
+                    title={t(type)}
+                  >
                     {filters.map((f) => {
                       const { id, label, tooltip } = f;
+                      const foundDataElement = program.dataElements.find(
+                        (de) => de.id === id,
+                      );
+                      if (foundDataElement) {
+                        const groupSetId = foundDataElement.description.replace(
+                          "FCGS:",
+                          "",
+                        );
+                        const foundGroupSet = orgUnitGroupSets.find(
+                          (gs) => gs.id === groupSetId,
+                        );
+                        if (foundGroupSet) {
+                          return (
+                            <FacilitiesNonSpatialFilterSelection
+                              groupSet={foundGroupSet}
+                              de={id}
+                            />
+                          );
+                        }
+                      }
+
                       return (
-                        <Tooltip content={tooltip ? tooltip : t(id + "Tooltip")} placement="left">
+                        <Tooltip
+                          content={tooltip ? tooltip : t(id + "Tooltip")}
+                          placement="left"
+                        >
                           <div>
                             <Checkbox
                               checked={currentFilters.includes(id)}

@@ -239,4 +239,9 @@ export default {
     "Updating your own authorities may require you to log out and log in again for the changes to take effect. You will be logged out after saving.",
   savedTranslationChangeSuccessfully: "Save translation change successfully",
   savedTranslationChangeFailed: "Save translation change failed",
+  notInAnyGroup: "Not in any group",
+  inMultipleGroups: "In multiple groups",
+  byGroups: "By groups",
+  editedFacilities: "Edited facilities",
+  clear: "Clear",
 };
