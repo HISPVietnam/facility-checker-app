@@ -244,4 +244,13 @@ export default {
   byGroups: "By groups",
   editedFacilities: "Edited facilities",
   clear: "Clear",
+  metadataLocales: "Metadata locales",
+  metadataLocalesUpdated: "Metadata locales updated successfully",
+  metadataLocalesCreated: "Metadata locales created successfully",
+  updateMetadataLocalesFailed: "Update metadata locales failed",
+  createMetadataLocalesFailed: "Create metadata locales failed",
+  selectLocales: "Select metadata locales",
+  translation: "translation",
+  emptyMetadataLocaleAlert:
+    "No metadata locales found, please select at least one locale",
 };

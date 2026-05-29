@@ -7,7 +7,9 @@ import {
   DataTableCell,
   DataTableBody,
   DataTableColumnHeader,
-  Pagination
+  Pagination,
+  SingleSelectField,
+  SingleSelectOption,
 } from "@dhis2/ui";
 import { Pending, Edited, New } from "@/ui/common/Labels";
 import DataValueText from "@/ui/common/DataValueText";
@@ -20,33 +22,46 @@ import useFacilityCheckModuleStore from "@/states/facilityCheckModule";
 import { useEffect, useState } from "react";
 import useDataStore from "@/states/data";
 import FacilityProfileDialog from "./FacilityProfileDialog";
-import { PROFILE_LOGS_PROGRAM_STAGE_ID, CUSTOM_COLUMNS_LIST_VIEW, DATA_ELEMENTS } from "@/const";
-const { IS_NEW_FACILITY } = DATA_ELEMENTS;
+import {
+  PROFILE_LOGS_PROGRAM_STAGE_ID,
+  CUSTOM_COLUMNS_LIST_VIEW,
+  DATA_ELEMENTS,
+  NATIVE_LANGUAGES,
+  TRANSLATION_FIELDS,
+} from "@/const";
+const { IS_NEW_FACILITY, NAME, TRANSLATIONS } = DATA_ELEMENTS;
 const FacilitiesList = () => {
   const { t } = useTranslation();
   const [paging, setPaging] = useState({
     page: 1,
     pageSize: 50,
     pageCount: 1,
-    pageTotal: 0
+    pageTotal: 0,
   });
   const [filter, setFilter] = useState("");
   const [sorting, setSorting] = useState(null);
 
-  const { filters, selectedFacility, actions, selectedOrgUnit } = useFacilityCheckModuleStore(
-    useShallow((state) => ({
-      filters: state.filters,
-      selectedFacility: state.selectedFacility,
-      actions: state.actions,
-      selectedOrgUnit: state.selectedOrgUnit
-    }))
-  );
+  const { filters, selectedFacility, actions, selectedOrgUnit } =
+    useFacilityCheckModuleStore(
+      useShallow((state) => ({
+        filters: state.filters,
+        selectedFacility: state.selectedFacility,
+        actions: state.actions,
+        selectedOrgUnit: state.selectedOrgUnit,
+      })),
+    );
   const { selectFacility, toggleDialog } = actions;
-  const { program, locale } = useMetadataStore(
+  const { program, locale, dataStore } = useMetadataStore(
     useShallow((state) => ({
       program: state.program,
-      locale: state.locale
-    }))
+      locale: state.locale,
+      dataStore: state.dataStore,
+    })),
+  );
+
+  const metadataLocales = dataStore.metadataLocales || [];
+  const [selectedLocale, setSelectedLocale] = useState(
+    metadataLocales[0] ?? "",
   );
 
   const facilities = useDataStore((state) => state.facilities);
@@ -57,16 +72,24 @@ const FacilitiesList = () => {
         ...tei,
         status: tei.events.find((event) => event.status === "ACTIVE")
           ? "edited"
-          : tei.events.find((event) => event.status === "COMPLETED" && event.p4m3y1jLgpv === "pending")
-          ? "pending"
-          : ""
+          : tei.events.find(
+                (event) =>
+                  event.status === "COMPLETED" &&
+                  event.p4m3y1jLgpv === "pending",
+              )
+            ? "pending"
+            : "",
       };
     })
     .filter((e) => !e.hidden);
 
   const sortedFacilities =
     sorting && sorting.direction !== "default"
-      ? _.orderBy(filterFacilities, [sorting.name], [sorting.direction === "asc" ? "asc" : "desc"])
+      ? _.orderBy(
+          filterFacilities,
+          [sorting.name],
+          [sorting.direction === "asc" ? "asc" : "desc"],
+        )
       : filterFacilities;
 
   const [list, setList] = useState(null);
@@ -82,7 +105,7 @@ const FacilitiesList = () => {
     paging.pageSize,
     filter,
     sorting,
-    locale
+    locale,
   ]);
 
   // useEffect(() => {
@@ -93,17 +116,30 @@ const FacilitiesList = () => {
 
   const generateTableColumns = () => {
     const columns = [];
-    const foundProgramStage = program.programStages.find((e) => e.id === PROFILE_LOGS_PROGRAM_STAGE_ID);
+    const foundProgramStage = program.programStages.find(
+      (e) => e.id === PROFILE_LOGS_PROGRAM_STAGE_ID,
+    );
     if (foundProgramStage) {
       foundProgramStage.programStageDataElements.forEach((psde) => {
         if (psde.displayInReports) {
-          const foundDataElement = program.dataElements.find((e) => e.id === psde.dataElement.id);
+          const foundDataElement = program.dataElements.find(
+            (e) => e.id === psde.dataElement.id,
+          );
           if (foundDataElement) {
             columns.push({
               id: foundDataElement.id,
               name: pickTranslation(foundDataElement, locale, "formName"),
-              optionSet: foundDataElement.optionSet?.id ?? null
+              optionSet: foundDataElement.optionSet?.id ?? null,
             });
+            if (foundDataElement.id === NAME && selectedLocale) {
+              columns.push({
+                id: TRANSLATIONS,
+                name:
+                  pickTranslation(foundDataElement, locale, "formName") +
+                  ` ${t("translation")}`,
+                optionSet: null,
+              });
+            }
           }
         }
       });
@@ -112,7 +148,7 @@ const FacilitiesList = () => {
       columns.splice(col.position, 0, {
         id: col.id,
         name: col.name,
-        optionSet: col.optionSet
+        optionSet: col.optionSet,
       });
     });
     return columns;
@@ -150,7 +186,10 @@ const FacilitiesList = () => {
                 if (tei.status === "pending") {
                   element = (
                     <Pending>
-                      <DataValueText dataElement={col.id} value={t(tei.status)} />
+                      <DataValueText
+                        dataElement={col.id}
+                        value={t(tei.status)}
+                      />
                     </Pending>
                   );
                 } else {
@@ -176,8 +215,26 @@ const FacilitiesList = () => {
                   : "";
               row[col.id] = <DataValueText dataElement={col.id} value={val} />;
               break;
+            case TRANSLATIONS:
+              row[col.id] = (
+                <DataValueText
+                  dataElement={col.id}
+                  value={
+                    tei[TRANSLATIONS]
+                      ? JSON.parse(tei[TRANSLATIONS]).find(
+                          (item) =>
+                            item.property === TRANSLATION_FIELDS[NAME] &&
+                            item.locale === selectedLocale,
+                        )?.value || ""
+                      : ""
+                  }
+                />
+              );
+              break;
             default:
-              row[col.id] = <DataValueText dataElement={col.id} value={tei[col.id]} />;
+              row[col.id] = (
+                <DataValueText dataElement={col.id} value={tei[col.id]} />
+              );
               break;
           }
         });
@@ -187,7 +244,13 @@ const FacilitiesList = () => {
       .filter((row) => {
         let flag = false;
         columns.forEach((col) => {
-          if (row[col.id] && row[col.id].toString().toLowerCase().includes(filter.toString().toLowerCase())) {
+          if (
+            row[col.id] &&
+            row[col.id]
+              .toString()
+              .toLowerCase()
+              .includes(filter.toString().toLowerCase())
+          ) {
             flag = true;
           }
         });
@@ -196,18 +259,21 @@ const FacilitiesList = () => {
         }
       });
 
-    const rows = dataTable.length > 0 ? _.chunk(dataTable, paging.pageSize)[paging.page - 1] : [];
+    const rows =
+      dataTable.length > 0
+        ? _.chunk(dataTable, paging.pageSize)[paging.page - 1]
+        : [];
 
     setPaging({
       ...paging,
       page: dataTable.length < paging.pageTotal ? 1 : paging.page,
       pageCount: _.chunk(dataTable, paging.pageSize).length,
-      pageTotal: dataTable.length
+      pageTotal: dataTable.length,
     });
     setList({
       ready: true,
       columns,
-      rows
+      rows,
     });
   };
 
@@ -217,14 +283,14 @@ const FacilitiesList = () => {
     setPaging({
       ...paging,
       pageSize,
-      page: 1
+      page: 1,
     });
   };
 
   const onPageChange = (page) => {
     setPaging({
       ...paging,
-      page
+      page,
     });
   };
 
@@ -240,13 +306,54 @@ const FacilitiesList = () => {
                     <DataTableColumnHeader
                       fixed
                       top="0"
-                      className="z-0"
+                      className="z-0 "
                       key={columnIndex}
-                      sortDirection={column.id === "coordinates" ? null : sorting && sorting.name === column.id ? sorting.direction : "default"}
+                      sortDirection={
+                        column.id === "coordinates"
+                          ? null
+                          : sorting && sorting.name === column.id
+                            ? sorting.direction
+                            : "default"
+                      }
                       onSortIconClick={() => onSortIconClick(column.id)}
                       name={column.id}
                     >
-                      {t(column.name)}
+                      <div className="flex flex-col gap-1 items-start">
+                        <p className="w-full">{t(column.name)}</p>
+                        {column.id === TRANSLATIONS && (
+                          <div className="ml-1">
+                            <SingleSelectField
+                              className=" !min-w-[140px] 
+                          [&_[data-test='dhis2-uicore-select-input']]:!min-h-[30px]
+                          [&_[data-test='dhis2-uicore-select-input']]:!h-[30px]
+                          [&_[data-test='dhis2-uicore-select-input']]:!py-0"
+                              selected={selectedLocale}
+                              onChange={({ selected }) =>
+                                setSelectedLocale(selected)
+                              }
+                            >
+                              {metadataLocales.map((locale) => {
+                                const language = NATIVE_LANGUAGES[locale];
+
+                                return (
+                                  <SingleSelectOption
+                                    key={locale}
+                                    value={locale}
+                                    label={
+                                      <div className="flex items-center gap-2">
+                                        <span
+                                          className={`fi fi-${language.flag}`}
+                                        />
+                                        <span>{t(language.name)}</span>
+                                      </div>
+                                    }
+                                  />
+                                );
+                              })}
+                            </SingleSelectField>
+                          </div>
+                        )}
+                      </div>
                     </DataTableColumnHeader>
                   );
                 })}
@@ -256,14 +363,17 @@ const FacilitiesList = () => {
               {rows &&
                 rows.length > 0 &&
                 rows.map((row, rowIndex) => {
-                  const selected = selectedFacility && selectedFacility.tei === row.tei;
+                  const selected =
+                    selectedFacility && selectedFacility.tei === row.tei;
                   return (
                     <DataTableRow
                       className="cursor-pointer"
                       key={rowIndex}
                       selected={selected}
                       onClick={() => {
-                        const foundTei = filterFacilities.find((e) => e.tei === row.tei);
+                        const foundTei = filterFacilities.find(
+                          (e) => e.tei === row.tei,
+                        );
                         if (foundTei) {
                           selectFacility(foundTei);
                           toggleDialog("facilityProfileDialog");
@@ -271,7 +381,11 @@ const FacilitiesList = () => {
                       }}
                     >
                       {columns.map((column, columnIndex) => {
-                        return <DataTableCell key={columnIndex}>{row[column.id]}</DataTableCell>;
+                        return (
+                          <DataTableCell key={columnIndex}>
+                            {row[column.id]}
+                          </DataTableCell>
+                        );
                       })}
                     </DataTableRow>
                   );

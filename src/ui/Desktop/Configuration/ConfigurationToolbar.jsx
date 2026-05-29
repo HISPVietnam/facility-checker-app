@@ -6,18 +6,20 @@ import OrgUnitGroupSetsToolbar from "./OrgUnitGroupSets/OrgUnitGroupSetsToolbar"
 import AuthoritiesToolbar from "./Authorities/AuthoritiesToolbar";
 import TranslationsToolbar from "./Translations/TranslationsToolbar";
 import LanguageSelectButton from "@/ui/common/LanguageSelectButton";
+import MetadataLocalesToolbar from "./MetadataLocales/MetadataLocalesToolbar";
 
 const SUB_MODULES_TOOLBAR_MAPPING = {
   orgUnitGroupSets: <OrgUnitGroupSetsToolbar />,
   authorities: <AuthoritiesToolbar />,
   translations: <TranslationsToolbar />,
+  metadataLocales: <MetadataLocalesToolbar />,
 };
 
 const ConfigurationToolbar = () => {
   const { selectedFunction } = useConfigurationModuleStore(
     useShallow((state) => ({
       selectedFunction: state.selectedFunction,
-    }))
+    })),
   );
 
   return (

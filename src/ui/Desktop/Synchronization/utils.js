@@ -81,7 +81,7 @@ const buildPayload = (base = {}, entries = []) => {
       ...base,
       oldOrganisationUnitGroups: base.organisationUnitGroups || [],
       organisationUnitGroups: [],
-    }
+    },
   );
 };
 
@@ -104,7 +104,7 @@ const getOrgUnitGroupUpdates = (orgUnits) => {
       newGroupIds.forEach((groupId) => {
         if (!oldGroupIds.includes(groupId)) {
           addList.push(
-            `/api/organisationUnitGroups/${groupId}/organisationUnits/${orgUnitId}`
+            `/api/organisationUnitGroups/${groupId}/organisationUnits/${orgUnitId}`,
           );
         }
       });
@@ -113,11 +113,11 @@ const getOrgUnitGroupUpdates = (orgUnits) => {
       oldGroupIds.forEach((groupId) => {
         if (!newGroupIds.includes(groupId)) {
           deleteList.push(
-            `/api/organisationUnitGroups/${groupId}/organisationUnits/${orgUnitId}`
+            `/api/organisationUnitGroups/${groupId}/organisationUnits/${orgUnitId}`,
           );
         }
       });
-    }
+    },
   );
 
   return { addList, deleteList };

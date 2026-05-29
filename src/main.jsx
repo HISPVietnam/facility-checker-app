@@ -10,6 +10,7 @@ import "leaflet/dist/leaflet.css";
 import "./index.css";
 import "./i18n";
 import "react-toastify/dist/ReactToastify.css";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 createRoot(document.getElementById("root")).render(
   <HashRouter>
@@ -22,5 +23,5 @@ createRoot(document.getElementById("root")).render(
       closeOnClick
       pauseOnHover
     />
-  </HashRouter>
+  </HashRouter>,
 );

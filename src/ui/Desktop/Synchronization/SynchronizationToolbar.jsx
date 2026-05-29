@@ -27,7 +27,7 @@ const SynchronizationToolbar = () => {
     useShallow((state) => ({
       program: state.program,
       me: state.me,
-    }))
+    })),
   );
 
   const { dataElements } = program;
@@ -36,21 +36,21 @@ const SynchronizationToolbar = () => {
     useShallow((state) => ({
       facilities: state.facilities,
       actions: state.actions,
-    }))
+    })),
   );
 
   const [loading, setLoading] = useState(false);
 
   const filteredSyncFacilities = facilities.filter((facility) =>
     facility.events.some(
-      (event) => event[APPROVAL_STATUS] === "approved" && !event[SYNC_NUMBER]
-    )
+      (event) => event[APPROVAL_STATUS] === "approved" && !event[SYNC_NUMBER],
+    ),
   );
 
   const filteredSyncFacilityEvents = filteredSyncFacilities
     .flatMap((f) => f.events)
     .filter(
-      (event) => event[APPROVAL_STATUS] === "approved" && !event[SYNC_NUMBER]
+      (event) => event[APPROVAL_STATUS] === "approved" && !event[SYNC_NUMBER],
     );
 
   const generatePayloads = async (facilitiesList, isNew) => {
@@ -58,7 +58,7 @@ const SynchronizationToolbar = () => {
 
     for (const f of facilitiesList) {
       const foundFacility = filteredSyncFacilities.find((item) =>
-        item.events.some((event) => event.event === f.event)
+        item.events.some((event) => event.event === f.event),
       );
       const foundOrgUnit = isNew
         ? {
@@ -69,7 +69,7 @@ const SynchronizationToolbar = () => {
         : await pull(`/api/organisationUnits/${foundFacility.orgUnit}`);
       const payload = buildPayload(
         foundOrgUnit,
-        extractDataValues(f, dataElements)
+        extractDataValues(f, dataElements),
       );
 
       results.push(payload);
@@ -89,10 +89,10 @@ const SynchronizationToolbar = () => {
     try {
       setLoading(true);
       const newFacilities = filteredSyncFacilityEvents.filter(
-        (f) => f[IS_NEW_FACILITY] === "true"
+        (f) => f[IS_NEW_FACILITY] === "true",
       );
       const existedFacilities = filteredSyncFacilityEvents.filter(
-        (f) => f[IS_NEW_FACILITY] !== "true"
+        (f) => f[IS_NEW_FACILITY] !== "true",
       );
 
       const [payloadExisted, payloadNew] = await Promise.all([
@@ -120,12 +120,12 @@ const SynchronizationToolbar = () => {
 
       const [addResults, deleteResults] = await Promise.all([
         Promise.all(
-          addOrgUnitToOrgUnitGroupList.map((item) => push(item, null, "POST"))
+          addOrgUnitToOrgUnitGroupList.map((item) => push(item, null, "POST")),
         ),
         Promise.all(
           deleteOrgUnitToOrgUnitGroupList.map((item) =>
-            push(item, null, "DELETE")
-          )
+            push(item, null, "DELETE"),
+          ),
         ),
       ]);
 
@@ -142,11 +142,14 @@ const SynchronizationToolbar = () => {
       while (true) {
         const results = await Promise.all(
           Array.from({ length: 10 }, (_, i) => i + 1).map((i) =>
-            getFacilityTeis(me.organisationUnits[0].id, page + i)
-          )
+            getFacilityTeis(me.organisationUnits[0].id, page + i),
+          ),
         );
 
         if (results.find((res) => res.length === 0)) {
+          results.forEach((res) => {
+            latestTeis = [...latestTeis, ...res];
+          });
           break;
         }
 
@@ -159,8 +162,8 @@ const SynchronizationToolbar = () => {
       const newTeis = newFacilities.map((facility) => {
         const tei = latestTeis.find((tei) =>
           tei.enrollments[0].events.some(
-            (event) => event.event === facility.event
-          )
+            (event) => event.event === facility.event,
+          ),
         );
         const updatedEvents = tei.enrollments[0].events.map((event) =>
           event.event === facility.event
@@ -168,19 +171,19 @@ const SynchronizationToolbar = () => {
                 ...event,
                 orgUnit: facility[UID],
                 dataValues: event.dataValues.some(
-                  (dv) => dv.dataElement === SYNC_NUMBER
+                  (dv) => dv.dataElement === SYNC_NUMBER,
                 )
                   ? event.dataValues.map((dv) =>
                       dv.dataElement === SYNC_NUMBER
                         ? { ...dv, value: maxSyncNumber }
-                        : dv
+                        : dv,
                     )
                   : [
                       ...event.dataValues,
                       { dataElement: SYNC_NUMBER, value: maxSyncNumber },
                     ],
               }
-            : { ...event, orgUnit: facility[UID] }
+            : { ...event, orgUnit: facility[UID] },
         );
         return {
           ...tei,
@@ -194,25 +197,24 @@ const SynchronizationToolbar = () => {
           ],
         };
       });
-
       const existedEvents = existedFacilities.map((facility) => {
         const tei = latestTeis.find((tei) =>
           tei.enrollments[0].events.some(
-            (event) => event.event === facility.event
-          )
+            (event) => event.event === facility.event,
+          ),
         );
         const event = tei.enrollments[0].events.find(
-          (e) => e.event === facility.event
+          (e) => e.event === facility.event,
         );
         return {
           ...event,
           dataValues: event.dataValues.some(
-            (dv) => dv.dataElement === SYNC_NUMBER
+            (dv) => dv.dataElement === SYNC_NUMBER,
           )
             ? event.dataValues.map((dv) =>
                 dv.dataElement === SYNC_NUMBER
                   ? { ...dv, value: maxSyncNumber }
-                  : dv
+                  : dv,
               )
             : [
                 ...event.dataValues,
@@ -230,10 +232,10 @@ const SynchronizationToolbar = () => {
         throw new Error(t("trackerProcessFailed"));
       const updatedFacilities = facilities.map((f) => {
         const isNewFacility = f.events.some((event) =>
-          newFacilities.some((fe) => fe.event === event.event)
+          newFacilities.some((fe) => fe.event === event.event),
         );
         const isExistedFacility = f.events.some((event) =>
-          existedFacilities.some((fe) => fe.event === event.event)
+          existedFacilities.some((fe) => fe.event === event.event),
         );
         if (!isNewFacility && !isExistedFacility) return f;
         if (isNewFacility) {
@@ -248,7 +250,7 @@ const SynchronizationToolbar = () => {
                     [SYNC_NUMBER]: maxSyncNumber,
                     orgUnit: e[UID],
                   }
-                : e
+                : e,
             ),
           };
         }
@@ -258,7 +260,7 @@ const SynchronizationToolbar = () => {
           events: f.events.map((e) =>
             existedFacilities.some((fe) => fe.event === e.event)
               ? { ...e, [SYNC_NUMBER]: maxSyncNumber }
-              : e
+              : e,
           ),
         };
       });

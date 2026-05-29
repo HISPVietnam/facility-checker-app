@@ -39,6 +39,7 @@ import {
   TRACKED_ENTITY_TYPE,
   PROGRAM_ID,
   TRACKED_ENTITY_ATTRIBUTES,
+  TRANSLATION_FIELDS,
 } from "@/const";
 import { postEvent, postTei, getTeiById, findFacilityByCode } from "@/api/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -46,6 +47,7 @@ import { faCheck, faMap } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import _ from "lodash";
 import { toast } from "react-toastify";
+import InputFieldWithTranslationWithoutHistory from "./components/InputFieldWithTranslationWithoutHistory";
 const {
   UID,
   APPROVAL_STATUS,
@@ -57,7 +59,7 @@ const {
   ATTRIBUTE_VALUES,
 } = DATA_ELEMENTS;
 const { ATTRIBUTE_CODE } = TRACKED_ENTITY_ATTRIBUTES;
-const Row = ({ children, className }) => {
+export const Row = ({ children, className }) => {
   return (
     <div
       className={`flex items-center py-1 border-b border-b-slate-200 ${
@@ -97,7 +99,7 @@ const NewFacilityDialog = () => {
     useShallow((state) => ({
       facilities: state.facilities,
       actions: state.actions,
-    }))
+    })),
   );
   const [facilityCoordinatesPicker, setFacilityCoordinatesPicker] =
     useState(false);
@@ -109,14 +111,14 @@ const NewFacilityDialog = () => {
       locale: state.locale,
       me: state.me,
       customAttributes: state.customAttributes,
-    }))
+    })),
   );
   const { selectedFacility, facilityCheckModuleActions } =
     useFacilityCheckModuleStore(
       useShallow((state) => ({
         facilityCheckModuleActions: state.actions,
         selectedFacility: state.selectedFacility,
-      }))
+      })),
     );
 
   const { addNewFacilityToList, addNewTeiToList, save } = actions;
@@ -141,7 +143,7 @@ const NewFacilityDialog = () => {
     } else {
       finalValue = JSON.parse(currentAttributeValues);
       const foundIndex = finalValue.findIndex(
-        (v) => v.attribute.id === attribute
+        (v) => v.attribute.id === attribute,
       );
       if (foundIndex === -1) {
         finalValue.push({
@@ -169,7 +171,7 @@ const NewFacilityDialog = () => {
       if (selectedFacility[CODE]) {
         foundDuplicated = await findFacilityByCode(
           selectedFacility.tei,
-          selectedFacility[CODE]
+          selectedFacility[CODE],
         );
       }
       if (foundDuplicated) {
@@ -303,12 +305,12 @@ const NewFacilityDialog = () => {
     let orgUnit = "";
     if (selectedFacility) {
       const pathOrgUnits = _.compact(
-        selectedFacility[PATH].split("/").reverse()
+        selectedFacility[PATH].split("/").reverse(),
       );
       pathOrgUnits.forEach((pathOrgUnit, index) => {
         const foundInAssignedOrgUnits =
           program.programs[0].organisationUnits.find(
-            (ou) => ou.id === pathOrgUnit
+            (ou) => ou.id === pathOrgUnit,
           );
         if (foundInAssignedOrgUnits && !orgUnit) {
           orgUnit = foundInAssignedOrgUnits.id;
@@ -316,7 +318,7 @@ const NewFacilityDialog = () => {
         if (index === 1) {
           const foundOu = orgUnits.find((ou) => ou.id === pathOrgUnit);
           const foundChildrenFacilities = facilities.filter((f) =>
-            f[PATH].includes(pathOrgUnit)
+            f[PATH].includes(pathOrgUnit),
           );
           const ouName = foundOu.name;
           const ouShortName = foundOu.shortName;
@@ -390,7 +392,7 @@ const NewFacilityDialog = () => {
         const isInside = isInsideParent(
           path,
           selectedFacility.latitude,
-          selectedFacility.longitude
+          selectedFacility.longitude,
         );
         if (!isInside) {
           currentHelpers.push({
@@ -428,7 +430,7 @@ const NewFacilityDialog = () => {
   }, []);
 
   const foundCoordinatesError = helpers.find(
-    (h) => h.target === "coordinates" && h.type === "ERROR"
+    (h) => h.target === "coordinates" && h.type === "ERROR",
   );
   return (
     selectedFacility && (
@@ -482,14 +484,14 @@ const NewFacilityDialog = () => {
                         filter={filterForPathSelector}
                         displayValue={convertDisplayValueForPath(
                           value,
-                          tempValue
+                          tempValue,
                         )}
                         valueType="ORGANISATION_UNIT"
                         value={value}
                         onChange={(orgUnit) => {
                           changeValue(
                             PATH,
-                            orgUnit.path + "/" + selectedFacility[UID]
+                            orgUnit.path + "/" + selectedFacility[UID],
                           );
                         }}
                       />
@@ -549,6 +551,42 @@ const NewFacilityDialog = () => {
                 })
                 .map((psde) => {
                   const de = psde.dataElement;
+                  const foundTranslationField = TRANSLATION_FIELDS[de.id];
+                  if (foundTranslationField) {
+                    return (
+                      <>
+                        <Row>
+                          <DataValueLabel
+                            dataElement={de.id}
+                            mandatory={MANDATORY_FIELDS.includes(de.id)}
+                          />
+                          <div>
+                            <DataValueField
+                              dataElement={de.id}
+                              disabled={loading || de.id === ACTIVE_STATUS}
+                              value={selectedFacility[de.id]}
+                              onChange={(value) => {
+                                changeValue(de.id, value);
+                              }}
+                            />
+                            {helpers
+                              .filter((h) => h.target === de.id)
+                              .map((h) => {
+                                return (
+                                  <div>
+                                    <Helper type={h.type} value={h.value} />
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        </Row>
+                        <InputFieldWithTranslationWithoutHistory
+                          dataElement={de.id}
+                          disabled={loading || de.id === ACTIVE_STATUS}
+                        />
+                      </>
+                    );
+                  }
                   return (
                     <Row>
                       <DataValueLabel
@@ -588,7 +626,7 @@ const NewFacilityDialog = () => {
                           attribute={id}
                           value={findCustomAttributeValue(
                             selectedFacility[ATTRIBUTE_VALUES],
-                            id
+                            id,
                           )}
                           onChange={(value) => {
                             changeAttributeValue(id, value);

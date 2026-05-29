@@ -35,6 +35,7 @@ const {
   OPENING_DATE,
   PHONE_NUMBER,
   SHORT_NAME,
+  TRANSLATIONS,
 } = DATA_ELEMENTS;
 const columns = [
   {
@@ -76,12 +77,12 @@ const FacilitiesTableByCategories = ({
 }) => {
   const { t } = useTranslation();
   const { program } = useMetadataStore(
-    useShallow((state) => ({ program: state.program }))
+    useShallow((state) => ({ program: state.program })),
   );
   const { facilities } = useDataStore(
     useShallow((state) => ({
       facilities: state.facilities,
-    }))
+    })),
   );
   const checkChangeDataValue = (fields, currentValues, facility) => {
     const previousValues =
@@ -89,11 +90,11 @@ const FacilitiesTableByCategories = ({
       getLatestValues(
         facilities.find((f) => f.tei === facility.tei).events,
         program,
-        currentValues
+        currentValues,
       );
     return fields.some(
       (field) =>
-        currentValues[field] && previousValues[field] !== currentValues[field]
+        currentValues[field] && previousValues[field] !== currentValues[field],
     );
   };
 
@@ -110,14 +111,14 @@ const FacilitiesTableByCategories = ({
       const isChangeCoordinates = checkChangeDataValue(
         ["longitude", "latitude"],
         row,
-        facility
+        facility,
       );
       const isChangeOuGroups = checkChangeDataValue(
         program.dataElements
           .filter((de) => de.description && de.description.includes("FCGS"))
           .map((de) => de.id),
         row,
-        facility
+        facility,
       );
 
       const isChangeHierarchy = checkChangeDataValue([PATH], row, facility);
@@ -135,9 +136,10 @@ const FacilitiesTableByCategories = ({
           PHONE_NUMBER,
           SHORT_NAME,
           URL,
+          TRANSLATIONS,
         ],
         row,
-        facility
+        facility,
       );
       const isNewFacility = row[IS_NEW_FACILITY];
 
@@ -197,7 +199,7 @@ const FacilitiesTableByCategories = ({
               getLatestValues(
                 facilities.find((f) => f.tei === facility.tei).events,
                 program,
-                row
+                row,
               );
             return (
               <DataTableRow

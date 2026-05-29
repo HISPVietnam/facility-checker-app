@@ -3,20 +3,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Checkbox, CircularLoader } from "@dhis2/ui";
+import { debounce } from "lodash";
+import * as _ from "lodash";
 
 import {
   DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST,
   DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST,
 } from "@/const";
+
 import { useDropdownPosition } from "@/hooks/useDropDownPosition";
+import { removeAccents } from "@/utils";
 
 import VirtualizedList from "./VirtualizedList";
-import { removeAccents } from "@/utils";
-import { debounce } from "lodash";
-import * as _ from "lodash";
 
 const DEFAULT_LIMIT_TAGS = 2;
 const DROP_DOWN_GAP = 10;
+
 const CustomizedMultipleSelector = ({
   disabled,
   selected = [],
@@ -28,21 +30,32 @@ const CustomizedMultipleSelector = ({
   isServerSideFilter = false,
   getOptions,
   defaultOptions = [],
+  onBlur,
+  filterKey = "label",
 }) => {
   const { t } = useTranslation();
+
   const containerRef = useRef(null);
+  const requestIdRef = useRef(0);
+  const debouncedSearchRef = useRef(null);
+
   const { triggerRef, dropdownRef, position } = useDropdownPosition(
     DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST *
       DEFAULT_VISIBLE_COUNT_VIRTUALIZED_LIST +
-      DROP_DOWN_GAP
+      DROP_DOWN_GAP,
   );
 
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [filteredOptions, setFilteredOptions] = useState(
-    isServerSideFilter ? options : defaultOptions
-  );
   const [loading, setLoading] = useState(false);
+
+  const [filteredOptions, setFilteredOptions] = useState(
+    isServerSideFilter ? defaultOptions : options,
+  );
+
+  const visibleTags = showDropdown ? selected : selected.slice(0, limitTags);
+
+  const hiddenTagCount = selected.length - visibleTags.length;
 
   const toggleSelect = (value) => {
     if (selected.includes(value)) {
@@ -50,13 +63,14 @@ const CustomizedMultipleSelector = ({
     } else {
       onChange([...selected, value]);
     }
+
     setInputValue("");
   };
 
-  const removeTag = (value) => {
-    if (!disabled) {
-      onChange(selected.filter((v) => v !== value));
-    }
+  const removeTag = async (value) => {
+    if (disabled) return;
+    onChange(selected.filter((v) => v !== value));
+    onBlur?.(selected.filter((v) => v !== value));
   };
 
   const removeAllTags = () => {
@@ -65,61 +79,100 @@ const CustomizedMultipleSelector = ({
 
   const handleClickOutside = (e) => {
     if (containerRef.current && !containerRef.current.contains(e.target)) {
+      if (showDropdown) {
+        onBlur?.();
+      }
       setShowDropdown(false);
       setInputValue("");
+      if (!isServerSideFilter) {
+        setFilteredOptions(options);
+      }
     }
   };
-  const visibleTags = showDropdown ? selected : selected.slice(0, limitTags);
-  const hiddenTagCount = selected.length - visibleTags.length;
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
-  const requestIdRef = useRef(0);
-  const debouncedSearchRef = useRef(null);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [options]);
 
-  /**
-   * 1️⃣ Tạo debounce DUY NHẤT
-   */
+  /*
+     Sync option updates
+    */
+  useEffect(() => {
+    if (!isServerSideFilter) {
+      setFilteredOptions(options);
+    }
+  }, [options, isServerSideFilter]);
+
+  /*
+      Create debounce once
+    */
   useEffect(() => {
     debouncedSearchRef.current = debounce(async (value, isServerSide) => {
       const currentRequestId = ++requestIdRef.current;
 
-      if (!value) {
-        setLoading(false);
-        setShowDropdown(false);
-        return;
-      }
-
+      // SERVER SIDE
       if (isServerSide) {
-        setLoading(true);
+        if (!value) {
+          setLoading(false);
+          setFilteredOptions(defaultOptions);
 
-        const serverSideOptions = await getOptions(value);
-        if (currentRequestId !== requestIdRef.current) {
-          // outdated request
           return;
         }
 
-        setFilteredOptions(serverSideOptions);
-        setLoading(false);
+        setLoading(true);
+
+        try {
+          const serverOptions = await getOptions(value);
+
+          if (currentRequestId !== requestIdRef.current) {
+            return;
+          }
+
+          setFilteredOptions(serverOptions);
+        } finally {
+          setLoading(false);
+        }
+
         return;
       }
 
-      // client side filter
+      // CLIENT SIDE
+      if (!value) {
+        setFilteredOptions(options);
+        return;
+      }
+
       const lowerValue = value.toLowerCase();
+
       const accentlessValue = removeAccents(lowerValue);
 
-      const toneMatched = options.filter((item) =>
-        item.label.toLowerCase().includes(lowerValue)
-      );
+      const toneMatched = options.filter((item) => {
+        const filterValue = item[filterKey]?.toLowerCase?.() || "";
+        const labelValue = item.label?.toLowerCase?.() || "";
 
-      const accentlessMatched = options.filter(
-        (item) =>
-          !toneMatched.includes(item) &&
-          removeAccents(item.label).includes(accentlessValue)
-      );
+        return (
+          filterValue.includes(lowerValue) || labelValue.includes(lowerValue)
+        );
+      });
+
+      const accentlessMatched = options.filter((item) => {
+        if (toneMatched.includes(item)) return false;
+
+        const filterValue = removeAccents(
+          item[filterKey]?.toLowerCase?.() || "",
+        );
+
+        const labelValue = removeAccents(item.label?.toLowerCase?.() || "");
+
+        return (
+          filterValue.includes(accentlessValue) ||
+          labelValue.includes(accentlessValue)
+        );
+      });
 
       setFilteredOptions([...toneMatched, ...accentlessMatched]);
     }, 300);
@@ -127,82 +180,79 @@ const CustomizedMultipleSelector = ({
     return () => {
       debouncedSearchRef.current?.cancel();
     };
-  }, [options]); // ❗ options phải stable (useMemo nếu cần)
+  }, [options, defaultOptions, getOptions]);
 
-  /**
-   * 2️⃣ Trigger khi inputValue đổi
-   */
+  /*
+      Trigger search
+    */
   useEffect(() => {
-    const value = inputValue.trim();
-
-    if (!debouncedSearchRef.current) return;
-
-    debouncedSearchRef.current(value, isServerSideFilter);
+    debouncedSearchRef.current?.(inputValue.trim(), isServerSideFilter);
   }, [inputValue, isServerSideFilter]);
 
   return (
     <div ref={containerRef} className="relative">
       <div
         ref={triggerRef}
-        onClick={() =>
-          !disabled && isServerSideFilter
-            ? inputValue && setShowDropdown(true)
-            : setShowDropdown(true)
-        }
-        className={`flex flex-col gap-2 p-2 min-h-[40px] border border-slate-400 rounded-md ${
-          disabled ? "bg-gray-100 cursor-not-allowed" : ""
-        }`}
+        onClick={() => {
+          if (disabled) return;
+          if (showDropdown) {
+            onBlur?.();
+          }
+
+          setShowDropdown((prev) => !prev);
+
+          if (!isServerSideFilter) {
+            setFilteredOptions(options);
+          }
+        }}
+        className={` relative flex flex-col gap-2 p-2 min-h-[40px] border border-slate-400 rounded-md ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
       >
         {filterable && (
           <input
             disabled={disabled}
             type="text"
             value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-
-              e.target.value.trim() && !showDropdown && setShowDropdown(true);
-            }}
             placeholder={placeholder}
-            className="flex-1 min-w-[50px] outline-none border-none focus:ring-0 bg-transparent"
+            className=" flex-1 min-w-[50px] outline-none border-none focus:ring-0 bg-transparent"
+            onChange={(e) => {
+              const value = e.target.value;
+
+              setInputValue(value);
+
+              if (!showDropdown) {
+                setShowDropdown(true);
+              }
+            }}
           />
         )}
 
         {selected.length > 0 && (
-          <div
-            className={`flex items-center gap-2 flex-wrap max-h-[150px] overflow-auto w-[calc(100%-50px)]`}
-          >
+          <div className=" flex items-center gap-2 flex-wrap max-h-[150px] overflow-auto w-[calc(100%-50px)]">
             {visibleTags.map((value) => {
               const option = (
                 isServerSideFilter
                   ? _.uniqBy([...defaultOptions, ...filteredOptions], "value")
                   : options
               ).find((o) => o.value === value);
+
               return (
                 <div
                   key={value}
-                  className="flex items-center gap-1 py-[2px] px-2 rounded-lg text-sm bg-[#f3f5f7]"
+                  className=" flex items-center gap-1 py-[2px] px-2 rounded-lg text-sm bg-[#f3f5f7] "
                 >
                   <p
-                    className={`${
-                      !showDropdown ? "max-w-[350px]" : ""
-                    } whitespace-nowrap overflow-hidden text-ellipsis`}
                     title={option?.label}
+                    className=" whitespace-nowrap overflow-hidden text-ellipsis "
                   >
                     {option?.prefix} {option?.label} {option?.suffix}
                   </p>
+
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
+
                       removeTag(value);
                     }}
-                    disabled={disabled}
-                    className={`ml-1 w-6 h-6 flex items-center justify-center rounded-full transition-all hover:bg-slate-300 focus:outline-none ${
-                      disabled
-                        ? "pointer-events-none opacity-50"
-                        : "cursor-pointer"
-                    }`}
-                    title="Remove"
                   >
                     <FontAwesomeIcon icon={faClose} />
                   </button>
@@ -211,52 +261,38 @@ const CustomizedMultipleSelector = ({
             })}
 
             {!showDropdown && hiddenTagCount > 0 && (
-              <div className="font-semibold text-lg">+{hiddenTagCount}</div>
+              <div className="font-semibold">+{hiddenTagCount}</div>
             )}
           </div>
         )}
 
-        <div className="absolute right-5 top-1/2 -translate-y-1/2 flex gap-1 items-center">
+        <div className="absolute right-5 top-1/2 -translate-y-1/2 flex gap-2 items-center">
           {selected.length > 0 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 removeAllTags();
               }}
-              disabled={disabled}
-              className={`w-5 h-5 flex items-center justify-center rounded-full transition-all hover:bg-slate-300 focus:outline-none ${
-                disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
-              }`}
-              title="Clear all"
             >
               <FontAwesomeIcon icon={faClose} />
             </button>
           )}
-          {!isServerSideFilter && (
-            <FontAwesomeIcon
-              icon={faAngleDown}
-              onClick={(e) => {
-                e.stopPropagation();
-                !disabled && setShowDropdown((prev) => !prev);
-              }}
-              className={`transition-all ${showDropdown ? "rotate-180" : ""} ${
-                disabled ? "pointer-events-none opacity-50" : "cursor-pointer"
-              }`}
-            />
-          )}
+
+          <FontAwesomeIcon
+            icon={faAngleDown}
+            className={`transition-all ${showDropdown ? "rotate-180" : ""}`}
+          />
         </div>
       </div>
 
       {showDropdown && (
         <div
           ref={dropdownRef}
-          className={`absolute left-0 right-0 z-50 bg-white border rounded-md shadow ${
-            position === "top" ? "bottom-full mb-1" : "top-full mt-1"
-          }`}
+          className={` absolute left-0 right-0 z-50 bg-white border rounded-md shadow ${position === "top" ? "bottom-full mb-1" : "top-full mt-1"} `}
         >
           {loading ? (
             <div
-              className="flex items-center justify-center"
+              className="flex justify-center items-center"
               style={{
                 height:
                   DEFAULT_ITEM_HEIGHT_VIRTUALIZED_LIST *
@@ -280,10 +316,12 @@ const CustomizedMultipleSelector = ({
                 >
                   <Checkbox
                     checked={isSelected}
-                    className="mr-2"
                     onChange={() => onSelect(item.value)}
                   />
-                  {item.prefix} {item.label} {item.suffix}
+
+                  <span className="ml-2">
+                    {item.prefix} {item.label} {item.suffix}
+                  </span>
                 </div>
               )}
             />

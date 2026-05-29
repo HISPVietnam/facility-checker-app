@@ -12,8 +12,6 @@ import CustomizedButton from "@/ui/common/Button";
 import useMetadataStore from "@/states/metadata";
 import resources from "@/locales";
 
-import "/node_modules/flag-icons/css/flag-icons.min.css";
-
 const LanguageSelectButton = () => {
   const { t, i18n } = useTranslation();
 
@@ -28,7 +26,7 @@ const LanguageSelectButton = () => {
       locale: state.locale,
       actions: state.actions,
       dataStore: state.dataStore,
-    }))
+    })),
   );
 
   const [localePopover, setLocalePopover] = useState(false);

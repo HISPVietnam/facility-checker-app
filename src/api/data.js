@@ -7,9 +7,9 @@ const getFacilityTeis = async (orgUnit, page = 1) => {
   const { systemInfo } = useMetadataStore.getState();
   let url = "";
   if (systemInfo.version >= "2.42") {
-    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnits=${orgUnit}&orgUnitMode=DESCENDANTS&fields=trackedEntity,attributes[attribute,value],hidden,enrollments[enrollment,orgUnit,status,enrolledAt,geometry,events[event,status,completedAt,updatedBy,geometry,occurredAt,dataValues[dataElement,value]]]&pageSize=100&page=${page}`;
+    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnits=${orgUnit}&orgUnitMode=DESCENDANTS&fields=trackedEntity,attributes[attribute,value],hidden,enrollments[enrollment,orgUnit,status,enrolledAt,geometry,events[event,program,programStage,orgUnit,enrollment,trackedEntity,status,completedAt,updatedBy,geometry,occurredAt,dataValues[dataElement,value]]]&pageSize=100&page=${page}`;
   } else {
-    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=trackedEntity,attributes[attribute,value],hidden,enrollments[enrollment,orgUnit,status,enrolledAt,geometry,events[event,status,completedAt,updatedBy,geometry,occurredAt,dataValues[dataElement,value]]]&pageSize=100&page=${page}`;
+    url = `/api/tracker/trackedEntities?program=dJELklAE1ZZ&orgUnit=${orgUnit}&ouMode=DESCENDANTS&fields=trackedEntity,attributes[attribute,value],hidden,enrollments[enrollment,orgUnit,status,enrolledAt,geometry,events[event,program,programStage,orgUnit,enrollment,trackedEntity,status,completedAt,updatedBy,geometry,occurredAt,dataValues[dataElement,value]]]&pageSize=100&page=${page}`;
   }
 
   const result = await pull(url);
@@ -24,7 +24,7 @@ const getFacilityTeis = async (orgUnit, page = 1) => {
 
 const getTeiById = async (teiId) => {
   const result = await pull(
-    `/api/tracker/trackedEntities/${teiId}?program=dJELklAE1ZZ&fields=*`
+    `/api/tracker/trackedEntities/${teiId}?program=dJELklAE1ZZ&fields=*`,
   );
   return result;
 };
@@ -35,7 +35,7 @@ const postEvent = async (event) => {
     {
       events: [event],
     },
-    "POST"
+    "POST",
   );
   return result;
 };
@@ -46,7 +46,7 @@ const postTei = async (tei) => {
     {
       trackedEntities: [tei],
     },
-    "POST"
+    "POST",
   );
   return result;
 };
@@ -61,14 +61,14 @@ const postTeis = async (teis, dryRun = false) => {
     {
       trackedEntities: teis,
     },
-    "POST"
+    "POST",
   );
   return result;
 };
 
 const findEventByDataElement = async (dataElement, value) => {
   const result = await pull(
-    `/api/tracker/events?program=dJELklAE1ZZ&ouMode=ACCESSIBLE&fields=*&skipPaging=true`
+    `/api/tracker/events?program=dJELklAE1ZZ&ouMode=ACCESSIBLE&fields=*&skipPaging=true`,
   );
   return result.instances;
 };

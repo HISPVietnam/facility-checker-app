@@ -10,11 +10,13 @@ import useConfigurationModuleStore from "@/states/configurationModule";
 import OrgUnitGroupSets from "./OrgUnitGroupSets";
 import Authorities from "./Authorities";
 import Translations from "./Translations";
+import MetadataLocales from "./MetadataLocales";
 
 const SUB_MODULES_MAPPING = {
   translations: <Translations />,
   authorities: <Authorities />,
-  orgUnitGroupSets: <OrgUnitGroupSets />
+  orgUnitGroupSets: <OrgUnitGroupSets />,
+  metadataLocales: <MetadataLocales />,
 };
 
 const Configuration = () => {
@@ -23,8 +25,8 @@ const Configuration = () => {
   const { selectedFunction, actions } = useConfigurationModuleStore(
     useShallow((state) => ({
       selectedFunction: state.selectedFunction,
-      actions: state.actions
-    }))
+      actions: state.actions,
+    })),
   );
   const { selectFunction } = actions;
 
@@ -44,13 +46,15 @@ const Configuration = () => {
                 icon={<FontAwesomeIcon icon={icon} />}
                 label={t(key)}
               />,
-              index < CONFIGURATION_SUB_MODULES.length - 1 && <MenuDivider />
+              index < CONFIGURATION_SUB_MODULES.length - 1 && <MenuDivider />,
             ];
           })}
         </Menu>
       </div>
       <div className="h-full w-[calc(100%-200px)] p-2">
-        <div className="w-full h-full bg-white rounded-md shadow-md">{SUB_MODULES_MAPPING[selectedFunction]}</div>
+        <div className="w-full h-full bg-white rounded-md shadow-md">
+          {SUB_MODULES_MAPPING[selectedFunction]}
+        </div>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ import { DATA_ELEMENTS } from "@/const";
 const { PATH } = DATA_ELEMENTS;
 import "./FacilityManagement.css";
 import { useTranslation } from "react-i18next";
-import ClearNonSpatialFilterButton from "./ClearNonSpatialFilterButton";
+import ClearNonSpatialFilterButton from "./components/ClearNonSpatialFilterButton";
 
 const FacilitiesManagement = () => {
   const { t } = useTranslation();
