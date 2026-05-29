@@ -1,3 +1,10 @@
+## [1.13.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.13...v1.13.0) (2026-05-29)
+
+### Features
+
+* enhance orgunit group set based filters ([6c72190](https://github.com/HISPVietnam/facility-checker-app/commit/6c72190117a3a7468a2cde4c0ee0ecdd78525901))
+* finalize meta data locales ([004117f](https://github.com/HISPVietnam/facility-checker-app/commit/004117fcba8f8f628a0e7f7b3fb80593f0524200))
+
 ## [1.12.13](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.12...v1.12.13) (2026-01-15)
 
 ### Bug Fixes
