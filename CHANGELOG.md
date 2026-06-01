@@ -1,3 +1,9 @@
+## [1.13.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.0...v1.13.1) (2026-06-01)
+
+### Bug Fixes
+
+* major issues in enhanced filter ([2e60147](https://github.com/HISPVietnam/facility-checker-app/commit/2e601471eaaacec5a4dde053eaf2675779954576))
+
 ## [1.13.0](https://github.com/HISPVietnam/facility-checker-app/compare/v1.12.13...v1.13.0) (2026-05-29)
 
 ### Features
