@@ -80,56 +80,41 @@ const FacilitiesManagement = () => {
       setIsReadOnly(true);
     }
   }, []);
-
   useEffect(() => {
-    if (selectedOrgUnit) {
-      const transformed = facilities.map((facility) => {
-        const newFacility = _.cloneDeep(facility);
-        const path = newFacility[PATH];
-        let isChild;
-        let passedFilter = false;
-        if (path) {
-          if (path.includes(selectedOrgUnit.id)) {
-            isChild = true;
-          } else {
-            isChild = false;
-          }
-        } else {
-          isChild = false;
-        }
-        if (filters.length > 0) {
-          filters.forEach((filter) => {
-            let passed = false;
-            const foundFilter = allFilters
-              .map((f) => f.filters)
-              .flat()
-              .find((element) => element.id === (filter.id || filter));
-
-            if (!foundFilter) {
-              passed = true;
-            } else {
-              passed = foundFilter.function(facility, filter);
-            }
-            if (passed) {
-              passedFilter = true;
-            }
-          });
-        } else {
-          passedFilter = true;
-        }
-        newFacility.hidden = !isChild || !passedFilter;
-        return newFacility;
-      });
-      setFacilities(transformed);
-    } else {
+    if (!selectedOrgUnit) {
       selectOrgUnit(foundMeOrgUnits[0]);
+      return;
     }
-  }, [
-    selectedOrgUnit ? selectedOrgUnit.id : "",
-    JSON.stringify(filters),
-    facilities.length,
-  ]);
 
+    const filterMap = allFilters
+      .flatMap((group) => group.filters)
+      .reduce((acc, filter) => {
+        acc[filter.id] = filter;
+        return acc;
+      }, {});
+
+    const transformed = facilities.map((facility) => {
+      const path = facility[PATH];
+
+      const isChild =
+        typeof path === "string" && path.includes(selectedOrgUnit.id);
+
+      const passedFilter =
+        filters.length === 0 ||
+        filters.every((filter) => {
+          const foundFilter = filterMap[filter.id || filter];
+
+          return !foundFilter ? true : foundFilter.function(facility, filter);
+        });
+
+      return {
+        ...facility,
+        hidden: !isChild || !passedFilter,
+      };
+    });
+
+    setFacilities(transformed);
+  }, [selectedOrgUnit?.id, filters, allFilters, facilities.length]);
   useEffect(() => {
     const filters = [
       {
@@ -170,7 +155,7 @@ const FacilitiesManagement = () => {
                     return isNotInGroup(facility, de);
                   }
                   if (filter.type === "inMultipleGroups") {
-                    return belongToMultipleGroups(facility);
+                    return belongToMultipleGroups(facility, de);
                   }
                   return isInGroups(facility, filter.value);
                 },
@@ -196,59 +181,6 @@ const FacilitiesManagement = () => {
     ];
     setAllFilters(filters);
   }, [locale]);
-
-  // useEffect(() => {
-  //   if (selectedOrgUnit) {
-  //     const columns = ["id"];
-  //     const sortedOrgUnitLevels = _.sortBy(orgUnitLevels, "level").reverse();
-  //     sortedOrgUnitLevels.forEach((oul) => {
-  //       columns.push(pickTranslation(oul, "en", "name"));
-  //     });
-  //     columns.push(...["latitude", "longitude"]);
-  //     const transformedFacilities = facilities.map((ou) => {
-  //       const row = { id: ou.id, ancestors: ou.ancestors };
-  //       sortedOrgUnitLevels.forEach((level, levelIndex) => {
-  //         let foundOrgUnit = null;
-  //         if (ou.level === level.level) {
-  //           foundOrgUnit = ou;
-  //           row.name = pickTranslation(ou, "en", "name");
-  //         } else {
-  //           const foundAncestor = ou.ancestors.find((a) => a.level === level.level);
-  //           if (foundAncestor) {
-  //             foundOrgUnit = orgUnits.find((orgUnit) => orgUnit.id === foundAncestor.id);
-  //           }
-  //         }
-  //         row[columns[levelIndex + 1]] = foundOrgUnit ? pickTranslation(foundOrgUnit, "en", "name") : "";
-  //       });
-  //       if (ou.geometry) {
-  //         row.latitude = ou.geometry.coordinates[1];
-  //         row.longitude = ou.geometry.coordinates[0];
-  //       }
-  //       return row;
-  //     });
-  //     let filteredFacilities = transformedFacilities.filter((ou) => {
-  //       const foundAncestor = ou.ancestors.find((a) => a.id === selectedOrgUnit.id);
-  //       return foundAncestor;
-  //     });
-
-  //     const foundFacility = transformedFacilities.find((f) => f.id === selectedOrgUnit.id);
-  //     let finalList;
-  //     if (foundFacility) {
-  //       finalList = [foundFacility];
-  //       selectFacility(foundFacility);
-  //     } else {
-  //       selectFacility(null);
-  //       finalList = filteredFacilities;
-  //     }
-  //     setFacilityList({
-  //       ready: true,
-  //       columns,
-  //       rows: finalList
-  //     });
-  //   } else {
-  //     selectOrgUnit(foundMeOrgUnits[0]);
-  //   }
-  // }, [selectedOrgUnit ? selectedOrgUnit.id : ""]);
 
   return (
     <div className="w-full h-full flex">

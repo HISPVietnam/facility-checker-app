@@ -465,25 +465,14 @@ const isTooCloseToEachOther = (facility) => {
   return tooCloseToOtherFacility;
 };
 
-const belongToMultipleGroups = (facility) => {
-  let passed = false;
-  const program = useMetadataStore.getState().program;
-  const dataElements = program.dataElements.filter(
-    (de) => de.description && de.description.includes("FCGS"),
-  );
-  dataElements.forEach((de) => {
-    const value = facility[de.id];
-    if (value) {
-      const converted = JSON.parse(value);
-      if (converted.length > 1) {
-        passed = true;
-      }
-    }
-  });
-  return passed;
+const belongToMultipleGroups = (facility, de) => {
+  return facility[de.id] && JSON.parse(facility[de.id]).length > 1;
 };
 
 const isInGroups = (facility, groups) => {
+  if (!groups || groups.length === 0) {
+    return true;
+  }
   let passed = false;
   const program = useMetadataStore.getState().program;
   const dataElements = program.dataElements.filter(
@@ -493,7 +482,7 @@ const isInGroups = (facility, groups) => {
     const value = facility[de.id];
     if (value) {
       const converted = JSON.parse(value);
-      if (groups.every((group) => converted.includes(group))) {
+      if (groups.some((group) => converted.includes(group))) {
         passed = true;
       }
     }
