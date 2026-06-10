@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.1...v1.13.2) (2026-06-10)
+
+### Bug Fixes
+
+* add Comment data element to metadata ([90baa9d](https://github.com/HISPVietnam/facility-checker-app/commit/90baa9dc0c522aa0069f1bcf3aed812483f52034))
+* add mapping comment value for org unit when synchronization ([bb156f3](https://github.com/HISPVietnam/facility-checker-app/commit/bb156f3ca44fc9d9ac140b6d9b881cb4b587d84b))
+
 ## [1.13.1](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.0...v1.13.1) (2026-06-01)
 
 ### Bug Fixes
