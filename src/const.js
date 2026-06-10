@@ -35,6 +35,7 @@ const DATA_ELEMENTS = {
   TRANSLATIONS: "pf27agpzDak",
   IMAGE: "QRaMM9LMM3y",
   SYNC_NUMBER: "m75JpouZBy8",
+  COMMENT: "h8qLZy7n2sM",
 };
 const TRACKED_ENTITY_ATTRIBUTES = {
   UID: "prbjtVvKNet",
@@ -175,6 +176,7 @@ const MAPPING_DATA_ELEMENTS_INSTALLATION_MODULE = {
   [DATA_ELEMENTS.ADDRESS]: "address",
   [DATA_ELEMENTS.PHONE_NUMBER]: "phoneNumber",
   [DATA_ELEMENTS.TRANSLATIONS]: "translations",
+  [DATA_ELEMENTS.COMMENT]: "comment",
 };
 
 const DATA_STORE_NAMESPACE = "fca";
