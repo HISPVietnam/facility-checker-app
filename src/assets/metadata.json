@@ -2514,6 +2514,48 @@
       "zeroIsSignificant": false,
       "id": "eb7SYR3EHEZ",
       "attributeValues": []
+    },
+    {
+      "code": "FCA_028",
+      "name": "FCA_Comment",
+      "translations": [],
+      "sharing": {
+        "external": false,
+        "users": {},
+        "userGroups": {
+          "MJK6n5PLXM6": {
+            "displayName": "FCA - Admin",
+            "access": "rw------",
+            "id": "MJK6n5PLXM6"
+          },
+          "m6GidmfEK48": {
+            "displayName": "FCA - Capture",
+            "access": "r-------",
+            "id": "m6GidmfEK48"
+          },
+          "shYXBFb3lpw": {
+            "displayName": "FCA - Synchronization",
+            "access": "r-------",
+            "id": "shYXBFb3lpw"
+          },
+          "xd865kZFSRw": {
+            "displayName": "FCA - Approval",
+            "access": "r-------",
+            "id": "xd865kZFSRw"
+          }
+        },
+        "public": "--------"
+      },
+      "shortName": "FCA_Comment",
+      "formName": "Comment",
+      "legendSets": [],
+      "aggregationType": "NONE",
+      "valueType": "LONG_TEXT",
+      "domainType": "TRACKER",
+      "aggregationLevels": [],
+      "zeroIsSignificant": false,
+      "id": "tTujDz47YhF",
+      "attributeValues": []
     }
   ],
   "trackedEntityTypes": [
@@ -2980,6 +3022,23 @@
       "skipSynchronization": false,
       "skipAnalytics": false,
       "id": "q0jUzjJPXEZ"
+    },
+    {
+      "programStage": {
+        "id": "VdBma23iRTw"
+      },
+      "dataElement": {
+        "id": "tTujDz47YhF"
+      },
+      "compulsory": false,
+      "allowProvidedElsewhere": false,
+      "sortOrder": 28,
+      "displayInReports": false,
+      "allowFutureDate": false,
+      "renderOptionsAsRadio": false,
+      "skipSynchronization": false,
+      "skipAnalytics": false,
+      "id": "yZtBEyCfmiu"
     }
   ],
   "userGroups": [
