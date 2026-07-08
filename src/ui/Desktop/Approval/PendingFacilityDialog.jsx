@@ -1,12 +1,6 @@
 import useMetadataStore from "@/states/metadata";
 import CustomizedButton from "@/ui/common/Button";
-import {
-  Approved,
-  New,
-  NotYetSynced,
-  Pending,
-  Rejected,
-} from "@/ui/common/Labels";
+import { Approved, New, NotYetSynced, Pending, Rejected } from "@/ui/common/Labels";
 import { Modal, ModalTitle, ModalContent, ModalActions } from "@dhis2/ui";
 import DataValueField from "@/ui/common/DataValueField";
 import DataValueText from "@/ui/common/DataValueText";
@@ -21,14 +15,10 @@ import {
   convertDisplayValueForPath,
   convertDisplayValueForAllField,
   generateParentFeatures,
-  getLatestValues,
+  getLatestValues
 } from "@/utils";
 import useDataStore from "@/states/data";
-import {
-  DATA_ELEMENTS,
-  HIDDEN_DATA_ELEMENTS,
-  TRANSLATION_FIELDS,
-} from "@/const";
+import { DATA_ELEMENTS, HIDDEN_DATA_ELEMENTS, TRANSLATION_FIELDS } from "@/const";
 import { postEvent } from "@/api/data";
 import { format } from "date-fns";
 import _ from "lodash";
@@ -43,6 +33,7 @@ const {
   APPROVED_BY,
   APPROVED_AT,
   NAME,
+  UID,
   PATH,
   IS_NEW_FACILITY,
   SYNC_NUMBER,
@@ -50,7 +41,7 @@ const {
   REJECTED_BY,
   REJECTED_AT,
   REASON_FOR_REJECT,
-  TRANSLATIONS,
+  TRANSLATIONS
 } = DATA_ELEMENTS;
 
 export const CustomValue = ({ isOld = false, isNew = false, children }) => {
@@ -75,42 +66,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
     useShallow((state) => ({
       program: state.program,
       me: state.me,
-      customAttributes: state.customAttributes,
-    })),
+      customAttributes: state.customAttributes
+    }))
   );
   const { actions, facilities } = useDataStore(
     useShallow((state) => ({
       actions: state.actions,
-      facilities: state.facilities,
-    })),
+      facilities: state.facilities
+    }))
   );
   const { approve, reject } = actions;
-  const {
-    approvalModuleActions,
-    selectedFacility,
-    selectedEventId,
-    isReadOnly,
-  } = useApprovalModuleStore(
+  const { approvalModuleActions, selectedFacility, selectedEventId, isReadOnly } = useApprovalModuleStore(
     useShallow((state) => ({
       approvalModuleActions: state.actions,
       selectedFacility: state.selectedFacility,
       selectedEventId: state.selectedEventId,
-      isReadOnly: state.isReadOnly,
-    })),
+      isReadOnly: state.isReadOnly
+    }))
   );
   const { selectFacility } = approvalModuleActions;
-  const finalEvent = selectedFacility
-    ? selectedFacility.events.find((event) => event.event === selectedEventId)
-    : null;
+  const finalEvent = selectedFacility ? selectedFacility.events.find((event) => event.event === selectedEventId) : null;
 
   const previousValues = selectedFacility
-    ? finalEvent.previousValues ||
-      getLatestValues(
-        facilities.find((facility) => facility.tei === selectedFacility.tei)
-          .events,
-        program,
-        finalEvent,
-      )
+    ? finalEvent.previousValues || getLatestValues(facilities.find((facility) => facility.tei === selectedFacility.tei).events, program, finalEvent)
     : null;
 
   const listDataElementDataValue = selectedFacility
@@ -119,24 +97,14 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         "latitude",
         "longitude",
         ...program.programStages[0].programStageDataElements.filter((psde) => {
-          return (
-            !HIDDEN_DATA_ELEMENTS.filter((id) => id !== TRANSLATIONS).includes(
-              psde.dataElement.id,
-            ) && psde.dataElement.id !== PATH
-          );
+          return !HIDDEN_DATA_ELEMENTS.filter((id) => id !== TRANSLATIONS).includes(psde.dataElement.id) && psde.dataElement.id !== PATH;
         }),
-        ...customAttributes,
+        ...customAttributes
       ].map((item) => {
-        const foundValue =
-          findCustomAttributeValue(finalEvent[ATTRIBUTE_VALUES], item.id) ||
-          finalEvent[item.dataElement?.id] ||
-          finalEvent[item];
+        const foundValue = findCustomAttributeValue(finalEvent[ATTRIBUTE_VALUES], item.id) || finalEvent[item.dataElement?.id] || finalEvent[item];
         const previousValue = item.id
           ? previousValues[ATTRIBUTE_VALUES]
-            ? findCustomAttributeValue(
-                previousValues[ATTRIBUTE_VALUES],
-                item.id,
-              )
+            ? findCustomAttributeValue(previousValues[ATTRIBUTE_VALUES], item.id)
             : ""
           : previousValues[item.dataElement?.id] || previousValues[item];
 
@@ -145,10 +113,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
           value: foundValue ? foundValue : "",
           isChangedValue: foundValue && previousValue !== foundValue,
           valueType: item.id && item.valueType,
-          oldValue:
-            item.dataElement?.id === TRANSLATIONS
-              ? previousValues[item.dataElement?.id]
-              : previousValue,
+          oldValue: item.dataElement?.id === TRANSLATIONS ? previousValues[item.dataElement?.id] : previousValue
         };
       })
     : [];
@@ -160,9 +125,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       const now = format(new Date(), "yyyy-MM-dd");
       approve(selectedFacility);
       const cloned = _.cloneDeep(selectedFacility);
-      const foundPendingEventIndex = cloned.events.findIndex(
-        (event) => event[APPROVAL_STATUS] === "pending",
-      );
+      const foundPendingEventIndex = cloned.events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
       cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "approved";
       cloned.events[foundPendingEventIndex][APPROVED_BY] = username;
       cloned.events[foundPendingEventIndex][APPROVED_AT] = now;
@@ -170,10 +133,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       cloned[APPROVED_BY] = username;
       cloned[APPROVED_AT] = now;
       selectFacility(cloned, selectedEventId);
-      const convertedEvent = convertToDhis2Event(
-        cloned.events[foundPendingEventIndex],
-        program,
-      );
+      const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
       convertedEvent.orgUnit = selectedFacility.orgUnit;
       convertedEvent.trackedEntity = selectedFacility.tei;
       convertedEvent.enrollment = selectedFacility.enr;
@@ -194,23 +154,17 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
       const now = format(new Date(), "yyyy-MM-dd");
       reject(selectedFacility, reasonForReject);
       const cloned = _.cloneDeep(selectedFacility);
-      const foundPendingEventIndex = cloned.events.findIndex(
-        (event) => event[APPROVAL_STATUS] === "pending",
-      );
+      const foundPendingEventIndex = cloned.events.findIndex((event) => event[APPROVAL_STATUS] === "pending");
       cloned.events[foundPendingEventIndex][APPROVAL_STATUS] = "rejected";
       cloned.events[foundPendingEventIndex][REJECTED_BY] = username;
       cloned.events[foundPendingEventIndex][REJECTED_AT] = now;
-      cloned.events[foundPendingEventIndex][REASON_FOR_REJECT] =
-        reasonForReject;
+      cloned.events[foundPendingEventIndex][REASON_FOR_REJECT] = reasonForReject;
       cloned[APPROVAL_STATUS] = "rejected";
       cloned[REJECTED_BY] = username;
       cloned[REJECTED_AT] = now;
       cloned[REASON_FOR_REJECT] = reasonForReject;
       selectFacility(cloned, selectedEventId);
-      const convertedEvent = convertToDhis2Event(
-        cloned.events[foundPendingEventIndex],
-        program,
-      );
+      const convertedEvent = convertToDhis2Event(cloned.events[foundPendingEventIndex], program);
       convertedEvent.orgUnit = selectedFacility.orgUnit;
       convertedEvent.trackedEntity = selectedFacility.tei;
       convertedEvent.enrollment = selectedFacility.enr;
@@ -236,24 +190,18 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
               <div className="flex gap-10">
                 <div>
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={NAME} />:{" "}
-                    <DataValueText
-                      dataElement={NAME}
-                      value={finalEvent[NAME] || previousValues[NAME]}
-                    />
+                    <DataValueLabel dataElement={UID} />: <DataValueText dataElement={UID} value={finalEvent[UID] || previousValues[UID]} />
                   </div>
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={PATH} />:{" "}
-                    <DataValueText
-                      dataElement={PATH}
-                      value={finalEvent[PATH] || previousValues[PATH]}
-                    />
+                    <DataValueLabel dataElement={NAME} />: <DataValueText dataElement={NAME} value={finalEvent[NAME] || previousValues[NAME]} />
+                  </div>
+                  <div className="text-[15px]">
+                    <DataValueLabel dataElement={PATH} />: <DataValueText dataElement={PATH} value={finalEvent[PATH] || previousValues[PATH]} />
                   </div>
                 </div>
                 <div>
                   <div className="text-[15px]">
-                    {t("dateOfRequest")}:{" "}
-                    {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
+                    {t("dateOfRequest")}: {format(new Date(finalEvent.completedAt), "yyyy-MM-dd")}
                   </div>
                   <div className="text-[15px]">
                     {t("requestedBy")}: {finalEvent.updatedBy.username}
@@ -281,57 +229,37 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     <New>{t("newFacility")}</New>&nbsp;
                   </span>
                 )}
-                {!finalEvent[SYNC_NUMBER] &&
-                  finalEvent[APPROVAL_STATUS] == "approved" && (
-                    <span>
-                      <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
-                    </span>
-                  )}
+                {!finalEvent[SYNC_NUMBER] && finalEvent[APPROVAL_STATUS] == "approved" && (
+                  <span>
+                    <NotYetSynced>{t("notYetSynced")}</NotYetSynced>&nbsp;
+                  </span>
+                )}
               </div>
               <div className="flex gap-5">
                 {finalEvent[APPROVAL_STATUS] == "approved" && (
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={APPROVED_BY} />:{" "}
-                    <DataValueText
-                      dataElement={APPROVED_BY}
-                      value={finalEvent[APPROVED_BY]}
-                    />
+                    <DataValueLabel dataElement={APPROVED_BY} />: <DataValueText dataElement={APPROVED_BY} value={finalEvent[APPROVED_BY]} />
                   </div>
                 )}
                 {finalEvent[APPROVAL_STATUS] == "rejected" && (
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={REJECTED_BY} />:{" "}
-                    <DataValueText
-                      dataElement={REJECTED_BY}
-                      value={finalEvent[REJECTED_BY]}
-                    />
+                    <DataValueLabel dataElement={REJECTED_BY} />: <DataValueText dataElement={REJECTED_BY} value={finalEvent[REJECTED_BY]} />
                   </div>
                 )}
                 {finalEvent[APPROVAL_STATUS] == "approved" && (
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={APPROVED_AT} />:{" "}
-                    <DataValueText
-                      dataElement={APPROVED_AT}
-                      value={finalEvent[APPROVED_AT]}
-                    />
+                    <DataValueLabel dataElement={APPROVED_AT} />: <DataValueText dataElement={APPROVED_AT} value={finalEvent[APPROVED_AT]} />
                   </div>
                 )}
                 {finalEvent[APPROVAL_STATUS] == "rejected" && (
                   <div className="text-[15px]">
-                    <DataValueLabel dataElement={REJECTED_AT} />:{" "}
-                    <DataValueText
-                      dataElement={REJECTED_AT}
-                      value={finalEvent[REJECTED_AT]}
-                    />
+                    <DataValueLabel dataElement={REJECTED_AT} />: <DataValueText dataElement={REJECTED_AT} value={finalEvent[REJECTED_AT]} />
                   </div>
                 )}
                 {finalEvent[APPROVAL_STATUS] == "rejected" && (
                   <div className="text-[15px]">
                     <DataValueLabel dataElement={REASON_FOR_REJECT} />:{" "}
-                    <DataValueText
-                      dataElement={REASON_FOR_REJECT}
-                      value={finalEvent[REASON_FOR_REJECT]}
-                    />
+                    <DataValueText dataElement={REASON_FOR_REJECT} value={finalEvent[REASON_FOR_REJECT]} />
                   </div>
                 )}
               </div>
@@ -343,11 +271,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
               <div className="w-[40%] ml-2">{t("newValue")}</div>
             </div>
             <div className="flex-1 overflow-auto flex flex-col gap-2">
-              <Accordion
-                key={`${selectFacility.tei}-changed`}
-                title={t("changedValues")}
-                defaultOpen={true}
-              >
+              <Accordion key={`${selectFacility.tei}-changed`} title={t("changedValues")} defaultOpen={true}>
                 {listDataElementDataValue
                   .filter((dataValue) => dataValue.isChangedValue)
                   .map((dataValue) => {
@@ -377,9 +301,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                     </ModalTitle>
                                     <ModalContent>
                                       <div className="w-[1000px] h-[600px]">
-                                        <GeoJsonViewer
-                                          data={JSON.parse(oldValue)}
-                                        />
+                                        <GeoJsonViewer data={JSON.parse(oldValue)} />
                                       </div>
                                     </ModalContent>
                                     <ModalActions>
@@ -395,19 +317,13 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 )}
                               </CustomValue>
                             ) : (
-                              <CustomValue
-                                isOld={!!(value && oldValue !== value)}
-                              >
-                                {oldValue}
-                              </CustomValue>
+                              <CustomValue isOld={!!(value && oldValue !== value)}>{oldValue}</CustomValue>
                             )}
                           </div>
                           <div className="w-[40%]">
                             {valueType === "GEOJSON" ? (
                               value && (
-                                <CustomValue
-                                  isNew={!!(value && oldValue !== value)}
-                                >
+                                <CustomValue isNew={!!(value && oldValue !== value)}>
                                   <span
                                     className="underline cursor-pointer"
                                     onClick={() => {
@@ -423,9 +339,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                       </ModalTitle>
                                       <ModalContent>
                                         <div className="w-[1000px] h-[600px]">
-                                          <GeoJsonViewer
-                                            data={JSON.parse(value)}
-                                          />
+                                          <GeoJsonViewer data={JSON.parse(value)} />
                                         </div>
                                       </ModalContent>
                                       <ModalActions>
@@ -442,11 +356,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 </CustomValue>
                               )
                             ) : (
-                              <CustomValue
-                                isNew={!!(value && oldValue !== value)}
-                              >
-                                {value}
-                              </CustomValue>
+                              <CustomValue isNew={!!(value && oldValue !== value)}>{value}</CustomValue>
                             )}
                           </div>
                         </div>
@@ -454,12 +364,8 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     }
                     if (dataValue.id === "longitude") return;
                     if (dataValue.id === "latitude") {
-                      const longitudeDataValue = listDataElementDataValue.find(
-                        (item) => item.id === "longitude",
-                      );
-                      const pathDataValue = listDataElementDataValue.find(
-                        (item) => item.id === PATH,
-                      );
+                      const longitudeDataValue = listDataElementDataValue.find((item) => item.id === "longitude");
+                      const pathDataValue = listDataElementDataValue.find((item) => item.id === PATH);
                       return (
                         <div className="flex mb-1 gap-2 border-b pb-1 items-center">
                           <div className="w-[20%]">
@@ -467,67 +373,29 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                           </div>
                           <div className="w-[40%]">
                             <div className=" flex gap-1">
-                              <CustomValue
-                                isOld={longitudeDataValue.isChangedValue}
-                              >
-                                {previousValues["longitude"]}
-                              </CustomValue>
-                              <CustomValue isOld={dataValue.isChangedValue}>
-                                {previousValues["latitude"]}
-                              </CustomValue>
+                              <CustomValue isOld={longitudeDataValue.isChangedValue}>{previousValues["longitude"]}</CustomValue>
+                              <CustomValue isOld={dataValue.isChangedValue}>{previousValues["latitude"]}</CustomValue>
                             </div>
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
-                                data={generateParentFeatures(
-                                  previousValues[PATH],
-                                )}
+                                data={generateParentFeatures(previousValues[PATH])}
                                 point={
-                                  previousValues.longitude &&
-                                  previousValues.latitude
-                                    ? [
-                                        previousValues.latitude,
-                                        previousValues.longitude,
-                                      ]
-                                    : [0, 0]
+                                  previousValues.longitude && previousValues.latitude ? [previousValues.latitude, previousValues.longitude] : [0, 0]
                                 }
-                                showPoint={
-                                  !previousValues.longitude ||
-                                  !previousValues.latitude
-                                    ? false
-                                    : true
-                                }
+                                showPoint={!previousValues.longitude || !previousValues.latitude ? false : true}
                               />
                             </div>
                           </div>
                           <div className="w-[40%]">
                             <div className=" flex gap-1">
-                              <CustomValue
-                                isNew={longitudeDataValue.isChangedValue}
-                              >
-                                {longitudeDataValue.value}
-                              </CustomValue>
-                              <CustomValue isNew={dataValue.isChangedValue}>
-                                {dataValue.value}
-                              </CustomValue>
+                              <CustomValue isNew={longitudeDataValue.isChangedValue}>{longitudeDataValue.value}</CustomValue>
+                              <CustomValue isNew={dataValue.isChangedValue}>{dataValue.value}</CustomValue>
                             </div>
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
-                                data={generateParentFeatures(
-                                  pathDataValue.value || previousValues[PATH],
-                                )}
-                                point={
-                                  longitudeDataValue.value && dataValue.value
-                                    ? [
-                                        dataValue.value,
-                                        longitudeDataValue.value,
-                                      ]
-                                    : [0, 0]
-                                }
-                                showPoint={
-                                  !longitudeDataValue.value || !dataValue.value
-                                    ? false
-                                    : true
-                                }
+                                data={generateParentFeatures(pathDataValue.value || previousValues[PATH])}
+                                point={longitudeDataValue.value && dataValue.value ? [dataValue.value, longitudeDataValue.value] : [0, 0]}
+                                showPoint={!longitudeDataValue.value || !dataValue.value ? false : true}
                               />
                             </div>
                           </div>
@@ -535,13 +403,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                       );
                     }
                     if (dataValue.id === TRANSLATIONS) {
-                      return (
-                        <TranslationRow
-                          key={dataValue.id}
-                          dataValue={dataValue}
-                          isChangedValue={true}
-                        />
-                      );
+                      return <TranslationRow key={dataValue.id} dataValue={dataValue} isChangedValue={true} />;
                     }
                     return (
                       <div className="flex mb-1 gap-2 border-b pb-1 items-center">
@@ -551,39 +413,22 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                         <div className="w-[40%]">
                           <CustomValue isOld={dataValue.isChangedValue}>
                             {dataValue.id === PATH
-                              ? convertDisplayValueForPath(
-                                  previousValues[dataValue.id],
-                                )
+                              ? convertDisplayValueForPath(previousValues[dataValue.id])
                               : ["latitude", "longitude"].includes(dataValue.id)
                                 ? previousValues[dataValue.id]
-                                : convertDisplayValueForAllField(
-                                    dataValue.id,
-                                    previousValues[dataValue.id],
-                                  )}
+                                : convertDisplayValueForAllField(dataValue.id, previousValues[dataValue.id])}
                           </CustomValue>
                         </div>
                         <div className="w-[40%]">
-                          <CustomValue isNew={dataValue.isChangedValue}>
-                            {convertDisplayValueForAllField(
-                              dataValue.id,
-                              dataValue.value,
-                            )}
-                          </CustomValue>
+                          <CustomValue isNew={dataValue.isChangedValue}>{convertDisplayValueForAllField(dataValue.id, dataValue.value)}</CustomValue>
                         </div>
                       </div>
                     );
                   })}
               </Accordion>
-              <Accordion
-                key={`${selectFacility.tei}-not-changed`}
-                title={t("notChangedValues")}
-              >
+              <Accordion key={`${selectFacility.tei}-not-changed`} title={t("notChangedValues")}>
                 {listDataElementDataValue
-                  .filter(
-                    (dataValue) =>
-                      !dataValue.isChangedValue ||
-                      dataValue.id === TRANSLATIONS,
-                  )
+                  .filter((dataValue) => !dataValue.isChangedValue || dataValue.id === TRANSLATIONS)
                   .map((dataValue) => {
                     if (dataValue.valueType) {
                       const { id, valueType, value, oldValue } = dataValue;
@@ -613,9 +458,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                     </ModalTitle>
                                     <ModalContent>
                                       <div className="w-[1000px] h-[600px]">
-                                        <GeoJsonViewer
-                                          data={JSON.parse(oldValue)}
-                                        />
+                                        <GeoJsonViewer data={JSON.parse(oldValue)} />
                                       </div>
                                     </ModalContent>
                                     <ModalActions>
@@ -631,11 +474,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                                 )}
                               </CustomValue>
                             ) : (
-                              <CustomValue
-                                isOld={!!(value && oldValue !== value)}
-                              >
-                                {oldValue}
-                              </CustomValue>
+                              <CustomValue isOld={!!(value && oldValue !== value)}>{oldValue}</CustomValue>
                             )}
                           </div>
                         </div>
@@ -643,12 +482,8 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                     }
                     if (dataValue.id === "longitude") return;
                     if (dataValue.id === "latitude") {
-                      const longitudeDataValue = listDataElementDataValue.find(
-                        (item) => item.id === "longitude",
-                      );
-                      const pathDataValue = listDataElementDataValue.find(
-                        (item) => item.id === PATH,
-                      );
+                      const longitudeDataValue = listDataElementDataValue.find((item) => item.id === "longitude");
+                      const pathDataValue = listDataElementDataValue.find((item) => item.id === PATH);
                       return (
                         <div className="flex mb-1 gap-2 border-b pb-1 items-center">
                           <div className="w-[20%]">
@@ -656,35 +491,16 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                           </div>
                           <div className="w-[40%]">
                             <div className=" flex gap-1">
-                              <CustomValue
-                                isOld={longitudeDataValue.isChangedValue}
-                              >
-                                {previousValues["longitude"]}
-                              </CustomValue>
-                              <CustomValue isOld={dataValue.isChangedValue}>
-                                {previousValues["latitude"]}
-                              </CustomValue>
+                              <CustomValue isOld={longitudeDataValue.isChangedValue}>{previousValues["longitude"]}</CustomValue>
+                              <CustomValue isOld={dataValue.isChangedValue}>{previousValues["latitude"]}</CustomValue>
                             </div>
                             <div className="w-full h-[300px] mt-2">
                               <MiniMap
-                                data={generateParentFeatures(
-                                  previousValues[PATH],
-                                )}
+                                data={generateParentFeatures(previousValues[PATH])}
                                 point={
-                                  previousValues.longitude &&
-                                  previousValues.latitude
-                                    ? [
-                                        previousValues.latitude,
-                                        previousValues.longitude,
-                                      ]
-                                    : [0, 0]
+                                  previousValues.longitude && previousValues.latitude ? [previousValues.latitude, previousValues.longitude] : [0, 0]
                                 }
-                                showPoint={
-                                  !previousValues.longitude ||
-                                  !previousValues.latitude
-                                    ? false
-                                    : true
-                                }
+                                showPoint={!previousValues.longitude || !previousValues.latitude ? false : true}
                               />
                             </div>
                           </div>
@@ -692,13 +508,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                       );
                     }
                     if (dataValue.id === TRANSLATIONS) {
-                      return (
-                        <TranslationRow
-                          key={dataValue.id}
-                          dataValue={dataValue}
-                          isChangedValue={false}
-                        />
-                      );
+                      return <TranslationRow key={dataValue.id} dataValue={dataValue} isChangedValue={false} />;
                     }
                     return (
                       <div className="flex mb-1 gap-2 border-b pb-1 items-center">
@@ -708,15 +518,10 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
                         <div className="w-[40%]">
                           <CustomValue isOld={dataValue.isChangedValue}>
                             {dataValue.id === PATH
-                              ? convertDisplayValueForPath(
-                                  previousValues[dataValue.id],
-                                )
+                              ? convertDisplayValueForPath(previousValues[dataValue.id])
                               : ["latitude", "longitude"].includes(dataValue.id)
                                 ? previousValues[dataValue.id]
-                                : convertDisplayValueForAllField(
-                                    dataValue.id,
-                                    previousValues[dataValue.id],
-                                  )}
+                                : convertDisplayValueForAllField(dataValue.id, previousValues[dataValue.id])}
                           </CustomValue>
                         </div>
                       </div>
@@ -729,12 +534,7 @@ const PendingFacilityDialog = ({ open, setPendingFacilityDialog }) => {
         <ModalActions>
           {finalEvent[APPROVAL_STATUS] === "pending" && (
             <div className="flex items-center">
-              <CustomizedButton
-                loading={loading}
-                disabled={isReadOnly}
-                primary={true}
-                onClick={handleApprove}
-              >
+              <CustomizedButton loading={loading} disabled={isReadOnly} primary={true} onClick={handleApprove}>
                 {t("approve")}
               </CustomizedButton>
               &nbsp;
