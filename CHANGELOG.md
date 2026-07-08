@@ -1,3 +1,9 @@
+## [1.13.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.2...v1.13.3) (2026-07-08)
+
+### Bug Fixes
+
+* wrong values assigned to facility uid tei attribute, show uid in approval dialog ([d5a7fa3](https://github.com/HISPVietnam/facility-checker-app/commit/d5a7fa389e7eb11532ed2d7b227c935734e90c59))
+
 ## [1.13.2](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.1...v1.13.2) (2026-06-10)
 
 ### Bug Fixes
