@@ -961,6 +961,23 @@
           "favorite": false,
           "id": "MRWtm1iAEBd",
           "attributeValues": []
+        },
+        {
+          "programStage": {
+            "id": "VdBma23iRTw"
+          },
+          "dataElement": {
+            "id": "tTujDz47YhF"
+          },
+          "compulsory": false,
+          "allowProvidedElsewhere": false,
+          "sortOrder": 30,
+          "displayInReports": false,
+          "allowFutureDate": false,
+          "renderOptionsAsRadio": false,
+          "skipSynchronization": false,
+          "skipAnalytics": false,
+          "id": "yZtBEyCfmiu"
         }
       ],
       "dataEntryForm": { "id": "jtRQ5PD72D8" },
@@ -3032,7 +3049,7 @@
       },
       "compulsory": false,
       "allowProvidedElsewhere": false,
-      "sortOrder": 28,
+      "sortOrder": 30,
       "displayInReports": false,
       "allowFutureDate": false,
       "renderOptionsAsRadio": false,
