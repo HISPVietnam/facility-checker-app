@@ -118,7 +118,14 @@ const CustomizedMultipleSelector = ({
       if (isServerSide) {
         if (!value) {
           setLoading(false);
-          setFilteredOptions(defaultOptions);
+
+          setFilteredOptions(
+            defaultOptions.length != 0
+              ? defaultOptions
+              : selected.map((item) =>
+                  filteredOptions.find((option) => option.value === item),
+                ),
+          );
 
           return;
         }
@@ -132,7 +139,17 @@ const CustomizedMultipleSelector = ({
             return;
           }
 
-          setFilteredOptions(serverOptions);
+          setFilteredOptions(
+            _.uniqBy(
+              [
+                ...serverOptions,
+                ...selected.map((item) =>
+                  filteredOptions.find((option) => option.value === item),
+                ),
+              ],
+              "value",
+            ),
+          );
         } finally {
           setLoading(false);
         }
