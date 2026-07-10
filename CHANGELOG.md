@@ -1,3 +1,9 @@
+## [1.13.5](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.4...v1.13.5) (2026-07-10)
+
+### Bug Fixes
+
+* minor issue in user selector during installation process and in configuration module ([51dcf51](https://github.com/HISPVietnam/facility-checker-app/commit/51dcf5137464f2e6ae3d26f31ac75bb0b2823b64))
+
 ## [1.13.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.3...v1.13.4) (2026-07-09)
 
 ### Bug Fixes
