@@ -10,7 +10,7 @@ import { pickTranslation } from "@/utils";
 import { APP_ROLES } from "@/const";
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 import { AppRole, AppRoleSelectable } from "./AppRole";
-import { searchUsers } from "@/api/metadata";
+import { getUsersByQuery, searchUsers } from "@/api/metadata";
 
 const SetupAuthorities = () => {
   const [selectedRole, setSelectedRole] = useState(0);
@@ -18,7 +18,7 @@ const SetupAuthorities = () => {
   const { userGroups } = useMetadataStore(
     useShallow((state) => ({
       userGroups: state.userGroups,
-    }))
+    })),
   );
 
   const { actions, valid, setupAuthorities, status, refreshingMetadata } =
@@ -29,7 +29,7 @@ const SetupAuthorities = () => {
         setupAuthorities: state.setupAuthorities,
         status: state.status,
         refreshingMetadata: state.refreshingMetadata,
-      }))
+      })),
     );
   const {
     captureRoleUsers,
@@ -75,6 +75,8 @@ const SetupAuthorities = () => {
     adminRole: adminRoleUsers,
   };
 
+  useEffect;
+
   return (
     <div className="w-full flex flex-col">
       <div className="font-bold text-[20px]">{t("setupAuthorities")}</div>
@@ -116,12 +118,33 @@ const SetupAuthorities = () => {
                       setStepData(
                         "setupAuthorities",
                         name + "Users",
-                        JSON.stringify(value)
+                        JSON.stringify(value),
                       );
                     }}
-                    // options={options}
                     isServerSideFilter
                     getOptions={async (searchText) => {
+                      if (!searchText) {
+                        const selected = mapping[name]
+                          ? JSON.parse(mapping[name])
+                          : [];
+                        const users = await getUsersByQuery(
+                          `filter=id:in:[${selected.join(",")}]`,
+                        );
+                        const userOptions = users.map((user) => ({
+                          value: user.id,
+                          isSuperuser: user.userRoles
+                            .flatMap((ur) => ur.authorities)
+                            .includes("ALL"),
+                          prefix: (
+                            <FontAwesomeIcon icon={faUser} className="pr-2" />
+                          ),
+                          label: `${user.username} (${user.firstName} ${user.surname})`,
+                        }));
+                        if (isAdminRole) {
+                          return userOptions.filter((user) => user.isSuperuser);
+                        }
+                        return userOptions;
+                      }
                       const users = await searchUsers(searchText);
 
                       const userOptions = users.map((user) => ({
@@ -142,7 +165,7 @@ const SetupAuthorities = () => {
                         ...userGroupOptions.filter((ugo) =>
                           ugo.label
                             .toLowerCase()
-                            .includes(searchText.toLowerCase())
+                            .includes(searchText.toLowerCase()),
                         ),
                       ];
                     }}

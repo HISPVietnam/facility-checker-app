@@ -11,7 +11,7 @@ import useMetadataStore from "@/states/metadata";
 import CustomizedMultipleSelector from "@/ui/common/CustomMultipleSelector";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { NoticeBox } from "@dhis2/ui";
-import { searchUsers } from "@/api/metadata";
+import { getUsersByQuery, searchUsers } from "@/api/metadata";
 
 const AppRole = ({ role }) => {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ const Authorities = () => {
   const { t } = useTranslation();
 
   const { usersInFcaGroup } = useMetadataStore(
-    useShallow((state) => ({ usersInFcaGroup: state.usersInFcaGroup }))
+    useShallow((state) => ({ usersInFcaGroup: state.usersInFcaGroup })),
   );
 
   const {
@@ -41,7 +41,7 @@ const Authorities = () => {
     useShallow((state) => ({
       actions: state.actions,
       authorities: state.authorities,
-    }))
+    })),
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Authorities = () => {
         const userGroupId = USER_GROUPS[roleName];
         const userInUserGroup = usersInFcaGroup.filter((user) => {
           return user.userGroups.some(
-            (userGroup) => userGroup.id === userGroupId
+            (userGroup) => userGroup.id === userGroupId,
           );
         });
         const isAdminRole = role.name === "adminRole";
@@ -94,6 +94,28 @@ const Authorities = () => {
                   label: `${user.username} (${user.firstName} ${user.surname})`,
                 }))}
                 getOptions={async (searchText) => {
+                  if (!searchText) {
+                    const selected =
+                      selectedUsersByUserGroup[userGroupId] ||
+                      userInUserGroup.map((user) => user.id);
+                    const users = await getUsersByQuery(
+                      `filter=id:in:[${selected.join(",")}]`,
+                    );
+                    const userOptions = users.map((user) => ({
+                      value: user.id,
+                      isSuperuser: user.userRoles
+                        .flatMap((ur) => ur.authorities)
+                        .includes("ALL"),
+                      prefix: (
+                        <FontAwesomeIcon icon={faUser} className="pr-2" />
+                      ),
+                      label: `${user.username} (${user.firstName} ${user.surname})`,
+                    }));
+                    if (isAdminRole) {
+                      return userOptions.filter((user) => user.isSuperuser);
+                    }
+                    return userOptions;
+                  }
                   const users = await searchUsers(searchText);
 
                   const userOptions = users.map((user) => ({

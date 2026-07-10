@@ -181,13 +181,12 @@ const AuthoritiesToolbar = () => {
               );
 
               const groupMeta = metadata.userGroups.find((ug) => ug.id === key);
-
               return {
                 id: key,
                 name: groupMeta?.name,
-                users: selectedUsersByUserGroup[key]?.length
-                  ? selectedUsersByUserGroup[key].map((user) => ({ id: user }))
-                  : allUsers.map((user) => ({ id: user.id })),
+                users: selectedUsersByUserGroup[key].map((user) => ({
+                  id: user,
+                })),
               };
             }),
         ),

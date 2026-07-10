@@ -53,6 +53,7 @@ const CustomizedMultipleSelector = ({
     isServerSideFilter ? defaultOptions : options,
   );
 
+  const [listVisible, setListVisible] = useState();
   const visibleTags = showDropdown ? selected : selected.slice(0, limitTags);
 
   const hiddenTagCount = selected.length - visibleTags.length;
@@ -60,8 +61,15 @@ const CustomizedMultipleSelector = ({
   const toggleSelect = (value) => {
     if (selected.includes(value)) {
       onChange(selected.filter((v) => v !== value));
+      setListVisible(listVisible.filter((v) => v.value !== value));
+      setFilteredOptions(listVisible.filter((v) => v.value !== value));
     } else {
       onChange([...selected, value]);
+      const newList = listVisible;
+      setListVisible([
+        ...(newList || []),
+        filteredOptions.find((item) => item.value === value),
+      ]);
     }
 
     setInputValue("");
@@ -71,10 +79,16 @@ const CustomizedMultipleSelector = ({
     if (disabled) return;
     onChange(selected.filter((v) => v !== value));
     onBlur?.(selected.filter((v) => v !== value));
+    setListVisible(listVisible?.filter((v) => v.value !== value));
+    !inputValue &&
+      setFilteredOptions(listVisible?.filter((v) => v.value !== value));
   };
 
   const removeAllTags = () => {
     onChange([]);
+    onBlur?.([]);
+    setListVisible([]);
+    !inputValue && setFilteredOptions([]);
   };
 
   const handleClickOutside = (e) => {
@@ -116,20 +130,6 @@ const CustomizedMultipleSelector = ({
 
       // SERVER SIDE
       if (isServerSide) {
-        if (!value) {
-          setLoading(false);
-
-          setFilteredOptions(
-            defaultOptions.length != 0
-              ? defaultOptions
-              : selected.map((item) =>
-                  filteredOptions.find((option) => option.value === item),
-                ),
-          );
-
-          return;
-        }
-
         setLoading(true);
 
         try {
@@ -139,17 +139,8 @@ const CustomizedMultipleSelector = ({
             return;
           }
 
-          setFilteredOptions(
-            _.uniqBy(
-              [
-                ...serverOptions,
-                ...selected.map((item) =>
-                  filteredOptions.find((option) => option.value === item),
-                ),
-              ],
-              "value",
-            ),
-          );
+          setFilteredOptions(serverOptions);
+          !listVisible && setListVisible(serverOptions);
         } finally {
           setLoading(false);
         }
@@ -160,6 +151,11 @@ const CustomizedMultipleSelector = ({
       // CLIENT SIDE
       if (!value) {
         setFilteredOptions(options);
+        setListVisible(
+          selected
+            .map((item) => options.find((option) => option.value === item))
+            .filter(Boolean),
+        );
         return;
       }
 
@@ -246,11 +242,9 @@ const CustomizedMultipleSelector = ({
         {selected.length > 0 && (
           <div className=" flex items-center gap-2 flex-wrap max-h-[150px] overflow-auto w-[calc(100%-50px)]">
             {visibleTags.map((value) => {
-              const option = (
-                isServerSideFilter
-                  ? _.uniqBy([...defaultOptions, ...filteredOptions], "value")
-                  : options
-              ).find((o) => o.value === value);
+              const option = (listVisible || defaultOptions || options).find(
+                (o) => o?.value === value,
+              );
 
               return (
                 <div
