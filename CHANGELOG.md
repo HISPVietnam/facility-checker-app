@@ -1,3 +1,10 @@
+## [1.13.4](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.3...v1.13.4) (2026-07-09)
+
+### Bug Fixes
+
+* add missing comment in psde in program stage psde ([891bae8](https://github.com/HISPVietnam/facility-checker-app/commit/891bae8fe7b820a9696188d2385da5064888f2e2))
+* minor issue in user selector during installation process ([ceec7cd](https://github.com/HISPVietnam/facility-checker-app/commit/ceec7cdcc73841e33dc8c0b366ded42a7fbd590e))
+
 ## [1.13.3](https://github.com/HISPVietnam/facility-checker-app/compare/v1.13.2...v1.13.3) (2026-07-08)
 
 ### Bug Fixes
